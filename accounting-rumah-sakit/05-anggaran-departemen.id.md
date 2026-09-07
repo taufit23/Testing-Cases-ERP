@@ -1,0 +1,50 @@
+---
+title: (Rumah Sakit) — 05. Anggaran (Budget) Per Departemen
+category: accounting-rumah-sakit
+description: Budget per departemen (RI/RJ/FAR/PJG) Januari 2026 vs realisasi (kasus over-budget & under-budget skala miliaran), plus budget beban tetap besar (gaji karyawan) dengan presisi angka.
+visibility: internal
+---
+
+# 05. Anggaran (Budget) Per Departemen
+
+> Prasyarat: file [`04-laporan-keuangan-per-departemen.id.md`](./04-laporan-keuangan-per-departemen.id.md) sudah selesai.
+
+## 1. Budget Pendapatan per Departemen — Januari 2026
+
+Budget disusun untuk **bulan penuh Januari 2026**, sedangkan realisasi (file 01) baru mencakup sampel hari-hari yang didokumentasikan — perbedaan ini SENGAJA, sama pola dengan suite klinik gigi, untuk menguji varian budget-vs-actual yang realistis.
+
+| Departemen | Budget Januari 2026 | Realisasi (file 01) |                Varian | Keterangan                                                                                                                                                                        |
+| ---------- | ------------------: | ------------------: | --------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RI         |       4.500.000.000 |         165.000.000 | −4.335.000.000 (−96%) | Under-budget besar — WAJAR, realisasi hanya 3 transaksi sampel dari target 1 bulan penuh RS besar (target bulanan RI RS tipe B realistis miliaran karena okupansi ratusan pasien) |
+| RJ         |         350.000.000 |          16.000.000 |   −334.000.000 (−95%) | Under-budget, sama alasan sampel data                                                                                                                                             |
+| FAR        |         180.000.000 |           9.200.000 |   −170.800.000 (−95%) | Under-budget                                                                                                                                                                      |
+| PJG        |         420.000.000 |          47.800.000 |   −372.200.000 (−89%) | Under-budget, **PJG relatif paling dekat ke target** dibanding 3 departemen lain (radiologi bernilai tinggi per transaksi)                                                        |
+
+| Skenario                             | Detail                                                                                                                                                                              | Hasil                                                                                                                                                                                                                                                     |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Positif — create budget 4 departemen | `POST accounting/budgets/create {business_unit_id:<RI>, period:"2026-01", chart_of_account_id:<sesuai kontrak endpoint>, amount:4500000000}` (ulangi untuk RJ/FAR/PJG sesuai tabel) | 201 tiap satu                                                                                                                                                                                                                                             |
+| Positif — Budget vs Actual report    | `POST accounting/budgets/vs-actual {period:"2026-01"}`                                                                                                                              | Menampilkan 4 baris varian PERSIS seperti tabel di atas — SEMUA under-budget (tidak ada kasus over-budget di lini pendapatan suite ini, beda dari suite klinik gigi yang punya 1 cabang over-budget — lihat §1.1 untuk kasus over-budget versi suite ini) |
+| Negatif                              | Create budget untuk `business_unit_id` yang tidak ada di branch aktif                                                                                                               | 422 `not_found_in_branch`                                                                                                                                                                                                                                 |
+| Negatif                              | `amount` negatif                                                                                                                                                                    | 422 (kalau sistem tidak menolak, catat sebagai gap validasi kecil, belum diverifikasi ke kode)                                                                                                                                                            |
+| Netralisasi                          | `delete` budget test                                                                                                                                                                | —                                                                                                                                                                                                                                                         |
+
+### 1.1 Budget Beban — Kasus Over-Budget (kontras dengan §1)
+
+RS punya 1 lini beban yang justru **melebihi budget** — kasus realistis: klaim BPJS ditolak (write-off) tidak pernah dianggarkan sama sekali karena sifatnya insidental/tidak terduga.
+
+| Akun                                                 | Budget Januari 2026 | Realisasi (file 01) |                   Varian |
+| ---------------------------------------------------- | ------------------: | ------------------: | -----------------------: |
+| 5111 Beban Piutang Tak Tertagih (Klaim BPJS Ditolak) |          50.000.000 |         200.000.000 | **+150.000.000 (+300%)** |
+| 5102 Beban Gaji Karyawan Tetap                       |       1.850.000.000 |       1.850.000.000 |           0 (pas persis) |
+
+| Skenario                                                                              | Detail                                                                              | Hasil                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Positif — over-budget signifikan pada beban insidental**                            | Create budget 5111 (50.000.000) dan 5102 (1.850.000.000), jalankan Budget vs Actual | Baris 5111 HARUS tampil **over-budget +300%** (realisasi 4x lipat budget) — mencerminkan kasus nyata RS besar: klaim BPJS ditolak sulit diprediksi presisi saat penyusunan anggaran tahunan, verifikasi FE/BE menampilkan tanda over-budget dengan jelas (bukan cuma angka mentah tanpa indikator)                                                                                                       |
+| **Positif — varian 0 persis (regression check presisi, sama pola suite klinik gigi)** | Baris 5102 (gaji, biaya tetap sesuai kontrak karyawan)                              | Varian **PERSIS 0** — kasus ini sengaja dipilih untuk menguji tidak ada pembulatan floating-point yang bikin varian muncul angka aneh pada NILAI BESAR (1.850.000.000, bukan jutaan seperti suite lain) — kalau muncul angka bukan-nol untuk kasus yang secara matematis harus 0 pada skala miliaran, catat sebagai temuan presisi PRIORITAS TINGGI (risiko floating-point lebih besar pada angka besar) |
+| Netralisasi                                                                           | `delete` 2 budget ini                                                               | —                                                                                                                                                                                                                                                                                                                                                                                                        |
+
+## Referensi Silang
+
+- File [`02-general-ledger-dan-trial-balance.id.md`](./02-general-ledger-dan-trial-balance.id.md) §3 — sumber angka realisasi per departemen
+- Suite klinik gigi [`../accounting-klinik-gigi/05-anggaran-dan-aset-tetap.id.md`](../accounting-klinik-gigi/05-anggaran-dan-aset-tetap.id.md) — pola dasar budget vs actual yang direplikasi strukturnya, dengan tambahan kasus over-budget pada beban insidental (klaim ditolak) yang belum pernah dites di suite lain
+- File [`06-aset-tetap-alat-medis-besar.id.md`](./06-aset-tetap-alat-medis-besar.id.md) — Aset Tetap dipisah jadi file tersendiri di suite ini (beda dari suite klinik gigi yang menggabungkan Budget+Aset Tetap dalam 1 file) karena kompleksitas aset medis besar (multi-metode penyusutan + pelepasan/upgrade) butuh ruang tersendiri

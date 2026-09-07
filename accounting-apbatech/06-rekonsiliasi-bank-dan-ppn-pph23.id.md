@@ -1,0 +1,65 @@
+---
+title: (IT Consultant + Retail Elektronik) — 06. Rekonsiliasi Bank, PPN, & PPh 23
+category: accounting-apbatech
+description: Rekonsiliasi 2 rekening bank (Bank BCA & Bank Mandiri, 1 branch PT APBATECH), rekap PPN Masukan/Keluaran, dan keterbatasan pelaporan PPh 23.
+visibility: internal
+---
+
+# 06. Rekonsiliasi Bank, PPN, & PPh 23
+
+> Format pengujian: **Positif** / **Negatif** / **Netralisasi**. Endpoint rekonsiliasi: **Bank Reconciliations** (`finance/bank-reconciliations/*`). Endpoint pajak: **Tax Summary** (`reports/tax-summary`).
+
+> ⚠️ **Model rekonsiliasi bank cuma header** — `BankReconciliation` hanya `opening_balance`, `closing_balance`, `statement_balance`, `difference = statement_balance - closing_balance`, `status: draft|completed`. TIDAK ADA line-item matching mutasi per transaksi, TIDAK ADA "matched", dan TIDAK ADA jurnal penyesuaian otomatis (`BankReconciliations::create()/update()/complete()` tidak memanggil `Journal`/`JournalHeader` sama sekali).
+
+> Bank BCA Operasional (AST-02) dan Bank Mandiri Operasional (AST-03) sekarang **berada di branch yang sama** (PT APBATECH) — bedanya cuma akun COA (AST-02 tanpa BU default, AST-03 di-tag `default_business_units_id = BU-RETAIL`, lihat file 00 §4). Kedua rekening tetap direkonsiliasi TERPISAH per `bank_account_id` seperti biasa — cuma sekarang tidak perlu switch branch untuk berpindah dari 1 rekening ke rekening lain.
+
+## 1. Rekonsiliasi Bank BCA Operasional
+
+| Skenario                           | Payload kunci                                                                                                                                                                                                                                                            | Hasil                                                                                           |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| Positif                            | `POST finance/bank-reconciliations/create {bank_account_id:<Bank BCA Operasional>, period_start:"2026-08-01", period_end:"2026-08-31", opening_balance:300000000, closing_balance:296500000, statement_balance:296500000}` (sesuai saldo GL setelah jurnal §1.4 file 01) | 200, `reconciliation_number` auto-generate `RCN/YYYY/MM/0001`, `status:"draft"`, `difference:0` |
+| Positif — selisih biaya admin bank | Rekening koran menunjukkan biaya admin Rp 25.000 yang belum dicatat di sistem (`statement_balance:296475000` vs `closing_balance:296500000`)                                                                                                                             | `difference: -25000`                                                                            |
+
+## 2. Selisih Saldo — Biaya Admin Bank (jurnal manual terlebih dulu)
+
+> ❌ **Tidak ada fitur "item penyesuaian" atau jurnal otomatis di dalam rekonsiliasi.**
+
+| Skenario                      | Detail                                                                                                                                            | Hasil                                    |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| Wajib — jurnal manual dulu    | Buat jurnal terpisah `accounting/journals/create` (Dr BBN-05 Beban Administrasi Bank 25.000 / Cr AST-02 Bank BCA Operasional 25.000), lalu `post` | Saldo GL Bank BCA turun jadi 296.475.000 |
+| Positif — update rekonsiliasi | `PUT finance/bank-reconciliations/update {slug, closing_balance:296475000}`                                                                       | `difference:0` — baru boleh `complete`   |
+
+## 3. Complete Rekonsiliasi (`POST finance/bank-reconciliations/complete`)
+
+| Skenario                                                           | Detail                                                                                    | Hasil                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Positif                                                            | `difference = 0` → `complete {slug}`                                                      | 200, `status:"completed"`                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| 🐞 **Negatif — selisih tidak nol memicu bug 500, BUKAN 422 bersih** | `difference != 0` → `complete {slug}` (pakai reconciliation §1 sebelum jurnal koreksi §2) | `BankReconciliations::complete()` memanggil `response()->warn([...])` — **macro `warn()` TIDAK terdaftar** di `MacroServiceProvider` (hanya `successWithData`, `validatorFail`, `authSuccess`, `successWithData1`, `error`). Ini melempar `BadMethodCallException` → **HTTP 500 generic**, bukan 422 rapi "Unbalanced reconciliation". Ini bug backend nyata, bukan skenario company-specific — laporkan ke tim dev (perbaikan: ganti `->warn(...)` jadi `->error(...)` atau daftarkan macro baru) |
+| Negatif — bukan draft                                              | Complete rekonsiliasi yang sudah `completed`                                              | `firstOrFail()` pada query `where('status','draft')` gagal → exception (kemungkinan 404/500, bukan 422 khusus)                                                                                                                                                                                                                                                                                                                                                                                     |
+
+## 4. Rekonsiliasi Bank Mandiri Operasional (BU-RETAIL)
+
+| Skenario | Payload kunci                                                                                                                                                                                                                    | Hasil                                                                                                                                                                                              |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Positif  | `create {bank_account_id:<Bank Mandiri Operasional>, period_start:"2026-08-01", period_end:"2026-08-31", opening_balance:60000000, closing_balance:60721500, statement_balance:60721500}` (sesuai saldo GL setelah §1.5 file 01) | 200, `difference:0`, rekonsiliasi ini SEPENUHNYA independen dari rekonsiliasi Bank BCA (beda `bank_account_id`, walau branch sama) — isolasi terjadi di level rekening, bukan lagi di level branch |
+
+## 5. Rekap PPN Masukan/Keluaran (`POST reports/tax-summary`)
+
+> **Verifikasi kode (`ReportController::taxSummary()`, komentar developer eksplisit)**: fitur ini **sengaja dibatasi hanya PPN Masukan/Keluaran** — dibaca dari `journal_taxes`, hanya baris jurnal yang akunnya `is_tax:true` DAN dikirim `tax_rate` saat create. Klasifikasi otomatis: akun tipe `asset` → PPN Masukan, akun tipe `liability` → PPN Keluaran. **PPh withholding (termasuk PPh 23 kita) TIDAK di-scope endpoint ini** — komentar kode eksplisit bilang ini "out of scope on purpose", nunggu spesifikasi jenis PPh dari owner. Endpoint ini juga TIDAK punya filter `business_unit_id` — hasil selalu gabungan ketiga divisi (§1.1–1.5 file 01) dalam 1 kali panggil, tidak perlu lagi 2x panggil per branch seperti sebelumnya.
+
+| Skenario                                                  | Payload kunci                                                                  | Hasil                                                                                                                                                                                                                                                                                                                                                                |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Positif                                                   | `{start_date:"2026-08-01", end_date:"2026-08-31"}`                             | 200, PPN Keluaran (LIA-02, kategori liability) = 1.320.000 (§1.1) + 4.950.000 (§1.2) + 71.500 (§1.5) = **6.341.500**, gabungan ketiga BU. TIDAK ada baris PPN Masukan karena tidak ada transaksi pembelian jasa berPPN Masukan di suite ini                                                                                                                          |
+| ❌ **Negatif — PPh 23 TIDAK muncul di laporan apapun**     | Cari rekap "PPh 23 dipotong klien" dari saldo AST-07 Rp 900.000 (§1.2 file 01) | Tidak ada — akun AST-07 (Uang Muka PPh 23) tidak di-flag `is_tax:true` di COA (flag itu direservasi untuk PPN), jadi TIDAK masuk `journal_taxes` sama sekali. Satu-satunya cara memverifikasi saldo PPh 23 adalah `general-ledger/detail-ledger {chart_of_account_id:<AST-07>}` manual — dokumentasikan sebagai gap fitur, bukan uji "laporan PPh 23" yang tidak ada |
+| Negatif — jurnal tanpa `tax_rate`                         | Jurnal PPN yang dibuat TANPA `tax_rate` di baris akun `is_tax:true`            | Baris tersebut TIDAK muncul di `journal_taxes` — silent-missing, bukan error. Selalu sertakan `tax_rate` saat baris melibatkan akun `is_tax:true`                                                                                                                                                                                                                    |
+| ❌ **Negatif — breakdown PPN per Business Unit tidak ada** | Cari filter `business_unit_id` di `tax-summary`                                | Tidak ada — kalau butuh tahu PPN Keluaran per divisi, hitung manual dari baris jurnal masing-masing (§1.1 BU-MANAGED 1.320.000, §1.2 BU-CONSULT 4.950.000, §1.5 BU-RETAIL 71.500)                                                                                                                                                                                    |
+
+## Netralisasi
+
+- `DELETE finance/bank-reconciliations/delete` hanya berlaku untuk status `draft`.
+- Reverse jurnal penyesuaian manual yang sudah posted via `accounting/journals/reverse`.
+
+## Referensi Silang
+
+- [`00-profil-perusahaan-dan-master-data.id.md`](./00-profil-perusahaan-dan-master-data.id.md)
+- [`01-jurnal-invoice-jasa-konsultasi-dan-milestone.id.md`](./01-jurnal-invoice-jasa-konsultasi-dan-milestone.id.md)

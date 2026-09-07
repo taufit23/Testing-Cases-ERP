@@ -1,0 +1,60 @@
+---
+title: (Hospitality / Hotel) — 03. Tutup Periode Bulanan & Tahun Fiskal
+category: accounting-hospitality
+description: Close/Lock/Reopen Accounting Period Februari (bulanan), guard periode berikutnya, dan Close Fiscal Year FY2026 dengan closing entry ke Laba Ditahan.
+visibility: internal
+---
+
+# 03. Tutup Periode Bulanan & Tahun Fiskal
+
+> Prasyarat: [`01-jurnal-booking-dan-revenue-recognition.id.md`](./01-jurnal-booking-dan-revenue-recognition.id.md) — semua jurnal Februari sudah `posted` (tidak ada draft/pending tersisa, §1.5 jurnal timpang sudah dihapus). Endpoint: `PUT client-master/accounting-period/{close|lock|reopen}`, `POST client-master/fiscal-year/close-year`.
+
+## 1. Close Accounting Period Februari 2026
+
+| Skenario                                                | Payload kunci                                                                                                    | Hasil                                                                                                                                                                                           |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Negatif — ada jurnal belum posted                       | Buat 1 jurnal draft baru (tidak di-post), lalu `PUT client-master/accounting-period/close {id:<Februari>}`       | 422 — `content.accounting_period_has_unposted_journals_post_or_void_them_first`                                                                                                                 |
+| Netralisasi                                             | Post atau hapus jurnal draft test di atas                                                                        |
+| Positif                                                 | `PUT .../close {id:<Februari>}`                                                                                  | 200 — `is_closed:true`                                                                                                                                                                          |
+| Negatif — close 2x                                      | `PUT .../close {id:<Februari>}` (sudah closed)                                                                   | 422 — `content.accounting_period_already_closed`                                                                                                                                                |
+| Negatif — close periode Maret sebelum Februari (loncat) | `PUT .../close {id:<Maret>}` sementara Januari belum closed (kalau skenario test dimulai dari Februari langsung) | Cek behavior aktual — controller memvalidasi "next period must already..." (guard closing-into-a-gap), kemungkinan 422 kalau Januari belum closed lebih dulu — urutan close **harus berurutan** |
+
+## 2. Lock Accounting Period Februari 2026
+
+`lock` hanya boleh dilakukan setelah `close` (immutability tambahan, mencegah reopen tanpa jejak).
+
+| Skenario                                         | Payload kunci                                            | Hasil                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------------------------------------ | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Negatif — lock sebelum closed                    | `PUT .../lock {id:<Maret>}` (periode Maret masih open)   | 422 — `content.accounting_period_must_be_closed_before_it_can_be_locked`                                                                                                                                                                                                                                                                                                                                                                  |
+| Positif                                          | `PUT .../lock {id:<Februari>}`                           | 200 — `is_locked:true`                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Negatif — lock 2x                                | `PUT .../lock {id:<Februari>}` (sudah locked)            | 422 — `content.accounting_period_already_locked`                                                                                                                                                                                                                                                                                                                                                                                          |
+| Negatif — reverse jurnal Februari setelah locked | `POST accounting/journals/reverse` pada jurnal §1.4/§1.5 | Cek behavior aktual — reverse tidak memvalidasi status periode secara eksplisit di `Journal::reverse()` (hanya cek `posted_at`/`is_reversed`), TAPI jurnal reversal baru dibuat dengan `date` request (bisa dipilih tanggal Maret agar tidak masuk periode Februari yang locked) — kalau `date` reversal dipaksa ke Februari yang sudah locked dan tetap lolos tanpa guard periode → 🔧 **temuan**: reverse tidak menghormati period lock |
+
+## 3. Reopen Accounting Period Februari 2026
+
+| Skenario    | Payload kunci                                                                                                               | Hasil                                                     |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Positif     | `PUT client-master/accounting-period/reopen {id:<Februari>, reason:"Koreksi jurnal PB1 salah baris"}`                       | 200 — `is_closed:false`, `is_locked:false`                |
+| Negatif     | `PUT .../reopen {id:<Maret>}` (periode Maret masih open, belum pernah closed/locked)                                        | 422 — `content.accounting_period_is_not_closed_or_locked` |
+| Netralisasi | Close & lock kembali Februari 2026 setelah selesai eksperimen reopen, supaya file `04`-`06` konsisten dengan state "closed" |
+
+## 4. Close Fiscal Year FY2026
+
+Guard aktual (`FiscalYear::closeYear()`): SEMUA `accounting_periods` pada fiscal year harus `is_closed:true` dulu, DAN harus ada **tepat 1** akun yang diflag `is_retained_earnings_account:true` (bukan 0, bukan lebih dari 1).
+
+| Skenario                                     | Payload kunci                                                                                                          | Hasil                                                                                                                                                                                                                                          |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Negatif — masih ada periode terbuka          | `POST client-master/fiscal-year/close-year {id:<FY2026>}` sementara 11 dari 12 periode bulanan masih `is_closed:false` | 422 — `content.all_accounting_periods_in_this_fiscal_year_must_be_closed_first`                                                                                                                                                                |
+| Netralisasi (untuk pengujian ini saja)       | Close seluruh 12 periode bulanan FY2026 secara berurutan (tidak perlu lock, cukup close)                               | —                                                                                                                                                                                                                                              |
+| Negatif — tidak ada akun Laba Ditahan diflag | Hapus sementara flag `is_retained_earnings_account` dari `EKT-02`, lalu `close-year`                                   | 422 — `content.flag_exactly_one_account_as_the_retained_earnings_account_in_chart_of_accounts_before_closing_a_fiscal_year`                                                                                                                    |
+| Netralisasi                                  | Pasang kembali flag `is_retained_earnings_account:true` di `EKT-02`                                                    |
+| Positif                                      | `POST .../close-year {id:<FY2026>}` (semua periode closed, `EKT-02` diflag benar)                                      | 200 — `is_closed:true`; closing entry otomatis: seluruh saldo akun Pendapatan & Beban (`PDT-01/02/03`, `BBN-01`) dipindah netto ke `EKT-02` Laba Ditahan = **(16.954.545)** (rugi berjalan file `01`, mengurangi Laba Ditahan, BUKAN menambah) |
+| Positif — verifikasi pasca-close             | `general-ledger/trial-balance {as_of_date:"2026-12-31"}`                                                               | 200 — `PDT-01/02/03`/`BBN-01` bersaldo **0** (sudah di-zero-kan closing entry), `EKT-02` = **−16.954.545**, `EKT-01` tetap 452.000.000, Total Aset tetap 573.815.000 = Liabilitas(138.769.545) + Ekuitas(452.000.000−16.954.545=435.045.545)   |
+| Negatif                                      | `close-year` 2x pada FY yang sama                                                                                      | 422 — `content.fiscal_year_already_closed`                                                                                                                                                                                                     |
+
+> ⚠️ **Catatan urutan pengerjaan**: pengujian §4 (Close Fiscal Year) sebaiknya dilakukan TERAKHIR/terpisah dari alur utama (setelah file `04`-`06` selesai diuji dengan periode Februari dalam keadaan closed-tapi-belum-locked-permanen), karena men-zero-kan akun Pendapatan/Beban akan mengubah semua angka Laba Rugi yang dipakai file `04` sebagai baseline. Jalankan §1-§3 dulu untuk alur bulanan normal, baru §4 sebagai pengujian akhir siklus tahunan terpisah.
+
+## Referensi Silang
+
+- [`02-general-ledger-trial-balance-per-departemen.id.md`](./02-general-ledger-trial-balance-per-departemen.id.md) — baseline sebelum closing
+- [`04-laporan-keuangan-konsolidasi-dan-per-departemen.id.md`](./04-laporan-keuangan-konsolidasi-dan-per-departemen.id.md) — Laba Rugi & Neraca sebelum/sesudah closing entry
