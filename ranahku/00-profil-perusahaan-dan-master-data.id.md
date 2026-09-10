@@ -6,6 +6,8 @@ description: Berkas pengenalan usaha Ranahku (fiktif) — perusahaan penyewaan a
 # Ranahku — Profil Perusahaan & Data Awal
 
 > Berkas ini ditulis seperti seorang pemilik usaha menceritakan bisnisnya kepada konsultan pada pertemuan pertama: apa usahanya, siapa saja orangnya, berapa modalnya, dan apa saja yang dimiliki serta ditanggung saat mulai jalan. Semua nama, angka, dan pihak adalah fiktif.
+>
+> Untuk **input data saat testing**, pakai [`01-urutan-input-master-data.id.md`](01-urutan-input-master-data.id.md) — daftar yang sama disusun ulang sesuai urutan penginputan, lengkap dengan departemen, daftar pajak, jabatan, dan pemetaan jurnal per modul.
 
 ---
 
