@@ -313,27 +313,29 @@ Semua bertipe layanan/jasa (tidak dikelola stok). Pendapatan → `4-101` (sewa) 
 
 Untuk **setiap** jabatan: centang **"Buat role baru untuk posisi ini"** supaya role akses otomatis terbentuk (nama role = nama jabatan). Hak akses tiap role diatur belakangan dari halaman **Roles** (jabatan hanya membuat role kosong + menautkan).
 
-| #   | Jabatan                       | Departemen | Level         | Kisaran Gaji | Buat Role? |
-| --- | ----------------------------- | ---------- | ------------- | -----------: | ---------- |
-| 1   | Direktur Utama                | `MGT`      | Direksi       |   25.000.000 | Ya         |
-| 2   | Manajer Operasional           | `MGT`      | Manajer       |   15.000.000 | Ya         |
-| 3   | Manajer Keuangan              | `KEU`      | Manajer       |   15.000.000 | Ya         |
-| 4   | Staf Akunting                 | `KEU`      | Staf          |    6.500.000 | Ya         |
-| 5   | Staf Penagihan & Kasir Kantor | `KEU`      | Staf          |    5.000.000 | Ya         |
-| 6   | Staf Administrasi & SDM       | `MGT`      | Staf          |    5.500.000 | Ya         |
-| 7   | Koordinator Layanan Aplikasi  | `SEWA`     | Koordinator   |    9.000.000 | Ya         |
-| 8   | Petugas Kanvasing             | `SEWA`     | Staf Lapangan |    4.000.000 | Ya         |
-| 9   | Eksekutif Penjualan           | `SEWA`     | Staf          |    6.000.000 | Ya         |
-| 10  | Admin Kontrak & Sewa          | `SEWA`     | Staf          |    4.500.000 | Ya         |
-| 11  | Staf Pendampingan Pelanggan   | `SEWA`     | Staf          |    4.500.000 | Ya         |
-| 12  | Supervisor Toko               | `TOKO`     | Supervisor    |    6.000.000 | Ya         |
-| 13  | Pramuniaga                    | `TOKO`     | Staf          |    3.500.000 | Ya         |
-| 14  | Kasir Toko                    | `TOKO`     | Staf          |    3.500.000 | Ya         |
-| 15  | Staf Gudang                   | `TOKO`     | Staf          |    3.800.000 | Ya         |
-| 16  | Supervisor Rumah Makan        | `RESTO`    | Supervisor    |    6.000.000 | Ya         |
-| 17  | Juru Masak                    | `RESTO`    | Staf          |    4.500.000 | Ya         |
-| 18  | Pelayan                       | `RESTO`    | Staf          |    3.500.000 | Ya         |
-| 19  | Kasir Rumah Makan             | `RESTO`    | Staf          |    3.500.000 | Ya         |
+| #   | Jabatan                       | Departemen | Gaji Min.  | Gaji Maks. | Buat Role? |
+| --- | ----------------------------- | ---------- | ---------: | ---------: | ---------- |
+| 1   | Direktur Utama                | `MGT`      | 25.000.000 | 30.000.000 | Ya         |
+| 2   | Manajer Operasional           | `MGT`      | 15.000.000 | 20.000.000 | Ya         |
+| 3   | Manajer Keuangan              | `KEU`      | 15.000.000 | 20.000.000 | Ya         |
+| 4   | Staf Akunting                 | `KEU`      |  6.500.000 |  9.000.000 | Ya         |
+| 5   | Staf Penagihan & Kasir Kantor | `KEU`      |  5.000.000 |  7.000.000 | Ya         |
+| 6   | Staf Administrasi & SDM       | `MGT`      |  5.500.000 |  7.500.000 | Ya         |
+| 7   | Koordinator Layanan Aplikasi  | `SEWA`     |  9.000.000 | 12.000.000 | Ya         |
+| 8   | Petugas Kanvasing             | `SEWA`     |  4.000.000 |  6.000.000 | Ya         |
+| 9   | Eksekutif Penjualan           | `SEWA`     |  6.000.000 |  9.000.000 | Ya         |
+| 10  | Admin Kontrak & Sewa          | `SEWA`     |  4.500.000 |  6.000.000 | Ya         |
+| 11  | Staf Pendampingan Pelanggan   | `SEWA`     |  4.500.000 |  6.000.000 | Ya         |
+| 12  | Supervisor Toko               | `TOKO`     |  6.000.000 |  8.000.000 | Ya         |
+| 13  | Pramuniaga                    | `TOKO`     |  3.500.000 |  4.500.000 | Ya         |
+| 14  | Kasir Toko                    | `TOKO`     |  3.500.000 |  4.500.000 | Ya         |
+| 15  | Staf Gudang                   | `TOKO`     |  3.800.000 |  5.000.000 | Ya         |
+| 16  | Supervisor Rumah Makan        | `RESTO`    |  6.000.000 |  8.000.000 | Ya         |
+| 17  | Juru Masak                    | `RESTO`    |  4.500.000 |  6.000.000 | Ya         |
+| 18  | Pelayan                       | `RESTO`    |  3.500.000 |  4.500.000 | Ya         |
+| 19  | Kasir Rumah Makan             | `RESTO`    |  3.500.000 |  4.500.000 | Ya         |
+
+> **Cepat:** pakai **Import from Excel** (Download Template → isi 19 baris → upload → review → Import). Kolom **Buat Role Baru = Ya** di template = role akses auto-terbentuk per jabatan.
 
 > Setelah semua jabatan dibuat: buka halaman **Roles**, isi hak akses tiap role
 > (19 role baru). Contoh: role "Kasir Toko" cukup akses kasir + lihat produk;
