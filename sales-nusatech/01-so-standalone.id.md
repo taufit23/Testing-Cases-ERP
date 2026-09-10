@@ -1,17 +1,17 @@
 ---
-title: Test Case Sales (APBATECH) — 01. Sales Order Standalone (Quotation → SO)
-category: Sales Apbatech
-description: Alur Quotation → Sales Order berdiri sendiri untuk PT APBATECH — kontrak jasa konsultasi/managed-service (BU-CONSULT/BU-MANAGED, termin/milestone) dan penjualan retail unit ke reseller (BU-RETAIL), 1 branch.
+title: Test Case Sales (NUSATECH) — 01. Sales Order Standalone (Quotation → SO)
+category: Sales Nusatech
+description: Alur Quotation → Sales Order berdiri sendiri untuk PT NUSATECH — kontrak jasa konsultasi/managed-service (BU-CONSULT/BU-MANAGED, termin/milestone) dan penjualan retail unit ke reseller (BU-RETAIL), 1 branch.
 visibility: internal
 ---
 
 # 01. Sales Order Standalone (Quotation → SO)
 
-> Skenario: **PT APBATECH**, lihat [`../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md).
+> Skenario: **PT NUSATECH**, lihat [`../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md).
 >
 > **Scope file ini**: Quotation → SO sampai `approved`, **belum** Delivery/Invoice/GL. Integrasi ke Accounting di [`02-so-integrasi-accounting.id.md`](./02-so-integrasi-accounting.id.md).
 >
-> Dua alur, KEDUANYA di branch **PT APBATECH yang sama** (1 branch, tidak ada switch-context): **(A)** kontrak jasa (`BU-CONSULT`/`BU-MANAGED`) — SO berbasis termin/milestone, TANPA barang fisik jadi TANPA Delivery. **(B)** penjualan retail unit ke reseller (`BU-RETAIL`) — SO dengan barang fisik, pakai Delivery seperti alur dagang biasa.
+> Dua alur, KEDUANYA di branch **PT NUSATECH yang sama** (1 branch, tidak ada switch-context): **(A)** kontrak jasa (`BU-CONSULT`/`BU-MANAGED`) — SO berbasis termin/milestone, TANPA barang fisik jadi TANPA Delivery. **(B)** penjualan retail unit ke reseller (`BU-RETAIL`) — SO dengan barang fisik, pakai Delivery seperti alur dagang biasa.
 >
 > ⚠️ **`quotations`/`sales_orders` TIDAK punya kolom `business_unit_id`** — sama seperti sisi Purchasing, tagging BU baru benar-benar tersimpan di level jurnal (Sales Invoice `export-to-journal`, lihat file 02) lewat akun COA pendapatan yang sudah punya `default_business_units_id` (PDT-01/PDT-02/PDT-03).
 
@@ -20,7 +20,7 @@ visibility: internal
 - Customer jasa: **PT Solusi Niaga Digital** (proyek software, `payment_term_days:30`), **PT Sinergi Pangan Nasional** (managed service, `payment_term_days:14`) — sudah dibuat di file `00` Accounting.
 - Customer retail: **CV Reseller Gadget Bandung** (`payment_term_days:14`).
 - SKU jual Alur B: `LPT-001 Laptop ASUS Vivobook 14` (Rp 7.800.000), `KOM-001 Keyboard Mechanical Logitech G213` (Rp 650.000), `KOM-002 SSD NVMe 512GB Samsung` (Rp 750.000).
-- Pastikan `sales-orders/status-setup` dan `quotations/status-setup` sudah ter-seed di branch PT APBATECH (branch-scoped, tapi karena cuma 1 branch, cukup 1 kali seed).
+- Pastikan `sales-orders/status-setup` dan `quotations/status-setup` sudah ter-seed di branch PT NUSATECH (branch-scoped, tapi karena cuma 1 branch, cukup 1 kali seed).
 
 ## A. Alur Kontrak Jasa Konsultasi & Managed Service (BU-CONSULT / BU-MANAGED)
 
@@ -88,7 +88,7 @@ visibility: internal
 
 ## Referensi Silang
 
-- [`../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md)
+- [`../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md)
 - [`02-so-integrasi-accounting.id.md`](./02-so-integrasi-accounting.id.md)
 - [[project_quotation_so_flow_fixes_20260720]], [[project_approval_engine_skip_submitted_when_off]], [[feedback_relation_json_snake_case]]
 - [`../../../routes/sales.php`](../../../routes/sales.php)

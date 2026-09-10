@@ -1,7 +1,7 @@
 ---
 title: (IT Consultant + Retail Elektronik) — 05. Anggaran & Aset Tetap
-category: accounting-apbatech
-description: Budget per Business Unit, register aset tetap (laptop/server konsultan vs rak/etalase toko), dan penyusutan — semuanya dalam 1 branch PT APBATECH.
+category: accounting-nusatech
+description: Budget per Business Unit, register aset tetap (laptop/server konsultan vs rak/etalase toko), dan penyusutan — semuanya dalam 1 branch PT NUSATECH.
 visibility: internal
 ---
 

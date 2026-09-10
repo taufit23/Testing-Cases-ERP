@@ -1,18 +1,18 @@
 ---
 title: (IT Consultant + Retail Elektronik) — 01. Jurnal Invoice Jasa Konsultasi & Milestone Proyek
-category: accounting-apbatech
-description: Jurnal manual untuk tagihan managed-service bulanan (recurring), milestone proyek software development, dan transaksi retail Toko Elektronik — ketiganya dalam 1 branch PT APBATECH, dipisah via business_unit_id.
+category: accounting-nusatech
+description: Jurnal manual untuk tagihan managed-service bulanan (recurring), milestone proyek software development, dan transaksi retail Toko Elektronik — ketiganya dalam 1 branch PT NUSATECH, dipisah via business_unit_id.
 visibility: internal
 ---
 
 # 01. Jurnal Invoice Jasa Konsultasi & Milestone Proyek
 
-> **Ciri Khas Skenario**: Pengakuan pendapatan jasa recurring (managed services, `BU-MANAGED`) vs milestone proyek (software development, `BU-CONSULT`), ditambah transaksi kas harian sisi retail (`BU-RETAIL`) — SEMUANYA di branch **PT APBATECH** yang sama, dipisah murni via `business_unit_id` di baris jurnal (bukan lewat branch/COA terpisah).
+> **Ciri Khas Skenario**: Pengakuan pendapatan jasa recurring (managed services, `BU-MANAGED`) vs milestone proyek (software development, `BU-CONSULT`), ditambah transaksi kas harian sisi retail (`BU-RETAIL`) — SEMUANYA di branch **PT NUSATECH** yang sama, dipisah murni via `business_unit_id` di baris jurnal (bukan lewat branch/COA terpisah).
 > Format pengujian: **Positif** / **Negatif** / **Netralisasi**. Semua endpoint di **Journals** (`accounting/journals/*`). Prasyarat: master data [`00`](./00-profil-perusahaan-dan-master-data.id.md) sudah ada.
 
 > ⚠️ **Tidak ada fitur recurring invoice otomatis di backend** (`grep -ri recurring app/` nihil kecuali dokumen ini). "Tagihan managed-service bulanan" di judul berarti transaksi retainer dicatat manual berulang tiap bulan lewat `Journals — create`, BUKAN job terjadwal. Jangan uji fitur otomasi yang tidak ada.
 
-> Karena hanya 1 branch, tidak ada switch-context di sepanjang file ini — cukup pastikan active branch tester = PT APBATECH. `account_id` yang dipakai SELALU dari COA yang sama (dibuat sekali di file 00 §4); yang berubah antar transaksi hanyalah `business_unit_id` per baris jurnal untuk menandai divisi mana yang bertanggung jawab.
+> Karena hanya 1 branch, tidak ada switch-context di sepanjang file ini — cukup pastikan active branch tester = PT NUSATECH. `account_id` yang dipakai SELALU dari COA yang sama (dibuat sekali di file 00 §4); yang berubah antar transaksi hanyalah `business_unit_id` per baris jurnal untuk menandai divisi mana yang bertanggung jawab.
 
 ## 1.1 Create Jurnal — Tagihan Managed Service Bulanan (BU-MANAGED)
 
@@ -57,13 +57,13 @@ Transaksi: bayar tagihan bulanan Microsoft 365 + Antivirus Enterprise Rp 3.500.0
 
 ## 1.5 Create Jurnal — Penjualan Tunai Retail (BU-RETAIL, bukan lewat Sales module)
 
-> Skenario ini murni untuk menguji jurnal manual sisi retail SEBELUM alur Sales lengkap (lihat [`../sales-apbatech/`](../sales-apbatech/) untuk SO/Invoice yang lebih realistis). Berguna kalau tester ingin verifikasi tag `business_unit_id:<BU-RETAIL>` independen dari transaksi divisi lain, tanpa perlu isolasi branch (karena memang cuma 1 branch).
+> Skenario ini murni untuk menguji jurnal manual sisi retail SEBELUM alur Sales lengkap (lihat [`../sales-nusatech/`](../sales-nusatech/) untuk SO/Invoice yang lebih realistis). Berguna kalau tester ingin verifikasi tag `business_unit_id:<BU-RETAIL>` independen dari transaksi divisi lain, tanpa perlu isolasi branch (karena memang cuma 1 branch).
 
 Transaksi: jual tunai 1 unit Keyboard Mechanical Logitech G213 ke walk-in customer Rp 650.000 + PPN Keluaran 11% (Rp 71.500), HPP Rp 450.000.
 
 | Skenario    | Payload kunci                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Hasil                                                                                                                                                                                                                                                                            |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Positif     | `lines:[{account_id:<Bank Mandiri Operasional AST-03>, debit:721500}, {account_id:<Pendapatan Penjualan Barang Elektronik PDT-03>, credit:650000, business_unit_id:<BU-RETAIL>, tax_rate:11}, {account_id:<PPN Keluaran LIA-02>, credit:71500, tax_rate:11}, {account_id:<HPP Barang Elektronik HPP-01>, debit:450000, business_unit_id:<BU-RETAIL>}, {account_id:<Persediaan Barang Dagang Elektronik AST-05>, credit:450000, business_unit_id:<BU-RETAIL>}]` | 200, 5 baris, Dr=Cr=721.500+450.000=1.171.500. **Jurnal manual TIDAK mengurangi `sku_stocks` Inventory** — kalau ingin stok toko konsisten, kurangi stok terpisah lewat Stock Adjustment atau pakai jalur Sales resmi (lihat [`../inventory-apbatech/`](../inventory-apbatech/)) |
+| Positif     | `lines:[{account_id:<Bank Mandiri Operasional AST-03>, debit:721500}, {account_id:<Pendapatan Penjualan Barang Elektronik PDT-03>, credit:650000, business_unit_id:<BU-RETAIL>, tax_rate:11}, {account_id:<PPN Keluaran LIA-02>, credit:71500, tax_rate:11}, {account_id:<HPP Barang Elektronik HPP-01>, debit:450000, business_unit_id:<BU-RETAIL>}, {account_id:<Persediaan Barang Dagang Elektronik AST-05>, credit:450000, business_unit_id:<BU-RETAIL>}]` | 200, 5 baris, Dr=Cr=721.500+450.000=1.171.500. **Jurnal manual TIDAK mengurangi `sku_stocks` Inventory** — kalau ingin stok toko konsisten, kurangi stok terpisah lewat Stock Adjustment atau pakai jalur Sales resmi (lihat [`../inventory-nusatech/`](../inventory-nusatech/)) |
 | Netralisasi | Reverse setelah posted, dan kembalikan stok manual kalau sempat dikurangi terpisah                                                                                                                                                                                                                                                                                                                                                                             |
 
 ## Netralisasi

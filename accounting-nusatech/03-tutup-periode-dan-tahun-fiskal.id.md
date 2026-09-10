@@ -1,7 +1,7 @@
 ---
 title: (IT Consultant + Retail Elektronik) — 03. Tutup Periode Bulanan & Tahun Fiskal
-category: accounting-apbatech
-description: Close/lock/reopen Accounting Period dan Close Fiscal Year — 1 kali saja untuk PT APBATECH (1 branch), mencakup ketiga Business Unit sekaligus.
+category: accounting-nusatech
+description: Close/lock/reopen Accounting Period dan Close Fiscal Year — 1 kali saja untuk PT NUSATECH (1 branch), mencakup ketiga Business Unit sekaligus.
 visibility: internal
 ---
 
@@ -9,7 +9,7 @@ visibility: internal
 
 > Format pengujian: **Positif** / **Negatif** / **Netralisasi**. Endpoint periode: **Accounting Period** (`client-master/accounting-period/*`). Endpoint tahun fiskal: **Fiscal Year** (`client-master/fiscal-year/*`).
 >
-> Accounting Period & Fiscal Year adalah master data **branch-scoped**, TAPI karena PT APBATECH cuma 1 branch, cukup **1 set periode/fiscal year** yang menaungi ketiga Business Unit sekaligus (dibuat di file 00 §5). Close periode Agustus otomatis menutup SEMUA transaksi bulan itu, apapun `business_unit_id`-nya — tidak ada lagi close terpisah per divisi/toko.
+> Accounting Period & Fiscal Year adalah master data **branch-scoped**, TAPI karena PT NUSATECH cuma 1 branch, cukup **1 set periode/fiscal year** yang menaungi ketiga Business Unit sekaligus (dibuat di file 00 §5). Close periode Agustus otomatis menutup SEMUA transaksi bulan itu, apapun `business_unit_id`-nya — tidak ada lagi close terpisah per divisi/toko.
 
 ## 1. Close Accounting Period Agustus 2026
 

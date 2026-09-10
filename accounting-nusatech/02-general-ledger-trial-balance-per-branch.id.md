@@ -1,19 +1,19 @@
 ---
 title: (IT Consultant + Retail Elektronik) — 02. General Ledger & Trial Balance
-category: accounting-apbatech
-description: Verifikasi Detail Ledger, Summary by Account (dimensi Business Unit), dan Trial Balance PT APBATECH (1 branch, 1 set GL) atas transaksi file 01.
+category: accounting-nusatech
+description: Verifikasi Detail Ledger, Summary by Account (dimensi Business Unit), dan Trial Balance PT NUSATECH (1 branch, 1 set GL) atas transaksi file 01.
 visibility: internal
 ---
 
 # 02. General Ledger & Trial Balance
 
-> **Nama file dipertahankan** (`...-per-branch.id.md`) untuk menjaga referensi silang lintas suite tetap utuh — isi di bawah SUDAH direvisi ke model 1 branch. Judul konten sekarang "General Ledger & Trial Balance" biasa (bukan lagi "per branch"), karena PT APBATECH cuma 1 branch — breakdown per divisi memakai dimensi Business Unit (§2), bukan isolasi branch.
+> **Nama file dipertahankan** (`...-per-branch.id.md`) untuk menjaga referensi silang lintas suite tetap utuh — isi di bawah SUDAH direvisi ke model 1 branch. Judul konten sekarang "General Ledger & Trial Balance" biasa (bukan lagi "per branch"), karena PT NUSATECH cuma 1 branch — breakdown per divisi memakai dimensi Business Unit (§2), bukan isolasi branch.
 >
-> Prasyarat: [`01`](./01-jurnal-invoice-jasa-konsultasi-dan-milestone.id.md) — jurnal §1.1–1.5 posted (semua di branch PT APBATECH yang sama, hanya beda `business_unit_id`).
+> Prasyarat: [`01`](./01-jurnal-invoice-jasa-konsultasi-dan-milestone.id.md) — jurnal §1.1–1.5 posted (semua di branch PT NUSATECH yang sama, hanya beda `business_unit_id`).
 >
 > Semua endpoint `general-ledger/*` dan `reports/*` di-scope `BranchHelper::activeBranchId($request)` — karena cuma ada 1 branch, tidak ada lagi switch-context untuk melihat "sisi lain" data. Satu kali panggil endpoint sudah mencakup seluruh transaksi (ketiga BU tercampur), kecuali difilter manual pakai `business_unit_id` (§2).
 
-## 1. Detail Ledger — PT APBATECH
+## 1. Detail Ledger — PT NUSATECH
 
 | Skenario                                      | Payload kunci                                                                                               | Hasil                                                                                                                                                  |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -36,7 +36,7 @@ visibility: internal
 | Summary akun Beban Software License, tanpa filter BU                    | `chart_of_account_id:<BBN-04>`                                                                                          | Total = 3.500.000 — cocok karena hanya 1 baris & sudah ada `business_unit_id:<BU-CONSULT>`                                                            |
 | Negatif — baris tanpa `business_unit_id`                                | Filter BU pada akun yang punya baris campuran (ber-BU dan tidak, mis. AST-04 Piutang Usaha yang tidak di-tag BU apapun) | Baris tanpa BU harus ke-exclude dari hasil filter — verifikasi behavior aktual (pola sama seperti temuan `docs/testing/accounting-coretax/02-...` §2) |
 
-## 3. Trial Balance PT APBATECH
+## 3. Trial Balance PT NUSATECH
 
 | Skenario                                        | Payload kunci                                                       | Hasil                                                                                                                                                                                                                                                                                                                                                                   |
 | ----------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

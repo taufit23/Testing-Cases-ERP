@@ -1,13 +1,13 @@
 ---
-title: Test Case Purchasing (APBATECH) — 02. PO Terintegrasi Accounting (GR → PI → Payment → GL)
-category: PO Apbatech
-description: Lanjutan PO approved dari file 01 ke Goods Receipt, Purchase Invoice, Payment Bill, dan verifikasi posting GL untuk PT APBATECH (1 branch, 2 profil procurement dibedakan via business_unit_id di jurnal).
+title: Test Case Purchasing (NUSATECH) — 02. PO Terintegrasi Accounting (GR → PI → Payment → GL)
+category: PO Nusatech
+description: Lanjutan PO approved dari file 01 ke Goods Receipt, Purchase Invoice, Payment Bill, dan verifikasi posting GL untuk PT NUSATECH (1 branch, 2 profil procurement dibedakan via business_unit_id di jurnal).
 visibility: internal
 ---
 
 # 02. PO Terintegrasi Accounting (GR → PI → Payment → GL)
 
-> Prasyarat: PO approved dari [`01-po-standalone.id.md`](./01-po-standalone.id.md) — Alur A (BU-CONSULT) dan Alur B (BU-RETAIL), keduanya di branch PT APBATECH yang sama. COA & saldo di [`../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md).
+> Prasyarat: PO approved dari [`01-po-standalone.id.md`](./01-po-standalone.id.md) — Alur A (BU-CONSULT) dan Alur B (BU-RETAIL), keduanya di branch PT NUSATECH yang sama. COA & saldo di [`../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md).
 >
 > Fokus: verifikasi jurnal turunan PO benar per Business Unit — regression check [[project_gl_auto_post_gap_fixed]], [[project_gr_over_receipt_validation]], [[project_pi_payment_requires_approval_gate]].
 >
@@ -71,6 +71,6 @@ visibility: internal
 ## Referensi Silang
 
 - [`01-po-standalone.id.md`](./01-po-standalone.id.md)
-- [`../accounting-apbatech/02-general-ledger-trial-balance-per-branch.id.md`](../accounting-apbatech/02-general-ledger-trial-balance-per-branch.id.md)
-- [`../inventory-apbatech/`](../inventory-apbatech/) — verifikasi `sku_stocks` naik konsisten dengan GR B
+- [`../accounting-nusatech/02-general-ledger-trial-balance-per-branch.id.md`](../accounting-nusatech/02-general-ledger-trial-balance-per-branch.id.md)
+- [`../inventory-nusatech/`](../inventory-nusatech/) — verifikasi `sku_stocks` naik konsisten dengan GR B
 - [[project_gr_over_receipt_validation]], [[project_gl_auto_post_gap_fixed]], [[project_pi_payment_requires_approval_gate]], [[project_po_partially_paid_status_added]]

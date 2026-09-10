@@ -1,17 +1,17 @@
 ---
-title: Test Case Purchasing (APBATECH) — 01. Purchase Order Standalone (PR → PQ → PO)
-category: PO Apbatech
-description: Alur Purchase Requisition → Purchase Quotation → Purchase Order berdiri sendiri untuk PT APBATECH — procurement software/hardware konsultan (BU-CONSULT) dan stok elektronik toko (BU-RETAIL), 1 branch.
+title: Test Case Purchasing (NUSATECH) — 01. Purchase Order Standalone (PR → PQ → PO)
+category: PO Nusatech
+description: Alur Purchase Requisition → Purchase Quotation → Purchase Order berdiri sendiri untuk PT NUSATECH — procurement software/hardware konsultan (BU-CONSULT) dan stok elektronik toko (BU-RETAIL), 1 branch.
 visibility: internal
 ---
 
 # 01. Purchase Order Standalone (PR → PQ → PO)
 
-> Skenario perusahaan: **PT APBATECH**, lihat [`../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md).
+> Skenario perusahaan: **PT NUSATECH**, lihat [`../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md).
 >
 > **Scope file ini**: PO berdiri sendiri sampai status `approved`/`sent`, **belum** menyentuh Goods Receipt/Purchase Invoice/GL. Integrasi ke Accounting ada di [`02-po-integrasi-accounting.id.md`](./02-po-integrasi-accounting.id.md).
 >
-> Dua alur berbeda diuji, KEDUANYA di branch **PT APBATECH yang sama** (1 branch, tidak ada switch-context): **(A)** procurement hardware/software untuk kebutuhan internal konsultan (`BU-CONSULT`, tidak masuk stok dagang), **(B)** procurement stok dagang elektronik untuk dijual lagi di toko (`BU-RETAIL`, masuk `sku_stocks`).
+> Dua alur berbeda diuji, KEDUANYA di branch **PT NUSATECH yang sama** (1 branch, tidak ada switch-context): **(A)** procurement hardware/software untuk kebutuhan internal konsultan (`BU-CONSULT`, tidak masuk stok dagang), **(B)** procurement stok dagang elektronik untuk dijual lagi di toko (`BU-RETAIL`, masuk `sku_stocks`).
 >
 > ⚠️ **`purchase_requests`/`purchase_quotations`/`purchase_orders` TIDAK punya kolom `business_unit_id`** (dicek di migration, tidak ada) — pemisahan alur A vs B di file ini murni dokumentasi/testing by convention (via supplier & item yang dipakai), bukan field yang benar-benar di-tag di payload PR/PQ/PO. Tag `business_unit_id` baru benar-benar tersimpan nanti di level **jurnal** hasil `export-to-journal` (lihat file 02) via mapping akun COA yang sudah ada `default_business_units_id`-nya.
 
@@ -20,8 +20,8 @@ visibility: internal
 - Supplier hardware/software: **PT Distributor Teknologi Nusantara** (`payment_term_days:30`).
 - Supplier elektronik dagang: **PT Grosir Elektronik Jaya** (`payment_term_days:30`).
 - Barang alur A (non-inventory, dipakai internal): "Lisensi Microsoft 365 Business (5 seat)", "Laptop Dell Latitude untuk Tim Proyek (2 unit)" — kalau modul Inventory tidak di-scope untuk item internal ini, cukup baris manual (nama+qty+harga).
-- Barang alur B (SKU dagang, sudah didaftarkan di `inventory-apbatech/`): `LPT-001 Laptop ASUS Vivobook 14`, `KOM-001 Keyboard Mechanical Logitech G213`, `KOM-002 SSD NVMe 512GB Samsung`.
-- Pastikan status setup (`purchase-requests/status-setup`, `purchase-quotations/status-setup`, `purchase-orders/status-setup`) sudah ter-seed di branch PT APBATECH sebelum create dokumen (status setup tetap branch-scoped, tapi karena cuma 1 branch, cukup 1 kali seed).
+- Barang alur B (SKU dagang, sudah didaftarkan di `inventory-nusatech/`): `LPT-001 Laptop ASUS Vivobook 14`, `KOM-001 Keyboard Mechanical Logitech G213`, `KOM-002 SSD NVMe 512GB Samsung`.
+- Pastikan status setup (`purchase-requests/status-setup`, `purchase-quotations/status-setup`, `purchase-orders/status-setup`) sudah ter-seed di branch PT NUSATECH sebelum create dokumen (status setup tetap branch-scoped, tapi karena cuma 1 branch, cukup 1 kali seed).
 
 ## A. Alur Procurement Internal Konsultan (BU-CONSULT)
 
@@ -95,7 +95,7 @@ visibility: internal
 
 ## Referensi Silang
 
-- [`../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md)
+- [`../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md)
 - [`02-po-integrasi-accounting.id.md`](./02-po-integrasi-accounting.id.md)
 - [`../../../routes/purchasing.php`](../../../routes/purchasing.php)
 - [[project_approval_engine_skip_submitted_when_off]]

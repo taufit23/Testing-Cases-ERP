@@ -1,13 +1,13 @@
 ---
-title: Test Case HRM (APBATECH) — 01. Attendance, Payroll, Leave, & Komisi Sales Toko
-category: HRM Apbatech
-description: 30 karyawan konsultan IT + staff toko, semua dalam 1 branch PT APBATECH — attendance, payroll bulanan, cuti, dan komisi penjualan retail, dibedakan via department/position (bukan business_unit_id).
+title: Test Case HRM (NUSATECH) — 01. Attendance, Payroll, Leave, & Komisi Sales Toko
+category: HRM Nusatech
+description: 30 karyawan konsultan IT + staff toko, semua dalam 1 branch PT NUSATECH — attendance, payroll bulanan, cuti, dan komisi penjualan retail, dibedakan via department/position (bukan business_unit_id).
 visibility: internal
 ---
 
 # 01. Attendance, Payroll, Leave, & Komisi Sales Toko
 
-> Skenario: **PT APBATECH**, 1 branch tunggal. 30 karyawan (konsultan IT, project manager, admin) + staff toko (kasir/sales, teknisi servis) — SEMUANYA di branch yang sama.
+> Skenario: **PT NUSATECH**, 1 branch tunggal. 30 karyawan (konsultan IT, project manager, admin) + staff toko (kasir/sales, teknisi servis) — SEMUANYA di branch yang sama.
 >
 > ⚠️ **`employees` TIDAK punya kolom `business_unit_id`** (dicek di migration `create_employees_table` — hanya ada `position_id` dan `department_id`, keduanya nullable FK ke `positions`/`departments`). Jadi pembeda "karyawan konsultan" vs "staff toko" di file ini BUKAN via Business Unit, melainkan via **Department** (`departments.name`) dan **Position** (`positions.name`) seperti biasa — field yang memang ada di skema. Jangan mengarang payload `business_unit_id` di `employees/create`.
 >
@@ -17,7 +17,7 @@ visibility: internal
 
 | Skenario    | Detail                                                                                                     | Hasil                                                              |
 | ----------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| Positif     | `departments/create` — "Divisi Konsultasi & Proyek IT", "Divisi Managed Services", "Admin & Finance"       | 3 department terdaftar (branch PT APBATECH)                        |
+| Positif     | `departments/create` — "Divisi Konsultasi & Proyek IT", "Divisi Managed Services", "Admin & Finance"       | 3 department terdaftar (branch PT NUSATECH)                        |
 | Positif     | `positions/create` — "IT Consultant", "Project Manager", "Network Engineer", "Finance Staff", "HR & Admin" | 5 posisi terdaftar, masing-masing terhubung department yang sesuai |
 | Netralisasi | Hapus department/position test kalau belum ada employee yang mereferensikannya                             |
 
@@ -34,7 +34,7 @@ visibility: internal
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
 | Positif — 30 karyawan konsultan/Managed | `employees/create` (atau `create-bulk` kalau tersedia) — isi minimal representative sample (mis. 5-10 record nyata untuk test, sisanya boleh data dummy) dengan `department_id`/`position_id` sesuai §1, `base_salary` sesuai posisi | Karyawan terdaftar, `employee_number` auto-generate                                                               |
 | Positif — staff Toko Elektronik         | `employees/create` untuk 3-5 staff (Sales Associate, Teknisi) dengan `department_id`/`position_id` §2                                                                                                                                | Karyawan terdaftar, branch sama dengan §1 — pembeda cuma `department_id`, BUKAN branch/BU terpisah lagi           |
-| Negatif                                 | `create` employee dengan `department_id`/`position_id` yang tidak ada / bukan milik branch PT APBATECH                                                                                                                               | 422 — validasi FK tetap berlaku walau branch tunggal                                                              |
+| Negatif                                 | `create` employee dengan `department_id`/`position_id` yang tidak ada / bukan milik branch PT NUSATECH                                                                                                                               | 422 — validasi FK tetap berlaku walau branch tunggal                                                              |
 | Positif                                 | `employees/options` (permission-free dropdown)                                                                                                                                                                                       | Muncul list ringkas untuk dipakai modul lain (payroll, komisi) — [[feedback_dropdown_options_permission_pattern]] |
 | Netralisasi                             | `delete` employee test kalau belum ada payroll/attendance/leave terkait                                                                                                                                                              |
 
@@ -63,7 +63,7 @@ visibility: internal
 | ----------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Positif     | `salary-components/create` — "Gaji Pokok", "Tunjangan Transport", "Tunjangan Komunikasi (IT Consultant)" | Komponen gaji tersedia untuk di-attach ke employee/payroll                                                                                                                                                   |
 | Positif     | `bpjs-settings` — set persentase BPJS Kesehatan & Ketenagakerjaan sesuai regulasi (`tax-reference`)      | Konfigurasi tersimpan, dipakai perhitungan potongan payroll                                                                                                                                                  |
-| Positif     | `payroll-periods/create` untuk Agustus 2026 → `process`                                                  | 201 → payroll periode diproses (1 periode untuk SEMUA karyawan branch PT APBATECH, konsultan maupun staff toko), `payroll-items` (browse) muncul per karyawan (gaji pokok + tunjangan − potongan BPJS/PPh21) |
+| Positif     | `payroll-periods/create` untuk Agustus 2026 → `process`                                                  | 201 → payroll periode diproses (1 periode untuk SEMUA karyawan branch PT NUSATECH, konsultan maupun staff toko), `payroll-items` (browse) muncul per karyawan (gaji pokok + tunjangan − potongan BPJS/PPh21) |
 | Positif     | `payroll-items/update` — koreksi manual 1 item (mis. lembur proyek urgent klien)                         | Nilai payroll item ter-update sebelum approve final                                                                                                                                                          |
 | Positif     | `payroll-periods/approve` → `mark-paid`                                                                  | Status `paid`, siap generate payslip                                                                                                                                                                         |
 | Positif     | `payslips/generate` → `approve` → `download-pdf`                                                         | Payslip per karyawan tersedia, PDF ter-generate                                                                                                                                                              |
@@ -86,7 +86,7 @@ visibility: internal
 | Skenario    | Detail                                                                                                                                 | Hasil                                                                                                                                                                                                                                                                         |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Positif     | `commission-rules/create` — "Komisi Sales Associate 2% dari nilai penjualan unit elektronik"                                           | Rule tersimpan, terhubung ke posisi "Sales Associate"                                                                                                                                                                                                                         |
-| Positif     | `commissions/create` — hitung komisi 1 Sales Associate dari penjualan SO retail file `sales-apbatech/02` (57.165.000 × 2% = 1.143.300) | 201, status `pending`                                                                                                                                                                                                                                                         |
+| Positif     | `commissions/create` — hitung komisi 1 Sales Associate dari penjualan SO retail file `sales-nusatech/02` (57.165.000 × 2% = 1.143.300) | 201, status `pending`                                                                                                                                                                                                                                                         |
 | Negatif     | `create` Commission untuk employee yang bukan posisi "Sales Associate" (mis. Teknisi Servis)                                           | Ditolak/tidak relevan — verifikasi behavior aktual, catat kalau tidak ada validasi posisi                                                                                                                                                                                     |
 | Positif     | `commissions/mark-paid`                                                                                                                | Status `paid`, idealnya muncul di payslip periode terkait — verifikasi apakah `payslips/generate` otomatis menarik data `commissions` atau HARUS ditambahkan manual sebagai `salary-components` tambahan (dokumentasikan behavior aktual, jangan asumsikan otomatis nyambung) |
 | Netralisasi | Batalkan Commission test sebelum `mark-paid` kalau salah input                                                                         |
@@ -101,6 +101,6 @@ visibility: internal
 
 ## Referensi Silang
 
-- [`../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md)
-- [`../sales-apbatech/02-so-integrasi-accounting.id.md`](../sales-apbatech/02-so-integrasi-accounting.id.md) — sumber nilai penjualan untuk komisi
+- [`../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md)
+- [`../sales-nusatech/02-so-integrasi-accounting.id.md`](../sales-nusatech/02-so-integrasi-accounting.id.md) — sumber nilai penjualan untuk komisi
 - [[feedback_dropdown_options_permission_pattern]]

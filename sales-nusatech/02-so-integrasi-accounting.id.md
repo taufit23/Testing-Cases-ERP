@@ -1,13 +1,13 @@
 ---
-title: Test Case Sales (APBATECH) — 02. SO Terintegrasi Accounting (Invoice/Delivery → Payment → GL)
-category: Sales Apbatech
-description: Lanjutan SO approved file 01 ke Sales Invoice (langsung, jasa) dan Delivery→Invoice (barang, retail), Payment, dan GL untuk PT APBATECH (1 branch, dibedakan via business_unit_id).
+title: Test Case Sales (NUSATECH) — 02. SO Terintegrasi Accounting (Invoice/Delivery → Payment → GL)
+category: Sales Nusatech
+description: Lanjutan SO approved file 01 ke Sales Invoice (langsung, jasa) dan Delivery→Invoice (barang, retail), Payment, dan GL untuk PT NUSATECH (1 branch, dibedakan via business_unit_id).
 visibility: internal
 ---
 
 # 02. SO Terintegrasi Accounting (Invoice/Delivery → Payment → GL)
 
-> Prasyarat: SO approved dari [`01-so-standalone.id.md`](./01-so-standalone.id.md). COA & saldo di [`../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md).
+> Prasyarat: SO approved dari [`01-so-standalone.id.md`](./01-so-standalone.id.md). COA & saldo di [`../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md).
 >
 > ✅ **Verifikasi kode**: `App\Http\Controllers\Sales\SalesInvoices` TIDAK mereferensikan `delivery_id`/`sales_delivery` sama sekali — Sales Invoice bisa dibuat **langsung dari SO** tanpa Delivery. Ini penting untuk Alur A (jasa, tidak ada barang fisik yang dikirim).
 
@@ -84,6 +84,6 @@ visibility: internal
 ## Referensi Silang
 
 - [`01-so-standalone.id.md`](./01-so-standalone.id.md)
-- [`../purchasing-apbatech/02-po-integrasi-accounting.id.md`](../purchasing-apbatech/02-po-integrasi-accounting.id.md) — pasangan sisi Purchasing
-- [`../accounting-apbatech/02-general-ledger-trial-balance-per-branch.id.md`](../accounting-apbatech/02-general-ledger-trial-balance-per-branch.id.md), [`../accounting-apbatech/04-laporan-keuangan-konsolidasi-dan-per-branch.id.md`](../accounting-apbatech/04-laporan-keuangan-konsolidasi-dan-per-branch.id.md)
+- [`../purchasing-nusatech/02-po-integrasi-accounting.id.md`](../purchasing-nusatech/02-po-integrasi-accounting.id.md) — pasangan sisi Purchasing
+- [`../accounting-nusatech/02-general-ledger-trial-balance-per-branch.id.md`](../accounting-nusatech/02-general-ledger-trial-balance-per-branch.id.md), [`../accounting-nusatech/04-laporan-keuangan-konsolidasi-dan-per-branch.id.md`](../accounting-nusatech/04-laporan-keuangan-konsolidasi-dan-per-branch.id.md)
 - [[project_gl_auto_post_gap_fixed]], [[project_gr_over_receipt_validation]], [[project_payment_bill_termin_ordering]]

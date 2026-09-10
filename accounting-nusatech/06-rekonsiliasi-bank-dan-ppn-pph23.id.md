@@ -1,7 +1,7 @@
 ---
 title: (IT Consultant + Retail Elektronik) — 06. Rekonsiliasi Bank, PPN, & PPh 23
-category: accounting-apbatech
-description: Rekonsiliasi 2 rekening bank (Bank BCA & Bank Mandiri, 1 branch PT APBATECH), rekap PPN Masukan/Keluaran, dan keterbatasan pelaporan PPh 23.
+category: accounting-nusatech
+description: Rekonsiliasi 2 rekening bank (Bank BCA & Bank Mandiri, 1 branch PT NUSATECH), rekap PPN Masukan/Keluaran, dan keterbatasan pelaporan PPh 23.
 visibility: internal
 ---
 
@@ -11,7 +11,7 @@ visibility: internal
 
 > ⚠️ **Model rekonsiliasi bank cuma header** — `BankReconciliation` hanya `opening_balance`, `closing_balance`, `statement_balance`, `difference = statement_balance - closing_balance`, `status: draft|completed`. TIDAK ADA line-item matching mutasi per transaksi, TIDAK ADA "matched", dan TIDAK ADA jurnal penyesuaian otomatis (`BankReconciliations::create()/update()/complete()` tidak memanggil `Journal`/`JournalHeader` sama sekali).
 
-> Bank BCA Operasional (AST-02) dan Bank Mandiri Operasional (AST-03) sekarang **berada di branch yang sama** (PT APBATECH) — bedanya cuma akun COA (AST-02 tanpa BU default, AST-03 di-tag `default_business_units_id = BU-RETAIL`, lihat file 00 §4). Kedua rekening tetap direkonsiliasi TERPISAH per `bank_account_id` seperti biasa — cuma sekarang tidak perlu switch branch untuk berpindah dari 1 rekening ke rekening lain.
+> Bank BCA Operasional (AST-02) dan Bank Mandiri Operasional (AST-03) sekarang **berada di branch yang sama** (PT NUSATECH) — bedanya cuma akun COA (AST-02 tanpa BU default, AST-03 di-tag `default_business_units_id = BU-RETAIL`, lihat file 00 §4). Kedua rekening tetap direkonsiliasi TERPISAH per `bank_account_id` seperti biasa — cuma sekarang tidak perlu switch branch untuk berpindah dari 1 rekening ke rekening lain.
 
 ## 1. Rekonsiliasi Bank BCA Operasional
 

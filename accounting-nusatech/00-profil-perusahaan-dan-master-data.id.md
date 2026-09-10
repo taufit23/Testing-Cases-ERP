@@ -1,7 +1,7 @@
 ---
 title: (IT Consultant + Retail Elektronik) — 00. Profil Perusahaan & Master Data
-category: accounting-apbatech
-description: Skenario PT APBATECH — perusahaan IT Consultant dengan sub-usaha retail toko elektronik. 1 branch, 3 Business Unit. Setup COA Types, COA, Business Unit, Fiscal Year, dan Saldo Awal.
+category: accounting-nusatech
+description: Skenario PT NUSATECH — perusahaan IT Consultant dengan sub-usaha retail toko elektronik. 1 branch, 3 Business Unit. Setup COA Types, COA, Business Unit, Fiscal Year, dan Saldo Awal.
 visibility: internal
 ---
 
@@ -9,32 +9,32 @@ visibility: internal
 
 ## Profil Perusahaan (Skenario)
 
-**PT APBATECH** — perusahaan konsultan IT (fiktif) dengan bisnis utama jasa konsultasi & implementasi IT: pengembangan software custom, network setup/infrastructure consulting, dan managed services (kontrak maintenance bulanan). 30 karyawan bekerja di kantor. Sebagai unit bisnis kedua, PT APBATECH juga menjalankan **retail toko elektronik & komputer** (jual laptop, komponen PC, aksesoris, dan jasa servis ringan).
+**PT NUSATECH** — perusahaan konsultan IT (fiktif) dengan bisnis utama jasa konsultasi & implementasi IT: pengembangan software custom, network setup/infrastructure consulting, dan managed services (kontrak maintenance bulanan). 30 karyawan bekerja di kantor. Sebagai unit bisnis kedua, PT NUSATECH juga menjalankan **retail toko elektronik & komputer** (jual laptop, komponen PC, aksesoris, dan jasa servis ringan).
 
 Sudah **PKP** (PPN 11%). Karena menerima pembayaran jasa konsultasi dari klien badan usaha, transaksi jasa konsultasi juga berpotensi kena **PPh 23** (dipotong oleh klien) — dicatat sebagai aset kredit pajak (uang muka pajak).
 
-> **Revisi arsitektur (2026-08-21)**: skenario ini SEBELUMNYA dimodelkan sebagai 2 branch terpisah (Kantor Pusat + Toko Bandung). Diubah jadi **1 branch dengan 3 Business Unit**, karena `Business Unit` justru dimensi yang tepat untuk memisahkan profitabilitas divisi DI DALAM 1 badan usaha yang sama — sementara `Branch` di framework ini adalah unit isolasi penuh (COA, fiscal year, config jurnal semua branch-scoped keras, lihat [[project_centralized_accounting_mode_design]]) yang cocoknya dipakai kalau memang ada BADAN USAHA/LEGAL ENTITY terpisah, bukan sekadar divisi/toko di bawah 1 manajemen keuangan yang sama. Kasus PT APBATECH — 1 PT, keuangan dikelola terpusat, cuma beda lini bisnis — persis kasus yang seharusnya pakai Business Unit, bukan Branch ganda.
+> **Revisi arsitektur (2026-08-21)**: skenario ini SEBELUMNYA dimodelkan sebagai 2 branch terpisah (Kantor Pusat + Toko Bandung). Diubah jadi **1 branch dengan 3 Business Unit**, karena `Business Unit` justru dimensi yang tepat untuk memisahkan profitabilitas divisi DI DALAM 1 badan usaha yang sama — sementara `Branch` di framework ini adalah unit isolasi penuh (COA, fiscal year, config jurnal semua branch-scoped keras, lihat [[project_centralized_accounting_mode_design]]) yang cocoknya dipakai kalau memang ada BADAN USAHA/LEGAL ENTITY terpisah, bukan sekadar divisi/toko di bawah 1 manajemen keuangan yang sama. Kasus PT NUSATECH — 1 PT, keuangan dikelola terpusat, cuma beda lini bisnis — persis kasus yang seharusnya pakai Business Unit, bukan Branch ganda.
 
 **1 Branch, 3 Business Unit:**
 
-- **Branch: PT APBATECH** — 1 branch tunggal, menaungi seluruh operasional (jasa IT + retail).
+- **Branch: PT NUSATECH** — 1 branch tunggal, menaungi seluruh operasional (jasa IT + retail).
 - **BU-CONSULT** — Divisi Konsultasi & Proyek IT (30 karyawan inti).
 - **BU-MANAGED** — Divisi Managed Services (kontrak maintenance bulanan).
 - **BU-RETAIL** — Divisi Toko Elektronik (Bandung) — retail laptop/komponen PC/aksesoris + jasa servis ringan.
 
-> Catatan: seperti provider fiktif lain di suite ini, PT APBATECH **TIDAK ada di seeder** — semua master data di bawah dibuat manual lewat endpoint API/FE mengikuti langkah pada file ini. Beda dengan suite `*-coretax` yang datanya sudah ter-seed otomatis.
+> Catatan: seperti provider fiktif lain di suite ini, PT NUSATECH **TIDAK ada di seeder** — semua master data di bawah dibuat manual lewat endpoint API/FE mengikuti langkah pada file ini. Beda dengan suite `*-coretax` yang datanya sudah ter-seed otomatis.
 
 ## 1. Branch (**Branches**)
 
 | Kode/Nama   | Fungsi                                                  |
 | ----------- | ------------------------------------------------------- |
-| PT APBATECH | Branch tunggal — jasa IT consulting + retail elektronik |
+| PT NUSATECH | Branch tunggal — jasa IT consulting + retail elektronik |
 
 Dibuat via `client-master/branches/create` (atau di-set sejak awal onboarding tenant). Karena cuma 1 branch, tidak ada isu switch-context antar branch untuk testing suite ini — cukup pastikan user tester `active_branch`-nya branch ini.
 
 ## 2. Business Unit (**Business Units**)
 
-Dipakai untuk memisahkan profitabilitas 3 lini bisnis DI DALAM branch yang sama (`business_units.branch_id` tetap wajib diisi = branch PT APBATECH, tapi ketiganya share branch yang sama):
+Dipakai untuk memisahkan profitabilitas 3 lini bisnis DI DALAM branch yang sama (`business_units.branch_id` tetap wajib diisi = branch PT NUSATECH, tapi ketiganya share branch yang sama):
 
 | Kode         | Nama                           | `default_unit_type` | Catatan                                             |
 | ------------ | ------------------------------ | ------------------- | --------------------------------------------------- |
@@ -109,9 +109,9 @@ Cukup 1 kali setup (dulu perlu dipikirkan per branch, sekarang tidak relevan lag
 
 | Nama                | Type      | Business Unit | Branch      |
 | ------------------- | --------- | ------------- | ----------- |
-| Gudang Utama Retail | `central` | `BU-RETAIL`   | PT APBATECH |
+| Gudang Utama Retail | `central` | `BU-RETAIL`   | PT NUSATECH |
 
-> Tidak perlu warehouse `type:store` terpisah untuk POS di sini — toko elektronik menjual lewat alur Sales biasa (Quotation → SO → Delivery → Invoice), bukan POS kasir walk-in seperti minimarket. Lihat detail di [`../sales-apbatech/`](../sales-apbatech/).
+> Tidak perlu warehouse `type:store` terpisah untuk POS di sini — toko elektronik menjual lewat alur Sales biasa (Quotation → SO → Delivery → Invoice), bukan POS kasir walk-in seperti minimarket. Lihat detail di [`../sales-nusatech/`](../sales-nusatech/).
 
 ## 7. Currency
 
@@ -129,7 +129,7 @@ Pakai `IDR` sebagai currency utama (auto ter-seed per branch baru via `CurrencyT
 
 > `contacts` tidak punya kolom `business_unit_id` di skema — kolom "Catatan penggunaan" di atas murni penanda dokumentasi/testing, bukan field yang benar-benar diisi di form Contact.
 
-## 9. Produk/SKU Retail (untuk BU-RETAIL — lihat detail di `inventory-apbatech/`)
+## 9. Produk/SKU Retail (untuk BU-RETAIL — lihat detail di `inventory-nusatech/`)
 
 ### 9a. Product Category (**Product Categories**)
 
@@ -172,7 +172,7 @@ Harga jual BUKAN kolom langsung di `product_skus` — disimpan lewat 1 Price Lis
 
 ### 9e. Harga Beli — Vendor Price (**Contact Product SKU Prices**)
 
-Harga beli (avg) juga bukan field di `product_skus` — dicatat sebagai harga vendor per supplier via `client-master/contact-product-sku-prices/create` (`vendor_price`), terhubung ke supplier §8 **PT Grosir Elektronik Jaya**. Angka ini yang jadi acuan saldo awal persediaan di §10 dan penerimaan barang (Purchase Receipt) di `purchasing-apbatech/`.
+Harga beli (avg) juga bukan field di `product_skus` — dicatat sebagai harga vendor per supplier via `client-master/contact-product-sku-prices/create` (`vendor_price`), terhubung ke supplier §8 **PT Grosir Elektronik Jaya**. Angka ini yang jadi acuan saldo awal persediaan di §10 dan penerimaan barang (Purchase Receipt) di `purchasing-nusatech/`.
 
 | Supplier (§8)             | SKU     | `vendor_price` (Harga Beli avg) |
 | ------------------------- | ------- | ------------------------------: |
@@ -190,7 +190,7 @@ Karena sekarang 1 branch, saldo awal cukup **1 kali input** per akun (tidak ada 
 | AST-02 Bank BCA Operasional                   |                                                      300.000.000 | —            | `finance/bank-accounts`                                                                                      |
 | AST-03 Bank Mandiri Operasional (Toko Retail) |                                                       60.000.000 | `BU-RETAIL`  | `finance/bank-accounts`                                                                                      |
 | AST-04 Piutang Usaha                          |                                                       45.000.000 | —            | `chart-of-accounts-balances`                                                                                 |
-| AST-05 Persediaan Barang Dagang Elektronik    |                            32.500.000 (5 unit Laptop @6.500.000) | `BU-RETAIL`  | `chart-of-accounts-balances`, HARUS konsisten dengan stok awal Inventory §2 file `inventory-apbatech/01-...` |
+| AST-05 Persediaan Barang Dagang Elektronik    |                            32.500.000 (5 unit Laptop @6.500.000) | `BU-RETAIL`  | `chart-of-accounts-balances`, HARUS konsisten dengan stok awal Inventory §2 file `inventory-nusatech/01-...` |
 | LIA-01 Utang Usaha                            | 32.500.000 (20.000.000 + 12.500.000, gabungan Konsultasi & Toko) | —            | `chart-of-accounts-balances`                                                                                 |
 | LIA-04 Pendapatan Diterima Dimuka             |                                                       30.000.000 | `BU-MANAGED` | `chart-of-accounts-balances`                                                                                 |
 
@@ -202,18 +202,18 @@ Total Liabilitas = 32.500.000 + 30.000.000 = **62.500.000**
 
 Sejak Inventory Journal (auto-posting jurnal Stock Adjustment & Stock Transfer) ditambahkan, `inventory_config_journals` branch ini WAJIB dimapping dulu lewat halaman `inventory/config` sebelum posting jurnal bisa jalan — kalau kosong, jurnalnya di-skip (fail-soft, stok tetap jalan, cuma sisi akuntansi diam). Lihat `docs/inventory-auto-replenishment-plan.id.md` bagian 2 untuk desain lengkapnya.
 
-| `functionality`           | Akun (§4)                                    | Catatan APBATECH                                                                                                                                                                                                                                                                                      |
+| `functionality`           | Akun (§4)                                    | Catatan NUSATECH                                                                                                                                                                                                                                                                                      |
 | ------------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `inventory`               | AST-05 Persediaan Barang Dagang Elektronik   | Sama dengan akun Persediaan yang sudah ada — TIDAK perlu akun baru                                                                                                                                                                                                                                    |
 | `inventory_loss`          | BBN-06 Beban Kerugian Persediaan             | Akun baru (§4) — dipakai saat Stock Adjustment shrinkage / Stock Transfer shortage                                                                                                                                                                                                                    |
 | `other_income_adjustment` | PDT-04 Pendapatan Lain-lain (Selisih Opname) | Akun baru (§4) — dipakai saat Stock Adjustment overage / Stock Transfer overage                                                                                                                                                                                                                       |
-| `transit_clearing`        | — (tidak dimapping)                          | **Tidak relevan** untuk APBATECH — cuma 1 warehouse (`type:central`), tidak pernah ada Stock Transfer antar-gudang di skenario ini. Boleh dibiarkan kosong; kalau suatu saat nambah warehouse `type:store`, baru wajib dimapping (lihat suite `accounting-pos-retail` sebagai contoh multi-warehouse) |
+| `transit_clearing`        | — (tidak dimapping)                          | **Tidak relevan** untuk NUSATECH — cuma 1 warehouse (`type:central`), tidak pernah ada Stock Transfer antar-gudang di skenario ini. Boleh dibiarkan kosong; kalau suatu saat nambah warehouse `type:store`, baru wajib dimapping (lihat suite `accounting-pos-retail` sebagai contoh multi-warehouse) |
 
 > `auto_draft_purchase_request_on_reorder` / `auto_draft_stock_transfer_on_reorder` (toggle di halaman yang sama) sengaja **dibiarkan OFF** untuk suite ini — SKU §9c belum di-set `min_stock`/`max_stock`/`reorder_point`/`reorder_qty`, jadi auto-replenishment tidak relevan diuji di sini kecuali skenario itu ditambahkan terpisah.
 
 ## Ringkasan Sebelum Lanjut
 
-- [ ] 1 branch dibuat (PT APBATECH)
+- [ ] 1 branch dibuat (PT NUSATECH)
 - [ ] 3 Business Unit dibuat (BU-CONSULT, BU-MANAGED, BU-RETAIL)
 - [ ] 7 COA Types dibuat (§3) — SEBELUM bikin akun COA
 - [ ] COA 27 akun dibuat, masing-masing refer ke tipe §3, sebagian di-tag `default_business_units_id` sesuai §4
@@ -229,8 +229,8 @@ Sejak Inventory Journal (auto-posting jurnal Stock Adjustment & Stock Transfer) 
 
 ## Referensi Silang
 
-- [`../purchasing-apbatech/`](../purchasing-apbatech/) — procurement software/hardware konsultan & stok elektronik toko
-- [`../sales-apbatech/`](../sales-apbatech/) — kontrak jasa konsultasi & penjualan retail
-- [`../inventory-apbatech/`](../inventory-apbatech/) — stok barang elektronik toko
-- [`../hrm-apbatech/`](../hrm-apbatech/) — attendance/payroll/leave/komisi 30 karyawan + staff toko
+- [`../purchasing-nusatech/`](../purchasing-nusatech/) — procurement software/hardware konsultan & stok elektronik toko
+- [`../sales-nusatech/`](../sales-nusatech/) — kontrak jasa konsultasi & penjualan retail
+- [`../inventory-nusatech/`](../inventory-nusatech/) — stok barang elektronik toko
+- [`../hrm-nusatech/`](../hrm-nusatech/) — attendance/payroll/leave/komisi 30 karyawan + staff toko
 - [[project_currency_branch_template_seeding]], [[project_scale_and_big_todos]], [[project_centralized_accounting_mode_design]]

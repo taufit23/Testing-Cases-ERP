@@ -1,21 +1,21 @@
 ---
-title: Test Case Inventory (APBATECH) — 01. Warehouse & Stok Toko Elektronik
-category: Inventory Apbatech
-description: Warehouse Gudang Utama Retail (tag business_unit_id = BU-RETAIL), stok awal via Stock Adjustment, Stock Take, dan Stock Lots/Serials untuk sisi retail PT APBATECH (1 branch).
+title: Test Case Inventory (NUSATECH) — 01. Warehouse & Stok Toko Elektronik
+category: Inventory Nusatech
+description: Warehouse Gudang Utama Retail (tag business_unit_id = BU-RETAIL), stok awal via Stock Adjustment, Stock Take, dan Stock Lots/Serials untuk sisi retail PT NUSATECH (1 branch).
 visibility: internal
 ---
 
 # 01. Warehouse & Stok Toko Elektronik (BU-RETAIL)
 
-> Skenario: **PT APBATECH**, branch **PT APBATECH** (1 branch tunggal), divisi **BU-RETAIL**. Lihat [`../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md) untuk profil & saldo awal.
+> Skenario: **PT NUSATECH**, branch **PT NUSATECH** (1 branch tunggal), divisi **BU-RETAIL**. Lihat [`../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md) untuk profil & saldo awal.
 >
-> Berbeda dari suite `accounting-pos-retail` (minimarket, warehouse `type:store` + Cash Session POS): PT APBATECH menjual lewat alur Sales biasa (Quotation→SO→Delivery→Invoice, lihat [`../sales-apbatech/`](../sales-apbatech/)), **BUKAN** POS kasir walk-in. Warehouse di sini cukup `type:central`, di-tag `business_unit_id = BU-RETAIL` — TIDAK perlu Cash Session sama sekali.
+> Berbeda dari suite `accounting-pos-retail` (minimarket, warehouse `type:store` + Cash Session POS): PT NUSATECH menjual lewat alur Sales biasa (Quotation→SO→Delivery→Invoice, lihat [`../sales-nusatech/`](../sales-nusatech/)), **BUKAN** POS kasir walk-in. Warehouse di sini cukup `type:central`, di-tag `business_unit_id = BU-RETAIL` — TIDAK perlu Cash Session sama sekali.
 
 ## 1. Warehouse (**Warehouses**)
 
 | Skenario    | Detail                                                                                   | Hasil                                                           |
 | ----------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Positif     | `create` "Gudang Utama Retail", `type:central` (default), `business_unit_id:<BU-RETAIL>` | Warehouse terdaftar, `branch_id` = PT APBATECH (branch tunggal) |
+| Positif     | `create` "Gudang Utama Retail", `type:central` (default), `business_unit_id:<BU-RETAIL>` | Warehouse terdaftar, `branch_id` = PT NUSATECH (branch tunggal) |
 | Negatif     | `create` warehouse dengan `branch_id` bukan branch aktif                                 | 422/403 — isolasi branch                                        |
 | Netralisasi | Jangan hapus warehouse ini selama masih ada `sku_stocks`/dokumen referensi               |
 
@@ -69,13 +69,13 @@ visibility: internal
 
 ## 6. Stock Adjustment — Selisih & Inventory Journal Otomatis
 
-> Beda jalur dari §5 (Stock Take) — Stock Take `complete()` saat ini menulis `sku_stocks` langsung lewat `StockMovements::recordMovement()`, **BELUM** lewat `StockAdjustmentFinalizer`, jadi selisih dari Stock Take **TIDAK** memicu Inventory Journal (lihat `docs/inventory-auto-replenishment-plan.id.md` bagian 2 — batasan yang belum dibereskan). Skenario di bawah pakai jalur **Stock Adjustment langsung** (`stock-adjustments/create`), satu-satunya jalur yang saat ini benar-benar posting jurnal. Prasyarat: mapping COA §11 di [`accounting-apbatech/00-...`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md#11-inventory-journal--chart-of-accounts-mapping-inventoryconfig) harus sudah diisi.
+> Beda jalur dari §5 (Stock Take) — Stock Take `complete()` saat ini menulis `sku_stocks` langsung lewat `StockMovements::recordMovement()`, **BELUM** lewat `StockAdjustmentFinalizer`, jadi selisih dari Stock Take **TIDAK** memicu Inventory Journal (lihat `docs/inventory-auto-replenishment-plan.id.md` bagian 2 — batasan yang belum dibereskan). Skenario di bawah pakai jalur **Stock Adjustment langsung** (`stock-adjustments/create`), satu-satunya jalur yang saat ini benar-benar posting jurnal. Prasyarat: mapping COA §11 di [`accounting-nusatech/00-...`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md#11-inventory-journal--chart-of-accounts-mapping-inventoryconfig) harus sudah diisi.
 
 | Skenario    | Detail                                                                                                                                                                                                  | Hasil                                                                                                                                                                                                                                    |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Positif     | `stock-adjustments/create` → Gudang Utama Retail, item LPT-001: `qty_system:5`, `qty_actual:4`, `unit_cost:6500000` (1 unit rusak, alasan "Kerusakan unit display toko" §3) → `submit` → `post`         | `qty_difference = -1`. Setelah finalize: `sku_stocks` LPT-001 turun jadi 4, DAN 1 jurnal Inventory Journal (`IJ-...`) auto-posted: **Dr BBN-06 Beban Kerugian Persediaan 6.500.000 / Cr AST-05 Persediaan 6.500.000**                    |
 | Positif     | Cek `general-ledger/detail-ledger` filter AST-05 & BBN-06 setelah adjustment di atas                                                                                                                    | AST-05 turun 6.500.000 dari saldo sebelumnya, BBN-06 bertambah 6.500.000 — total debit=kredit balance                                                                                                                                    |
-| Positif     | Adjustment lain: item KOM-001 (sudah ada stok dari GR Purchasing, lihat `purchasing-apbatech/`) dengan `qty_actual` LEBIH BESAR dari `qty_system` (ketemu unit ekstra saat opname) + `unit_cost` terisi | `qty_difference` positif. Jurnal: **Dr AST-05 Persediaan / Cr PDT-04 Pendapatan Lain-lain (Selisih Opname)** senilai selisih × unit_cost                                                                                                 |
+| Positif     | Adjustment lain: item KOM-001 (sudah ada stok dari GR Purchasing, lihat `purchasing-nusatech/`) dengan `qty_actual` LEBIH BESAR dari `qty_system` (ketemu unit ekstra saat opname) + `unit_cost` terisi | `qty_difference` positif. Jurnal: **Dr AST-05 Persediaan / Cr PDT-04 Pendapatan Lain-lain (Selisih Opname)** senilai selisih × unit_cost                                                                                                 |
 | Negatif     | Buat adjustment dengan `unit_cost:0` (atau kosong) pada item yang selisih                                                                                                                               | `sku_stocks` tetap ter-update (stok fisik tidak boleh terhambat akuntansi), TAPI item itu di-exclude dari perhitungan jurnal — kalau semua item di adjustment itu `unit_cost:0`, TIDAK ADA jurnal yang terbuat sama sekali (bukan error) |
 | Negatif     | Hapus/kosongkan salah satu mapping COA §11 (mis. `inventory_loss`), lalu ulangi skenario shrinkage di atas                                                                                              | Stock movement & status `posted` tetap sukses seperti biasa (fail-soft) — cek log aplikasi (`storage/logs/laravel.log`) ada warning `StockAdjustmentFinalizer: gagal posting jurnal variance`, TIDAK ADA jurnal terbuat                  |
 | Netralisasi | Reverse/koreksi adjustment test HANYA sebelum ada transaksi penjualan yang memakai stok LPT-001 pasca-adjustment                                                                                        |
@@ -90,8 +90,8 @@ visibility: internal
 
 ## Referensi Silang
 
-- [`../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-apbatech/00-profil-perusahaan-dan-master-data.id.md) — §11 mapping COA Inventory Journal
+- [`../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md`](../accounting-nusatech/00-profil-perusahaan-dan-master-data.id.md) — §11 mapping COA Inventory Journal
 - `docs/inventory-auto-replenishment-plan.id.md` — desain lengkap Inventory Journal & auto-replenishment
-- [`../purchasing-apbatech/02-po-integrasi-accounting.id.md`](../purchasing-apbatech/02-po-integrasi-accounting.id.md) — GR menambah stok KOM-001/KOM-002
-- [`../sales-apbatech/02-so-integrasi-accounting.id.md`](../sales-apbatech/02-so-integrasi-accounting.id.md) — Delivery mengurangi stok
+- [`../purchasing-nusatech/02-po-integrasi-accounting.id.md`](../purchasing-nusatech/02-po-integrasi-accounting.id.md) — GR menambah stok KOM-001/KOM-002
+- [`../sales-nusatech/02-so-integrasi-accounting.id.md`](../sales-nusatech/02-so-integrasi-accounting.id.md) — Delivery mengurangi stok
 - [[project_stock_opname_scan_and_bugfixes]]
