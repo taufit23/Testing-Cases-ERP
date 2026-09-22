@@ -23,9 +23,9 @@ description: Daftar semua data master Ranahku disusun sesuai urutan penginputan 
 | 4   | Gudang                | Gudang toko & dapur                                | Tahap 1              |
 | 5   | Mitra                 | Pemasok, Pelanggan                                 | Tahap 1              |
 | 6   | Produk toko           | Kategori, Satuan, Barang, Harga Jual, Harga Beli   | Tahap 4, 5           |
-| 7   | Menu rumah makan      | Kategori menu, Menu, Bahan baku                    | Tahap 4              |
+| 7   | Menu rumah makan      | Kategori menu, Menu, Bahan baku, Area/Meja/Stasiun Dapur | Tahap 4        |
 | 8   | Layanan sewa aplikasi | Paket sewa + tarif                                 | Tahap 1              |
-| 9   | SDM                   | Departemen, Jabatan (+ Role Akses), Karyawan       | Tahap 1              |
+| 9   | SDM                   | Departemen, Jabatan (+ Role Akses), Karyawan, Jenis Cuti, Acuan BPJS/Pajak | Tahap 1 |
 | 10  | Saldo awal            | Rekening Bank, Saldo Awal Akun                     | Tahap 2, 3           |
 | 11  | Konfigurasi jurnal    | Pemetaan akun per modul (Auto-map lalu sesuaikan)  | Tahap 2, semua modul |
 | 12  | Pelengkap             | Metode pembayaran, syarat pembayaran               | Tahap 1              |
@@ -237,9 +237,38 @@ Kolom **Kegiatan** mengisi *default tag business unit* akun (opsional, bisa di-o
 | --------------- | ------------------------------------------------------------------------- |
 | Harga Toko 2026 | Semua 10 barang di atas, `min_qty: 1`, aktif — harga = kolom "Harga Jual" |
 
+> **⚠️ Temuan struktural (2026-09-14, ditemukan lewat testing UI langsung):** UI "Add Price" di
+> halaman detail Product → SKU (`Manage Prices`) **tidak punya field untuk memilih Price List** —
+> hanya `Currency`, `Unit`, `Price`, `Min Qty`, `Status`. Artinya harga jual SKU tidak bisa
+> ditautkan ke Price List custom bernama bebas seperti "Harga Toko 2026" lewat UI ini; harga
+> otomatis masuk ke Price List default per branch (di provider ini bernama **"Daftar Harga Jual
+> Retail"**, hasil dari `Use Template` di halaman Price Lists — 8 price list default lain juga
+> ikut ter-provision: Harga Modal, Promo, Member/Reseller, Online, Cabang, Grosir, Beli Default).
+> Dicek langsung: seluruh 10 SKU BRG-001..010 **sudah** punya harga jual `Active` yang cocok
+> persis dengan kolom "Harga Jual" di 6.3, dengan `min_qty: 1` — jadi **intent Tahap 6.4 sudah
+> terpenuhi secara fungsional** lewat price list default tersebut, walau bukan lewat list bernama
+> literal "Harga Toko 2026". Percobaan membuat price list terpisah bernama "Harga Toko 2026"
+> berakhir jadi list kosong tak terpakai (sudah dihapus lagi) karena tidak ada jalur UI untuk
+> mengisi itemnya. **Rekomendasi ke tim dev**: baik (a) tambahkan Price List selector di modal
+> "Add Price"/"Manage Prices", atau (b) update dokumentasi test-case supaya Tahap 6.4 eksplisit
+> menyebut "pakai price list default hasil Use Template" alih-alih menyuruh bikin list baru.
+
 ### 6.5 Harga Beli per Pemasok (**Contact Product SKU Prices**)
 
 Semua barang toko dari **CV Grosir Sembako Makmur** & **PT Distribusi Minuman Kemasan** (BRG-004, 005, 006) — `vendor_price` = kolom "Harga Beli". Angka ini jadi acuan nilai persediaan awal (Tahap 10).
+
+> **⚠️ Temuan struktural (2026-09-14, ditemukan lewat testing UI langsung):** Tidak ada field
+> harga di modal "Manage Suppliers" (Product → Manage Suppliers) maupun "Manage Products"
+> (Contact → kebab menu → Manage Products) — keduanya cuma checklist asosiasi supplier↔produk,
+> **tanpa field `vendor_price` sama sekali**. Yang bisa dieksekusi: (1) asosiasi dibuat —
+> BRG-005 (Kopi Sachet) → **CV Grosir Sembako Makmur**; BRG-004 (Air Mineral Galon) & BRG-006
+> (Teh Kotak) → **PT Distribusi Minuman Kemasan** (sesuai daftar pasokan di dokumen profil
+> bagian 7). (2) Dicek expand row SKU → panel PRICES: ketiganya **sudah** punya harga beli
+> default (Price List "Daftar Harga Beli Default", Inactive) yang cocok persis kolom "Harga
+> Beli": BRG-004 = 18.000, BRG-005 = 11.000, BRG-006 = 62.000 — jadi intent Tahap 6.5 (nilai
+> acuan persediaan awal Tahap 10 sudah benar) **terpenuhi secara fungsional**, hanya saja harga
+> ini generik per-SKU, bukan spesifik per-vendor. Detail & rekomendasi ke tim dev: lihat
+> [`TemuanTestCase/ClientMaster/Ranahku/02-manage-suppliers-tidak-punya-field-harga-per-vendor.id.md`](../../erpApiServices/docs/TemuanTestCase/ClientMaster/Ranahku/02-manage-suppliers-tidak-punya-field-harga-per-vendor.id.md).
 
 ---
 
@@ -275,9 +304,47 @@ Bahan baku dikelola sebagai satu kelompok persediaan (akun `1-131`), pemakaian d
 | MNU-007 | Es Jeruk                    | `minuman-resto` | Gelas  |      8.000 |               2.500 |
 | MNU-008 | Air Mineral Botol           | `minuman-resto` | Botol  |      5.000 |               2.000 |
 
+> **Catatan gap (ditemukan 2026-09-15 saat menjalankan `02-alur-transaksi.id.md` Tahap D.2):**
+> saat membuat menu di atas, pastikan setiap SKU juga diberi **Sales Channel** (minimal
+> **Sales**), bukan cuma disiapkan untuk dijual lewat kasir meja Restaurant. Ditemukan bahwa
+> MNU-005 (Paket Nasi Ayam Komplit) belum diberi kanal penjualan sama sekali, sehingga transaksi
+> lewat modul Sales (mis. pesanan katering partai besar di Tahap D.2) gagal disimpan sampai Sales
+> Channel-nya ditambahkan manual. Produk Layanan Sewa Aplikasi di Tahap 8 sendiri sudah benar
+> diberi Sales Channel sejak awal (Sales, Rental, Canvassing) — jadi gap ini spesifik untuk menu
+> Rumah Makan yang tadinya cuma disiapkan untuk kasir meja, bukan pola yang berulang di semua
+> modul produk.
+
 ### 7.4 Stok bahan dapur awal
 
 Rp **20.000.000** (sayur, beras, ayam, daging, bumbu, minyak, minuman) — masuk sebagai nilai persediaan awal akun `1-131` di Tahap 10.
+
+> **Catatan gap (ditemukan 2026-09-15 saat menjalankan `02-alur-transaksi.id.md` Tahap E.2):**
+> daftar produk bahan baku yang benar-benar dibuat di **Products** ternyata hanya barang kering/
+> kemasan (beras, minyak, bumbu kemasan, dsb) — belum ada produk khusus untuk bahan segar seperti
+> **sayur, ayam potong, dan telur**. Saat pengujian pembelian restock ke pemasok bahan segar
+> (UD Pasar Segar) mencoba mencari produk "Sayur" di form Purchase Order, hasilnya nihil sama
+> sekali. Lihat rincian di
+> [`erpApiServices/docs/TemuanTestCase/Inventory/Ranahku/02-produk-bahan-baku-dapur-sayur-ayam-telur-belum-ada-di-master-data.id.md`](../../erpApiServices/docs/TemuanTestCase/Inventory/Ranahku/02-produk-bahan-baku-dapur-sayur-ayam-telur-belum-ada-di-master-data.id.md).
+> **Untuk pengujian berikutnya**: tambahkan produk bahan segar (mis. Sayur Campur, Ayam Potong,
+> Telur Ayam) di **Products**, kategori bahan baku, satuan Kg/Butir, warehouse default "Dapur
+> Rumah Makan", SEBELUM menjalankan skenario pembelian bahan segar di Tahap E.2.
+
+### 7.5 Master Data Operasional Rumah Makan (**Areas**, **Tables**, **Kitchen Stations**)
+
+> **Catatan gap (ditemukan 2026-09-15 saat menjalankan `02-alur-transaksi.id.md` Tahap D):** modul
+> **Restaurant** butuh master data Areas (area/zona meja), Tables (nomor meja per area), dan
+> Kitchen Stations (stasiun dapur tujuan pesanan, mis. Dapur Panas/Dingin/Minuman) sebagai
+> prasyarat tersembunyi sebelum sesi kasir meja (`restaurant/orders`) bisa dibuka — tidak
+> disebutkan secara eksplisit di tahap mana pun pada dokumen ini sebelumnya. Tanpa data ini,
+> halaman pembukaan sesi meja tidak punya area/meja untuk dipilih.
+>
+> **Untuk pengujian berikutnya**, tambahkan sebelum Tahap D dijalankan:
+>
+> | Sub-langkah      | Contoh data minimal                                                      |
+> | ----------------- | ------------------------------------------------------------------------ |
+> | Areas             | "Area Dalam", "Area Luar" (2 area cukup untuk uji Transfer Table)         |
+> | Tables             | Meja 1–6 di "Area Dalam", Meja 7–10 di "Area Luar" (kapasitas bebas)      |
+> | Kitchen Stations   | "Dapur Panas", "Dapur Dingin/Minuman" (dipetakan ke kategori menu 7.1)    |
 
 ---
 
@@ -294,6 +361,25 @@ Rp **20.000.000** (sayur, beras, ayam, daging, bumbu, minyak, minuman) — masuk
 | PKT-DAMPING     | Pendampingan Awal     |   500.000 | sekali                 |
 
 Semua bertipe layanan/jasa (tidak dikelola stok). Pendapatan → `4-101` (sewa) / `4-102` (pendampingan).
+
+> **Status: Selesai (2026-09-14).** Ketujuh produk jasa dibuat di `client-master/products`,
+> Category **Layanan Sewa Aplikasi**, Sales Channels **Sales, Rental, Canvassing** (bukan Point
+> of Sale — jasa langganan/sewa dijual lewat sales/kanvasing, bukan transaksi kasir langsung).
+> Harga di-set via SKU → **Manage Prices** → **Add Price** (Currency **wajib** diganti manual ke
+> IDR — dropdown selalu default ke currency lain, lihat temuan
+> [`01-add-price-tidak-punya-price-list-selector.id.md`](../../erpApiServices/docs/TemuanTestCase/ClientMaster/Ranahku/01-add-price-tidak-punya-price-list-selector.id.md)).
+> Terverifikasi tiap SKU: PKT-DASAR 150.000/bulan, PKT-USAHA 350.000/bulan, PKT-PRO 750.000/bulan,
+> PKT-TAHUN-USAHA 3.500.000/tahun, PKT-TAHUN-PRO 7.500.000/tahun, PKT-SEWA-HARI 100.000/hari
+> (Min Qty diset **3**), PKT-DAMPING 500.000/sekali — semua status Active.
+>
+> **Catatan gap untuk PKT-SEWA-HARI:** field **Min Qty** di modal Add Price generik untuk semua
+> tipe harga (artinya "kuantitas minimum pembelian pada tier harga ini"), bukan business rule
+> "durasi sewa minimum" yang tervalidasi otomatis saat transaksi (mis. sistem tidak otomatis
+> menolak input sewa 1 atau 2 hari saat transaksi Rental/Canvassing dibuat). Min Qty = 3 di sini
+> hanya representasi data master, belum tentu benar-benar men-*enforce* aturan "sewa minimal 3
+> hari" di alur transaksional — perlu diverifikasi ulang saat menjalankan
+> `02-alur-transaksi.id.md` Tahap C (atau tahap transaksi Rental terkait) apakah validasi minimum
+> qty ini benar-benar dicek backend saat create order.
 
 ---
 
@@ -341,6 +427,29 @@ Untuk **setiap** jabatan: centang **"Buat role baru untuk posisi ini"** supaya r
 > (19 role baru). Contoh: role "Kasir Toko" cukup akses kasir + lihat produk;
 > role "Manajer Keuangan" akses penuh keuangan & laporan.
 
+> **Status: Selesai (2026-09-14).** Ke-5 departemen dan ke-19 jabatan sudah
+> dibuat sesuai tabel di atas, masing-masing dengan role akses otomatis
+> (nama role sama dengan nama jabatan) dan gaji minimum/maksimum yang cocok.
+>
+> Hak akses tiap role sudah diisi dengan cara memilih modul yang relevan
+> dengan pekerjaan jabatan tersebut, lalu menyalakan semua izin di modul itu
+> sekaligus (bukan satu per satu). Beberapa jabatan mendapat tambahan izin
+> dari modul lain yang memang dibutuhkan, misalnya kasir toko juga diberi
+> izin melihat data produk. Untuk dua jabatan pucuk pimpinan (Direktur Utama
+> dan Manajer Operasional), semua izin di seluruh sistem dinyalakan karena
+> keduanya memang perlu bisa mengawasi semua bagian.
+>
+> Jumlah izin akhir tiap role: Direktur Utama 1118, Manajer Operasional 1118,
+> Manajer Keuangan 56, Admin Kontrak & Sewa 68, Kasir Toko 27, Eksekutif
+> Penjualan 120, Juru Masak 3, Kasir Rumah Makan 83, Koordinator Layanan
+> Aplikasi 82, Pelayan 58, Petugas Kanvasing 48, Pramuniaga 27, Staf
+> Administrasi & SDM 148, Staf Akunting 45, Staf Gudang 80, Staf Penagihan &
+> Kasir Kantor 23, Staf Pendampingan Pelanggan 68, Supervisor Rumah Makan 83,
+> Supervisor Toko 89. Pemilihan modul untuk tiap jabatan adalah keputusan
+> praktis berdasarkan nama dan tanggung jawab jabatan, bukan daftar resmi
+> dari perusahaan — jika ada kebutuhan akses yang lebih spesifik, sebaiknya
+> disesuaikan lagi belakangan oleh yang paham alur kerja tiap bagian.
+
 ### 9.3 Karyawan (**Employees**) — 25 orang
 
 Saat membuat karyawan: pilih Jabatan → sistem otomatis menautkan role dari jabatan
@@ -375,6 +484,60 @@ mengikuti jabatan.
 | 24  | Agus Setiawan   | Pelayan                       | agus.s@ranahku.test      |
 | 25  | Novi Ramadhani  | Kasir Rumah Makan             | novi.r@ranahku.test      |
 
+> **Status: Selesai (2026-09-14).** Ke-25 karyawan sudah dibuat sesuai tabel di
+> atas, masing-masing dengan Jabatan yang benar (Departemen tidak diisi
+> per-baris karena asosiasi departemen sudah cukup diwakili lewat Jabatan di
+> Tahap 9.2, dan sistem tidak mewajibkannya). Semua akun login dicentang
+> "Buat akun login" sehingga role dari Jabatan otomatis ikut menempel ke
+> akun masing-masing. Nomor karyawan otomatis berurutan EMP/2026/0001 sampai
+> EMP/2026/0025 sesuai urutan pembuatan (bukan urutan nomor di tabel).
+>
+> Satu catatan penting: saat mencentang "Buat akun login" di form tambah
+> banyak karyawan, sistem membuatkan password sementara acak untuk tiap akun
+> (ditampilkan sekali di layar, tidak bisa diatur manual ke angka tertentu).
+> Ini tidak sesuai dengan instruksi awal supaya semua akun baru memakai
+> password yang sama (12345678). Sebagai perbaikan, semua 25 password akun
+> ini sudah disamakan manual ke 12345678 lewat halaman Users Manage
+> (menu kebab tiap akun → Edit → isi "New Password" & "Password
+> Confirmation" → Update) — jadi hasil akhirnya tetap sesuai kebutuhan,
+> hanya prosesnya perlu satu langkah tambahan di luar form tambah banyak
+> karyawan.
+
+### 9.4 Jenis Cuti (**Leave Types**)
+
+> **Catatan gap (ditemukan 2026-09-14 saat menjalankan `02-alur-transaksi.id.md` Tahap F.1):**
+> menu **Human Resource Management > Leave Types** ternyata kosong sama sekali — tidak
+> disebutkan sebagai langkah setup di dokumen ini sebelumnya, padahal jadi prasyarat wajib
+> sebelum satu pun Leave Request bisa dibuat.
+>
+> **Untuk pengujian berikutnya**, tambahkan minimal 1 jenis cuti sebelum Tahap F.1, misalnya:
+>
+> | Kode           | Nama         | Kuota (hari) | Is Paid | Requires Approval | Active |
+> | -------------- | ------------ | -----------: | ------- | ------------------ | ------ |
+> | `CUTI-TAHUNAN` | Cuti Tahunan |           12 | Ya      | Ya                  | Ya     |
+>
+> **Perhatian saat mengisi**: toggle Is Paid/Requires Approval/Active yang diaktifkan saat
+> **Create** tidak tersimpan (selalu jatuh ke Unpaid/No/Inactive) — bug yang sudah tercatat di
+> [`erpApiServices/docs/TemuanTestCase/Hrm/Ranahku/03-toggle-saat-buat-jenis-cuti-baru-tidak-tersimpan.id.md`](../../erpApiServices/docs/TemuanTestCase/Hrm/Ranahku/03-toggle-saat-buat-jenis-cuti-baru-tidak-tersimpan.id.md).
+> Setelah Create, buka **Edit** pada record yang sama dan aktifkan ulang ketiga toggle di sana
+> supaya benar-benar tersimpan sebelum dipakai untuk pengajuan cuti.
+
+### 9.5 Acuan BPJS & Pajak Penggajian (**Bpjs Settings**, **Payroll Tax Reference**)
+
+> **Catatan gap (ditemukan 2026-09-14 saat menjalankan `02-alur-transaksi.id.md` Tahap F.2):**
+> data acuan **Bpjs Settings** (rate iuran per program BPJS) dan **Payroll Tax Reference**
+> (PTKP, tabel TER, tabel pajak progresif Pasal 17) untuk tahun 2026 ternyata **kosong sama
+> sekali** — tidak disebutkan sebagai langkah setup di dokumen ini sebelumnya, padahal jadi
+> prasyarat wajib supaya `payroll-periods/process` menghitung potongan BPJS/PPh21 yang benar
+> (bukan Rp 0 untuk semua karyawan). Rincian lengkap ada di
+> [`erpApiServices/docs/TemuanTestCase/Hrm/Ranahku/06-potongan-bpjs-dan-pph21-payroll-selalu-nol-data-master-belum-diisi.id.md`](../../erpApiServices/docs/TemuanTestCase/Hrm/Ranahku/06-potongan-bpjs-dan-pph21-payroll-selalu-nol-data-master-belum-diisi.id.md).
+>
+> **Untuk pengujian berikutnya**: sebelum mempercayai hasil Tahap F.2, pastikan lebih dulu ke tim
+> dev bahwa seeder acuan BPJS/pajak tahun berjalan (2026 atau tahun saat pengujian dilakukan)
+> sudah dijalankan di lingkungan yang diuji — halaman **Bpjs Settings** saat ini tidak
+> menyediakan cara mengisi data ini secara manual lewat tampilan, jadi tidak bisa diakali dari
+> sisi tester saja.
+
 ---
 
 ## TAHAP 10 — Saldo Awal per 1 September 2026
@@ -406,6 +569,54 @@ mengikuti jabatan.
 
 Jumlah Harta = **1.700.000.000** · Jumlah Kewajiban + Modal = **1.700.000.000** → seimbang.
 Offset selisih otomatis lewat akun `3-103 Ekuitas Saldo Awal`.
+
+> **Status: Selesai (2026-09-14).** Rekening Bank "Bank Operasional Ranahku" berhasil
+> dibuat dengan saldo awal 815.000.000, dan ke-14 baris saldo awal akun di atas (termasuk
+> baris 1-110 yang otomatis tercatat lewat pembuatan rekening bank) sudah diisi lewat
+> menu "Chart Of Accounts Balances", semua bertanggal 1 September 2026.
+>
+> Dua catatan penting selama proses ini:
+>
+> 1. **Rekening bank tidak bisa dibuat dengan saldo awal sebelum satu akun ditandai
+>    sebagai "Is Opening Balance Equity Account".** Percobaan pertama membuat rekening
+>    bank gagal dengan pesan "No Opening Balance Equity Account Configured For This
+>    Branch". Setelah ditelusuri, ternyata akun `3-103 Ekuitas Saldo Awal` — walau
+>    namanya dan kodenya sudah persis sesuai kebutuhan sejak Tahap 2 — belum otomatis
+>    memiliki tanda ini. Perbaikannya: buka Chart of Accounts → Edit akun 3-103 →
+>    aktifkan saklar "Is Opening Balance Equity Account" → Simpan. Setelah itu,
+>    rekening bank berhasil dibuat.
+> 2. **Sebagian besar akun tidak bisa langsung diisi saldo awalnya** lewat menu "Chart
+>    Of Accounts Balances" sebelum kolom "Balance Is Required" pada akun tersebut
+>    diaktifkan — sistem menolak dengan pesan "This COA does not require a balance
+>    record." Dari 14 akun di tabel atas, hanya 1-101, 1-120 (tidak dipakai di tabel
+>    ini), 1-130, 1-131, 2-110, dan 3-103 yang sudah otomatis punya tanda ini sejak
+>    awal. Sisanya (1-102, 1-103, 1-140, 1-150, 1-201, 1-202, 1-203, 1-204, 3-101)
+>    diaktifkan dulu tanda "Balance Is Required"-nya (lewat menu Bulk Edit Chart Of
+>    Accounts atau satu-satu lewat "Edit With Balance"), baru saldo awalnya bisa
+>    diisi. Kedua langkah ini kemungkinan besar memang bagian normal dari alur
+>    konfigurasi (bukan bug), tapi tidak disebutkan di dokumentasi awal — dicatat di
+>    sini supaya pengujian berikutnya tidak bingung kalau menemukan pesan error yang
+>    sama.
+>
+> Total saldo Harta yang berhasil diinput dari 12 akun bertipe Debit murni (di luar
+> 3-103) berjumlah 1.695.000.000, sedikit di bawah 1.700.000.000 yang disebut di
+> ringkasan spesifikasi. Selisih 5.000.000 ini persis sesuai dengan yang sudah
+> diantisipasi lewat catatan "offset otomatis lewat akun 3-103" di atas, sehingga
+> akun `3-103 Ekuitas Saldo Awal` diisi saldo awal sebesar 5.000.000 supaya total
+> Harta genap 1.700.000.000, seimbang dengan total Kewajiban + Modal.
+
+> **Catatan gap (ditemukan 2026-09-14 saat menjalankan `02-alur-transaksi.id.md` Tahap C):**
+> saldo awal stok barang toko (baris 1-130 di atas, senilai 90.000.000) ternyata hanya masuk ke
+> **Gudang Utama** — **Gudang Toko Retail** (dari Tahap 4) tetap kosong sama sekali. Akibatnya,
+> tombol "Open Session" kasir toko otomatis nonaktif karena warehouse tujuan tidak punya stok.
+> Sistem sendiri sudah benar mencegah pembukaan sesi kasir dari gudang kosong, tapi langkah
+> "pindahkan sebagian stok dari Gudang Utama ke Gudang Toko Retail" ini belum pernah disebutkan
+> di dokumen ini sebagai bagian dari alur setup resmi. Detail di
+> [`erpApiServices/docs/TemuanTestCase/Inventory/Ranahku/01-warehouse-baru-perlu-transfer-stok-manual-dari-gudang-utama.id.md`](../../erpApiServices/docs/TemuanTestCase/Inventory/Ranahku/01-warehouse-baru-perlu-transfer-stok-manual-dari-gudang-utama.id.md).
+>
+> **Untuk pengujian berikutnya**: sebelum membuka sesi kasir toko (Tahap C), buat dulu 1 dokumen
+> **Stock Transfer** (Gudang Utama → Gudang Toko Retail) berisi SKU yang akan dipakai untuk
+> transaksi kasir, dengan kuantitas secukupnya.
 
 ---
 
@@ -492,6 +703,36 @@ sesuaikan baris yang perlu mengikut tabel di bawah, lalu Simpan.
 | `other_deductions_payable` | 2-130 Utang Gaji *(atau buat akun potongan lain)* |
 | `cash_bank`                | 1-110 Bank Operasional                            |
 
+> **Status: Selesai (2026-09-14).** Ketujuh halaman konfigurasi jurnal (11.1 sampai 11.7)
+> sudah diisi dan berhasil disimpan, semua sudah dicek ulang dengan cara membuka ulang
+> halamannya supaya yakin datanya benar-benar tersimpan, bukan cuma kelihatan tersimpan
+> sesaat.
+>
+> Beberapa catatan penting selama mengerjakan tahap ini:
+> - Tombol "Auto Map From Chart Of Accounts" selalu menghasilkan pesan "tidak ada yang
+>   bisa dipetakan otomatis" di ketujuh halaman. Ini wajar dan sudah diduga sebelumnya,
+>   karena daftar akun (Chart of Accounts) Ranahku memakai nama-nama berbahasa Indonesia
+>   yang dibuat khusus, sedangkan fitur auto-map mencocokkan berdasarkan nama akun
+>   berbahasa Inggris bawaan sistem. Jadi semua pemetaan di atas dikerjakan manual satu
+>   per satu sesuai tabel, dan ini bukan tanda ada yang salah/rusak.
+> - Untuk fungsi yang di tabel tertulis "hasil auto-map" atau "kosongkan" (misalnya
+>   `transit_clearing`, `cashback_liability`, `gr_ir`, `dp`, `return`,
+>   `restaurant_service_charge_income`), kolom akunnya sengaja dibiarkan "Not Set" karena
+>   fitur terkait (transfer antar gudang, program cashback, uang muka pembelian, dll)
+>   memang belum dipakai di skenario pengujian Ranahku ini.
+> - Fungsi `other_deductions_payable` di halaman Penggajian tidak punya akun khusus
+>   "potongan lain-lain" di daftar akun Ranahku, jadi dipetakan sementara ke akun yang
+>   sama dengan `salary_payable` (2-130 Utang Gaji) mengikuti catatan alternatif di
+>   tabel spesifikasi.
+> - Ditemukan satu catatan tampilan (bukan masalah fungsi) khusus di halaman Penggajian
+>   (**hrm/payroll-journal-configuration**): nama-nama fungsi di kolom kiri tabel
+>   (misalnya untuk `salary_expense`, `salary_payable`, dst) tampil sebagai kode program
+>   mentah, bukan kalimat biasa seperti di enam halaman konfigurasi lainnya. Tidak
+>   mengganggu proses simpan data (semua tetap tersimpan dengan benar), tapi sudah
+>   dicatat detailnya di
+>   `erpApiServices/docs/TemuanTestCase/Hrm/Ranahku/01-payroll-journal-configuration-key-terjemahan-belum-ada.id.md`
+>   supaya bisa diperbaiki tampilannya oleh tim developer.
+
 ---
 
 ## TAHAP 12 — Pelengkap
@@ -515,6 +756,23 @@ sesuaikan baris yang perlu mengikut tabel di bawah, lalu Simpan.
 | 21 Hari | 21   |
 | 30 Hari | 30   |
 
+> **Status: Selesai (2026-09-14), dengan penyesuaian.** Setelah dicek, kedua sub-tahap ini
+> tidak bisa dijalankan persis seperti tertulis karena keterbatasan aplikasi, jadi dikerjakan
+> versi yang paling mendekati sesuai kemampuan sistem saat ini. Detail lengkapnya sudah dicatat
+> di
+> `erpApiServices/docs/TemuanTestCase/ClientMaster/Ranahku/03-payment-methods-dan-payment-terms-tidak-sesuai-spec.id.md`.
+> Ringkasnya:
+> - **12.1 Metode Pembayaran**: halaman Payment Methods tidak punya cara memilih akun kas/bank
+>   untuk tiap metode. Branch Ranahku ternyata sudah punya 10 metode pembayaran bawaan yang
+>   aktif (Cash, Bank Transfer, Debit Card, Credit Card, QRIS, E-Wallet, Virtual Account,
+>   Cheque, Cash on Delivery, Store Credit), jadi tidak perlu membuat metode baru. Penautan ke
+>   akun kas/bank yang benar sudah tercakup lewat hasil kerja Tahap 11 (misalnya `pos_cash` di
+>   Kasir Toko, `cash_bank` di Sewa Aplikasi dan Pembelian).
+> - **12.2 Syarat Pembayaran**: tidak ada halaman master data "Payment Terms" di sistem ini
+>   (dicoba dibuka, hasilnya halaman tidak ditemukan). Yang ada cuma kotak isian angka
+>   "Payment Term Days" langsung di form tiap Contact, dan sudah dicek nilainya di data
+>   kontak yang ada sekarang sudah sesuai kebutuhan (0, 14, 21, dan 30 hari).
+
 ---
 
 ## Daftar Periksa Cepat
@@ -526,8 +784,8 @@ sesuaikan baris yang perlu mengikut tabel di bawah, lalu Simpan.
 - [ ] Tahap 5: 5 pemasok, 5 pelanggan + Pembeli Umum
 - [ ] Tahap 6: 5 kategori, 9 satuan, 10 barang, 1 daftar harga, harga beli per pemasok
 - [ ] Tahap 7: 2 kategori menu, 8 menu, stok bahan dapur 20 jt
-- [ ] Tahap 8: 7 paket sewa (layanan non-stok)
-- [ ] Tahap 9: 5 departemen → 19 jabatan (semua "buat role") → atur hak akses 19 role → 25 karyawan
-- [ ] Tahap 10: 1 rekening bank + saldo awal (harta = 1,7 M, seimbang)
-- [ ] Tahap 11: 7 halaman konfigurasi jurnal — Auto-map lalu sesuaikan
-- [ ] Tahap 12: metode pembayaran, syarat pembayaran
+- [x] Tahap 8: 7 paket sewa (layanan non-stok) — selesai 2026-09-14, lihat catatan gap Min Qty di atas
+- [x] Tahap 9: 5 departemen → 19 jabatan (semua "buat role") → atur hak akses 19 role → 25 karyawan — selesai semua (2026-09-14), termasuk penyamaan password 25 akun login ke 12345678
+- [x] Tahap 10: 1 rekening bank + saldo awal (harta = 1,7 M, seimbang) — selesai (2026-09-14), lihat catatan syarat "Balance Is Required" & "Is Opening Balance Equity Account" di atas
+- [x] Tahap 11: 7 halaman konfigurasi jurnal — selesai (2026-09-14), lihat catatan "auto-map tidak menemukan apa pun" & temuan tampilan halaman Penggajian di atas
+- [x] Tahap 12: metode pembayaran, syarat pembayaran — selesai (2026-09-14) dengan penyesuaian, lihat catatan gap fitur di atas

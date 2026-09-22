@@ -255,6 +255,27 @@ Tuition fee (recurring), scholarship (discount), payroll guru, fixed assets (ged
 | ------ | -------------------------------------------------------------- | -------------- |
 | (Draf) | Akan berisi setup COA tuition, jurnal tagihan massal, beasiswa | Belum dibuat   |
 
+### `ranahku/` — Skenario Ranahku (perusahaan sewa aplikasi + toko retail + rumah makan sendiri)
+
+**Beda dari semua suite lain**: bukan Accounting berdiri sendiri, bukan pula provider riil dari
+seeder (`ranahku` adalah provider/tenant baru dibuat via UI langsung oleh user, bukan seeder BE).
+Perusahaan fiktif **Ranahku** menyewakan aplikasi bisnis (SaaS) ke UMKM lain (via kanvasing,
+penjualan, dan sewa jangka pendek), SEKALIGUS menjalankan **Toko Retail** dan **Rumah Makan**
+sendiri sebagai unit usaha percontohan — jadi satu skenario ini menguji modul **Sales,
+Purchasing, POS, Restaurant, HRM/Payroll, Approval, DAN Accounting** sekaligus dalam satu
+provider/branch tunggal ("Ranahku" / "Kantor Utama"), bukan cuma Accounting.
+
+**Progres (per 2026-09-14)**: file `01` Tahap 1–6.4 sudah dites & diverifikasi ulang (ada 1
+perbaikan data — duplikasi Product Categories — dan 1 temuan struktural dicatat, lihat
+[`TemuanTestCase/ClientMaster/Ranahku/`](../erpApiServices/docs/TemuanTestCase/ClientMaster/Ranahku/)).
+Tahap 6.5–12 dan file `02` (alur transaksi) sedang berjalan.
+
+| File | Cakupan | Status Testing |
+| --- | --- | --- |
+| [`00-profil-perusahaan-dan-master-data.id.md`](./ranahku/00-profil-perusahaan-dan-master-data.id.md) | Profil perusahaan (narasi), struktur organisasi 25 karyawan, modal & neraca awal, pelanggan/pemasok, barang toko, menu rumah makan, paket sewa | Referensi (bukan langkah input) |
+| [`01-urutan-input-master-data.id.md`](./ranahku/01-urutan-input-master-data.id.md) | 12 tahap input master data berurutan: struktur dasar → bagan akun → pajak → gudang → mitra → produk toko → menu resto → paket sewa → SDM → saldo awal → konfigurasi jurnal 7 modul → pelengkap | 🔶 Tahap 1–6.4 selesai ditest (2026-09-14) — Tahap 6.5–12 berjalan |
+| [`02-alur-transaksi.id.md`](./ranahku/02-alur-transaksi.id.md) | Tahap A–F: Kanvasing→Sewa, Penjualan langsung sewa, Toko Retail (POS+SO), Rumah Makan (kasir+SO), Pembelian Restock, Payroll SDM | Belum ditest — menunggu master data selesai |
+
 ### `_deferred-integrated/` — Draf test case yang butuh modul lain (ditunda)
 
 | File                                                                                          | Kenapa ditunda                                                                                                                                                                                                                                                                                      |
