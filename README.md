@@ -6,6 +6,18 @@ Format tiap file konsisten dengan `docs/testing-flow-core-to-purchasing.id.md`: 
 
 ## Isi
 
+### `penjualan-sewa-aplikasi/` — Menjual dan menyewakan aplikasi ERP ini sendiri (SaaS)
+
+Skenario platform owner menyewakan aplikasi ke klien langsung dan lewat Mitra: kelola owner, paket dan Onboard Client, add-on dan provisioning modul, harga dan rekap tagihan bulanan, penangguhan klien, isolasi data antar klien, dan kerahasiaan gaji antar karyawan. Jual putus / lisensi self-hosted belum ada fiturnya dan dicatat sebagai batas cakupan di file 00. Skenario otomatis pendampingnya ada di `erpApiServices/tests/Scenarios` (`package_limits_and_module_provisioning.php`, `partner_billing_statement.php`).
+
+| File | Cakupan | Status Testing |
+| --- | --- | --- |
+| [`penjualan-sewa-aplikasi/00-profil-dan-prasyarat.id.md`](./penjualan-sewa-aplikasi/00-profil-dan-prasyarat.id.md) | Skenario, prasyarat, batas cakupan | Belum ditest |
+| [`penjualan-sewa-aplikasi/01-owner-dan-akses-platform.id.md`](./penjualan-sewa-aplikasi/01-owner-dan-akses-platform.id.md) | Platform owner, kelola owner, PIN, halaman terkunci owner | Belum ditest |
+| [`penjualan-sewa-aplikasi/02-paket-onboarding-dan-add-on.id.md`](./penjualan-sewa-aplikasi/02-paket-onboarding-dan-add-on.id.md) | Paket, Onboard Client, batas, add-on, provisioning | Belum ditest |
+| [`penjualan-sewa-aplikasi/03-mitra-harga-dan-rekap-tagihan.id.md`](./penjualan-sewa-aplikasi/03-mitra-harga-dan-rekap-tagihan.id.md) | Mitra, harga dasar, rekap, finalisasi, ekspor | Belum ditest |
+| [`penjualan-sewa-aplikasi/04-penangguhan-dan-isolasi-data-klien.id.md`](./penjualan-sewa-aplikasi/04-penangguhan-dan-isolasi-data-klien.id.md) | Suspend/resume, isolasi klien, kerahasiaan data karyawan | Belum ditest |
+
 ### `accounting-coretax/` + `purchasing-coretax/` + `sales-coretax/` — Provider RIIL "CORETAX" (Branch Pusat, langsung dari seeder)
 
 **Beda dari semua suite lain di bawah**: bukan perusahaan fiktif yang dibangun dari nol lewat API — **CORETAX adalah provider utama/riil** (`slug coretax-R3fNUj`, branch `Pusat`) yang datanya SUDAH ADA begitu `php artisan migrate:fresh --seed` selesai (lihat `database/seeders/*.php`). File `00` di tiap suite ini murni REFERENSI master data yang sudah ter-seed (COA, fiscal year, kontak, produk, dst) — bukan langkah pembuatan. Mencakup 3 modul sekaligus (Accounting, Purchasing, Sales) dengan cross-reference stock antar suite (`purchasing-coretax` GR dulu, baru `sales-coretax` bisa jual SKU yang sama).
