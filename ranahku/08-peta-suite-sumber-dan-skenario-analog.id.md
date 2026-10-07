@@ -48,6 +48,12 @@ description: Menunjukkan di mana setiap suite pengujian lain (accounting, 16 sui
 
 ---
 
+## 1b. Urutan Kerja Gabungan Seluruh Berkas Ranahku
+
+Urutan lengkap (00 → 11) dan titik sisip fitur baru ke berkas 01–03 ada di bagian 0 berkas `10-fitur-baru-sesuai-urutan-kerja.id.md`. Berkas 04–09 dikerjakan **sesudah** berkas 01–03 selesai; berkas 10 punya blok yang disisipkan **di dalam** urutan 01–03; berkas 11 dikerjakan paling akhir.
+
+---
+
 ## 2. Skenario Analog (pola tanpa padanan langsung)
 
 Kolom *Pola asal* menunjuk suite sumbernya. Selesaikan Tahap AI–AP (berkas 05) lebih dulu.
