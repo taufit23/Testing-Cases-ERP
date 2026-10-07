@@ -292,6 +292,7 @@ Tahap 6.5–12 dan file `02` (alur transaksi) sedang berjalan.
 | [`06-skenario-bisnis-per-modul.id.md`](./ranahku/06-skenario-bisnis-per-modul.id.md) | Tahap AQ–AV: seluruh kasus `global-testing` (PO 20, SO 20, POS 60, Restaurant 80, Inventory 26, HRM 4 level) dengan data Ranahku, plus format catatan temuan enam bagian | Belum ditest |
 | [`07-siklus-bisnis-penuh-dan-uji-prinsip.id.md`](./ranahku/07-siklus-bisnis-penuh-dan-uji-prinsip.id.md) | Tahap AW–BB: enam siklus bisnis, kasus keuangan lintas modul, simulasi satu hari, rantai penuh, uji prinsip ("satu rupiah", "satu transaksi", tidak ada uang/stok yang muncul atau hilang), uji peran pemilik/keuangan/auditor | Belum ditest |
 | [`08-peta-suite-sumber-dan-skenario-analog.id.md`](./ranahku/08-peta-suite-sumber-dan-skenario-analog.id.md) | Peta tiap folder suite lain → tahap Ranahku yang menerapkannya, dan 12 skenario analog (klaim ditolak sebagian, periode mingguan/kuartalan, saldo awal tengah tahun, selisih kurs, dana titipan, komisi, penagihan berulang) | Belum ditest |
+| [`09-validasi-penjaga-dan-kasus-batas.id.md`](./ranahku/09-validasi-penjaga-dan-kasus-batas.id.md) | Tahap BD–BJ: lapisan uji penolakan dari semua suite (Negatif, guard, saldo awal, validasi master data, penjaga pembelian/penjualan/kasir/persediaan/SDM, kasus batas akuntansi, mata uang asing dan selisih kurs) dengan label 🆕/🔧/🐞 untuk penolakan yang tidak terjadi | Belum ditest |
 
 ### `_deferred-integrated/` — Draf test case yang butuh modul lain (ditunda)
 

@@ -8,6 +8,9 @@ description: Menunjukkan di mana setiap suite pengujian lain (accounting, 16 sui
 > Disusun 2026-10-07. Berkas 04–07 membawa semua pola dari suite lain ke Ranahku. Berkas ini adalah **daftar pemeriksa**: untuk tiap folder di
 > `Testing-Cases-ERP/` tertulis pola apa yang diambil, di mana ia dijalankan di Ranahku, dan skenario analog bagi pola yang tidak punya
 > padanan langsung. Bila ada folder baru di repo ini, tambahkan barisnya di sini.
+>
+> **Dua lapisan dari tiap suite sumber:** (1) *skenario bisnis* (diterapkan di berkas 04–07 dan skenario analog di bawah) dan (2) *uji penolakan dan kasus batas*
+> (Negatif, guard, saldo awal, validasi API, jebakan desain), yang diterapkan di **berkas 09**. Kolom "Diterapkan di" di bawah menyebut kedua lapisan.
 
 ## 1. Peta Folder Sumber → Ranahku
 
@@ -35,6 +38,11 @@ description: Menunjukkan di mana setiap suite pengujian lain (accounting, 16 sui
 | `global-testing/HRM.md` | 4 level pengujian SDM | 06 AV |
 | `purchasing*`, `sales*` (termasuk Coretax dan Nusatech) | Alur PR→PQ→PO→GR→PI→PPB dan Quotation→SO→Delivery→Invoice→Payment; jasa tanpa delivery; retail dengan delivery | 02 B–E (sudah), 06 AQ, AR |
 | `hrm-nusatech`, `inventory-nusatech` | Absensi, cuti, payroll, komisi; stok awal lewat penyesuaian, opname, lot dan serial | 02 F, 03 L; 06 AU, AV |
+| *Semua* suite `accounting-*` (bagian 00 dan semua baris Negatif) | Validasi master data (kode unik, enum, isolasi cabang), saldo awal dan akun Ekuitas Saldo Awal, `balance_required`, mata uang dan kurs aktif, generate periode, penolakan jurnal | 09 BD, BI |
+| `accounting-manufaktur`, `-manufaktur-2` (file 02, 06) | Utang valas, selisih kurs, jebakan pelunasan naif, kurs aktif vs tanggal, rekening bank USD, anggaran dan periode kuartalan | 09 BJ; 08 BC4, BC6 |
+| `accounting-pos-retail` (Negatif) | Gudang toko saja, satu sesi per gudang, tendered kurang, hold, void/refund ganda, over-refund | 09 BG |
+| `purchasing*`, `sales*` (Negatif) | PR kosong, kontak salah tipe, over-receipt, PI melebihi GR, bayar sebelum disetujui, SKU duplikat, batas kredit, diskon nonaktif, over-delivery, export ganda, konfigurasi penjualan belum diatur | 09 BE, BF |
+| `hrm-nusatech`, `inventory-nusatech` (Negatif) | Absensi ganda, cuti melebihi saldo, payroll dibayar sebelum disetujui, komisi posisi non-sales, post tanpa submit, serial duplikat, unit cost nol, pemetaan akun hilang | 09 BH |
 | `penjualan-sewa-aplikasi` | Sisi pemilik platform (langganan, mitra, lisensi) | Suite tersendiri (di luar Ranahku sebagai klien) |
 | `_deferred-integrated` | Umur piutang dan utang | 07 AX17–AX19, AZ14; 06 AR21 |
 
