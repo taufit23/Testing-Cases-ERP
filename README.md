@@ -287,6 +287,7 @@ Tahap 6.5–12 dan file `02` (alur transaksi) sedang berjalan.
 | [`00-profil-perusahaan-dan-master-data.id.md`](./ranahku/00-profil-perusahaan-dan-master-data.id.md) | Profil perusahaan (narasi), struktur organisasi 25 karyawan, modal & neraca awal, pelanggan/pemasok, barang toko, menu rumah makan, paket sewa | Referensi (bukan langkah input) |
 | [`01-urutan-input-master-data.id.md`](./ranahku/01-urutan-input-master-data.id.md) | 12 tahap input master data berurutan: struktur dasar → bagan akun → pajak → gudang → mitra → produk toko → menu resto → paket sewa → SDM → saldo awal → konfigurasi jurnal 7 modul → pelengkap | 🔶 Tahap 1–6.4 selesai ditest (2026-09-14) — Tahap 6.5–12 berjalan |
 | [`02-alur-transaksi.id.md`](./ranahku/02-alur-transaksi.id.md) | Tahap A–F: Kanvasing→Sewa, Penjualan langsung sewa, Toko Retail (POS+SO), Rumah Makan (kasir+SO), Pembelian Restock, Payroll SDM | Belum ditest — menunggu master data selesai |
+| [`04-cakupan-semua-fitur-dan-lintas-modul.id.md`](./ranahku/04-cakupan-semua-fitur-dan-lintas-modul.id.md) | Tahap Y–AH (disusun 2026-10-07): semua halaman yang belum tersentuh (master data pendukung, kasir lanjutan, valuasi persediaan, pembelian lanjutan, Manufaktur, Pertambangan, SDM lanjutan, rental banyak unit, akuntansi terpusat, keamanan akun), 13 skenario lintas modul dengan pemeriksaan angka, dan peta cakupan menu → tahap | Belum ditest |
 
 ### `_deferred-integrated/` — Draf test case yang butuh modul lain (ditunda)
 
