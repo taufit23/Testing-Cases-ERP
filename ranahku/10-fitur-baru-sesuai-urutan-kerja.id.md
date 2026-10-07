@@ -11,6 +11,9 @@ description: Pengujian fitur yang lahir sesudah berkas 00–03 ditulis (rekrutme
 
 ## 0. Urutan Kerja Gabungan (patokan seluruh penguji)
 
+> **Jalur kerja yang dipakai penguji adalah berkas `00a-urutan-kerja-terpadu-per-menu.id.md`**, yang menyusun ulang semua butir (termasuk blok BK–BO di berkas ini) menjadi sesi per halaman supaya
+> tidak ada bolak-balik. Tabel di bawah menjelaskan **titik sisip** untuk pembaca yang mengikuti katalog berkas 01–03 secara berurutan, dan menjadi dasar penempatan blok di `00a`.
+
 | Urutan | Berkas dan tahap | Isi |
 | --- | --- | --- |
 | 1 | `00` | Baca profil perusahaan (tidak ada langkah input) |
