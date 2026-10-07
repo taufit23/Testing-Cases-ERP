@@ -18,6 +18,9 @@ description: Lanjutan berkas 00 sampai 03. Menambah skenario untuk setiap halama
 > **Prasyarat:** Tahap 1–12 di berkas 01 selesai, dan sebaiknya Tahap A–F di berkas 02. Tanggal transaksi: 1–30 September 2026, kecuali disebut lain.
 > Semua nama dan angka fiktif; sesuaikan asal proporsional.
 
+> **Lanjutan:** berkas 05 (akuntansi mendalam), 06 (kasus per modul), 07 (siklus penuh dan uji prinsip), dan 08 (peta suite sumber dan skenario analog)
+> melengkapi berkas ini dengan kedalaman suite `accounting*` dan `global-testing`. Tahap di berkas ini memakai kode Y–AH; berkas berikutnya melanjutkan AI–BB.
+
 ## Ringkasan Tahap
 
 | # | Tahap | Isi |
