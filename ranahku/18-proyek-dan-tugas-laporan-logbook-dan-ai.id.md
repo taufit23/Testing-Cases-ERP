@@ -41,3 +41,13 @@ description: Langkah uji tahap ketujuh modul Proyek dan Tugas: laporan dan ekspo
 | BL3.5 | Di detail tugas, "Ringkas komentar" | Ringkasan komentar tim/klien; komentar sistem tidak ikut | ⬜ |
 | BL3.6 | "Susun draf status mingguan" | Draf narasi; angka di draf sama dengan fakta yang ditampilkan di bawahnya; tanpa data uang | ⬜ |
 | BL3.7 | Pengguna tanpa akses ke proyek/tugas tertutup mencoba fitur AI untuknya | Ditolak (403) | ⬜ |
+
+## BL4. Tautan dokumen dan biaya faktur pembelian
+
+| # | Langkah | Hasil yang diharapkan | OK |
+| --- | --- | --- | --- |
+| BL4.1 | Buka `/projects/tasks/create?related_type=sales_order&related_id={id SO}&title=Siapkan pengiriman` | Judul terisi; setelah disimpan, detail tugas menampilkan kartu "Dokumen terkait" dengan nomor SO yang membuka halaman SO | ⬜ |
+| BL4.2 | Ulangi dengan id dokumen yang tidak ada atau milik cabang lain | Ditolak | ⬜ |
+| BL4.3 | Tautkan faktur pembelian ke proyek (API `projects/billing/link-purchase-invoice`) saat faktur masih draf | Belum menambah biaya proyek | ⬜ |
+| BL4.4 | Setujui faktur | Daftar biaya proyek menampilkan baris tertaut sebesar subtotal tanpa pajak; total biaya dan margin ikut berubah | ⬜ |
+| BL4.5 | Tolak/batalkan faktur, atau lepas tautan | Biaya itu hilang dari proyek | ⬜ |
