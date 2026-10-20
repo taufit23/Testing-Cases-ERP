@@ -17,6 +17,7 @@ Suite lintas modul paling lengkap: apotek, klinik dan laboratorium, distribusi o
 | [`sehat-sentosa-farma/00-profil-perusahaan-dan-prasyarat.id.md`](./sehat-sentosa-farma/00-profil-perusahaan-dan-prasyarat.id.md) | Profil, cabang, peran, data acuan, urutan kerja | Belum ditest |
 | [`sehat-sentosa-farma/01-alur-bisnis-terpadu-lintas-modul.id.md`](./sehat-sentosa-farma/01-alur-bisnis-terpadu-lintas-modul.id.md) | 30 langkah lintas modul dengan angka acuan | Belum ditest |
 | `sehat-sentosa-farma/02` sampai `20` | Per modul: platform dan akun, konfigurasi umum, inti dan AI, pembelian, persediaan, penjualan, kanvasing, POS, restoran, manufaktur, pertambangan, sewa, akuntansi dan aset tetap, keuangan, SDM, proyek, dasbor, laporan, halaman publik | Belum ditest |
+| [`sehat-sentosa-farma/97-referensi-odoo-amati-tiru-modifikasi.id.md`](./sehat-sentosa-farma/97-referensi-odoo-amati-tiru-modifikasi.id.md) | Pilot metode ATM: perilaku tes Odoo (modul account) dibanding aplikasi kita, kasus uji tiruan, peluang unggul, rencana modul berikutnya | Belum ditest |
 | [`sehat-sentosa-farma/98-izin-isolasi-dan-kasus-batas.id.md`](./sehat-sentosa-farma/98-izin-isolasi-dan-kasus-batas.id.md) | Izin, isolasi klien, paket, kasus batas, pola tampilan, bahasa | Belum ditest |
 | [`sehat-sentosa-farma/99-peta-cakupan.id.md`](./sehat-sentosa-farma/99-peta-cakupan.id.md) | Peta semua bab manual book ke kasus uji | Belum ditest |
 
