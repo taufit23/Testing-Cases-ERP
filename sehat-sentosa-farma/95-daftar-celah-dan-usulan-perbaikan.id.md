@@ -76,7 +76,7 @@ jalan pintas sementara, P3 = nilai tambah. **Ukuran**: S (hari), M (1 sampai 2 m
 
 | ID | Celah | Dampak bisnis | Usulan | Prio | Ukuran |
 | --- | --- | --- | --- | --- | --- |
-| G36 | Tidak ada pendaftaran mandiri: calon klien hanya bisa mengirim formulir minat, lalu menunggu owner membuat onboarding | penjualan SaaS lambat dan bergantung manusia; calon klien berpindah ke pesaing | alur daftar mandiri: pilih paket, isi perusahaan dan akun, bayar (atau mulai uji coba), provisi otomatis memakai pipeline onboarding yang sama; opsi per paket "wajib persetujuan owner" | P2 | L |
+| G36 | ~~Tidak ada pendaftaran mandiri~~ **SELESAI 2026-10-20**: halaman `/daftar` + persetujuan pemilik platform + mode uji `on_approval`; yang masih terbuka: pendaftaran tanpa persetujuan owner (otomatis setelah bayar) dan email otomatis | penjualan SaaS bergantung owner untuk menyetujui | opsi per paket "setujui otomatis setelah pembayaran lunas" bila owner ingin tanpa persetujuan manual | P3 | M |
 | G37 | Email otomatis tagihan, kredensial, dan pengingat langganan bergantung SMTP yang ditahan | owner harus mengirim manual | aktifkan setelah SMTP siap; bawaan: pesan tercatat dan bisa dikirim ulang dari halaman onboarding | P2 | M |
 
 ## 6. Urutan saran (untuk diputuskan owner)
