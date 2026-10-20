@@ -75,6 +75,25 @@ visibility: internal
 | 29 | Akuntansi dan Laporan | **Rekonsiliasi bank**; **rekonsiliasi persediaan**; Neraca Saldo, Laba Rugi, Neraca, Arus Kas, Ringkasan Pajak, Anggaran vs Aktual; tutup periode Oktober | Neraca Saldo seimbang; Laba Rugi = pendapatan − HPP − beban; Neraca seimbang. **Periksa:** Ringkasan Pajak: PPN Keluaran 682.000 (+ transaksi lain), PPN Masukan 2.750.000; jurnal draf tidak ikut terhitung; Anggaran vs Aktual tetap terbaca setelah tutup tahun uji |
 | 30 | Dashboard, AI dan halaman publik | Dasbor keuangan, penjualan, pembelian, operasional, SDM; tanya Asisten AI "berapa stok Paracetamol di Pusat?" (jawaban **800**: 1.500 setelah transfer, dikurangi 600 terjual dan 100 titipan kanvasing) dan minta draf PO; buka tautan penawaran publik dan halaman karier tanpa login | Angka dasbor cocok dengan laporan. **Periksa:** AI memberi kartu aksi yang dikonfirmasi pengguna (tidak mengeksekusi sendiri); halaman publik tidak membocorkan data internal; penangguhan klien menutup halaman publik dan API |
 
+## G. Skenario khas grup kesehatan (menguji kebutuhan bisnis, bukan menu)
+
+Langkah 31 sampai 40 berasal dari kebutuhan bisnis kesehatan ([`96`](./96-riset-kebutuhan-bisnis-grup-kesehatan.id.md)). Bagian ini **sengaja menyentuh hal yang mungkin belum ada**:
+bila fiturnya tidak ada, catat sebagai celah (nomor celah di kolom terakhir, daftar di [`95`](./95-daftar-celah-dan-usulan-perbaikan.id.md)) dan lanjut ke langkah berikutnya. Rincian dan
+hasil harapan tiap langkah ada di [`21`](./21-kebutuhan-bisnis-kesehatan-dan-uji-celah.id.md).
+
+| # | Modul | Aksi | Hasil yang diharapkan dari ERP yang matang | Celah bila belum ada |
+| --- | --- | --- | --- | --- |
+| 31 | Persediaan | Terima ulang OBT-001 dengan dua batch berbeda kedaluwarsa (21 A1), lalu jual 600 strip tanpa memilih batch | FEFO: batch dengan kedaluwarsa lebih dekat keluar dulu; stok per batch benar | G02 |
+| 32 | Persediaan | Majukan tanggal melewati kedaluwarsa satu batch, lalu jual atau transfer batch itu | Lot otomatis kedaluwarsa dan diblokir; peringatan kedaluwarsa muncul sebelumnya | G01, G02 |
+| 33 | Penjualan dan Persediaan | BPOM menarik satu batch: cari semua pelanggan penerimanya dan buat retur | Laporan penelusuran batch ke pelanggan; retur massal | G03 |
+| 34 | POS | Jual obat keras (OBT-002) di Apotek Bandung dengan resep dokter; lalu coba tanpa resep | Dengan resep: tercatat dokter, pasien, aturan pakai; tanpa resep: ditolak atau perlu persetujuan Apoteker | G05, G06 |
+| 35 | Persediaan | Satu bulan mutasi obat terkontrol uji | Laporan mutasi per produk siap disalin ke SIPNAP | G08 |
+| 36 | Pembelian | Input dua kali faktur PBF dengan nomor pemasok yang sama | Peringatan faktur ganda | G31 |
+| 37 | SDM | Karyawan apoteker dengan STR yang tinggal 30 hari | Peringatan perpanjangan; tidak bisa dijadwalkan setelah kedaluwarsa | G23 |
+| 38 | Klinik (POS jasa sebagai jalan pintas) | Pasien baru mendaftar, konsultasi dokter, tindakan, resep, bayar | Idealnya kunjungan satu tagihan dengan tarif sesuai penjamin; di aplikasi sekarang hanya kasir biasa | G15, G18 |
+| 39 | Klinik dan Keuangan | Jasa medis dokter bulan Oktober dari tindakan dan konsultasi | Perhitungan otomatis, hutang jasa, pembayaran dan PPh 21 | G19 |
+| 40 | Manufaktur | Produksi 2 batch Jamu Kunyit Asam dengan catatan lot bahan dan penahanan sampai QC melepas | Batch record lengkap, barang jadi karantina sampai dilepas, penelusuran bahan baku ke batch | G26, G03 |
+
 ## Hubungan angka yang harus selalu benar
 
 1. **Persediaan akhir di buku besar = nilai stok** di Rekonsiliasi Persediaan (selisih nol, selain koreksi yang terjurnal).

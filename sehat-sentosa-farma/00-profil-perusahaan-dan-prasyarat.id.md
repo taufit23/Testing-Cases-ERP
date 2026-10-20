@@ -17,6 +17,11 @@ barang dibeli, disimpan, dipindah, diolah, dijual, dibayar, digaji, dan akhirnya
 > **draf**: harus dibaca penguji dan disesuaikan dengan layar sebenarnya sebelum dianggap final. File `99` memetakan setiap bab ke
 > file ujinya, jadi tidak ada fitur yang terlewat.
 
+> **Dua lapisan suite.** Lapisan pertama (`01`–`20`, `98`, `99`) mengikuti **modul yang sudah ada**. Lapisan kedua dibuat dari **kebutuhan bisnis grup usaha kesehatan**
+> dan sengaja menguji hal yang mungkin belum didukung: riset di [`96`](./96-riset-kebutuhan-bisnis-grup-kesehatan.id.md), kasus uji dan status dukungan di
+> [`21`](./21-kebutuhan-bisnis-kesehatan-dan-uji-celah.id.md), pembanding Odoo di [`97`](./97-referensi-odoo-amati-tiru-modifikasi.id.md), dan register celah beserta usulan
+> perbaikan di [`95`](./95-daftar-celah-dan-usulan-perbaikan.id.md). Hasil pengujian lapisan kedua adalah **bahan memilih prioritas pengembangan**.
+
 ## 1. Profil
 
 **PT Sehat Sentosa Farma** (merek "Sentosa Farma"), grup usaha kesehatan, berstatus PKP, mata uang Rupiah, tahun fiskal Januari sampai
