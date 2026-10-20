@@ -6,6 +6,21 @@ Format tiap file konsisten dengan `docs/testing-flow-core-to-purchasing.id.md`: 
 
 ## Isi
 
+### `sehat-sentosa-farma/` — PT Sehat Sentosa Farma (grup usaha kesehatan, SEMUA modul dan SEMUA bab manual book)
+
+Suite lintas modul paling lengkap: apotek, klinik dan laboratorium, distribusi obat dan alat kesehatan, pabrik herbal, tambang kapur (bahan baku), kafe, dan sewa alat medis dalam satu perusahaan. File `01` adalah **alur terpadu 30 langkah** (platform owner sampai laporan) dengan angka acuan yang bisa dihitung ulang dan titik periksa di modul lain; file `02`-`20` adalah **kasus per modul, satu bagian per bab manual book**; file `98` memuat izin, isolasi, paket langganan, kasus batas dan pola tampilan; file `99` memetakan setiap bab manual ke kasus ujinya.
+
+**Cara dibuat:** profil perusahaan, alur terpadu, titik uji kunci per modul, serta file `98` ditulis tangan. Baris Positif dan Negatif per bab dirancang oleh **Ollama lokal (qwen2.5:7b-instruct)** dari isi tiap bab manual book lewat skrip batch, lalu disaring (pesan error karangan model dibuang) dan dirakit otomatis. Baris dari Ollama berstatus **draf**: penguji menyesuaikannya dengan layar sebenarnya. Skrip pembuat ada di `scripts/generate-testcases/`.
+
+| File | Cakupan | Status Testing |
+| --- | --- | --- |
+| [`sehat-sentosa-farma/00-profil-perusahaan-dan-prasyarat.id.md`](./sehat-sentosa-farma/00-profil-perusahaan-dan-prasyarat.id.md) | Profil, cabang, peran, data acuan, urutan kerja | Belum ditest |
+| [`sehat-sentosa-farma/01-alur-bisnis-terpadu-lintas-modul.id.md`](./sehat-sentosa-farma/01-alur-bisnis-terpadu-lintas-modul.id.md) | 30 langkah lintas modul dengan angka acuan | Belum ditest |
+| `sehat-sentosa-farma/02` sampai `20` | Per modul: platform dan akun, konfigurasi umum, inti dan AI, pembelian, persediaan, penjualan, kanvasing, POS, restoran, manufaktur, pertambangan, sewa, akuntansi dan aset tetap, keuangan, SDM, proyek, dasbor, laporan, halaman publik | Belum ditest |
+| [`sehat-sentosa-farma/98-izin-isolasi-dan-kasus-batas.id.md`](./sehat-sentosa-farma/98-izin-isolasi-dan-kasus-batas.id.md) | Izin, isolasi klien, paket, kasus batas, pola tampilan, bahasa | Belum ditest |
+| [`sehat-sentosa-farma/99-peta-cakupan.id.md`](./sehat-sentosa-farma/99-peta-cakupan.id.md) | Peta semua bab manual book ke kasus uji | Belum ditest |
+
+
 ### `penjualan-sewa-aplikasi/` — Menjual dan menyewakan aplikasi ERP ini sendiri (SaaS)
 
 Skenario platform owner menyewakan aplikasi ke klien langsung dan lewat Mitra: kelola owner, paket dan Onboard Client, add-on dan provisioning modul, harga dan rekap tagihan bulanan, penangguhan klien, isolasi data antar klien, dan kerahasiaan gaji antar karyawan. Jual putus / lisensi self-hosted belum ada fiturnya dan dicatat sebagai batas cakupan di file 00. Skenario otomatis pendampingnya ada di `erpApiServices/tests/Scenarios` (`package_limits_and_module_provisioning.php`, `partner_billing_statement.php`).
