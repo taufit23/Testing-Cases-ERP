@@ -7,6 +7,8 @@ visibility: internal
 
 # 01. Alur Bisnis Terpadu Lintas Modul
 
+> **Mulai dari berlangganan:** sebelum langkah 1, kerjakan [`00a`](./00a-perjalanan-berlangganan-klien.id.md) (landing page, formulir minat, onboarding, pembayaran, sampai login pertama klien). Langkah 1 di bawah adalah ringkasannya.
+>
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) selesai (provider, cabang, pengguna, master data acuan, saldo awal
 > Bank Operasional dan Modal Pemilik masing-masing Rp 500.000.000). Kerjakan **berurutan**: langkah berikutnya memakai hasil langkah
 > sebelumnya. Kolom **Periksa di modul lain** adalah inti suite ini: satu transaksi harus terlihat benar di tempat lain.
@@ -19,7 +21,7 @@ visibility: internal
 
 | # | Modul | Aksi | Hasil dan Periksa di modul lain |
 | --- | --- | --- | --- |
-| 1 | Platform Owner | Onboard Client "PT Sehat Sentosa Farma" dengan paket yang memuat Pembelian, Persediaan, Penjualan, Kanvasing, POS, Restoran, Manufaktur, Pertambangan, Sewa, Akuntansi, Keuangan, Aset Tetap, SDM, Proyek | Provider dan cabang Pusat terbentuk; menu hanya menampilkan modul yang dibeli. **Periksa:** modul di luar paket (uji dengan paket pembanding) menghilang dari menu dan endpoint-nya 403 |
+| 1 | Platform Owner (rinci di `00a` S4 sampai S10) | Dari lead lewat Client Onboarding dan Provision untuk "PT Sehat Sentosa Farma" dengan paket yang memuat Pembelian, Persediaan, Penjualan, Kanvasing, POS, Restoran, Manufaktur, Pertambangan, Sewa, Akuntansi, Keuangan, Aset Tetap, SDM, Proyek | Provider dan cabang Pusat terbentuk; menu hanya menampilkan modul yang dibeli. **Periksa:** modul di luar paket (uji dengan paket pembanding) menghilang dari menu dan endpoint-nya 403 |
 | 2 | Pengaturan Akun | Direktur masuk, ganti kata sandi awal, aktifkan 2FA, tambah 4 cabang lain dan 10 pengguna beserta peran (tabel peran file `00`) | Tiap pengguna hanya melihat cabang dan menu miliknya. **Periksa:** peran Kasir tidak bisa membuka Pembelian (403, tombol nonaktif bila ada di halaman bersama) |
 | 3 | Konfigurasi Umum | Mata uang, pajak PPN 11%, gudang `WH-PST`/`WH-BDG`/`WH-SKB-RM`/`WH-SKB-FG`, metode pembayaran (Tunai, Transfer, QRIS), kategori produk, satuan, awalan nomor dokumen | Master tersedia di semua dropdown. **Periksa:** nomor dokumen memakai awalan dari pengaturan cabang, bukan teks tetap |
 | 4 | Inti (Persetujuan) | Atur alur persetujuan PO > Rp 10.000.000 (Manajer Keuangan lalu Direktur) dan biaya > Rp 2.000.000 | Kedua modul menampilkan tombol pintas ke permintaan persetujuan. **Periksa:** menonaktifkan persetujuan membuat dokumen langsung berstatus disetujui saat diajukan |

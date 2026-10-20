@@ -72,6 +72,13 @@ jalan pintas sementara, P3 = nilai tambah. **Ukuran**: S (hari), M (1 sampai 2 m
 | G34 | Tidak ada akun penampung per metode pembayaran | dana QRIS H+1 tercatat langsung di bank | akun penampung opsional per metode pembayaran, dilepas saat settlement | P2 | M |
 | G35 | Selisih kurs hanya di faktur biaya logistik; laba dan rugi kurs tidak dipisah di laporan | impor bahan baku valas | mata uang di faktur penjualan/pembelian + laporan laba/rugi kurs | P3 | L |
 
+## 5b. Perjalanan berlangganan (dari [`00a`](./00a-perjalanan-berlangganan-klien.id.md))
+
+| ID | Celah | Dampak bisnis | Usulan | Prio | Ukuran |
+| --- | --- | --- | --- | --- | --- |
+| G36 | Tidak ada pendaftaran mandiri: calon klien hanya bisa mengirim formulir minat, lalu menunggu owner membuat onboarding | penjualan SaaS lambat dan bergantung manusia; calon klien berpindah ke pesaing | alur daftar mandiri: pilih paket, isi perusahaan dan akun, bayar (atau mulai uji coba), provisi otomatis memakai pipeline onboarding yang sama; opsi per paket "wajib persetujuan owner" | P2 | L |
+| G37 | Email otomatis tagihan, kredensial, dan pengingat langganan bergantung SMTP yang ditahan | owner harus mengirim manual | aktifkan setelah SMTP siap; bawaan: pesan tercatat dan bisa dikirim ulang dari halaman onboarding | P2 | M |
+
 ## 6. Urutan saran (untuk diputuskan owner)
 
 1. **Cepat dan bernilai (S, P1):** G31 faktur pemasok ganda, G01 peringatan kedaluwarsa, G23 STR/SIP, G09 HET, G11 NIE.

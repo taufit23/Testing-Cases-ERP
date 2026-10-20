@@ -36,8 +36,7 @@ Desember 2026. Periode uji utama: **Oktober 2026**.
 | **Kafe Sehat (lobi klinik)** | kafe pasien dan keluarga | Restoran |
 | **Layanan Sewa Alat Medis** (dikelola Pusat) | kursi roda, tabung oksigen, tempat tidur pasien | Sewa |
 
-Cabang Pusat adalah **cabang utama** (laporan bisa digabung dengan cabang anak). Provider ini dibuat lewat **Onboard Client** oleh
-platform owner (modul Platform Owner), bukan lewat seeder.
+Cabang Pusat adalah **cabang utama** (laporan bisa digabung dengan cabang anak). Provider ini **lahir dari alur berlangganan** ([`00a`](./00a-perjalanan-berlangganan-klien.id.md)): calon klien menemukan aplikasi di landing page, mengirim formulir minat, owner membuat Client Onboarding dan memprovisi, klien membayar tagihan dan login pertama. Data cabang, pengguna dan master di bawah ini dibuat **klien sendiri setelah itu**, bukan diisi lebih dulu oleh admin atau seeder.
 
 ## 2. Peran dan pengguna uji
 
@@ -101,7 +100,8 @@ persediaan awal, supaya angka di file `01` bisa dihitung dari nol.
 
 ## 4. Urutan kerja yang disarankan
 
-1. File `02` (Platform Owner, Mulai Menggunakan, Pengaturan Akun): provider, cabang, pengguna, peran.
+0. File [`00a`](./00a-perjalanan-berlangganan-klien.id.md): **titik awal**, perjalanan berlangganan dari landing page sampai login pertama dan penagihan berkala.
+1. File `02` (Platform Owner, Mulai Menggunakan, Pengaturan Akun): kedalaman per bab untuk provider, cabang, pengguna, peran.
 2. File `03` (Konfigurasi Umum, Inti, Persetujuan): master data, template, alur persetujuan.
 3. File `01` (alur terpadu) berjalan **mengikuti urutan langkahnya** dan memanggil file modul bila perlu rincian.
 4. File modul `04` sampai `20` untuk kedalaman per bab, termasuk kasus Negatif dan izin.
