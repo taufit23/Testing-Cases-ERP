@@ -1,7 +1,7 @@
 ---
 title: (PT Sehat Sentosa Farma) — 00a. Perjalanan Berlangganan Klien (Titik Awal Suite)
 category: sehat-sentosa-farma
-description: Suite dimulai dari calon klien yang berlangganan sendiri lewat halaman pendaftaran (/daftar), memilih paket dan layanan, lalu pemilik platform menyetujui dan langganan dimulai. Mode uji menjadikan persetujuan sebagai pengganti pembayaran. Memuat juga jalur lead lama, penagihan berkala, ganti paket, penangguhan, dan berhenti.
+description: Suite dimulai dari calon klien yang berlangganan sendiri lewat halaman pendaftaran (/subscribe), memilih paket dan layanan, lalu pemilik platform menyetujui dan langganan dimulai. Mode uji menjadikan persetujuan sebagai pengganti pembayaran. Memuat juga jalur lead lama, penagihan berkala, ganti paket, penangguhan, dan berhenti.
 visibility: internal
 ---
 
@@ -12,7 +12,7 @@ visibility: internal
 >
 > **Aktor:** *Calon klien* (belum login), *Platform Owner* (pemilik aplikasi), *Klien* (Dr. Rahmat setelah punya akun), *Mitra* (reseller, opsional).
 >
-> **Pendaftaran mandiri sudah ada (2026-10-20).** Calon klien membuka `/daftar`, memilih paket (dan modul tambahan), mengisi perusahaan dan akunnya (termasuk kata sandi pilihan sendiri), lalu mengirim pengajuan.
+> **Pendaftaran mandiri sudah ada (2026-10-20).** Calon klien membuka `/subscribe`, memilih paket (dan modul tambahan), mengisi perusahaan dan akunnya (termasuk kata sandi pilihan sendiri), lalu mengirim pengajuan.
 > **Tidak ada yang terbentuk sebelum pemilik platform menyetujui.** Manual: `erpApiServices/docs/manualBook/platform-owner/09-pendaftaran-mandiri-klien.md`.
 >
 > **Mode uji (yang dipakai suite ini).** Pengaturan platform `subscription_self_service_activation` bernilai **`on_approval`**: saat pemilik platform menyetujui, tagihan pertama langsung ditandai lunas
@@ -29,7 +29,7 @@ visibility: internal
 | # | Aktor | Aksi | Hasil yang diharapkan | Periksa |
 | --- | --- | --- | --- | --- |
 | S1 | Calon klien | Buka halaman depan: banner, fitur, modul, harga, testimoni, FAQ, profil | Semua bagian tampil sesuai pengaturan landing; bagian tersembunyi tidak tampil; tombol **Mulai Berlangganan** ada di navbar (desktop dan menu seluler) | Landing berjalan tanpa login; tidak ada data internal; judul dan meta halaman terisi, peta situs dan robots tersedia |
-| S2 | Calon klien | Klik **Mulai Berlangganan** (atau buka `/daftar?plan=<slug>`) | Halaman pendaftaran tampil dengan paket aktif dan publik: harga bulanan atau tahunan (ada pengalih siklus), masa uji coba, batas cabang, pengguna, karyawan, dan modul yang termasuk; paket dari tautan terpilih otomatis | Paket nonaktif atau tidak publik tidak tampil; paket tanpa harga siklus itu ditolak saat kirim; bila pendaftaran mandiri dimatikan, halaman menyatakan tidak tersedia |
+| S2 | Calon klien | Klik **Mulai Berlangganan** (atau buka `/subscribe?plan=<slug>`) | Halaman pendaftaran tampil dengan paket aktif dan publik: harga bulanan atau tahunan (ada pengalih siklus), masa uji coba, batas cabang, pengguna, karyawan, dan modul yang termasuk; paket dari tautan terpilih otomatis | Paket nonaktif atau tidak publik tidak tampil; paket tanpa harga siklus itu ditolak saat kirim; bila pendaftaran mandiri dimatikan, halaman menyatakan tidak tersedia |
 | S3 | Calon klien | Pilih **Paket Grup Kesehatan**, siklus bulanan; **tidak** memilih uji coba; tambah modul tambahan yang belum ada di paket; isi perusahaan "PT Sehat Sentosa Farma", kontak Dr. Rahmat, telepon, cabang pertama "Kantor Pusat & Distribusi Jakarta", kata sandi pilihan sendiri; centang persetujuan; **Kirim Pengajuan** | Berpindah ke halaman **status** berisi nomor ONB, perusahaan, paket, dan "Menunggu persetujuan"; halaman menyegarkan diri tiap 15 detik | Modul yang sudah termasuk paket tidak muncul sebagai tambahan; uji coba hanya bisa dicentang bila paket menyediakannya; tombol kirim nonaktif sampai kolom wajib, kata sandi sama, dan persetujuan terpenuhi |
 | S3a | Calon klien | Kasus negatif pengajuan | Ditolak dengan pesan per kolom, tanpa membuat data | Email kontak sudah terdaftar sebagai perusahaan atau pengguna, atau sudah ada pengajuan tertunda dengan email sama: ditolak; kata sandi kurang dari 8 atau tidak sama: ditolak; persetujuan tidak dicentang: ditolak; telepon bukan angka: ditolak; kolom jebakan terisi: dijawab seperti sukses tetapi tidak menyimpan apa pun; lebih dari 5 pengajuan per menit: dibatasi |
 | S3b | Calon klien | Buka halaman status dengan token salah atau tanpa token | Pesan "pengajuan tidak ditemukan" dan tautan membuat pengajuan baru | Token tidak dapat ditebak; tidak membocorkan jenis onboarding lain |
@@ -88,7 +88,7 @@ Ulangi S3 sampai S7 dengan `subscription_self_service_activation` = `on_payment`
 
 ## Jalur lain: lead dan onboarding oleh owner (tetap ada)
 
-Calon klien yang tidak memakai `/daftar` bisa mengirim **formulir minat** di landing (lead berstatus Baru); owner menindaklanjuti di **Landing Leads**, membuat **Client Onboarding** dari lead itu, lalu **Provision**,
+Calon klien yang tidak memakai `/subscribe` bisa mengirim **formulir minat** di landing (lead berstatus Baru); owner menindaklanjuti di **Landing Leads**, membuat **Client Onboarding** dari lead itu, lalu **Provision**,
 tagihan, **serah kredensial**, dan login pertama. Uji: validasi formulir (nama dan email wajib, batas laju 10 per menit), status lead Baru, Sudah Dihubungi, Qualified, Closed; onboarding dari lead (telepon angka 6 sampai 15
 digit, kode pos 5 digit); provision atomik dan tidak bisa dua kali; peran milik klien lain tidak bisa dipinjam; izin awal hanya izin klien; tahap onboarding diturunkan dari data nyata.
 
@@ -97,7 +97,7 @@ digit, kode pos 5 digit); provision atomik dan tidak bisa dua kali; peran milik 
 | Skenario | Hasil yang diharapkan |
 | --- | --- |
 | Peran selain owner memanggil endpoint onboarding, langganan, tagihan, lead, setujui, tolak | 403; tidak ada data bocor |
-| Pendaftaran mandiri dimatikan (`subscription_self_service_enabled` salah) lalu kirim pengajuan | Ditolak (403) dan halaman `/daftar` menyatakan tidak tersedia |
+| Pendaftaran mandiri dimatikan (`subscription_self_service_enabled` salah) lalu kirim pengajuan | Ditolak (403) dan halaman `/subscribe` menyatakan tidak tersedia |
 | Modul tambahan yang inti atau nonaktif dikirim di pengajuan | Ditolak dengan pesan modul tidak dapat ditambahkan |
 | Tautan pembayaran klien A dibuka dengan token B | Seperti tautan tidak ada |
 | Klien tertangguhkan memanggil API setelah login lama | Ditolak dengan pesan penangguhan; sesi lama tidak lolos |
