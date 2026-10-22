@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** **Dr. Rahmat** (admin klien). Bagian ini membuat data master, jadi kerjakan **sebelum** transaksi apa pun. Template yang dipakai datang dari owner (file `02` bagian 3 dan 4).
+
+**Cabang aktif:** Pusat dulu; ulangi bagian yang bersifat per cabang (mata uang, gudang, tahun fiskal, pajak) di tiap cabang lain.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Nomor dokumen memakai awalan dari pengaturan cabang dan unik per cabang.
@@ -21,6 +27,8 @@ visibility: internal
 
 Bab manual: [`konfigurasi-umum/01-mata-uang.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/01-mata-uang.md)
 
+**Input di:** `Client Master → Currencies` (`/client-master/currencies`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Konfigurasi mata uang (draf) | Pilih Rupiah sebagai mata uang default, atur pemisah ribuan dengan koma dan desimal dengan titik | Pengaturan berhasil, tampilan konfirmasi dengan setting yang diubah |
@@ -32,6 +40,8 @@ Bab manual: [`konfigurasi-umum/01-mata-uang.md`](../../erpApiServices/docs/manua
 ## 2. Warehouse — Konfigurasi Umum
 
 Bab manual: [`konfigurasi-umum/02-warehouse.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/02-warehouse.md)
+
+**Input di:** `Client Master → Warehouses` (`/client-master/warehouses`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -46,6 +56,10 @@ Bab manual: [`konfigurasi-umum/02-warehouse.md`](../../erpApiServices/docs/manua
 
 Bab manual: [`konfigurasi-umum/03-kategori-dan-satuan-produk.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/03-kategori-dan-satuan-produk.md)
 
+**Input di:** `Client Master → Product Categories` (`/client-master/product-categories`) dan `Client Master → Product Units` (`/client-master/product-units`).
+
+**Perhatikan:** **Kerjakan sebelum membuat Product Catalog** — kategori dan satuan adalah field wajib saat membuat produk/SKU.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | Membuat kategori "Obat" dan satuan "pcs", "dus"; mengimpor data dari Excel; berhasil membuat kategori & satuan produk | Kategori & satuan produk terkonfigurasi dengan benar |
@@ -58,6 +72,8 @@ Bab manual: [`konfigurasi-umum/03-kategori-dan-satuan-produk.md`](../../erpApiSe
 
 Bab manual: [`konfigurasi-umum/04-metode-pembayaran-dan-tipe-order.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/04-metode-pembayaran-dan-tipe-order.md)
 
+**Input di:** `Client Master → Payment Methods` (`/client-master/payment-methods`) dan `Client Master → Order Types` (`/client-master/order-types`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | Menambahkan metode pembayaran QRIS dan tipe order dine-in di Apotek Sentosa Bandung | Metode pembayaran QRIS ditampilkan dalam daftar dan tipe order dine-in dapat dipilih saat transaksi |
@@ -68,6 +84,10 @@ Bab manual: [`konfigurasi-umum/04-metode-pembayaran-dan-tipe-order.md`](../../er
 ## 5. Fiscal Year & Accounting Period — Konfigurasi Umum
 
 Bab manual: [`konfigurasi-umum/05-fiscal-year-dan-accounting-period.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/05-fiscal-year-dan-accounting-period.md)
+
+**Input di:** `Client Master → Fiscal Year` (`/client-master/fiscal-year`).
+
+**Perhatikan:** **Kerjakan ini SEBELUM ada jurnal/saldo awal apa pun** — lihat manual book Akuntansi _01. Setup Master Data & Saldo Awal_ untuk konteks lebih lengkap, dan _04. Tutup Periode & Tahun Fiskal_ untuk proses closing-nya.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -83,6 +103,8 @@ Bab manual: [`konfigurasi-umum/05-fiscal-year-dan-accounting-period.md`](../../e
 
 Bab manual: [`konfigurasi-umum/06-status-setup.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/06-status-setup.md)
 
+**Input di:** `Client Master → Statuses` (`/client-master/statuses`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Status Setup (draf) | Input status draft untuk Paracetamol 500 mg strip (SKU OBT-001) | Berhasil disimpan dengan status draft |
@@ -94,6 +116,10 @@ Bab manual: [`konfigurasi-umum/06-status-setup.md`](../../erpApiServices/docs/ma
 
 Bab manual: [`konfigurasi-umum/07-permissions.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/07-permissions.md)
 
+**Input di:** `Client Master → Permissions` (`/client-master/permissions`).
+
+**Perhatikan:** **Terkait:** manual book _Manual Book New Client → 01. Mendaftarkan Client Baru_ (langkah "Buat Role Akses").
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | Memilih permission pesan yang jelas dan menyimpan | Role terkonfigurasi dengan permission yang tepat untuk Apoteker Penanggung Jawab |
@@ -104,6 +130,10 @@ Bab manual: [`konfigurasi-umum/07-permissions.md`](../../erpApiServices/docs/man
 ## 8. App Setup & Integration Configs — Konfigurasi Umum
 
 Bab manual: [`konfigurasi-umum/08-app-setup-dan-integration-configs.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/08-app-setup-dan-integration-configs.md)
+
+**Input di:** `Core → App Setup` (`/core/app-setup`) dan `Core → Integration Configs` (`/core/integration-configs`).
+
+**Perhatikan:** **Catatan**: dua halaman ini biasanya dikerjakan sekali di awal oleh tim teknis/admin platform, bukan bagian dari operasional harian staff cabang.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -117,6 +147,8 @@ Bab manual: [`konfigurasi-umum/08-app-setup-dan-integration-configs.md`](../../e
 
 Bab manual: [`konfigurasi-umum/09-cost-centers.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/09-cost-centers.md)
 
+**Input di:** `Finance → Cost Centers` (`/finance/cost-centers`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | membuat Cost Center 'Gudang' di bawah Business Unit 'Jakarta', menambah biaya gaji staf gudang | struktur Cost Center terbentuk dengan hierarki yang benar dan biaya terkategorikan dengan tepat |
@@ -128,6 +160,10 @@ Bab manual: [`konfigurasi-umum/09-cost-centers.md`](../../erpApiServices/docs/ma
 
 Bab manual: [`konfigurasi-umum/10-product-catalog.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/10-product-catalog.md)
 
+**Input di:** `Client Master → Products` (`/client-master/products`).
+
+**Prasyarat:** Product Categories, Product Units, dan Chart of Accounts sudah ada (lihat chapter _03. Kategori & Satuan Produk_).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | Membuat produk Paracetamol 500 mg strip (SKU OBT-001), mengatur harga Rp2.000, menambahkan gambar, dan mengatur buffer stock 10-50 | Produk ditambahkan dengan detail benar, harga dan gambar terkait, buffer stock berhasil diset |
@@ -138,6 +174,10 @@ Bab manual: [`konfigurasi-umum/10-product-catalog.md`](../../erpApiServices/docs
 ## 11. Kontak (Supplier & Customer) — Konfigurasi Umum
 
 Bab manual: [`konfigurasi-umum/11-kontak-supplier-dan-customer.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/11-kontak-supplier-dan-customer.md)
+
+**Input di:** `Client Master → Contacts` (`/client-master/contacts`).
+
+**Prasyarat:** Tidak ada — halaman ini bisa langsung diakses begitu punya akses ke branch.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -153,6 +193,10 @@ Bab manual: [`konfigurasi-umum/11-kontak-supplier-dan-customer.md`](../../erpApi
 
 Bab manual: [`konfigurasi-umum/12-user-dan-role.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/12-user-dan-role.md)
 
+**Input di:** `Client Master → Users` (`/client-master/users`) dan `Client Master → Roles` (`/client-master/roles`).
+
+**Prasyarat:** Tidak ada, tapi lihat chapter _07. Permissions_ untuk detail daftar permission per fitur sebelum bikin role baru.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membuat Akun Login (draf) | Buat user baru dengan detail: nama, username, password, role 'Kasir' | User Kasir berhasil dibuat dan memiliki akses sesuai role |
@@ -167,6 +211,8 @@ Bab manual: [`konfigurasi-umum/12-user-dan-role.md`](../../erpApiServices/docs/m
 
 Bab manual: [`konfigurasi-umum/13-pajak-dan-daftar-harga.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/13-pajak-dan-daftar-harga.md)
 
+**Input di:** `Client Master → Taxes` (`/client-master/taxes`) · `Client Master → Price Lists` (`/client-master/price-lists`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — membuat pajak PPN (draf) | masukkan kode PPN, tarif 10%, sifat penerimaan otomatis | pajak berhasil ditambahkan ke entitas |
@@ -177,6 +223,10 @@ Bab manual: [`konfigurasi-umum/13-pajak-dan-daftar-harga.md`](../../erpApiServic
 ## 14. Manajemen Cabang (Branch) — Konfigurasi Umum
 
 Bab manual: [`konfigurasi-umum/14-manajemen-cabang.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/14-manajemen-cabang.md)
+
+**Input di:** `Client Master → Branch Manage` (`/client-master/branch-manage`).
+
+**Prasyarat:** akun sudah login sebagai admin/pemilik provider (yang berhak membuat cabang baru).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -193,6 +243,10 @@ Bab manual: [`konfigurasi-umum/14-manajemen-cabang.md`](../../erpApiServices/doc
 
 Bab manual: [`konfigurasi-umum/15-produk-lanjutan-varian-modifier-dan-resep.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/15-produk-lanjutan-varian-modifier-dan-resep.md)
 
+**Input di:** `Client Master → Product SKUs` (`/client-master/product-skus`), `Client Master → Product Modifiers` (`/client-master/product-modifiers`), `Client Master → Product Recipes` (`/client-master/product-recipes`).
+
+**Prasyarat:** Produk induk dan Satuan Produk sudah dibuat — lihat chapter _10. Product Catalog_ dan _03. Kategori dan Satuan Produk_.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Varian Produk (draf) | Menambah SKU Paracetamol 500 mg strip (OBT-001) dengan ukuran kecil dan besar; atur harga bertingkat; tambah modifier topping alpukat dan stroberi untuk menu kafe | Varian baru ditambahkan dengan harga dan modifier yang sesuai |
@@ -204,6 +258,10 @@ Bab manual: [`konfigurasi-umum/15-produk-lanjutan-varian-modifier-dan-resep.md`]
 ## 16. Cash Register & Sales Channel — Konfigurasi Umum
 
 Bab manual: [`konfigurasi-umum/16-cash-register-dan-sales-channel.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/16-cash-register-dan-sales-channel.md)
+
+**Input di:** `Client Master → Cash Registers` (`/client-master/cash-registers`) dan `Client Master → Sales Channels` (`/client-master/sales-channels`).
+
+**Prasyarat:** modul terkait (POS/Penjualan) sudah aktif untuk branch ini.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -219,6 +277,10 @@ Bab manual: [`konfigurasi-umum/16-cash-register-dan-sales-channel.md`](../../erp
 
 Bab manual: [`konfigurasi-umum/17-kurs-mata-uang-per-cabang.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/17-kurs-mata-uang-per-cabang.md)
 
+**Input di:** `Client Master → Exchange Rates` (`/client-master/exchange-rates`).
+
+**Prasyarat:** mata uang asing yang mau dipakai sudah terdaftar di **Client Master → Currencies** (lihat chapter _01. Mata Uang_) dan cabang sudah punya mata uang dasar (base/reporting currency).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Menambah Kurs Baru (draf) | Tambah kurs USD dengan tgl 1 Januari 2023, nilai 14500 Rupiah | Kurs baru muncul dalam daftar kurs cabang Sentosa Farma |
@@ -231,6 +293,10 @@ Bab manual: [`konfigurasi-umum/17-kurs-mata-uang-per-cabang.md`](../../erpApiSer
 
 Bab manual: [`konfigurasi-umum/18-pengaturan-tampilan-pdf.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/18-pengaturan-tampilan-pdf.md)
 
+**Input di:** `Client Master → PDF Layout Settings` (`/client-master/pdf-layout-settings`).
+
+**Prasyarat:** tidak ada — halaman ini bersifat konfigurasi satu-record per cabang (bukan daftar), langsung menampilkan form pengaturan.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Mengatur tampilan PDF (draf) | Pilih "Kop Suratpesan yang jelasTampilanpesan yang jelasTotal Harga" di "Tabel Item"; simpan perubahan. | Tampilan PDF sesuai dengan desain Sentosa Farma, termasuk logo, warna biru, dan kolom total harga. |
@@ -242,6 +308,8 @@ Bab manual: [`konfigurasi-umum/18-pengaturan-tampilan-pdf.md`](../../erpApiServi
 ## 19. Denominasi Uang dan Deposit Kasir
 
 Bab manual: [`konfigurasi-umum/19-denominasi-uang-dan-deposit-kasir.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/19-denominasi-uang-dan-deposit-kasir.md)
+
+**Input di:** `Client Master → Cash Denominations` (`/client-master/cash-denominations`) · `Client Master → Cashier Deposits` (`/client-master/cashier-deposits`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -258,6 +326,8 @@ Bab manual: [`konfigurasi-umum/19-denominasi-uang-dan-deposit-kasir.md`](../../e
 
 Bab manual: [`konfigurasi-umum/23-pola-transaksi.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/23-pola-transaksi.md)
 
+**Input di:** `Client Master → Transaction Patern Types` (`/client-master/transaction-patern-types`) · `Client Master → Transaction Paterns` (`/client-master/transaction-paterns`). **Catatan: bab manual ini menyatakan halamannya sudah tidak ada di aplikasi; kasus di bagian ini kemungkinan tidak berlaku.**
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Menambah Tipe Transaksi (draf) | Klik "Tambah Tipe", isi nama "Retur Obatpesan yang jelasPenjualan", konfirmasi | Tampilan berhasil menambahkan tipe transaksi Retur Obat pada Transaction Patern Types |
@@ -269,6 +339,8 @@ Bab manual: [`konfigurasi-umum/23-pola-transaksi.md`](../../erpApiServices/docs/
 ## 21. Tipe Dokumen Legal dan Permintaan Data Pribadi
 
 Bab manual: [`konfigurasi-umum/24-dokumen-legal-dan-permintaan-data-pribadi.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/24-dokumen-legal-dan-permintaan-data-pribadi.md)
+
+**Input di:** `Client Master → Legal Document Types` (`/client-master/legal-document-types`) · `Client Master → Personal Data Requests` (`/client-master/data-subject-requests`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -282,6 +354,8 @@ Bab manual: [`konfigurasi-umum/24-dokumen-legal-dan-permintaan-data-pribadi.md`]
 
 Bab manual: [`konfigurasi-umum/25-tata-letak-menu-dan-log-pribadi.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/25-tata-letak-menu-dan-log-pribadi.md)
 
+**Input di:** `Client Master → Menu Layout` (`/client-master/menu-layout`) · `Client Master → My Activity Log` (`/client-master/personal-logs`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Tata Letak Menu (draf) | Membuat tata letak, mengatur urutan dan grup, menambah item, mengubah dan menghapus entitas dengan benar; membaca log aktivitas | Tampilan menu sesuai desain, log aktivitas tercatat dengan lengkap |
@@ -292,6 +366,8 @@ Bab manual: [`konfigurasi-umum/25-tata-letak-menu-dan-log-pribadi.md`](../../erp
 ## 23. Pergerakan Stok
 
 Bab manual: [`konfigurasi-umum/26-pergerakan-stok.md`](../../erpApiServices/docs/manualBook/konfigurasi-umum/26-pergerakan-stok.md)
+
+**Input di:** `Client Master → Inventory` (`/client-master/inventory`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

@@ -24,6 +24,26 @@ visibility: internal
 > `subscription_self_service_enabled` = benar. Untuk jalur pembayaran: akun gateway platform sandbox (panduan: `erpApiServices/docs/panduan-uji-kredensial-pembayaran.id.md`).
 > Email otomatis belum aktif (SMTP ditahan, celah **G37** di [`95`](./95-daftar-celah-dan-usulan-perbaikan.id.md)): calon klien mengikuti perkembangan dari halaman status.
 
+## Alamat halaman yang dipakai di perjalanan ini
+
+| Langkah | Siapa | Halaman | Yang dikerjakan |
+| --- | --- | --- | --- |
+| S1 | Calon klien (tanpa login) | `/` (landing) | Melihat banner, fitur, harga, FAQ |
+| S2, S3, S3a | Calon klien | `/subscribe` (atau `/subscribe?plan=<slug>`) | Memilih paket, mengisi perusahaan, akun, kata sandi, mengirim pengajuan |
+| S3b, S7 | Calon klien | `/subscribe/status?token=...` | Melihat status; tombol Masuk muncul setelah disetujui |
+| S4, S4a, S5, S6 | Owner | `Core → Subscriptions → Onboarding` (`/core/subscriptions/onboarding`), lalu detailnya | Melihat pengajuan, menyetujui (**Approve Request**) atau menolak (**Reject Request**) |
+| S8 | Klien | `/auth/login` | Masuk, lalu ubah kata sandi dan aktifkan 2FA di `/settings/security` |
+| S9 | Klien | `/settings/subscription` | Melihat paket, status, batas, fitur |
+| S11 | Klien | `/client-master/branch-manage`, `/client-master/users`, `/client-master/roles`, `/hrm/employees` | Menambah cabang, pengguna, peran, karyawan (kena batas paket) |
+| S13 | Klien | `/settings/subscription` | Meminta ganti paket atau add-on |
+| S14, S15, S16, S17, S18 | Owner | `Core → Subscriptions` (`/core/subscriptions`), `Core → Billing Prices` (`/core/billing-prices`) | Ganti paket, jalankan job harian, tandai lunas, tangguhkan, aktifkan ulang |
+| S19 | Owner | `/dashboard/subscriptions`, `/dashboard/core` | Mencocokkan angka dasbor dengan daftar |
+| S20 | Owner | `Core → Partners` (`/core/partners`), `Partner Statements` (`/core/partner-statements`), `Partner Overview` (`/core/partner-overview`) | Rekap tagihan mitra |
+| Jalur lead | Owner | `Core → Landing Leads` (`/core/landing-leads`), lalu `/core/subscriptions/onboarding` → buat dari lead | Menindaklanjuti formulir minat |
+| Pengaturan platform | Owner | `Core → App Setup` (`/core/app-setup`) | Nilai `subscription_self_service_enabled` dan `subscription_self_service_activation` |
+| Paket dan modulnya | Owner | `Core → Subscription Plans` (`/core/subscription-plans`), `Core → Module Packages` (`/core/module-packages`) | Mengaktifkan paket (Active dan Public), mengisi harga dan batas |
+| Akun gateway platform | Owner | `Core → Platform Gateway Accounts` (`/core/platform-gateway-accounts`) | Kunci sandbox untuk jalur pembayaran |
+
 ## Fase 1. Calon klien menemukan dan memilih (tanpa login)
 
 | # | Aktor | Aksi | Hasil yang diharapkan | Periksa |

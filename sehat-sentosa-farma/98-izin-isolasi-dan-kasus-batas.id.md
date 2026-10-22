@@ -10,6 +10,19 @@ visibility: internal
 > Prasyarat: alur `01` selesai sampai langkah 14 (ada dokumen di Pembelian, Persediaan, Penjualan, Keuangan). Kasus di sini ditulis tangan
 > dan **tidak berasal dari Ollama**, karena menyangkut keamanan dan keputusan desain yang sudah ditetapkan.
 
+## Halaman yang dipakai di file ini
+
+| Bagian | Dikerjakan di | Siapa |
+| --- | --- | --- |
+| 1 Izin per peran | Atur izin di `/client-master/roles`; uji dengan masuk sebagai pengguna `/client-master/users` yang berperan itu | Dr. Rahmat mengatur, lalu masuk bergantian sebagai tiap peran |
+| 2 Isolasi antar klien dan cabang | Butuh **dua perusahaan klien**. Perusahaan kedua dibuat lewat `/subscribe` lalu disetujui di `/core/subscriptions/onboarding`. Antar cabang: pindah cabang aktif di aplikasi | Owner membuat klien kedua; uji dari akun masing-masing |
+| 3 Paket langganan dan fitur terkunci | Owner mengubah paket di `/core/subscriptions`; klien melihat menu berubah | Owner dan klien |
+| 4 Kasus batas angka | Form dokumen di modul terkait (jumlah, harga, diskon) | Peran yang berhak atas dokumen itu |
+| 5 Pola tampilan | Setiap halaman transaksi | Siapa saja |
+| 6 Bahasa dan teks | `/settings` (bahasa tampilan) | Dr. Rahmat |
+
+> Bagian 2 butuh klien kedua. Tanpa itu, uji isolasi antar klien tidak bisa dijalankan; catat sebagai ditunda.
+
 ## 1. Izin per peran
 
 | Skenario | Detail | Hasil |

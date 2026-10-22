@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi oleh **Dr. Rahmat**. Transaksi stok oleh **Hendra Saputra** (Kepala Gudang); persetujuan penyesuaian oleh **Sari Wulandari**.
+
+**Cabang aktif:** Pusat; transfer dan opname juga menyentuh Apotek Bandung.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Transfer stok bertahap (pengiriman ganda) dan penerimaan di gudang tujuan; nilai gabungan tidak berubah.
@@ -20,6 +26,8 @@ visibility: internal
 ## 1. Konfigurasi Inventory — Modul Inventory
 
 Bab manual: [`inventory/01-konfigurasi-inventory.md`](../../erpApiServices/docs/manualBook/inventory/01-konfigurasi-inventory.md)
+
+**Input di:** `Inventory → Config` (`/inventory/config`) · `Inventory → Warehouse Supply Sources` (`/inventory/warehouse-supply-sources`) · `Inventory → Buffer Stock` (`/inventory/buffer-stock`) · `Inventory → Stock History` (`/inventory/stock-history`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -35,6 +43,8 @@ Bab manual: [`inventory/01-konfigurasi-inventory.md`](../../erpApiServices/docs/
 
 Bab manual: [`inventory/02-stock-adjustment.md`](../../erpApiServices/docs/manualBook/inventory/02-stock-adjustment.md)
 
+**Input di:** `Inventory → Stock Adjustments` (`/inventory/stock-adjustments`) dan `Inventory → Stock Adjustment Reasons` (`/inventory/stock-adjustment-reasons`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Menyesuaikan Stok Awal (draf) | Input SKU OBT-001 dengan qty 500 unit; pilih alasan 'Stok awal'; submit & post | Stok OBT-001 berubah menjadi 500 unit, status transaksi tercatat dengan benar |
@@ -47,6 +57,8 @@ Bab manual: [`inventory/02-stock-adjustment.md`](../../erpApiServices/docs/manua
 ## 3. Stock Transfer — Modul Inventory
 
 Bab manual: [`inventory/03-stock-transfer.md`](../../erpApiServices/docs/manualBook/inventory/03-stock-transfer.md)
+
+**Input di:** `Inventory → Stock Transfers` (`/inventory/stock-transfers`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -62,6 +74,8 @@ Bab manual: [`inventory/03-stock-transfer.md`](../../erpApiServices/docs/manualB
 
 Bab manual: [`inventory/04-stock-take.md`](../../erpApiServices/docs/manualBook/inventory/04-stock-take.md)
 
+**Input di:** `Inventory → Stock Takes` (`/inventory/stock-takes`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Stock Take Apotek Sentosa Bandung (draf) | Membuat sesi opname, scan barcode produk, mengoreksi manual jika gagal, menyelesaikan opname; hasil akhir stok sistem setepat data fisik | Stok sistem sejalan dengan stok fisik, perbedaan tercatat dan dijelaskan |
@@ -72,6 +86,8 @@ Bab manual: [`inventory/04-stock-take.md`](../../erpApiServices/docs/manualBook/
 ## 5. Stock Lots & Serials — Modul Inventory
 
 Bab manual: [`inventory/05-stock-lots-dan-serials.md`](../../erpApiServices/docs/manualBook/inventory/05-stock-lots-dan-serials.md)
+
+**Input di:** `Inventory → Stock Lots` (`/inventory/stock-lots`) dan `Inventory → Stock Serials` (`/inventory/stock-serials`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -84,6 +100,10 @@ Bab manual: [`inventory/05-stock-lots-dan-serials.md`](../../erpApiServices/docs
 ## 6. Consignment Settlements — Modul Inventory
 
 Bab manual: [`inventory/06-consignment-settlements.md`](../../erpApiServices/docs/manualBook/inventory/06-consignment-settlements.md)
+
+**Input di:** `Inventory → Consignment Settlements` (`/inventory/consignment-settlements`).
+
+**Perhatikan:** **Terkait:** _01. Konfigurasi Inventory_ (Consignment Settlement Mode).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

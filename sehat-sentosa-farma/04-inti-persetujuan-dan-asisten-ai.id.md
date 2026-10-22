@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi alur persetujuan oleh **Dr. Rahmat**. Memproses permintaan persetujuan (bagian 4) oleh **Sari Wulandari** (Manajer Keuangan) lalu **Dr. Rahmat** sebagai persetujuan akhir. Kunci AI diisi sekali oleh admin.
+
+**Cabang aktif:** Pusat.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Alur persetujuan per modul dengan langkah dan peran; permintaan muncul di antrean penyetuju; dokumen tidak bisa diputuskan di luar antrean saat alur berjalan.
@@ -19,6 +25,10 @@ visibility: internal
 ## 1. Konfigurasi Approval Workflow — Lintas Modul
 
 Bab manual: [`core/01-konfigurasi-approval-workflow.md`](../../erpApiServices/docs/manualBook/core/01-konfigurasi-approval-workflow.md)
+
+**Input di:** `Client Master → Approval Workflow Configurations` (`/client-master/approval-workflow-configs`).
+
+**Perhatikan:** **Kerjakan ini SEBELUM mengaktifkan toggle "Require ... Approval" di modul manapun** (Purchase Configs, Sales Configs, Journal, dll).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -33,6 +43,8 @@ Bab manual: [`core/01-konfigurasi-approval-workflow.md`](../../erpApiServices/do
 
 Bab manual: [`core/02-asisten-ai.md`](../../erpApiServices/docs/manualBook/core/02-asisten-ai.md)
 
+**Input di:** tombol **Asisten AI** (ikon obrolan) di navbar aplikasi; kunci AI-nya diisi di `Core → Integrations` (`/core/integration-configs`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Aktivasi Asisten AI (draf) | Admin mengambil API key, memasukkan ke aplikasi, uji di server | Asisten AI berfungsi dengan baik, menjawab pertanyaan dan menyiapkan tombol pintasan |
@@ -44,6 +56,8 @@ Bab manual: [`core/02-asisten-ai.md`](../../erpApiServices/docs/manualBook/core/
 ## 3. Cara Dapat API Key AI Provider — Modul Core
 
 Bab manual: [`core/03-cara-dapat-api-key-ai.md`](../../erpApiServices/docs/manualBook/core/03-cara-dapat-api-key-ai.md)
+
+**Input di:** kunci didapat dari situs penyedia AI (Gemini, OpenRouter, Groq, OpenAI, Anthropic), lalu diisi di `Core → Integrations` (`/core/integration-configs`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -60,6 +74,10 @@ Bab manual: [`core/03-cara-dapat-api-key-ai.md`](../../erpApiServices/docs/manua
 
 Bab manual: [`core/04-approval-requests.md`](../../erpApiServices/docs/manualBook/core/04-approval-requests.md)
 
+**Input di:** `Approvals → Approval Requests` (`/approvals/approval-requests`).
+
+**Prasyarat:** Approval Workflow sudah dikonfigurasi (lihat chapter _01. Konfigurasi Approval Workflow_) dan user login sedang aktif dengan Role yang termasuk di salah satu step workflow tersebut.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Approve Purchase Request (draf) | Approver menyetujui permintaan pembelian Paracetamol dari PT Bintang Farmasi Utama | Persetujuan berhasil, status request berubah menjadi approved |
@@ -71,6 +89,8 @@ Bab manual: [`core/04-approval-requests.md`](../../erpApiServices/docs/manualBoo
 ## 5. Agen AI, Aksi, Mode Tutorial, Rangkaian, dan Jadwal — Modul Core
 
 Bab manual: [`core/05-agen-ai-aksi-tutorial-dan-jadwal.md`](../../erpApiServices/docs/manualBook/core/05-agen-ai-aksi-tutorial-dan-jadwal.md)
+
+**Input di:** di dalam panel **Asisten AI** (tombol obrolan di navbar); tidak punya halaman menu sendiri.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

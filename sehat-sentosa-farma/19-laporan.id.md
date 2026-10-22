@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** **Sari Wulandari** atau **Dr. Rahmat**. Laporan baru bermakna setelah ada transaksi.
+
+**Cabang aktif:** Pusat (laporan bisa digabung dengan cabang anak).
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Laporan mendukung cabang anak bila cabang aktif adalah cabang utama.
@@ -17,6 +23,10 @@ visibility: internal
 ## 1. Laporan Lintas Modul — Reports
 
 Bab manual: [`reports/01-laporan-lintas-modul.md`](../../erpApiServices/docs/manualBook/reports/01-laporan-lintas-modul.md)
+
+**Input di:** `Reports → ...` (`/reports/...`).
+
+**Prasyarat:** ada transaksi tercatat di modul terkait (Purchasing, Sales, Inventory, POS, Canvassing).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

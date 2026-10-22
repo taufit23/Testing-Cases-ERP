@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi dan proyek oleh **Dr. Rahmat**; tugas dan catatan waktu oleh anggota proyek.
+
+**Cabang aktif:** Klinik Pratama & Laboratorium Bekasi (proyek akreditasi).
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Tugas, papan, linimasa dan daftar; WIP limit; alur kerja per tipe tugas.
@@ -18,6 +24,10 @@ visibility: internal
 ## 1. Pengaturan Proyek, Tipe Tugas, Label, dan Peran — Modul Proyek & Tugas
 
 Bab manual: [`proyek-dan-tugas/01-konfigurasi-dan-master.md`](../../erpApiServices/docs/manualBook/proyek-dan-tugas/01-konfigurasi-dan-master.md)
+
+**Input di:** `Proyek → Pengaturan Proyek`, `Tipe Tugas`, `Label`, `Peran Proyek`.
+
+**Prasyarat:** data karyawan sudah ada di modul HRM.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -31,6 +41,8 @@ Bab manual: [`proyek-dan-tugas/01-konfigurasi-dan-master.md`](../../erpApiServic
 
 Bab manual: [`proyek-dan-tugas/02-proyek-dan-tugas.md`](../../erpApiServices/docs/manualBook/proyek-dan-tugas/02-proyek-dan-tugas.md)
 
+**Input di:** `Proyek → Proyek`, `Tugas`, `Tugas Saya`, `Papan`, `Kalender`, `Linimasa`, `Beban Kerja`, `Template`, `Workflow`, `Field Kustom`.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membuat Proyek (draf) | Buat proyek pesan yang jelas, tugas pesan yang jelas & "Negosiasi Harga" | Proyek dan tugas terdaftar dengan status "Belum Dimulai" |
@@ -42,6 +54,8 @@ Bab manual: [`proyek-dan-tugas/02-proyek-dan-tugas.md`](../../erpApiServices/doc
 ## 3. Catatan Waktu, Tarif, Penagihan, dan Alokasi — Modul Proyek & Tugas
 
 Bab manual: [`proyek-dan-tugas/03-waktu-tarif-dan-penagihan.md`](../../erpApiServices/docs/manualBook/proyek-dan-tugas/03-waktu-tarif-dan-penagihan.md)
+
+**Input di:** `Proyek → Catatan Waktu`, `Kartu Tarif`, `Peran Proyek`, `Alokasi Sumber Daya`; kartu **Keuangan Proyek** di halaman proyek..
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -55,6 +69,10 @@ Bab manual: [`proyek-dan-tugas/03-waktu-tarif-dan-penagihan.md`](../../erpApiSer
 
 Bab manual: [`proyek-dan-tugas/04-integrasi-git.md`](../../erpApiServices/docs/manualBook/proyek-dan-tugas/04-integrasi-git.md)
 
+**Input di:** `Proyek → Git`, `Rilis`, dan `Pengaturan Proyek → Integrasi Git`.
+
+**Prasyarat:** admin repositori di GitHub/GitLab; `APP_URL` server benar.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Integrasi Git (draf) | Hubungkan repositori GitHub/GitLab; konfigurasi webhook; commit baru di repo muncul di tugas Sentosa Farma; pipeline otomatis berjalan; rilis dikaitkan dengan tugas manajemen keuangan | Semua integrasi dan otomasi berfungsi sesuai harapan |
@@ -65,6 +83,8 @@ Bab manual: [`proyek-dan-tugas/04-integrasi-git.md`](../../erpApiServices/docs/m
 ## 5. Otomasi, Webhook, Portal Klien, Change Request, dan Tiket — Modul Proyek & Tugas
 
 Bab manual: [`proyek-dan-tugas/05-otomasi-portal-dan-tiket.md`](../../erpApiServices/docs/manualBook/proyek-dan-tugas/05-otomasi-portal-dan-tiket.md)
+
+**Input di:** `Proyek → Otomasi`, `Webhook`, `SLA`; kartu **Change Request** dan **Portal Klien** di halaman proyek..
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -77,6 +97,8 @@ Bab manual: [`proyek-dan-tugas/05-otomasi-portal-dan-tiket.md`](../../erpApiServ
 ## 6. Laporan, Dasbor, LogBook, dan Asisten AI — Modul Proyek & Tugas
 
 Bab manual: [`proyek-dan-tugas/06-laporan-logbook-dan-asisten-ai.md`](../../erpApiServices/docs/manualBook/proyek-dan-tugas/06-laporan-logbook-dan-asisten-ai.md)
+
+**Input di:** `Proyek → Laporan Proyek`, `Dasbor Proyek`.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

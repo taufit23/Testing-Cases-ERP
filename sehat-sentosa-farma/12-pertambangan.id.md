@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi oleh **Dr. Rahmat**; produksi dan hauling oleh **Joko Santoso** atau pengguna yang kamu beri peran tambang.
+
+**Cabang aktif:** Pabrik Herbal Sukabumi (tambang kapur dikelola di cabang ini menurut profil `00`; sesuaikan bila kamu membuatnya terpisah).
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Log produksi masuk ke stockpile; stockpile boleh dibatasi ke produk tertentu.
@@ -18,6 +24,10 @@ visibility: internal
 ## 1. Konfigurasi Tambang — Modul Mining
 
 Bab manual: [`mining/01-konfigurasi-tambang.md`](../../erpApiServices/docs/manualBook/mining/01-konfigurasi-tambang.md)
+
+**Input di:** `Mining → Config`, `Mining → Sites`, `Mining → Pits`, `Mining → Equipment`.
+
+**Prasyarat:** Branch aktif sudah dipilih; modul Mining sudah aktif untuk branch ini.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -30,6 +40,10 @@ Bab manual: [`mining/01-konfigurasi-tambang.md`](../../erpApiServices/docs/manua
 
 Bab manual: [`mining/02-parameter-kualitas.md`](../../erpApiServices/docs/manualBook/mining/02-parameter-kualitas.md)
 
+**Input di:** `Mining → Quality Parameters` (`/mining/quality-parameters`).
+
+**Prasyarat:** Tidak ada, tapi disarankan diisi sebelum mulai mencatat Production Log/Hauling supaya data kualitas ikut tercatat sejak awal.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | PT Sehat Sentosa Farma menginput parameter kualitas obat Paracetamol 500 mg strip (SKU OBT-001) dengan kadar tepat 500 mg per tablet, mencapai standar produksi. | Parameter kualitas tercatat dan disetujui. |
@@ -40,6 +54,10 @@ Bab manual: [`mining/02-parameter-kualitas.md`](../../erpApiServices/docs/manual
 ## 3. Produksi dan Hauling — Modul Mining
 
 Bab manual: [`mining/03-produksi-dan-hauling.md`](../../erpApiServices/docs/manualBook/mining/03-produksi-dan-hauling.md)
+
+**Input di:** `Mining → Production Logs` (`/mining/production-logs`), `Mining → Haulings` (`/mining/haulings`).
+
+**Prasyarat:** Site, Pit, Equipment, dan Stockpile sudah dibuat (lihat chapter _01_ dan _04_).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -53,6 +71,10 @@ Bab manual: [`mining/03-produksi-dan-hauling.md`](../../erpApiServices/docs/manu
 
 Bab manual: [`mining/04-stockpile.md`](../../erpApiServices/docs/manualBook/mining/04-stockpile.md)
 
+**Input di:** `Mining → Stockpiles` (`/mining/stockpiles`).
+
+**Prasyarat:** Mining Site sudah dibuat (chapter _01_), Warehouse sudah dibuat di modul Inventory/Konfigurasi Umum.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Mendaftar Stockpile (draf) | Daftar stockpile CV Kapur Medika di Pabrik Herbal Sukabumi; hubungkan dengan gudang pusat | Tumpukan kapur karbonat terdaftar dan tersambung dengan inventaris gudang pusat |
@@ -63,6 +85,10 @@ Bab manual: [`mining/04-stockpile.md`](../../erpApiServices/docs/manualBook/mini
 ## 5. Royalti — Modul Mining
 
 Bab manual: [`mining/05-royalti.md`](../../erpApiServices/docs/manualBook/mining/05-royalti.md)
+
+**Input di:** `Mining → Royalty Rates` (`/mining/royalty-rates`), `Mining → Royalties` (`/mining/royalties`).
+
+**Prasyarat:** Royalty Rate sudah dibuat; sudah ada Hauling berstatus **Delivered** dengan tujuan **bukan stockpile** (Port/Customer/Other) dalam periode yang ingin dihitung.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -78,6 +104,10 @@ Bab manual: [`mining/05-royalti.md`](../../erpApiServices/docs/manualBook/mining
 ## 6. Rekonsiliasi Survey — Modul Mining
 
 Bab manual: [`mining/06-rekonsiliasi-survey.md`](../../erpApiServices/docs/manualBook/mining/06-rekonsiliasi-survey.md)
+
+**Input di:** `Mining → Survey Reconciliations` (`/mining/survey-reconciliations`).
+
+**Prasyarat:** Sudah ada Production Log (Verified) dan/atau Hauling (Delivered) di periode yang mau direkonsiliasi.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

@@ -18,6 +18,8 @@ visibility: internal
 
 ## A. Obat: batch, kedaluwarsa dan penarikan (apotek, PBF, pabrik)
 
+**Halaman terdekat:** `/purchasing/purchase-receipts`, `/inventory/stock-lots`, `/sales/sales-deliveries`, `/sales/sales-returns`, `/inventory/stock-history`. Untuk kebutuhan yang belum didukung, tidak ada halaman input khusus; yang diuji adalah apakah ada tempat untuk mengisinya.
+
 | ID | Kebutuhan | Skenario uji (data acuan file `00`) | Hasil yang diharapkan dari ERP yang matang | Dukungan sekarang | Celah |
 | --- | --- | --- | --- | --- | --- |
 | A1 | Penerimaan dengan batch dan kedaluwarsa | GR OBT-001 2.000 strip: batch `PCT-2610A` kedaluwarsa 2028-10 untuk 1.200 strip dan batch `PCT-2611B` kedaluwarsa 2027-06 untuk 800 strip | Dua lot tercatat di gudang dengan nomor batch, tanggal produksi dan kedaluwarsa masing-masing | **Sebagian**: lot punya nomor, tanggal produksi, kedaluwarsa, status (aktif, kedaluwarsa, karantina, habis); pengisian saat penerimaan perlu diverifikasi di layar GR | G02 |
@@ -32,6 +34,8 @@ visibility: internal
 | A10 | Konsinyasi dengan pemasok | Barang titipan SUP-01 di Apotek Bandung, bayar saat terjual | Hutang muncul hanya untuk yang terjual; sisa dapat dikembalikan | **Ada**: penyelesaian konsinyasi dan penanda konsinyasi di kontak dan lot | — |
 
 ## B. Obat terkontrol, resep dan pelayanan apotek
+
+**Halaman terdekat:** `/pos/pos-transactions/create`, `/client-master/products`, `/inventory/stock-history`. Untuk kebutuhan yang belum didukung, tidak ada halaman input khusus; yang diuji adalah apakah ada tempat untuk mengisinya.
 
 | ID | Kebutuhan | Skenario uji | Hasil yang diharapkan | Dukungan sekarang | Celah |
 | --- | --- | --- | --- | --- | --- |
@@ -48,6 +52,8 @@ visibility: internal
 
 ## C. PBF dan distribusi
 
+**Halaman terdekat:** `/purchasing/purchase-invoices`, `/sales/sales-invoices`, `/canvassing/sales-stock-custodies`, `/client-master/contacts`. Untuk kebutuhan yang belum didukung, tidak ada halaman input khusus; yang diuji adalah apakah ada tempat untuk mengisinya.
+
 | ID | Kebutuhan | Skenario uji | Hasil yang diharapkan | Dukungan sekarang | Celah |
 | --- | --- | --- | --- | --- | --- |
 | C1 | Kualifikasi pelanggan | Daftarkan CUS-02 dengan izin Apotek bermasa berlaku 2027-03 | Dokumen izin pelanggan tersimpan; penjualan obat keras diblokir bila izin kedaluwarsa | **Belum**: ada syarat dokumen hukum per penawaran (NDA, PKS), bukan izin sarana | G12 |
@@ -60,6 +66,8 @@ visibility: internal
 | C8 | Faktur pemasok ganda | Input dua kali faktur PBF dengan nomor pemasok sama | Peringatan atau penolakan faktur ganda | **Belum**: faktur pembelian tidak menyimpan nomor faktur pemasok | G31 |
 
 ## D. Klinik pratama dan laboratorium
+
+**Halaman terdekat:** `/pos/pos-transactions/create`, `/client-master/contacts`, `/hrm/commission-rules`. Untuk kebutuhan yang belum didukung, tidak ada halaman input khusus; yang diuji adalah apakah ada tempat untuk mengisinya.
 
 | ID | Kebutuhan | Skenario uji | Hasil yang diharapkan | Dukungan sekarang | Celah |
 | --- | --- | --- | --- | --- | --- |
@@ -77,6 +85,8 @@ visibility: internal
 
 ## E. Produksi obat tradisional (Pabrik Herbal)
 
+**Halaman terdekat:** `/manufacturing/boms`, `/manufacturing/production-orders`, `/inventory/stock-lots`. Untuk kebutuhan yang belum didukung, tidak ada halaman input khusus; yang diuji adalah apakah ada tempat untuk mengisinya.
+
 | ID | Kebutuhan | Skenario uji | Hasil yang diharapkan | Dukungan sekarang | Celah |
 | --- | --- | --- | --- | --- | --- |
 | E1 | Formula dan perubahan formula | Revisi BOM Jamu Kunyit Asam (kunyit 20 kg menjadi 22 kg) | Versi formula baru berlaku mulai tanggal tertentu, pesanan lama memakai versi lama | **Verifikasi** (BOM ada; versi perlu dicoba) | G27 |
@@ -89,6 +99,8 @@ visibility: internal
 
 ## F. Alat kesehatan dan sewa
 
+**Halaman terdekat:** `/rental/assets`, `/rental/orders`, `/fixed-assets/assets`. Untuk kebutuhan yang belum didukung, tidak ada halaman input khusus; yang diuji adalah apakah ada tempat untuk mengisinya.
+
 | ID | Kebutuhan | Skenario uji | Hasil yang diharapkan | Dukungan sekarang | Celah |
 | --- | --- | --- | --- | --- | --- |
 | F1 | Sewa harian dan deposit | Sewa kursi roda 3 unit 7 hari, deposit, denda | Pesanan sewa, deposit, pengembalian dikurangi denda | **Ada** | — |
@@ -98,6 +110,8 @@ visibility: internal
 
 ## G. SDM tenaga kesehatan
 
+**Halaman terdekat:** `/hrm/employees`, `/hrm/shifts`, `/hrm/leave-requests`. Untuk kebutuhan yang belum didukung, tidak ada halaman input khusus; yang diuji adalah apakah ada tempat untuk mengisinya.
+
 | ID | Kebutuhan | Skenario uji | Hasil yang diharapkan | Dukungan sekarang | Celah |
 | --- | --- | --- | --- | --- | --- |
 | G1 | Masa berlaku STR dan SIP | Apt. Lestari STR berlaku sampai 2027-02, SIP 2027-02 | Dokumen kompetensi per karyawan dengan masa berlaku dan peringatan 90/60/30 hari; tidak boleh dijadwalkan bila kedaluwarsa | **Belum** (ada lampiran dan data karyawan, tanpa jenis izin bermasa berlaku) | G23 |
@@ -106,6 +120,8 @@ visibility: internal
 | G4 | Rekrutmen tenaga medis | Lowongan Apoteker Pendamping, syarat STR | Lamaran dari halaman karier dengan CV | **Ada** (syarat STR hanya sebagai teks kualifikasi) | — |
 
 ## H. Keuangan, pajak dan grup
+
+**Halaman terdekat:** `/accounting/journals`, `/reports/tax-summary`, `/client-master/branch-manage`, `/reports/*`. Untuk kebutuhan yang belum didukung, tidak ada halaman input khusus; yang diuji adalah apakah ada tempat untuk mengisinya.
 
 | ID | Kebutuhan | Skenario uji | Hasil yang diharapkan | Dukungan sekarang | Celah |
 | --- | --- | --- | --- | --- | --- |
@@ -118,6 +134,8 @@ visibility: internal
 | H7 | Pembayaran melalui QRIS menunggu settlement | QRIS terbayar, dana masuk H+1 | Akun penampung sampai dana diterima | **Sebagian**: ada penyelesaian dan akun penampung penyedia untuk gateway; akun penampung per metode tidak | G34 |
 
 ## I. Kepatuhan dan mutu
+
+**Halaman terdekat:** `/client-master/legal-document-types`, `/client-master/data-subject-requests`, `/core/attachment`. Untuk kebutuhan yang belum didukung, tidak ada halaman input khusus; yang diuji adalah apakah ada tempat untuk mengisinya.
 
 | ID | Kebutuhan | Skenario uji | Hasil yang diharapkan | Dukungan sekarang | Celah |
 | --- | --- | --- | --- | --- | --- |

@@ -21,12 +21,17 @@ Satu file ini adalah **peta jalan** untuk menjalankan seluruh suite di folder in
    - **Aturan manual**: lakukan sesuai aturan, lalu langgar aturannya, dan lihat penolakannya.
    - **Peran tanpa izin**: tombol harus **terlihat tetapi nonaktif dengan tooltip alasan** (bukan hilang), dan endpoint menjawab **403**.
    - **Netralisasi**: cara mengembalikan data ke keadaan semula. Kerjakan hanya kalau file berikutnya butuh data awal itu.
-3. **Baris berlabel "(draf)"** dirancang model lokal dari isi manual book. Cocokkan dulu dengan layar sebenarnya. Kalau barisnya tidak masuk akal,
+3. **Kalau bingung "ini diinput di mana":** ada tiga petunjuk di dalam suite.
+   - **File `00` bagian 1.2**: tabel tiap atribut profil perusahaan, tingkatnya (perusahaan atau cabang), menu dan alamat halamannya, serta isi yang dipakai. Bagian 3 memuat input mitra, produk, gudang, akun, dan saldo awal. **Bagian 4.1** memuat urutan memasukkan data acuan.
+   - **Setiap bagian di file `02` sampai `20`** diawali baris **Input di** (menu sidebar dan alamat halaman, diambil dari bab manual book) dan di atasnya ada **Dikerjakan oleh** (peran) serta **Cabang aktif**.
+   - **File `01`** punya kolom **Halaman input** di setiap langkah, dan `00a` punya tabel alamat halaman perjalanan berlangganan.
+   Beberapa hal **memang tidak punya tempat input** (mis. status PKP, merek di profil perusahaan, persediaan awal). Itu dijelaskan di tempatnya, bukan kesalahanmu.
+4. **Baris berlabel "(draf)"** dirancang model lokal dari isi manual book. Cocokkan dulu dengan layar sebenarnya. Kalau barisnya tidak masuk akal,
    catat sebagai "kasus tidak valid", bukan sebagai bug aplikasi.
-4. **Angka acuan di file `01` jangan diubah.** Kalau hasil di layar beda, catat sebagai temuan.
-5. **Satu klien, satu trial.** Jalur penangguhan, ganti paket, dan berhenti berlangganan (`00a` S14 sampai S18) mengubah status langganan
+5. **Angka acuan di file `01` jangan diubah.** Kalau hasil di layar beda, catat sebagai temuan.
+6. **Satu klien, satu trial.** Jalur penangguhan, ganti paket, dan berhenti berlangganan (`00a` S14 sampai S18) mengubah status langganan
    dan bisa mengunci akun uji. Kerjakan **paling akhir**, atau pakai klien uji kedua.
-6. Setiap temuan dicatat di tabel **bagian 6** (jangan hanya diingat).
+7. Setiap temuan dicatat di tabel **bagian 6** (jangan hanya diingat).
 
 ### Ringkasan beban kerja
 
@@ -86,7 +91,7 @@ Tanggal bisa digeser. Yang penting urutan fasenya. Jadwal sengaja menyisakan 3 h
 | Hari | Tanggal | Fokus | File dan bagian |
 | ---: | --- | --- | --- |
 | 1 | Kam 22 Okt | Pondasi akun dan langganan | Bagian 2 di atas; `00a` Fase 1 sampai 4; `02` §9 sampai §10 (masuk, bantuan, pengaturan akun) |
-| 2 | Jum 23 Okt | Master data dasar | `00` data acuan (§3); `03` §1 sampai §9 (mata uang, gudang, kategori, pembayaran, fiscal year, status, permission, app setup) |
+| 2 | Jum 23 Okt | Master data dasar | `00` §1.2 dan §4.1 (urutan input data acuan), lalu `00` §3; `03` §1 sampai §9 (mata uang, gudang, kategori, pembayaran, fiscal year, status, permission, app setup) |
 | 3 | Sab 24 Okt | Master data lanjutan | `03` §10 sampai §23; `01` langkah 2 sampai 5 |
 | 4 | Min 25 Okt | Persetujuan dan AI | `04` §1 sampai §5; ulangi `01` langkah 4 |
 | 5 | Sen 26 Okt | Pembelian | `01` langkah 6 sampai 10; `05` §1 sampai §12 |

@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi oleh **Dr. Rahmat**. Sesi kas dan penjualan oleh **Rina Marlina** (Kasir); retur dan void disetujui **Apt. Lestari Dewi**.
+
+**Cabang aktif:** Apotek Sentosa Bandung.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Satu sesi per kasir; modal awal, hitung pecahan, selisih kas menurut mode.
@@ -19,6 +25,8 @@ visibility: internal
 ## 1. Setup Toko & Cash Session — Modul POS
 
 Bab manual: [`pos/01-setup-toko-dan-cash-session.md`](../../erpApiServices/docs/manualBook/pos/01-setup-toko-dan-cash-session.md)
+
+**Input di:** `Client Master → Warehouses` (`/client-master/warehouses`) dan `POS → Cash Sessions` (`/pos/cash-sessions`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -34,6 +42,10 @@ Bab manual: [`pos/01-setup-toko-dan-cash-session.md`](../../erpApiServices/docs/
 
 Bab manual: [`pos/02-transaksi-penjualan.md`](../../erpApiServices/docs/manualBook/pos/02-transaksi-penjualan.md)
 
+**Input di:** `POS → POS Transactions` (`/pos/pos-transactions`).
+
+**Prasyarat:** Cash Session sudah **Open** untuk toko yang bersangkutan (lihat chapter sebelumnya).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Transaksi Penjualan Tunai (draf) | Pelanggan membeli Paracetamol 500 mg strip (SKU OBT-001) di Apotek Sentosa Bandung; kasir menginput produk dan jumlah; total dibayar pelanggan dengan uang tunai; transaksi selesai. | Kasir menerima pembayaran, transaksi dicatat dalam sistem, stok produk dikurangi. |
@@ -47,6 +59,8 @@ Bab manual: [`pos/02-transaksi-penjualan.md`](../../erpApiServices/docs/manualBo
 ## 3. Void & Refund — Modul POS
 
 Bab manual: [`pos/03-void-dan-refund.md`](../../erpApiServices/docs/manualBook/pos/03-void-dan-refund.md)
+
+**Input di:** `POS → POS Transactions` — dari halaman detail transaksi yang bersangkutan.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -63,6 +77,8 @@ Bab manual: [`pos/03-void-dan-refund.md`](../../erpApiServices/docs/manualBook/p
 
 Bab manual: [`pos/04-tutup-cash-session.md`](../../erpApiServices/docs/manualBook/pos/04-tutup-cash-session.md)
 
+**Input di:** `POS → Cash Sessions` (`/pos/cash-sessions`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Menutup Sesi Kasir (draf) | Klik "Tutup Sesi", masukkan PIN, cek saldo fisik & sistem, selisih terposting otomatis ke jurnal | Selisih diteruskan ke jurnal, sesi ditutup dengan sukses |
@@ -75,6 +91,8 @@ Bab manual: [`pos/04-tutup-cash-session.md`](../../erpApiServices/docs/manualBoo
 
 Bab manual: [`pos/05-verifikasi-ke-accounting.md`](../../erpApiServices/docs/manualBook/pos/05-verifikasi-ke-accounting.md)
 
+**Input di:** tidak ada halaman input; periksa hasilnya di `Accounting → Journals` (`/accounting/journals`), `Accounting → General Ledger` (`/accounting/general-ledger`), dan `Reports → Trial Balance` (`/reports/trial-balance`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Verifikasi POS ke Accounting (draf) | Input transaksi POS dengan benar; cek akun kas dan penyesuaian persediaan; laporan keuangan akurat | Transaksi tercatat di akun kas dan persediaan, laporan keuangan akurat |
@@ -85,6 +103,8 @@ Bab manual: [`pos/05-verifikasi-ke-accounting.md`](../../erpApiServices/docs/man
 ## 6. Konfigurasi POS Lanjutan — Modul POS
 
 Bab manual: [`pos/06-konfigurasi-pos-lanjutan.md`](../../erpApiServices/docs/manualBook/pos/06-konfigurasi-pos-lanjutan.md)
+
+**Input di:** `POS → POS Configurations` (`/pos/pos-configs`) · Satu halaman pengaturan per toko/branch — bukan daftar, langsung tampil form..
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -98,6 +118,8 @@ Bab manual: [`pos/06-konfigurasi-pos-lanjutan.md`](../../erpApiServices/docs/man
 ## 7. Diskon, Promo, Member Tier, dan Cashback — Modul POS
 
 Bab manual: [`pos/07-diskon-promo-member-dan-cashback.md`](../../erpApiServices/docs/manualBook/pos/07-diskon-promo-member-dan-cashback.md)
+
+**Input di:** `Client Master → Discounts`, `Client Master → Member Tiers`, `Client Master → Cashback Rules`, dan `Client Master → Products` (untuk promo beli-gratis & pre-order per produk)..
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

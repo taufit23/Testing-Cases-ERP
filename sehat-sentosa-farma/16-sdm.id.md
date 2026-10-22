@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** **Maya Puspita** (Staf HR). Slip gaji dilihat karyawan sendiri di `My Payslips`.
+
+**Cabang aktif:** Pusat untuk struktur dan payroll; Klinik Pratama & Laboratorium Bekasi untuk karyawan klinik.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Aturan absensi: toleransi, pulang cepat, lembur otomatis dengan persetujuan, konsekuensi gaji hanya bila dinyalakan.
@@ -19,6 +25,10 @@ visibility: internal
 ## 1. Konfigurasi HRM — Modul HRM
 
 Bab manual: [`hrm/01-konfigurasi-hrm.md`](../../erpApiServices/docs/manualBook/hrm/01-konfigurasi-hrm.md)
+
+**Input di:** `HRM → HRM Configs` (`/hrm/hrm-configs`) · `HRM → Employment Types` · `HRM → Shifts` · `HRM → Attendance Statuses`.
+
+**Prasyarat:** akses admin HRM di branch yang aktif.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -33,6 +43,10 @@ Bab manual: [`hrm/01-konfigurasi-hrm.md`](../../erpApiServices/docs/manualBook/h
 
 Bab manual: [`hrm/02-struktur-organisasi.md`](../../erpApiServices/docs/manualBook/hrm/02-struktur-organisasi.md)
 
+**Input di:** `HRM → Departments` (`/hrm/departments`) · `HRM → Positions` (`/hrm/positions`) · `HRM → Organization Structure` (`/hrm/organization-structure`).
+
+**Prasyarat:** tidak ada, ini biasanya diisi paling awal sebelum menambah karyawan.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Struktur Organisasi (draf) | Menambah departemen "Kafe Sehat", menambah posisi kasir dan manajer kafe, mengimport struktur dari Excel | Struktur organisasi terupdate dengan departemen baru dan posisi yang ditambahkan |
@@ -44,6 +58,10 @@ Bab manual: [`hrm/02-struktur-organisasi.md`](../../erpApiServices/docs/manualBo
 ## 3. Data Karyawan — Modul HRM
 
 Bab manual: [`hrm/03-data-karyawan.md`](../../erpApiServices/docs/manualBook/hrm/03-data-karyawan.md)
+
+**Input di:** `HRM → Employees` (`/hrm/employees`) · `HRM → Employee Transfers` (`/hrm/employee-transfers`).
+
+**Prasyarat:** Departemen dan Posisi sudah dibuat (chapter _02. Struktur Organisasi_) supaya bisa dipilih saat mengisi data karyawan.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -60,6 +78,10 @@ Bab manual: [`hrm/03-data-karyawan.md`](../../erpApiServices/docs/manualBook/hrm
 
 Bab manual: [`hrm/04-rekrutmen.md`](../../erpApiServices/docs/manualBook/hrm/04-rekrutmen.md)
 
+**Input di:** `HRM → Job Vacancies` (`/hrm/job-vacancies`) · `HRM → Applications` (`/hrm/applications`) · `HRM → Job Interviews` (`/hrm/job-interviews`) · `HRM → Job Offers` (`/hrm/job-offers`).
+
+**Prasyarat:** Departemen dan Posisi sudah dibuat (chapter _02_).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membuka Lowongan (draf) | Membuka lowongan dokter umum di klinik Bekasi; menerima lamaran dari 15 kandidat; menetapkan wawancara dengan 5 calon terbaik; membuat penawaran kerja kepada 2 kandidat yang disetujui | Proses rekrutmen berjalan lancar, mendapatkan 2 kandidat yang sesuai untuk posisi dokter umum |
@@ -71,6 +93,10 @@ Bab manual: [`hrm/04-rekrutmen.md`](../../erpApiServices/docs/manualBook/hrm/04-
 ## 5. Absensi — Modul HRM
 
 Bab manual: [`hrm/05-absensi.md`](../../erpApiServices/docs/manualBook/hrm/05-absensi.md)
+
+**Input di:** `HRM → Attendances` (`/hrm/attendances`) · `HRM → Attendance Devices` · `HRM → Attendance Device Logs` · `HRM → Attendance Adjustments` · `HRM → My Attendance Adjustments` · `HRM → Attendance Recaps`.
+
+**Prasyarat:** Attendance Statuses dan (kalau perlu jadwal kerja) Shifts/Work Schedules sudah diatur (chapter _01_).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -84,6 +110,8 @@ Bab manual: [`hrm/05-absensi.md`](../../erpApiServices/docs/manualBook/hrm/05-ab
 ## 6. Cuti (Leave) — Modul HRM
 
 Bab manual: [`hrm/06-cuti.md`](../../erpApiServices/docs/manualBook/hrm/06-cuti.md)
+
+**Input di:** sisi HR: `HRM → Leave Types` (`/hrm/leave-types`), `HRM → Leave Balances` (`/hrm/leave-balances`), `HRM → Leave Requests` (`/hrm/leave-requests`). Sisi karyawan (self-service): `HRM → My Leave Requests` (`/hrm/my-leave-requests`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -100,6 +128,10 @@ Bab manual: [`hrm/06-cuti.md`](../../erpApiServices/docs/manualBook/hrm/06-cuti.
 
 Bab manual: [`hrm/07-komponen-gaji.md`](../../erpApiServices/docs/manualBook/hrm/07-komponen-gaji.md)
 
+**Input di:** `HRM → Payroll → Salary Components` (`/hrm/salary-components`).
+
+**Prasyarat:** tidak ada, tapi sebaiknya disiapkan sebelum mulai proses payroll pertama kali.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Menambahkan Tunjangan (draf) | Membuat komponen gaji "Transportasi" dengan jumlah Rp50.000; menyimpan | Komponen "Transportasi" ditambahkan ke daftar gaji dengan nilai sesuai |
@@ -110,6 +142,10 @@ Bab manual: [`hrm/07-komponen-gaji.md`](../../erpApiServices/docs/manualBook/hrm
 ## 8. Referensi Pajak & BPJS — Modul HRM
 
 Bab manual: [`hrm/08-referensi-pajak-dan-bpjs.md`](../../erpApiServices/docs/manualBook/hrm/08-referensi-pajak-dan-bpjs.md)
+
+**Input di:** `HRM → Payroll → Payroll Tax Reference` (`/hrm/payroll-tax-reference`) dan `HRM → Payroll → BPJS Settings` (`/hrm/bpjs-settings`).
+
+**Prasyarat:** tidak ada, tapi harus dicek/diisi sebelum proses payroll pertama supaya potongan pajak & BPJS karyawan terhitung benar.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -126,6 +162,10 @@ Bab manual: [`hrm/08-referensi-pajak-dan-bpjs.md`](../../erpApiServices/docs/man
 
 Bab manual: [`hrm/09-proses-payroll.md`](../../erpApiServices/docs/manualBook/hrm/09-proses-payroll.md)
 
+**Input di:** `HRM → Payroll → Payroll Periods` (`/hrm/payroll-periods`) dan `HRM → Payroll → Payslips` (`/hrm/payslips`).
+
+**Prasyarat:** Komponen Gaji dan Referensi Pajak/BPJS sudah diatur (lihat chapter sebelumnya); karyawan sudah punya data gaji di profil masing-masing.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | membuat periode gaji bulan ini untuk karyawan di klinik dan apotek; memproses perhitungan gaji; menyetujui; menandai sudah dibayar; menerbitkan slip gaji | proses payroll berjalan lancar, slip gaji terbit sesuai harapan |
@@ -140,6 +180,10 @@ Bab manual: [`hrm/09-proses-payroll.md`](../../erpApiServices/docs/manualBook/hr
 
 Bab manual: [`hrm/10-slip-gaji-karyawan.md`](../../erpApiServices/docs/manualBook/hrm/10-slip-gaji-karyawan.md)
 
+**Input di:** `HRM → My Payslips` (`/hrm/my-payslips`).
+
+**Prasyarat:** slip gaji sudah diterbitkan HR dan berstatus **Approved** atau **Paid** (lihat chapter _09. Proses Payroll_).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Karyawan (draf) | Login My Payslips, pilih slip gaji Januari 2023, unduh sebagai PDF | Mendapatkan file PDF dari slip gaji Januari 2023 |
@@ -151,6 +195,10 @@ Bab manual: [`hrm/10-slip-gaji-karyawan.md`](../../erpApiServices/docs/manualBoo
 ## 11. Mapping Jurnal Payroll — Modul HRM
 
 Bab manual: [`hrm/11-mapping-jurnal-payroll.md`](../../erpApiServices/docs/manualBook/hrm/11-mapping-jurnal-payroll.md)
+
+**Input di:** `HRM → Payroll → Payroll Journal Configuration` (`/hrm/payroll-journal-configuration`).
+
+**Prasyarat:** Chart of Accounts (akun-akun akuntansi) sudah disiapkan di modul Accounting.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -164,6 +212,10 @@ Bab manual: [`hrm/11-mapping-jurnal-payroll.md`](../../erpApiServices/docs/manua
 
 Bab manual: [`hrm/12-komisi-sales.md`](../../erpApiServices/docs/manualBook/hrm/12-komisi-sales.md)
 
+**Input di:** `HRM → Commission Rules` (`/hrm/commission-rules`) dan `HRM → Commissions` (`/hrm/commissions`).
+
+**Prasyarat:** Sales Invoice sudah berjalan normal, dan karyawan sales sudah terhubung sebagai salesperson di Sales Order/Invoice terkait.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Atur komisi sales (draf) | Masukkan aturan komisi untuk tim sales; terapkan pada transaksi penjualan; bayar komisi sesuai aturan | Komisi otomatis terbentuk dan dibayarkan sesuai aturan yang ditetapkan |
@@ -174,6 +226,8 @@ Bab manual: [`hrm/12-komisi-sales.md`](../../erpApiServices/docs/manualBook/hrm/
 ## 13. Perubahan Status Karyawan
 
 Bab manual: [`hrm/15-perubahan-status-karyawan.md`](../../erpApiServices/docs/manualBook/hrm/15-perubahan-status-karyawan.md)
+
+**Input di:** `HRM → Employee Status Changes` (`/hrm/employee-status-changes`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -187,6 +241,8 @@ Bab manual: [`hrm/15-perubahan-status-karyawan.md`](../../erpApiServices/docs/ma
 ## 14. Log Aktivitas, Tipe Aktivitas, dan Kriteria KPI
 
 Bab manual: [`hrm/16-log-aktivitas-tipe-aktivitas-dan-kpi.md`](../../erpApiServices/docs/manualBook/hrm/16-log-aktivitas-tipe-aktivitas-dan-kpi.md)
+
+**Input di:** `HRM → Employee Activity Logs` (`/hrm/activity-logs`) · `Client Master → Activity Types` (`/client-master/activity-types`) · `Client Master → Kpi Criteria` (`/client-master/kpi-criteria`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

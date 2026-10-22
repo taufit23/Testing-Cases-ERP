@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi dan produksi oleh **Joko Santoso** (Kepala Produksi); konfigurasi awal oleh **Dr. Rahmat**.
+
+**Cabang aktif:** Pabrik Herbal Sukabumi.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Biaya bahan per BOM menjadi HPP barang jadi.
@@ -18,6 +24,10 @@ visibility: internal
 ## 1. Konfigurasi Manufaktur & Work Center — Modul Manufacturing
 
 Bab manual: [`manufacturing/01-konfigurasi-manufaktur.md`](../../erpApiServices/docs/manualBook/manufacturing/01-konfigurasi-manufaktur.md)
+
+**Input di:** `Manufacturing → Config` (`/manufacturing/config`) dan `Manufacturing → Work Centers` (`/manufacturing/work-centers`).
+
+**Prasyarat:** Warehouse dan Chart of Accounts sudah disiapkan.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -30,6 +40,10 @@ Bab manual: [`manufacturing/01-konfigurasi-manufaktur.md`](../../erpApiServices/
 ## 2. Bill of Materials (BOM) — Modul Manufacturing
 
 Bab manual: [`manufacturing/02-bill-of-materials-bom.md`](../../erpApiServices/docs/manualBook/manufacturing/02-bill-of-materials-bom.md)
+
+**Input di:** `Manufacturing → Bills of Materials` (`/manufacturing/boms`).
+
+**Prasyarat:** Produk (SKU) bahan baku dan produk jadi sudah terdaftar di Product Catalog.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -44,6 +58,10 @@ Bab manual: [`manufacturing/02-bill-of-materials-bom.md`](../../erpApiServices/d
 
 Bab manual: [`manufacturing/03-routing-produksi.md`](../../erpApiServices/docs/manualBook/manufacturing/03-routing-produksi.md)
 
+**Input di:** `Manufacturing → Routings` (`/manufacturing/routings`).
+
+**Prasyarat:** Bill of Materials (BOM) dan Work Center sudah dibuat.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membuat Routing (draf) | Input: Paracetamol 500 mg strip (SKU OBT-001), work center Pemotongan & Pengemasan, waktu kerja 30 menit | Routing disusun dengan benar dan tersimpan dalam sistem |
@@ -55,6 +73,10 @@ Bab manual: [`manufacturing/03-routing-produksi.md`](../../erpApiServices/docs/m
 ## 4. Production Order — Modul Manufacturing
 
 Bab manual: [`manufacturing/04-production-order.md`](../../erpApiServices/docs/manualBook/manufacturing/04-production-order.md)
+
+**Input di:** `Manufacturing → Production Orders` (`/manufacturing/production-orders`).
+
+**Prasyarat:** Bill of Materials (BOM) sudah dibuat; Routing dan Work Center disiapkan kalau ingin memantau operasi per tahapan.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

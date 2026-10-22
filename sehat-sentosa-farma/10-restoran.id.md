@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi dan transaksi oleh **Dr. Rahmat** atau pengguna yang kamu beri peran restoran (file `00` tidak memuat staf kafe khusus).
+
+**Cabang aktif:** Kafe Sehat (lobi klinik).
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Pesanan per meja, kirim ke dapur (KDS), pisah tagihan, reservasi dan pesanan mandiri lewat QR.
@@ -18,6 +24,10 @@ visibility: internal
 ## 1. Konfigurasi Restoran — Modul Restaurant
 
 Bab manual: [`restaurant/01-konfigurasi-restoran.md`](../../erpApiServices/docs/manualBook/restaurant/01-konfigurasi-restoran.md)
+
+**Input di:** `Restaurant → Areas`, `Restaurant → Tables`, `Restaurant → Floor Plan`, `Restaurant → Kitchen Stations`, `Restaurant → Config`.
+
+**Prasyarat:** Branch sudah aktif; modul Restaurant sudah diaktifkan untuk branch tersebut.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -34,6 +44,10 @@ Bab manual: [`restaurant/01-konfigurasi-restoran.md`](../../erpApiServices/docs/
 
 Bab manual: [`restaurant/02-menu-dan-kitchen-routing.md`](../../erpApiServices/docs/manualBook/restaurant/02-menu-dan-kitchen-routing.md)
 
+**Input di:** `Restaurant → Menu` (`/restaurant/menu`).
+
+**Prasyarat:** Produk/SKU sudah didaftarkan di `Client-Master → Products`; Kitchen Stations sudah di-setup (opsional, lihat chapter _01_).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Menambahkan Menu (draf) | Tambah Paracetamol 500 mg strip (SKU OBT-001) ke daftar menu; routing ke stasiun obat; biaya resep ditampilkan | Menu Paracetamol 500 mg strip terlihat di daftar dan dikirim ke stasiun obat dengan estimasi biaya resep yang benar |
@@ -45,6 +59,10 @@ Bab manual: [`restaurant/02-menu-dan-kitchen-routing.md`](../../erpApiServices/d
 ## 3. Pemesanan dan Order Meja — Modul Restaurant
 
 Bab manual: [`restaurant/03-pemesanan-dan-order-meja.md`](../../erpApiServices/docs/manualBook/restaurant/03-pemesanan-dan-order-meja.md)
+
+**Input di:** `Restaurant → Orders` (`/restaurant/orders`).
+
+**Prasyarat:** Meja sudah terdaftar (chapter _01_), menu sudah tersedia (chapter _02_).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -61,6 +79,10 @@ Bab manual: [`restaurant/03-pemesanan-dan-order-meja.md`](../../erpApiServices/d
 
 Bab manual: [`restaurant/04-kitchen-display-dan-order-items.md`](../../erpApiServices/docs/manualBook/restaurant/04-kitchen-display-dan-order-items.md)
 
+**Input di:** `Restaurant → KDS` (`/restaurant/kds`), `Restaurant → Order Items` (`/restaurant/order-items`).
+
+**Prasyarat:** Ada order dine-in yang sudah dikirim ke dapur (chapter _03_).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Kitchen Display System (draf) | Memasukkan pesanan ke KDS, memfilter per stasiun, memproses item dengan benar | Tiket pesanan ditampilkan di layar dapur sesuai stasiun dan item diproses dengan akurat |
@@ -74,6 +96,10 @@ Bab manual: [`restaurant/04-kitchen-display-dan-order-items.md`](../../erpApiSer
 ## 5. Reservasi Meja (Booking) — Modul Restaurant
 
 Bab manual: [`restaurant/05-reservasi-meja.md`](../../erpApiServices/docs/manualBook/restaurant/05-reservasi-meja.md)
+
+**Input di:** `Restaurant → Bookings` (`/restaurant/bookings`).
+
+**Prasyarat:** Meja sudah terdaftar (chapter _01_).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -89,6 +115,8 @@ Bab manual: [`restaurant/05-reservasi-meja.md`](../../erpApiServices/docs/manual
 ## 6. QR Self-Order — Modul Restaurant
 
 Bab manual: [`restaurant/06-qr-self-order.md`](../../erpApiServices/docs/manualBook/restaurant/06-qr-self-order.md)
+
+**Input di:** sisi staf: `Restaurant → Tables` (`/restaurant/tables`, cetak QR di `/restaurant/tables/print-qr`), `Restaurant → Order Items` (`/restaurant/order-items`, konfirmasi pesanan), dan `Restaurant → Config` (`/restaurant/config`, saklar QR). Sisi pelanggan: halaman publik hasil scan QR meja, tanpa login.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

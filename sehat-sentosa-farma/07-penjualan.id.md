@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi oleh **Dr. Rahmat**. Transaksi penjualan grosir oleh **Dr. Rahmat** atau pengguna yang kamu beri peran penjualan (tabel peran file `00` tidak memuat staf penjualan khusus). Pembayaran oleh **Sari Wulandari**.
+
+**Cabang aktif:** Kantor Pusat & Distribusi Jakarta.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Quotation, SO, delivery, faktur, pembayaran dan retur; HPP terjurnal saat pengiriman.
@@ -20,6 +26,10 @@ visibility: internal
 ## 1. Konfigurasi Alur Sales — Modul Sales
 
 Bab manual: [`sales/01-konfigurasi-alur-sales.md`](../../erpApiServices/docs/manualBook/sales/01-konfigurasi-alur-sales.md)
+
+**Input di:** `Sales → Sales Configs` (`/sales/sales-configs`).
+
+**Perhatikan:** **Kerjakan ini SEBELUM mulai transaksi Quotation/SO.** Approval per tahap diatur lewat _Approval Workflow Config_ terpisah — lihat manual book _Core → 01. Konfigurasi Approval Workflow_.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -36,6 +46,8 @@ Bab manual: [`sales/01-konfigurasi-alur-sales.md`](../../erpApiServices/docs/man
 
 Bab manual: [`sales/02-quotation.md`](../../erpApiServices/docs/manualBook/sales/02-quotation.md)
 
+**Input di:** `Sales → Quotations` (`/sales/quotations`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membuat Quotation (draf) | Input data produk & harga, pilih customer, klik 'Kirim', cek status di admin panel | Quotation dikirim ke Apotek Mitra Sehat dengan detail produk dan harga yang benar |
@@ -49,6 +61,10 @@ Bab manual: [`sales/02-quotation.md`](../../erpApiServices/docs/manualBook/sales
 
 Bab manual: [`sales/03-sales-order.md`](../../erpApiServices/docs/manualBook/sales/03-sales-order.md)
 
+**Input di:** `Sales → Sales Orders` (`/sales/sales-orders`).
+
+**Prasyarat:** Quotation Accepted (kecuali konfigurasi **Require Quotation for SO** dimatikan).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membuat Sales Order (draf) | Input data produk, jumlah, harga, customer, alamat pengiriman; Approve oleh manager | Sales Order terbentuk dengan detail yang benar dan status 'Pending' |
@@ -59,6 +75,10 @@ Bab manual: [`sales/03-sales-order.md`](../../erpApiServices/docs/manualBook/sal
 ## 4. Sales Delivery — Modul Sales
 
 Bab manual: [`sales/04-sales-delivery.md`](../../erpApiServices/docs/manualBook/sales/04-sales-delivery.md)
+
+**Input di:** `Sales → Sales Deliveries` (`/sales/sales-deliveries`).
+
+**Prasyarat:** SO Approved, dan urutan sesuai **Fulfillment Mode** (lihat _01. Konfigurasi Alur Sales_).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -71,6 +91,10 @@ Bab manual: [`sales/04-sales-delivery.md`](../../erpApiServices/docs/manualBook/
 ## 5. Sales Invoice — Modul Sales
 
 Bab manual: [`sales/05-sales-invoice.md`](../../erpApiServices/docs/manualBook/sales/05-sales-invoice.md)
+
+**Input di:** `Sales → Sales Invoices` (`/sales/sales-invoices`).
+
+**Prasyarat:** SO Approved, dan urutan sesuai **Fulfillment Mode** (lihat _01. Konfigurasi Alur Sales_).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -85,6 +109,10 @@ Bab manual: [`sales/05-sales-invoice.md`](../../erpApiServices/docs/manualBook/s
 
 Bab manual: [`sales/06-sales-payment-bill.md`](../../erpApiServices/docs/manualBook/sales/06-sales-payment-bill.md)
 
+**Input di:** `Sales → Sales Payment Bills` (`/sales/sales-payment-bills`).
+
+**Prasyarat:** Sales Invoice sudah **Approved**.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | Pelanggan: Apotek Mitra Sehat; Invoice OBT-001; Jumlah: Rp500.000; Metode: Transfer Bank; Catatan: Lunas | Penerimaan tercatat, invoice diteruskan ke status lunas & jurnal posting dengan benar |
@@ -96,6 +124,10 @@ Bab manual: [`sales/06-sales-payment-bill.md`](../../erpApiServices/docs/manualB
 ## 7. Sales Return — Modul Sales
 
 Bab manual: [`sales/07-sales-return.md`](../../erpApiServices/docs/manualBook/sales/07-sales-return.md)
+
+**Input di:** `Sales → Sales Returns` (`/sales/sales-returns`).
+
+**Prasyarat:** ada Sales Delivery yang sudah tercatat (barang harus sudah "terkirim" dulu sebelum bisa "dikembalikan").
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -110,6 +142,8 @@ Bab manual: [`sales/07-sales-return.md`](../../erpApiServices/docs/manualBook/sa
 
 Bab manual: [`sales/08-verifikasi-ke-accounting.md`](../../erpApiServices/docs/manualBook/sales/08-verifikasi-ke-accounting.md)
 
+**Input di:** tidak ada halaman input; periksa di `Accounting → General Ledger` (`/accounting/general-ledger`), `Reports → Trial Balance` (`/reports/trial-balance`), dan `Reports → Accounts Receivable Aging` (`/reports/ar-aging`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | Verifikasi Quotation OBT-001 ke Invoice dengan benar di General Ledger; Trial Balance seimbang; AR Aging tidak terlambat lunas | Seluruh transaksi tercatat dan akurat dalam sistem akuntansi |
@@ -120,6 +154,8 @@ Bab manual: [`sales/08-verifikasi-ke-accounting.md`](../../erpApiServices/docs/m
 ## 9. Konfigurasi Jurnal Penjualan
 
 Bab manual: [`sales/09-konfigurasi-jurnal-penjualan.md`](../../erpApiServices/docs/manualBook/sales/09-konfigurasi-jurnal-penjualan.md)
+
+**Input di:** `Sales → Sales Journal Configuration` (`/sales/sales-journal-configuration`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

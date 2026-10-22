@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi oleh **Dr. Rahmat**. Kunjungan, order lapangan, dan penagihan oleh **Dewi Anggraini** (Sales Lapangan).
+
+**Cabang aktif:** Kantor Pusat & Distribusi Jakarta (wilayah dan rute Bekasi).
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Calon pelanggan terpisah dari master pelanggan; menang hanya lewat konversi; kalah wajib alasan.
@@ -19,6 +25,10 @@ visibility: internal
 ## 1. Konfigurasi Wilayah dan Rute — Modul Sales Canvassing
 
 Bab manual: [`canvassing/01-konfigurasi-wilayah-dan-rute.md`](../../erpApiServices/docs/manualBook/canvassing/01-konfigurasi-wilayah-dan-rute.md)
+
+**Input di:** `Canvassing → Territories` (`/canvassing/territories`) dan `Canvassing → Routes` (`/canvassing/routes`).
+
+**Prasyarat:** Data Salesperson (Employee) dan Outlet (Contact) sudah ada di sistem.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -33,6 +43,10 @@ Bab manual: [`canvassing/01-konfigurasi-wilayah-dan-rute.md`](../../erpApiServic
 
 Bab manual: [`canvassing/02-target-penjualan.md`](../../erpApiServices/docs/manualBook/canvassing/02-target-penjualan.md)
 
+**Input di:** `Canvassing → Sales Targets` (`/canvassing/sales-targets`).
+
+**Prasyarat:** Territory, Salesperson, atau Customer yang akan diberi target sudah terdaftar di sistem.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membuat Target Penjualan (draf) | Masuk ke modul Sales Canvassing; Pilih wilayah Jakarta; Isi data penjualan target bulanan 10 juta; Simpan | Target penjualan berhasil dibuat dan terlihat di daftar |
@@ -44,6 +58,10 @@ Bab manual: [`canvassing/02-target-penjualan.md`](../../erpApiServices/docs/manu
 ## 3. Titipan Stock Sales — Modul Sales Canvassing
 
 Bab manual: [`canvassing/03-titipan-stock-sales.md`](../../erpApiServices/docs/manualBook/canvassing/03-titipan-stock-sales.md)
+
+**Input di:** `Canvassing → Sales Stock Custodies` (`/canvassing/sales-stock-custodies`).
+
+**Prasyarat:** Warehouse dan Product SKU yang akan dititipkan sudah terdaftar di sistem.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -57,6 +75,10 @@ Bab manual: [`canvassing/03-titipan-stock-sales.md`](../../erpApiServices/docs/m
 ## 4. Kunjungan dan Order Lapangan — Modul Sales Canvassing
 
 Bab manual: [`canvassing/04-kunjungan-dan-order-lapangan.md`](../../erpApiServices/docs/manualBook/canvassing/04-kunjungan-dan-order-lapangan.md)
+
+**Input di:** `Canvassing → My Day` (`/canvassing/field`) untuk sales lapangan, dan `Canvassing → Visits` (`/canvassing/visits`) untuk memantau semua kunjungan.
+
+**Prasyarat:** Akun user sales sudah terhubung ke data Employee, dan sudah punya jadwal kunjungan (dari Route yang di-generate, lihat chapter *01*).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -72,6 +94,10 @@ Bab manual: [`canvassing/04-kunjungan-dan-order-lapangan.md`](../../erpApiServic
 
 Bab manual: [`canvassing/05-penagihan-lapangan.md`](../../erpApiServices/docs/manualBook/canvassing/05-penagihan-lapangan.md)
 
+**Input di:** `Canvassing → Field Collections` (`/canvassing/collections`) untuk kantor, form **Record Payment** dari halaman **My Day** untuk sales.
+
+**Prasyarat:** Kunjungan (visit) sedang berjalan (status In Progress), atau minimal customer terkait sudah terdaftar.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Penagihan Lapangan (draf) | Sales mencatat pembayaran OBT-001 dari Apotek Mitra Sehat; kantor menerima setoran; deposit tercatat; status pembayaran valid. | Pembayaran diterima dan dicatat dengan benar, sistem menandai sebagai disetor. |
@@ -82,6 +108,10 @@ Bab manual: [`canvassing/05-penagihan-lapangan.md`](../../erpApiServices/docs/ma
 ## 6. Competitor Tracking — Modul Sales Canvassing
 
 Bab manual: [`canvassing/06-competitor-tracking.md`](../../erpApiServices/docs/manualBook/canvassing/06-competitor-tracking.md)
+
+**Input di:** `Canvassing → Competitors` (`/canvassing/competitors`).
+
+**Prasyarat:** Tidak ada prasyarat khusus.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -94,6 +124,8 @@ Bab manual: [`canvassing/06-competitor-tracking.md`](../../erpApiServices/docs/m
 
 Bab manual: [`canvassing/07-kunjungan-ke-calon-pelanggan.md`](../../erpApiServices/docs/manualBook/canvassing/07-kunjungan-ke-calon-pelanggan.md)
 
+**Input di:** `Canvassing → Leads` (`/canvassing/leads`), `Canvassing → Field` (`/canvassing/field`), dan hasil kunjungan di `Canvassing → Visit Outcomes` (`/canvassing/visit-outcomes`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Kunjungan ke Calon Pelanggan (draf) | Sales melakukan kunjungan, memasukkan data calon, mengecek pesaing, membuat penawaran, dan mengubah status menjadi pelanggan | Proses berjalan lancar, calon menjadi pelanggan baru |
@@ -105,6 +137,8 @@ Bab manual: [`canvassing/07-kunjungan-ke-calon-pelanggan.md`](../../erpApiServic
 ## 8. Konfigurasi Canvassing — Hasil Kunjungan, Calon Pelanggan, dan Pengaturan Cabang
 
 Bab manual: [`canvassing/08-konfigurasi-canvassing.md`](../../erpApiServices/docs/manualBook/canvassing/08-konfigurasi-canvassing.md)
+
+**Input di:** `Canvassing → Hasil Kunjungan` (`/canvassing/visit-outcomes`) dan `Canvassing → Calon Pelanggan` (`/canvassing/leads`). Pengaturan wilayah, rute, dan target ada di chapter _01_ dan _02_..
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

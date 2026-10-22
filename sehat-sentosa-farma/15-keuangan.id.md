@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Pencatatan biaya oleh **Sari Wulandari**; persetujuan biaya di atas Rp 2.000.000 oleh **Dr. Rahmat**. Pembayaran online memakai kunci **sandbox**.
+
+**Cabang aktif:** Kantor Pusat & Distribusi Jakarta.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Biaya per kategori dengan persetujuan di atas batas; jurnal biaya saat disetujui.
@@ -18,6 +24,8 @@ visibility: internal
 ## 1. Kategori & Pencatatan Biaya — Modul Expense
 
 Bab manual: [`finance/01-kategori-dan-pencatatan-biaya.md`](../../erpApiServices/docs/manualBook/finance/01-kategori-dan-pencatatan-biaya.md)
+
+**Input di:** `Finance → Expense Categories` (`/expense/expense-categories`) dan `Finance → Expenses` (`/expense/expenses`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -33,6 +41,8 @@ Bab manual: [`finance/01-kategori-dan-pencatatan-biaya.md`](../../erpApiServices
 ## 2. Pembayaran Online, Rute Penyedia, dan Penyelesaian Dana
 
 Bab manual: [`finance/02-pembayaran-online-dan-penyelesaian.md`](../../erpApiServices/docs/manualBook/finance/02-pembayaran-online-dan-penyelesaian.md)
+
+**Input di:** `Client Master → Payment Routes` (`/client-master/payment-routes`) · `Finance → Online Payments` (`/finance/online-payments`) · `Finance → Payment Settlements` (`/finance/payment-settlements`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

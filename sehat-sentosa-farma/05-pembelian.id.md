@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Konfigurasi oleh **Dr. Rahmat**. Transaksi oleh **Bima Prakoso** (Staf Pembelian); penerimaan barang oleh **Hendra Saputra** (Kepala Gudang); persetujuan PO oleh **Sari Wulandari** dan **Dr. Rahmat**; pembayaran oleh **Sari Wulandari**.
+
+**Cabang aktif:** Kantor Pusat & Distribusi Jakarta.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - PR lalu PQ lalu PO lalu GR lalu PI lalu pembayaran; urutan GR dan faktur mengikuti konfigurasi.
@@ -20,6 +26,10 @@ visibility: internal
 ## 1. Konfigurasi Alur Purchasing — Modul Purchasing
 
 Bab manual: [`purchasing/01-konfigurasi-alur-purchasing.md`](../../erpApiServices/docs/manualBook/purchasing/01-konfigurasi-alur-purchasing.md)
+
+**Input di:** `Purchasing → Purchase Configs` (`/purchasing/purchase-configs`).
+
+**Perhatikan:** **Kerjakan ini SEBELUM mulai transaksi PR/PQ/PO** — pengaturan di sini menentukan urutan dokumen apa yang boleh dibuat kapan.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -36,6 +46,10 @@ Bab manual: [`purchasing/01-konfigurasi-alur-purchasing.md`](../../erpApiService
 
 Bab manual: [`purchasing/02-purchase-request.md`](../../erpApiServices/docs/manualBook/purchasing/02-purchase-request.md)
 
+**Input di:** `Purchasing → Purchase Requests` (`/purchasing/purchase-requests`).
+
+**Prasyarat:** _01. Konfigurasi Alur Purchasing_ sudah di-setup.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | membuat PR untuk Paracetamol 500 mg strip (SKU OBT-001) di gudang pusat; disetujui oleh kepala gudang; masuk ke antrian pembelian | Purchase Request diterbitkan dan masuk dalam proses pengadaan dengan status 'menunggu penerimaan' |
@@ -48,6 +62,8 @@ Bab manual: [`purchasing/02-purchase-request.md`](../../erpApiServices/docs/manu
 
 Bab manual: [`purchasing/03-purchase-quotation.md`](../../erpApiServices/docs/manualBook/purchasing/03-purchase-quotation.md)
 
+**Input di:** `Purchasing → Purchase Quotations` (`/purchasing/purchase-quotations`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Purchase Quotation (draf) | Membuat PQ untuk Paracetamol 500 mg strip (SKU OBT-001) dari PT Bintang Farmasi Utama; mengisi harga tier; membandingkan dengan PT Alkes Prima Mandiri; submit, approve, dan convert menjadi PO. | Berhasil membuat PQ, bandingkan penawaran, dan konversi menjadi PO untuk Paracetamol 500 mg strip. |
@@ -58,6 +74,10 @@ Bab manual: [`purchasing/03-purchase-quotation.md`](../../erpApiServices/docs/ma
 ## 4. Purchase Order — Modul Purchasing
 
 Bab manual: [`purchasing/04-purchase-order.md`](../../erpApiServices/docs/manualBook/purchasing/04-purchase-order.md)
+
+**Input di:** `Purchasing → Purchase Orders` (`/purchasing/purchase-orders`).
+
+**Prasyarat:** Purchase Quotation sudah Approved (kecuali konfigurasi **Require PQ Before PO** dimatikan).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -70,6 +90,10 @@ Bab manual: [`purchasing/04-purchase-order.md`](../../erpApiServices/docs/manual
 ## 5. Goods Receipt — Modul Purchasing
 
 Bab manual: [`purchasing/05-goods-receipt.md`](../../erpApiServices/docs/manualBook/purchasing/05-goods-receipt.md)
+
+**Input di:** `Purchasing → Purchase Receipts` (`/purchasing/purchase-receipts`).
+
+**Prasyarat:** PO sudah Approved, dan urutan sesuai **PO Flow Mode** (lihat _01. Konfigurasi Alur Purchasing_).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -84,6 +108,10 @@ Bab manual: [`purchasing/05-goods-receipt.md`](../../erpApiServices/docs/manualB
 
 Bab manual: [`purchasing/06-purchase-invoice.md`](../../erpApiServices/docs/manualBook/purchasing/06-purchase-invoice.md)
 
+**Input di:** `Purchasing → Purchase Invoices` (`/purchasing/purchase-invoices`).
+
+**Prasyarat:** PO Approved, dan urutan sesuai **PO Flow Mode** (lihat _01. Konfigurasi Alur Purchasing_).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Mencatat Tagihan Supplier (draf) | Input PO OBT-001, jumlah 100, harga Rp 500,000; klik Approve & Posting | Berhasil memposting invoice ke jurnal utang dagang dengan PPN Masukan |
@@ -95,6 +123,10 @@ Bab manual: [`purchasing/06-purchase-invoice.md`](../../erpApiServices/docs/manu
 
 Bab manual: [`purchasing/07-purchase-payment-bill.md`](../../erpApiServices/docs/manualBook/purchasing/07-purchase-payment-bill.md)
 
+**Input di:** `Purchasing → Purchase Payment Bills` (`/purchasing/purchase-payment-bills`).
+
+**Prasyarat:** Purchase Invoice sudah **Approved**.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membayar Invoice (draf) | Input invoice OBT-001, pilih metode lunas, konfirmasi, approve manajer keuangan, posting jurnal otomatis | Invoice OBT-001 terbayar dan terposting pada jurnal bayar supplier |
@@ -105,6 +137,10 @@ Bab manual: [`purchasing/07-purchase-payment-bill.md`](../../erpApiServices/docs
 ## 8. Purchase Return — Modul Purchasing
 
 Bab manual: [`purchasing/08-purchase-return.md`](../../erpApiServices/docs/manualBook/purchasing/08-purchase-return.md)
+
+**Input di:** `Purchasing → Purchase Returns` (`/purchasing/purchase-returns`).
+
+**Prasyarat:** ada Goods Receipt yang sudah tercatat (barang harus sudah "diterima" dulu sebelum bisa "dikembalikan").
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -118,6 +154,8 @@ Bab manual: [`purchasing/08-purchase-return.md`](../../erpApiServices/docs/manua
 
 Bab manual: [`purchasing/09-verifikasi-ke-accounting.md`](../../erpApiServices/docs/manualBook/purchasing/09-verifikasi-ke-accounting.md)
 
+**Input di:** tidak ada halaman input; periksa di `Accounting → General Ledger` (`/accounting/general-ledger`), `Reports → Trial Balance` (`/reports/trial-balance`), dan `Reports → Accounts Payable Aging` (`/reports/ap-aging`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Verifikasi PR-PQ-PO-GR-PI-Payment (draf) | Cek GL akun AP, TB, dan AP Aging; semua transaksi tercatat dengan benar; laporan sehat | Seluruh alur purchasing terintegrasi dengan akuntansi, data akurat |
@@ -130,6 +168,10 @@ Bab manual: [`purchasing/09-verifikasi-ke-accounting.md`](../../erpApiServices/d
 
 Bab manual: [`purchasing/10-tagihan-biaya-logistik.md`](../../erpApiServices/docs/manualBook/purchasing/10-tagihan-biaya-logistik.md)
 
+**Input di:** `Purchasing → Purchase Charge Invoices` (`/purchasing/purchase-charge-invoices`).
+
+**Prasyarat:** konfigurasi di `Purchasing → Purchase Charge Configs` sudah diisi, dan ada Purchase Order/Goods Receipt sebagai target alokasi.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Mencatat Biaya Logistik (draf) | Input data ongkos kirim ke konfigurasi, buat tagihan biaya logistik untuk OBT-001, approve & posting, rebill ke Apotek Mitra Sehat | Biaya logistik tercatat dan teralokasikan ke harga pokok, tagihan dikirim ke pelanggan dengan detail benar |
@@ -141,6 +183,8 @@ Bab manual: [`purchasing/10-tagihan-biaya-logistik.md`](../../erpApiServices/doc
 ## 11. Blanket Agreement (Kontrak Payung) — Modul Purchasing
 
 Bab manual: [`purchasing/11-blanket-agreement.md`](../../erpApiServices/docs/manualBook/purchasing/11-blanket-agreement.md)
+
+**Input di:** `Purchasing → Blanket Agreements` (`/purchasing/blanket-agreements`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -156,6 +200,8 @@ Bab manual: [`purchasing/11-blanket-agreement.md`](../../erpApiServices/docs/man
 ## 12. Konfigurasi Biaya Tambahan Pembelian
 
 Bab manual: [`purchasing/12-konfigurasi-biaya-tambahan-pembelian.md`](../../erpApiServices/docs/manualBook/purchasing/12-konfigurasi-biaya-tambahan-pembelian.md)
+
+**Input di:** `Purchasing → Logistics Charge Configuration` (`/purchasing/purchase-charge-configs`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

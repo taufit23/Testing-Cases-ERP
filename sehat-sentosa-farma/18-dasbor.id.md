@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** Siapa saja yang punya izin dasbor. Angka dasbor baru bermakna **setelah** ada transaksi di modul terkait.
+
+**Cabang aktif:** Cabang tempat transaksinya dibuat.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Angka dasbor sama dengan laporan sumbernya; dasbor hanya menampilkan data cabang aktif atau gabungan sesuai peran.
@@ -16,6 +22,8 @@ visibility: internal
 ## 1. Dashboard Akuntansi, Penjualan, Pembelian, dan Inventori
 
 Bab manual: [`dashboard/01-dashboard-keuangan-penjualan-dan-pembelian.md`](../../erpApiServices/docs/manualBook/dashboard/01-dashboard-keuangan-penjualan-dan-pembelian.md)
+
+**Input di:** `Dashboard → Accounting Dashboard` (`/dashboard/accounting`) · `Dashboard → Sales Dashboard` (`/dashboard/sales`) · `Dashboard → Purchasing Dashboard` (`/dashboard/purchasing`) · `Dashboard → Inventory Dashboard` (`/dashboard/inventory`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -29,6 +37,8 @@ Bab manual: [`dashboard/01-dashboard-keuangan-penjualan-dan-pembelian.md`](../..
 
 Bab manual: [`dashboard/02-dashboard-operasional.md`](../../erpApiServices/docs/manualBook/dashboard/02-dashboard-operasional.md)
 
+**Input di:** `Dashboard → Pos Dashboard` (`/dashboard/pos`) · `Dashboard → Restaurant Dashboard` (`/dashboard/restaurant`) · `Dashboard → Canvassing Dashboard` (`/dashboard/canvassing`) · `Dashboard → Manufacturing Dashboard` (`/dashboard/manufacturing`) · `Dashboard → Mining Dashboard` (`/dashboard/mining`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | Input transaksi obat Paracetamol 500 mg strip (SKU OBT-001) ke POS Dashboard; cek laporan penjualan | Menampilkan laporan penjualan obat dengan detail SKU, jumlah terjual, total pendapatan |
@@ -39,6 +49,8 @@ Bab manual: [`dashboard/02-dashboard-operasional.md`](../../erpApiServices/docs/
 ## 3. Dashboard HRM, Karyawan, dan Pemakaian AI
 
 Bab manual: [`dashboard/03-dashboard-sdm-notifikasi-dan-lainnya.md`](../../erpApiServices/docs/manualBook/dashboard/03-dashboard-sdm-notifikasi-dan-lainnya.md)
+
+**Input di:** `Dashboard → Hrm Dashboard` (`/dashboard/hrm`) · `Dashboard → My Dashboard` (`/dashboard/employee`) · `Dashboard → Ai Usage` (`/dashboard/ai-usage`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

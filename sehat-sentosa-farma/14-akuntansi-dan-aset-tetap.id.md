@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** **Sari Wulandari** (Manajer Keuangan). Penyiapan awal (akun, tahun fiskal, saldo awal) boleh oleh **Dr. Rahmat**.
+
+**Cabang aktif:** Kantor Pusat & Distribusi Jakarta.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Jurnal tidak seimbang tidak bisa diposting; jurnal reverse bersifat aditif; periode tertutup menolak posting.
@@ -20,6 +26,8 @@ visibility: internal
 ## 1. Setup Master Data & Saldo Awal — Modul Akuntansi
 
 Bab manual: [`accounting/01-setup-master-data-dan-saldo-awal.md`](../../erpApiServices/docs/manualBook/accounting/01-setup-master-data-dan-saldo-awal.md)
+
+**Input di:** `Client Master → Chart of Account Type` (`/client-master/chart-of-account-type`) → `Business Units` (`/client-master/business-units`) → `Chart of Accounts` (`/client-master/chart-of-accounts`) → `Branch Setup` (`/client-master/branch-setup`) → `Taxes` (`/client-master/taxes`); saldo awal di `Chart of Accounts Balances` (`/client-master/chart-of-accounts-balances`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -34,6 +42,10 @@ Bab manual: [`accounting/01-setup-master-data-dan-saldo-awal.md`](../../erpApiSe
 ## 2. Jurnal Manual — Modul Akuntansi
 
 Bab manual: [`accounting/02-jurnal-manual.md`](../../erpApiServices/docs/manualBook/accounting/02-jurnal-manual.md)
+
+**Input di:** `Accounting → Journals` (`/accounting/journals`).
+
+**Prasyarat:** Chart of Accounts & saldo awal sudah di-setup (lihat _01. Setup Master Data & Saldo Awal_).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -50,6 +62,10 @@ Bab manual: [`accounting/02-jurnal-manual.md`](../../erpApiServices/docs/manualB
 
 Bab manual: [`accounting/03-general-ledger-dan-neraca-saldo.md`](../../erpApiServices/docs/manualBook/accounting/03-general-ledger-dan-neraca-saldo.md)
 
+**Input di:** `Accounting → General Ledger` (`/accounting/general-ledger`).
+
+**Prasyarat:** ada jurnal yang sudah **Posted** (lihat _02. Jurnal Manual_).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Detail Ledger (draf) | Memasukkan nomor akun dan periode, menampilkan transaksi terperinci untuk akun tersebut | Menyajikan transaksi yang telah diposting dengan detail yang lengkap |
@@ -62,6 +78,10 @@ Bab manual: [`accounting/03-general-ledger-dan-neraca-saldo.md`](../../erpApiSer
 ## 4. Tutup Periode & Tahun Fiskal — Modul Akuntansi
 
 Bab manual: [`accounting/04-tutup-periode-dan-tahun-fiskal.md`](../../erpApiServices/docs/manualBook/accounting/04-tutup-periode-dan-tahun-fiskal.md)
+
+**Input di:** `Client Master → Accounting Period` (`/client-master/accounting-period`) dan `Client Master → Fiscal Year` (`/client-master/fiscal-year`).
+
+**Prasyarat:** siklus transaksi bulanan sudah selesai diinput & diposting.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -78,6 +98,10 @@ Bab manual: [`accounting/04-tutup-periode-dan-tahun-fiskal.md`](../../erpApiServ
 
 Bab manual: [`accounting/05-laporan-keuangan.md`](../../erpApiServices/docs/manualBook/accounting/05-laporan-keuangan.md)
 
+**Input di:** `Reports → Balance Sheet` / `Income Statement` / `Cash Flow Statement`.
+
+**Prasyarat:** jurnal sudah diposting & Trial Balance sudah seimbang (lihat _03. General Ledger & Neraca Saldo_).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Neraca Sehat Sentosa Farma (draf) | Buat neraca dengan aset Rp15M, kewajiban Rp8M, ekuitas Rp7M; cek keseimbangan | Aset = Kewajiban + Ekuitas (Rp15M = Rp8M + Rp7M) |
@@ -88,6 +112,10 @@ Bab manual: [`accounting/05-laporan-keuangan.md`](../../erpApiServices/docs/manu
 ## 6. Anggaran (Budget) — Modul Akuntansi
 
 Bab manual: [`accounting/06-anggaran-budget.md`](../../erpApiServices/docs/manualBook/accounting/06-anggaran-budget.md)
+
+**Input di:** `Accounting → Budgets` (`/accounting/budgets`).
+
+**Prasyarat:** Chart of Accounts, Business Unit, dan Fiscal Year/Accounting Period **yang masih aktif** (belum closed) sudah tersedia.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -100,6 +128,10 @@ Bab manual: [`accounting/06-anggaran-budget.md`](../../erpApiServices/docs/manua
 ## 7. Aset Tetap & Penyusutan — Modul Akuntansi
 
 Bab manual: [`accounting/07-aset-tetap-dan-penyusutan.md`](../../erpApiServices/docs/manualBook/accounting/07-aset-tetap-dan-penyusutan.md)
+
+**Input di:** `Fixed Assets → Assets` (`/fixed-assets/assets`).
+
+**Prasyarat:** akun Aset Tetap, Beban Penyusutan, dan Akumulasi Penyusutan sudah ada di Chart of Accounts.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
@@ -116,6 +148,8 @@ Bab manual: [`accounting/07-aset-tetap-dan-penyusutan.md`](../../erpApiServices/
 
 Bab manual: [`accounting/08-rekonsiliasi-bank.md`](../../erpApiServices/docs/manualBook/accounting/08-rekonsiliasi-bank.md)
 
+**Input di:** `Finance → Bank Accounts` (`/finance/bank-accounts`) dan `Finance → Bank Reconciliations` (`/finance/bank-reconciliations`).
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Rekonsiliasi Bank (draf) | Setup akun bank Sentosa Farma, lakukan rekonsiliasi dengan rekening koran bank, selesaikan selisih dan catat jurnal koreksi | Saldo buku dan rekening koran bank cocok, selisih terjawab dengan jurnal koreksi yang benar |
@@ -128,6 +162,10 @@ Bab manual: [`accounting/08-rekonsiliasi-bank.md`](../../erpApiServices/docs/man
 
 Bab manual: [`accounting/09-laporan-pajak-ppn.md`](../../erpApiServices/docs/manualBook/accounting/09-laporan-pajak-ppn.md)
 
+**Input di:** `Reports → Tax Summary` (`/reports/tax-summary`).
+
+**Prasyarat:** jurnal dengan baris PPN (akun ber-flag `Is Tax`) sudah diposting — lihat chapter _02. Jurnal Manual_.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membaca rekap PPN (draf) | Lihat rekap PPN Masukan/Keluaran Sentosa Farma; hitung Net Payable | Net Payable sesuai dengan perhitungan |
@@ -138,6 +176,8 @@ Bab manual: [`accounting/09-laporan-pajak-ppn.md`](../../erpApiServices/docs/man
 ## 10. Chart of Accounts — Tree View, Saldo Akun & Jenis Jurnal
 
 Bab manual: [`accounting/10-chart-of-accounts.md`](../../erpApiServices/docs/manualBook/accounting/10-chart-of-accounts.md)
+
+**Input di:** `Client Master → Chart of Accounts` (`/client-master/chart-of-accounts`) · `Client Master → Chart of Accounts Balances` (`/client-master/chart-of-accounts-balances`) · `Client Master → General Journal Type` (`/client-master/general-journal-type`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |

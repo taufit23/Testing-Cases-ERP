@@ -9,6 +9,12 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
+**Dikerjakan oleh:** **Tanpa login.** Buka tautan publik dari browser jendela penyamaran, supaya tidak terbaca sebagai pengguna masuk.
+
+**Cabang aktif:** tidak berlaku.
+
+**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
+
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Token kedaluwarsa dan tidak dapat ditebak; data internal tidak bocor.
@@ -17,6 +23,8 @@ visibility: internal
 ## 1. Halaman untuk Pihak Luar: Pelamar, Penawaran, Restoran, dan Pengiriman Pemasok
 
 Bab manual: [`halaman-publik/01-halaman-untuk-pihak-luar.md`](../../erpApiServices/docs/manualBook/halaman-publik/01-halaman-untuk-pihak-luar.md)
+
+**Input di:** `Halaman Publik → Job Applications` (`/public/job-applications`) · `Halaman Publik → Quotations` (`/public/quotations`) · `Halaman Publik → Restaurant` (`/public/restaurant`) · `Halaman Publik → Supplier Shipment` (`/public/supplier-shipment`).
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
