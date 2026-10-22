@@ -19,7 +19,7 @@ visibility: internal
 | --- | --- | --- |
 | 1 | `Client Master → Chart of Account Type` (`/client-master/chart-of-account-type`) | Buat **8 tipe akun** di bagian 2 |
 | 2 | `Client Master → Chart of Accounts` (`/client-master/chart-of-accounts`) | Buat **akun** di bagian 3, satu per satu atau massal (**Bulk Add**) atau impor Excel |
-| 3 | Chart of Accounts, kolom akun saldo awal | Tandai **Modal Pemilik** (`3101`) sebagai **akun saldo awal** |
+| 3 | Chart of Accounts, penanda akun (bagian 3.9) | Tandai **Modal Pemilik** (`3101`) sebagai **Is opening balance equity account**, dan penanda lain di 3.9 |
 | 4 | `Finance → Bank Accounts` (`/finance/bank-accounts`) | Hubungkan **Bank Operasional** (`1102`) ke rekening bank |
 | 5 | `Client Master → Chart of Accounts Balances` (`/client-master/chart-of-accounts-balances`) atau lewat COA | Isi saldo awal bagian 5, tanggal 1 Oktober 2026 |
 | 6 | Halaman konfigurasi tiap modul (bagian 4) | Hubungkan akun ke fungsi jurnal modul |
@@ -33,23 +33,29 @@ visibility: internal
 
 ## 2. Tipe akun (8 tipe)
 
-Kolom di form tipe akun: **Code**, **Name**, **Report group**. Gunakan kode di bawah.
+Kolom di form tipe akun (diambil dari validasi aplikasi): **Code**, **Name**, **Report group**, **Normal balance**, **Category**, **Cash flow section** (ketiganya **wajib**),
+serta **Description**, **Active**, dan **Default unit type** (opsional). Gunakan nilai di bawah.
 
-| Code | Name | Report group | Dipakai untuk |
-| --- | --- | --- | --- |
-| `SSF-AST-LANCAR` | Aset Lancar | Balance Sheet | Kas, bank, piutang, persediaan, pajak dibayar di muka |
-| `SSF-AST-TETAP` | Aset Tetap | Balance Sheet | Peralatan medis, aset sewa, akumulasi penyusutan |
-| `SSF-LIABILITAS` | Liabilitas | Balance Sheet | Utang usaha, utang pajak, utang gaji, deposit |
-| `SSF-EKUITAS` | Ekuitas | Balance Sheet | Modal pemilik, laba ditahan |
-| `SSF-PENDAPATAN` | Pendapatan | Income Statement | Penjualan, jasa, sewa, kafe, pendapatan lain |
-| `SSF-HPP` | Harga Pokok | Income Statement | HPP, retur pembelian, selisih persediaan |
-| `SSF-BEBAN` | Beban Usaha | Income Statement | Gaji, listrik, penyusutan, royalti, administrasi |
-| `SSF-LAIN` | Pendapatan dan Beban Lain | Income Statement | Selisih kurs, laba atau rugi pelepasan aset |
+| Code | Name | Report group | Normal balance | Category | Cash flow section | Dipakai untuk |
+| --- | --- | --- | --- | --- | --- | --- |
+| `SSF-AST-LANCAR` | Aset Lancar | Balance Sheet | debit | asset | operating | Kas, bank, piutang, persediaan, pajak dibayar di muka |
+| `SSF-AST-TETAP` | Aset Tetap | Balance Sheet | debit | asset | investing | Peralatan medis, aset sewa, akumulasi penyusutan |
+| `SSF-LIABILITAS` | Liabilitas | Balance Sheet | credit | liability | operating | Utang usaha, utang pajak, utang gaji, deposit |
+| `SSF-EKUITAS` | Ekuitas | Balance Sheet | credit | equity | financing | Modal pemilik, laba ditahan |
+| `SSF-PENDAPATAN` | Pendapatan | Income Statement | credit | revenue | operating | Penjualan, jasa, sewa, kafe, pendapatan lain |
+| `SSF-HPP` | Harga Pokok | Income Statement | debit | expense | operating | HPP, retur pembelian, selisih persediaan |
+| `SSF-BEBAN` | Beban Usaha | Income Statement | debit | expense | operating | Gaji, listrik, penyusutan, royalti, administrasi |
+| `SSF-LAIN` | Pendapatan dan Beban Lain | Income Statement | credit | revenue | operating | Selisih kurs, laba atau rugi pelepasan aset |
 
-## 3. Akun (kode, nama, tipe, saldo normal)
+> Pilihan nilai di form: Report group = `Balance Sheet` atau `Income Statement`; Normal balance = `debit` atau `credit`; Category = `asset`, `liability`, `equity`, `revenue`, `expense`;
+> Cash flow section = `operating`, `investing`, `financing`. Akun **mengikuti** sifat tipenya; aplikasi tidak punya kolom saldo normal di level akun.
+> Akun kontra (Akumulasi Penyusutan, Retur Pembelian, Retur Penjualan) tetap ditaruh di tipe induknya dan bersaldo berlawanan lewat jurnalnya.
+
+## 3. Akun (kode, nama, tipe)
 
 Nama di kolom **Nama akun** adalah acuan yang dipakai di file `01` dan di pemeriksaan jurnal. Kode boleh kamu sesuaikan, **nama jangan**.
-Kolom **Saldo normal**: D = debit, K = kredit.
+Kolom form akun (dari validasi aplikasi): **Type** (wajib, pilih dari tipe bagian 2), **Code** (wajib), **Name** (wajib), **Level** (wajib; isi `1` untuk semua akun di suite ini karena daftarnya datar),
+**Parent** (opsional, kosongkan), **Active**, **Balance required**, dan penanda khusus di bagian 3.9. Kolom **Saldo normal** di tabel bawah hanya **keterangan** (D = debit, K = kredit); nilainya mengikuti tipe.
 
 ### 3.1 Aset lancar (`SSF-AST-LANCAR`)
 
@@ -131,6 +137,22 @@ Kolom **Saldo normal**: D = debit, K = kredit.
 | `7101` | Laba atau Rugi Selisih Kurs | K | Transaksi mata uang asing (bila diuji) |
 | `7102` | Laba atau Rugi Pelepasan Aset | K | Penjualan atau penghapusan aset tetap |
 
+### 3.9 Penanda khusus akun (dicentang di form akun)
+
+Beberapa akun harus ditandai supaya modul lain mengenalinya. Tanpa penanda ini, saldo awal, penutupan tahun, atau kontrol piutang dan utang gagal.
+
+| Akun | Penanda di form | Kenapa |
+| --- | --- | --- |
+| `1101` Kas Kecil | **Is cash account** | Muncul di arus kas dan pemilih kas |
+| `1102` Bank Operasional | **Is cash account** | Sama; dipakai rekonsiliasi bank |
+| `1201` Piutang Usaha | **Is AR control account** | Akun kontrol piutang (umur piutang, sales invoice) |
+| `2101` Utang Usaha | **Is AP control account** | Akun kontrol utang (umur utang, purchase invoice) |
+| `3101` Modal Pemilik | **Is opening balance equity account** | **Wajib** sebelum saldo awal dapat diisi. Tepat **satu** akun |
+| `3102` Laba Ditahan | **Is retained earnings account** | Tujuan penutupan tahun fiskal. Tepat **satu** akun |
+| `1401` PPN Masukan dan `2201` Utang PPN | **Is tax** dan **Tax** = PPN 11% | Menghubungkan akun ke pajak |
+| `1101`, `1102`, `3101` dan akun lain yang punya saldo awal | **Balance required** | Boleh menerima saldo awal |
+| Akun arus kas (opsional) | **Cash flow section** | Mengisi laporan arus kas (operating, investing, financing) |
+
 **Jumlah: 8 tipe dan 40 akun.** Akun `1304`, `1303`, `2304`, `6401`, `1503`, `2303` hanya perlu bila modul terkait (Manufaktur, Pertambangan, Sewa) ikut diuji.
 Kalau modul itu belum kamu sentuh, akunnya boleh menyusul, tetapi **buat sebelum langkahnya**, bukan sesudah.
 
@@ -174,7 +196,7 @@ Tanpa persediaan awal, supaya semua angka di file `01` bisa dihitung dari nol. S
 | Positif — akun | Buat akun bagian 3 dengan tipe sesuai | Muncul di pohon akun dengan saldo normal benar |
 | Negatif — akun tanpa tipe | Kosongkan tipe lalu simpan | Ditolak per kolom |
 | Negatif — kode akun ganda | Buat akun dengan kode `1101` yang sudah ada | Ditolak |
-| Aturan manual — akun saldo awal | Isi saldo awal **sebelum** menandai `3101` sebagai akun saldo awal | Gagal dengan pesan jelas (bukan error server) |
+| Aturan manual — akun saldo awal | Isi saldo awal **sebelum** menandai `3101` dengan **Is opening balance equity account** | Gagal dengan pesan jelas (bukan error server) |
 | Positif — saldo awal | Tandai `3101`, isi saldo bagian 5 | Trial Balance seimbang Rp 500.000.000 per sisi |
 | Negatif — saldo awal tidak seimbang | Isi Bank 500.000.000 tanpa modal | Ditolak atau ditandai tidak seimbang, tidak diam-diam tersimpan |
 | Positif — hubungkan modul | Isi tabel bagian 4 untuk Pembelian, lalu buat satu Goods Receipt | Jurnal GR menyebut `1301` dan `2102` dengan angka sesuai |
