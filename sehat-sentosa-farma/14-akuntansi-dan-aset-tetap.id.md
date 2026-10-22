@@ -29,6 +29,8 @@ Bab manual: [`accounting/01-setup-master-data-dan-saldo-awal.md`](../../erpApiSe
 
 **Input di:** `Client Master → Chart of Account Type` (`/client-master/chart-of-account-type`) → `Business Units` (`/client-master/business-units`) → `Chart of Accounts` (`/client-master/chart-of-accounts`) → `Branch Setup` (`/client-master/branch-setup`) → `Taxes` (`/client-master/taxes`); saldo awal di `Chart of Accounts Balances` (`/client-master/chart-of-accounts-balances`).
 
+**Data yang diisi:** tipe akun dan akun **persis seperti [`00b`](./00b-tipe-akun-dan-akun-acuan.id.md)** (8 tipe, 40 akun, saldo awal Bank dan Modal Rp 500.000.000). Kasus uji data akun ada di bagian 6 file itu.
+
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — jalur normal (draf) | Setup Chart of Account Type dengan benar untuk entitas utama dan cabang; import template; buat manual untuk detail akun; lengkapi taxes sesuai peraturan | Semua setup berhasil, chart of account type dan tax tersedia di modul Akuntansi |

@@ -158,7 +158,9 @@ gudang wajib lewat **Transfer Stok**, bukan penyesuaian manual.
 **Input gudang di:** `Client Master → Warehouses` (`/client-master/warehouses`). Kolom: Name, Code (`WH-PST` dan seterusnya), Business unit, Type, alamat, telepon, koordinat, Status.
 Gudang **butuh unit bisnis**, jadi buat dulu satu unit per cabang di `Client Master → Business Units` (`/client-master/business-units`). `WH-BDG` dibuat saat cabang aktif adalah Bandung.
 
-### 3.4 Akun kunci (acuan nama, kode mengikuti template akun cabang)
+### 3.4 Akun kunci
+
+> **Daftar lengkap tipe akun dan akun (kode, tipe, saldo normal, dipakai modul mana) ada di [`00b`](./00b-tipe-akun-dan-akun-acuan.id.md).** Bagian ini hanya ringkasan nama. Kalau berbeda dengan `00b`, ikuti `00b`.
 
 Kas Kecil, Bank Operasional, Piutang Usaha, Persediaan Barang Dagang, Persediaan Bahan Baku, Persediaan Barang Jadi, Aset Tetap, Akumulasi
 Penyusutan, Utang Usaha, Utang PPN, PPN Masukan, Pendapatan Penjualan, Pendapatan Jasa, Harga Pokok Penjualan, Beban Gaji, Beban Listrik,
@@ -168,7 +170,7 @@ Saldo awal 1 Oktober 2026 (lewat fitur Saldo Awal): **Bank Operasional Rp 500.00
 persediaan awal, supaya angka di file `01` bisa dihitung dari nol.
 
 **Input akun di:** `Client Master → Chart of Account Type` (`/client-master/chart-of-account-type`) lalu `Client Master → Chart of Accounts` (`/client-master/chart-of-accounts`).
-Cara tercepat: **pakai template** (bagian "1.1 Pakai Template" di manual Akuntansi) supaya akun kunci terbentuk sekaligus, lalu tambahkan yang kurang satu per satu atau lewat impor Excel.
+Isi **sesuai [`00b`](./00b-tipe-akun-dan-akun-acuan.id.md)** (8 tipe, 40 akun), bukan template bawaan: template memakai kode yang bentrok dan template Kesehatan terlalu tipis. Klien baru memang mulai dengan COA kosong.
 Kolom akun: Code, Name, Category, Effect, Normal balance, Report group.
 
 **Input saldo awal (Bank Rp 500.000.000 dan Modal Rp 500.000.000):**
@@ -198,7 +200,7 @@ Dikerjakan oleh **Dr. Rahmat** (admin klien) setelah login. Untuk cabang selain 
 | 3 | Unit bisnis per cabang | `Client Master → Business Units` (`/client-master/business-units`) | - |
 | 4 | Gudang (4 gudang) | `Client Master → Warehouses` (`/client-master/warehouses`) | langkah 3 |
 | 5 | Metode pembayaran (Tunai, Transfer, QRIS) dan tipe order | `Client Master → Payment Methods` (`/client-master/payment-methods`), `Order Types` (`/client-master/order-types`) | - |
-| 6 | Jenis akun dan Chart of Accounts | `Client Master → Chart of Account Type`, `Chart of Accounts` | langkah 3 |
+| 6 | Jenis akun (8 tipe) dan Chart of Accounts (40 akun), **daftar di [`00b`](./00b-tipe-akun-dan-akun-acuan.id.md)** | `Client Master → Chart of Account Type`, `Chart of Accounts` | langkah 3 |
 | 7 | Tahun fiskal dan 12 periode | `Client Master → Fiscal Year`, `Accounting Period` | - |
 | 8 | Rekening bank, lalu saldo awal 1 Okt | `Finance → Bank Accounts`, `Chart of Accounts Balances` | langkah 6 dan 7 |
 | 9 | Awalan nomor dokumen | `Client Master → Branch Setup` (`/client-master/branch-setup`) | - |

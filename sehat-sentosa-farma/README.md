@@ -118,9 +118,17 @@ tetap diberikan setelah temuannya masuk tabel bagian 6.
 
 ### FASE A. Pondasi
 
+**`00b` Tipe akun dan akun acuan**
+- [ ] §2 delapan tipe akun dibuat
+- [ ] §3 empat puluh akun dibuat (modul Manufaktur, Pertambangan, Sewa boleh menyusul)
+- [ ] §4 akun dihubungkan ke konfigurasi tiap modul sebelum modul itu diuji
+- [ ] §5 saldo awal 1 Okt, Trial Balance seimbang Rp 500.000.000
+- [ ] §6 kasus uji data akun
+
 **`00` Profil dan prasyarat**
 - [ ] Seluruh cabang, peran, dan pengguna uji dibuat (tabel §1 dan §2)
-- [ ] Mitra, produk, gudang, akun kunci sesuai §3
+- [ ] Mitra, produk, gudang sesuai §3
+- [ ] 8 tipe akun dan 40 akun dibuat **sesuai `00b`** (klien baru mulai dengan COA kosong), akun saldo awal ditandai, akun dihubungkan ke tiap modul (`00b` §4)
 - [ ] Saldo awal 1 Okt: Bank Operasional dan Modal Pemilik masing-masing Rp 500.000.000
 
 **`00a` Perjalanan berlangganan**
@@ -420,6 +428,7 @@ Rendah (kosmetik, teks), Celah (fitur memang belum ada, masuk register `95`).
 | File | Isi |
 | --- | --- |
 | `00` | Profil perusahaan, cabang, peran, data acuan, urutan kerja |
+| `00b` | **Tipe akun dan 40 akun acuan**, saldo awal, penghubung akun ke modul, kasus uji data akun |
 | `00a` | Perjalanan berlangganan klien (titik awal) |
 | `01` | Alur bisnis terpadu, 40 langkah dengan angka acuan |
 | `02` sampai `04` | Platform, konfigurasi umum, persetujuan, AI |
