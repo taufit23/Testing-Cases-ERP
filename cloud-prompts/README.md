@@ -11,6 +11,11 @@ Berkas di folder ini adalah prompt siap pakai untuk sesi cloud Claude Code (mema
    Tanpa environment khusus, sesi memakai Default; prompt sudah menyuruh sesi menyalakan Postgres sendiri, jadi ini boleh dilewati untuk Sesi 0.
 4. Jangan isi kunci produksi atau kunci AI di environment. Tes memakai penyedia palsu.
 
+> **Versi CLI lama (mis. 2.1.152): pakai `--remote`, bukan `--cloud`.** `--cloud` adalah nama baru dari flag yang sama; CLI yang belum diperbarui hanya mengenal `--remote`.
+> Contoh: `claude --remote "$(cat ../Testing-Cases-ERP/cloud-prompts/sesi-0-peta-celah.md)"`. Hasilnya sama: sesi dibuat di claude.ai/code dan mencetak tautan serta
+> `claude --teleport <id>`. Bagian di bawah memakai `--cloud`; ganti dengan `--remote` bila perlu.
+> Terminal bash dan zsh memakai versi `$(cat ...)`; versi `Get-Content` hanya untuk PowerShell.
+
 ## Sesi 0: bukti lingkungan dan peta celah (jalankan dulu, paling murah)
 
 Git Bash:
