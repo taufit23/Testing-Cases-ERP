@@ -137,6 +137,9 @@ Kode `SUP-01` dan seterusnya hanya **sebutan di dokumen uji**; aplikasi membuat 
 | HRB-001 | Jamu Kunyit Asam | sachet | 380 (biaya produksi) | 700 | 1.000 | hasil produksi pabrik |
 | HRB-002 | Suplemen Kalsium | botol | dari BOM | 30.000 | 38.000 | hasil produksi, memakai kalsium karbonat |
 | KAL-001 | Kalsium Karbonat (bahan baku) | kg | dari tambang | - | - | bahan baku, tidak dijual eceran |
+| BHN-001 | Kunyit (bahan baku) | kg | 10.000 | - | - | bahan baku BOM HRB-001, kategori Bahan Baku, tidak dijual eceran |
+| BHN-002 | Asam Jawa (bahan baku) | kg | 8.000 | - | - | bahan baku BOM HRB-001, kategori Bahan Baku, tidak dijual eceran |
+| BHN-003 | Kemasan Sachet Jamu | sachet | 100 | - | - | bahan pengemas BOM HRB-001, 1 sachet kosong per sachet jamu, kategori Bahan Baku |
 | RNT-001 | Sewa Kursi Roda | hari | - | 15.000 per hari | - | aset sewa, deposit Rp 100.000 per unit |
 | MNU-001 | Teh Jahe Hangat | gelas | - | - | 12.000 | menu kafe |
 
