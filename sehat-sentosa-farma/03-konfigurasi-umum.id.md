@@ -151,8 +151,8 @@ Bab manual: [`konfigurasi-umum/09-cost-centers.md`](../../erpApiServices/docs/ma
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | membuat Cost Center 'Gudang' di bawah Business Unit 'Jakarta', menambah biaya gaji staf gudang | struktur Cost Center terbentuk dengan hierarki yang benar dan biaya terkategorikan dengan tepat |
-| Negatif — input salah (draf) | mencoba menambah Cost Center tanpa memilih Business Unit terlebih dahulu | sistem menolak input dan memberitahukan bahwa Business Unit harus dipilih terlebih dahulu |
+| Positif — jalur normal | membuat Cost Center induk 'Operasional', lalu Cost Center 'Gudang' dengan induk 'Operasional' (form berisi kode, nama, induk, deskripsi, status aktif; tidak ada isian Business Unit) | struktur Cost Center terbentuk dengan hierarki induk-anak yang benar |
+| Negatif — input salah | mencoba menyimpan Cost Center dengan nama dikosongkan | sistem menolak dan menyatakan nama wajib diisi |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 

@@ -48,7 +48,7 @@ Bab manual: [`inventory/02-stock-adjustment.md`](../../erpApiServices/docs/manua
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Menyesuaikan Stok Awal (draf) | Input SKU OBT-001 dengan qty 500 unit; pilih alasan 'Stok awal'; submit & post | Stok OBT-001 berubah menjadi 500 unit, status transaksi tercatat dengan benar |
-| Negatif — Alasan Salah (draf) | Input SKU OBT-001 dengan qty 500 unit; pilih alasan 'Retur'; submit tanpa perbaikan | Tidak dapat disimpan, pesan penolakan yang jelas dan tidak terposting |
+| Negatif — Input Salah | Input SKU OBT-001 dengan qty aktual negatif (mis. -5); alasan dipilih dari daftar yang tersedia (Correction, Damaged, Expired, Found, Initial Stock, Lost, Stock Opname Result); simpan | Tidak dapat disimpan, pesan penolakan yang jelas pada qty aktual dan tidak terposting |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Setiap Stock Adjustment wajib memilih alasan dari daftar yang sudah disiapkan (bukan teks bebas) — supaya riwayat penyesuaian tetap terkategori dan bisa dianalisis |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Stock Adjustment yang sudah Posted tidak bisa diedit langsung — kalau ada kesalahan, buat adjustment koreksi baru (bukan mengubah yang lama), demi menjaga jejak audit |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |

@@ -144,7 +144,7 @@ Bab manual: [`purchasing/08-purchase-return.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mencatat Retur Pembelian (draf) | Input nomor PO: OBT-001, jumlah retur 50 unit, alasan: salah kemasan | Jurnal terbentuk, Utang Dagang supplier dikreditkan 750.000 Rupiah |
+| Positif — Mencatat Retur Pembelian | Retur OBT-001 sebanyak 50 strip (harga beli 3.000), alasan: salah kemasan | Nilai retur 50 × 3.000 = 150.000. Jurnal: Utang Usaha didebit 150.000 (utang ke pemasok berkurang) dan Persediaan dikredit 150.000 |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Menu: Purchasing → Purchase Returns (/purchasing/purchase-returns) · Prasyarat: ada Goods Receipt yang sudah tercatat (barang harus sudah "diterima" dulu sebelum bisa "dikembalikan") |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Retur tidak bisa melebihi qty yang diterima (dikurangi retur sebelumnya untuk item yang sama) — sama seperti guard over-receipt di Goods Receipt (chapter 05), sistem menolak input yang melebihi batas ini |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
