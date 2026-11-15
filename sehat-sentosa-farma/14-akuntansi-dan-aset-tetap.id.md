@@ -9,12 +9,6 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
-**Dikerjakan oleh:** **Sari Wulandari** (Manajer Keuangan). Penyiapan awal (akun, tahun fiskal, saldo awal) boleh oleh **Dr. Rahmat**.
-
-**Cabang aktif:** Kantor Pusat & Distribusi Jakarta.
-
-**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
-
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Jurnal tidak seimbang tidak bisa diposting; jurnal reverse bersifat aditif; periode tertutup menolak posting.
@@ -27,14 +21,10 @@ visibility: internal
 
 Bab manual: [`accounting/01-setup-master-data-dan-saldo-awal.md`](../../erpApiServices/docs/manualBook/accounting/01-setup-master-data-dan-saldo-awal.md)
 
-**Input di:** `Client Master → Chart of Account Type` (`/client-master/chart-of-account-type`) → `Business Units` (`/client-master/business-units`) → `Chart of Accounts` (`/client-master/chart-of-accounts`) → `Branch Setup` (`/client-master/branch-setup`) → `Taxes` (`/client-master/taxes`); saldo awal di `Chart of Accounts Balances` (`/client-master/chart-of-accounts-balances`).
-
-**Data yang diisi:** tipe akun dan akun **persis seperti [`00b`](./00b-tipe-akun-dan-akun-acuan.id.md)** (8 tipe, 40 akun, saldo awal Bank dan Modal Rp 500.000.000). Kasus uji data akun ada di bagian 6 file itu.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Setup Chart of Account Type dengan benar untuk entitas utama dan cabang; import template; buat manual untuk detail akun; lengkapi taxes sesuai peraturan | Semua setup berhasil, chart of account type dan tax tersedia di modul Akuntansi |
-| Negatif — input salah (draf) | Input nama tax tidak sesuai format; coba import file Excel tanpa kolom wajib | Import gagal, muncul pesan kesalahan yang jelas tentang input atau format yang salah |
+| Positif — jalur normal (draf) | Setup Chart of Account Type untuk Sentosa Farma; import template; verifikasi saldo awal di Journal & Reports | Semua account type terdefinisi dengan benar dan saldo awal akuntansi valid |
+| Negatif — input salah (draf) | Input salah dalam Chart of Account Type; coba import template yang tidak sesuai | Import ditolak pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Langkah 5 (COA) butuh Chart of Account Type (Langkah 1) sudah ada, karena setiap akun wajib pilih tipe-nya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sama seperti Langkah 1 — tersedia Use Template, Add (manual satu-satu), Bulk Add, dan Import from Excel untuk COA. Setiap akun wajib terhubung ke Chart of Account Type (Langkah 1) yang sudah dibuat sebelumnya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Mengisi Opening Balance di sini otomatis memposting jurnal saldo awal ke General Ledger (lihat syarat di Langkah 5 — akun equity harus sudah ditandai). Tujuannya sama dengan Langkah 8, hanya beda titik masuk (dari Bank Account, bukan dari COA) |
@@ -45,14 +35,9 @@ Bab manual: [`accounting/01-setup-master-data-dan-saldo-awal.md`](../../erpApiSe
 
 Bab manual: [`accounting/02-jurnal-manual.md`](../../erpApiServices/docs/manualBook/accounting/02-jurnal-manual.md)
 
-**Input di:** `Accounting → Journals` (`/accounting/journals`).
-
-**Prasyarat:** Chart of Accounts & saldo awal sudah di-setup (lihat _01. Setup Master Data & Saldo Awal_).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Jurnal Penjualan Paracetamol (draf) | Membuat jurnal penjualan Paracetamol 500 mg strip ke Apotek Mitra Sehat; Approve & Post; Terlihat dalam laporan laba rugi | Berhasil mencatat transaksi penjualan dan menghasilkan laporan akuntansi yang benar |
-| Negatif — Input tanpa Approval Workflow (draf) | Membuat jurnal tanpa aktivasi approval workflow; Tidak dapat approve & post; Ditolak pesan penolakan yang jelas | Penginputan ditolak karena syarat penggunaan fitur belum terpenuhi |
+| Positif — Membuat Jurnal Penjualan Obat (draf) | Input jurnal penjualan obat Paracetamol 500 mg strip ke Apotek Sentosa Bandung; Approve & Post; Terlihat transaksi di laporan penjualan | Transaksi tercatat dengan benar, laporan penjualan update |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jurnal yang sudah Posted tidak bisa dihapus atau diedit langsung — karena sudah resmi mengubah saldo dan mungkin sudah "dilaporkan" ke pihak lain (bank, kantor pajak, dst). Satu-satunya cara mengoreksi jurnal yang sudah posted adalah Reverse: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kedua jurnal (asli + kebalikannya) tetap tersimpan selamanya — ini prinsip audit trail: riwayat tidak boleh hilang atau berubah diam-diam, koreksi harus lewat entri baru, bukan mengubah yang lama |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jurnal yang masih Draft tidak bisa di-Reverse (tombolnya nonaktif) — untuk jurnal draft yang salah, langsung Delete saja, tidak perlu reverse |
@@ -64,14 +49,10 @@ Bab manual: [`accounting/02-jurnal-manual.md`](../../erpApiServices/docs/manualB
 
 Bab manual: [`accounting/03-general-ledger-dan-neraca-saldo.md`](../../erpApiServices/docs/manualBook/accounting/03-general-ledger-dan-neraca-saldo.md)
 
-**Input di:** `Accounting → General Ledger` (`/accounting/general-ledger`).
-
-**Prasyarat:** ada jurnal yang sudah **Posted** (lihat _02. Jurnal Manual_).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Detail Ledger (draf) | Memasukkan nomor akun dan periode, menampilkan transaksi terperinci untuk akun tersebut | Menyajikan transaksi yang telah diposting dengan detail yang lengkap |
-| Negatif — Summary by Account (draf) | Menggunakan kriteria tidak valid, misalnya jenis transaksi palsu | Menolak input pesan penolakan yang jelas |
+| Positif — Detail Ledger (draf) | Cek detail ledger Paracetamol 500 mg strip (SKU OBT-001) di kantor pusat | Jurnal tercatat dengan benar dan sesuai saldo akhir bulan |
+| Negatif — Summary by Account (draf) | Menggunakan filter salah untuk account non-exist | Tampilan error atau pesan bahwa account tidak ditemukan, tidak menampilkan data apa pun |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi filter: Account (wajib pilih satu akun), Date From, Date To |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tabel menampilkan kolom Beginning/Period Movement/Ending Balance per akun, dengan baris Total di paling bawah. Baris Total inilah yang paling penting: total Debit harus sama dengan total Kredit untuk seluruh akun |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -81,14 +62,9 @@ Bab manual: [`accounting/03-general-ledger-dan-neraca-saldo.md`](../../erpApiSer
 
 Bab manual: [`accounting/04-tutup-periode-dan-tahun-fiskal.md`](../../erpApiServices/docs/manualBook/accounting/04-tutup-periode-dan-tahun-fiskal.md)
 
-**Input di:** `Client Master → Accounting Period` (`/client-master/accounting-period`) dan `Client Master → Fiscal Year` (`/client-master/fiscal-year`).
-
-**Prasyarat:** siklus transaksi bulanan sudah selesai diinput & diposting.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Tutup Periode Bulanan (draf) | Langkah: Pilih periode Januari 2023, klik "Close" | Periode Januari 2023 terkunci dan laporan bulanan tersedia |
-| Negatif — Input Tahun Fiskal Salah (draf) | Langkah: Masukkan tahun fiskal 2021, klik "Close" | Ditolak: Tahun fiskal harus 2022 atau setelahnya |
+| Positif — Tutup Periode Bulanan (draf) | Langkah: Pilih periode Januari 2023, klik "Close", konfirmasi | Periode Januari 2023 terkunci dan laporan keuangan bulan tersebut tersedia |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Pastikan semua jurnal bertanggal bulan tersebut sudah Posted (bukan Draft) — kalau masih ada draft, Close akan ditolak dengan pesan jelas ("ada jurnal belum posted, post atau hapus dulu") |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Periode yang belum Closed tidak bisa langsung di-Lock (opsi ini otomatis nonaktif). Setelah Locked, sama seperti Closed — tidak ada jurnal baru yang bisa masuk ke tanggal tersebut |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Semua Accounting Period dalam tahun itu (biasanya 12 bulan) harus sudah Closed. Kalau bulan tertentu tidak ada transaksinya sama sekali, tetap bisa di-Close (tidak ada jurnal draft yang memblokir) |
@@ -100,13 +76,10 @@ Bab manual: [`accounting/04-tutup-periode-dan-tahun-fiskal.md`](../../erpApiServ
 
 Bab manual: [`accounting/05-laporan-keuangan.md`](../../erpApiServices/docs/manualBook/accounting/05-laporan-keuangan.md)
 
-**Input di:** `Reports → Balance Sheet` / `Income Statement` / `Cash Flow Statement`.
-
-**Prasyarat:** jurnal sudah diposting & Trial Balance sudah seimbang (lihat _03. General Ledger & Neraca Saldo_).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Neraca Sehat Sentosa Farma (draf) | Buat neraca dengan aset Rp15M, kewajiban Rp8M, ekuitas Rp7M; cek keseimbangan | Aset = Kewajiban + Ekuitas (Rp15M = Rp8M + Rp7M) |
+| Positif — Neraca Sehat Sentosa Farma (draf) | Memasukkan data aset dan kewajiban tahunan; memeriksa saldo modal; mengevaluasi rasio likuiditas | Neraca seimbang dengan total aset = total kewajiban + modal, rasio likuiditas sesuai standar industri farmasi |
+| Negatif — Laba Rugi Sentosa Farma (draf) | Menginput data penjualan dan biaya yang tidak valid; mengabaikan syarat penilaian laba rugi | Input ditolak: pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Baru curigai konfigurasi Chart of Account Type — field Category, Normal Balance, dan Cash Flow Section per akun harus benar sejak awal setup |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -115,14 +88,10 @@ Bab manual: [`accounting/05-laporan-keuangan.md`](../../erpApiServices/docs/manu
 
 Bab manual: [`accounting/06-anggaran-budget.md`](../../erpApiServices/docs/manualBook/accounting/06-anggaran-budget.md)
 
-**Input di:** `Accounting → Budgets` (`/accounting/budgets`).
-
-**Prasyarat:** Chart of Accounts, Business Unit, dan Fiscal Year/Accounting Period **yang masih aktif** (belum closed) sudah tersedia.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Anggaran (draf) | Input data akun "Paracetamol" di klinik Bekasi untuk periode 2023, realisasikan per unit bisnis | Anggaran tersimpan dengan detail per unit dan periode, dapat dibandingkan dengan realisasi |
-| Negatif — Input Realisasi Sebelum Anggaran (draf) | Mencoba memasukkan realisasi "Paracetamol" tanpa ada anggaran terlebih dahulu | Sistem menolak input, pesan penolakan yang jelas |
+| Positif — jalur normal (draf) | PT Sehat Sentosa Farma membuat anggaran untuk klinik Bekasi & apotek Bandung; membandingkan dengan realisasi; status budget diperbarui secara otomatis | Anggaran akun terbentuk, dibandingkan dengan realisasi, dan status budget diperbarui sesuai periode |
+| Negatif — input salah (draf) | PT Sehat Sentosa Farma mencoba membuat anggaran untuk periode yang telah berlalu; syarat masa depan gagal | Input tidak valid: anggaran hanya bisa dibuat untuk periode aktif/masa depan, silakan pilih periode masa depan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Isi Fiscal Year (wajib) dan Name (nama anggaran, misalnya "Anggaran Operasional 2027") |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -131,14 +100,10 @@ Bab manual: [`accounting/06-anggaran-budget.md`](../../erpApiServices/docs/manua
 
 Bab manual: [`accounting/07-aset-tetap-dan-penyusutan.md`](../../erpApiServices/docs/manualBook/accounting/07-aset-tetap-dan-penyusutan.md)
 
-**Input di:** `Fixed Assets → Assets` (`/fixed-assets/assets`).
-
-**Prasyarat:** akun Aset Tetap, Beban Penyusutan, dan Akumulasi Penyusutan sudah ada di Chart of Accounts.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mendaftarkan Aset (draf) | PT Sehat Sentosa Farma memasukkan aset tetap baru dengan nilai awal Rp10 juta, masa manfaat 5 tahun, metode garis lurus; data valid | Aset tetap terdaftar dengan benar di sistem dan penyusutan otomatis dimulai |
-| Negatif — Metode Penyusutan Salah (draf) | PT Sehat Sentosa Farma memilih metode penyusutan yang tidak sesuai (contoh: saldo menurun untuk aset garis lurus); data tidak valid | Sistem menolak input pesan penolakan yang jelas |
+| Positif — Mendaftarkan Aset (draf) | PT Sehat Sentosa Farma memasukkan aset tetap kantor pusat, termasuk nilai historis dan estimasi umur manfaat | Aset tetap terdaftar dengan benar di sistem akuntansi |
+| Negatif — Metode Penyusutan Salah (draf) | Menggunakan metode garis lurus untuk aset yang lebih cocok menggunakan saldo menurun | Sistem memberikan pesan kesalahan tentang pemilihan metode yang tidak tepat |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Wajib dijalankan tiap bulan, per aset — sistem tidak otomatis menyusutkan semua aset sekaligus setiap bulan berjalan (tidak ada cron/scheduler bawaan untuk ini). Kalau ada beberapa aset, ulangi langkah ini untuk masing-masing aset setiap bulannya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sistem mencegah penyusutan ganda untuk periode yang sama — kalau Run Depreciation diklik lagi dengan Period Date bulan yang sudah pernah diproses, akan ditolak. Ini penting supaya Beban Penyusutan tidak tercatat dobel di laporan keuangan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Neraca (Balance Sheet) — cari akun Akumulasi Penyusutan di Trial Balance/COA, saldonya harus negatif (mengurangi total Aset Tetap) |
@@ -150,12 +115,10 @@ Bab manual: [`accounting/07-aset-tetap-dan-penyusutan.md`](../../erpApiServices/
 
 Bab manual: [`accounting/08-rekonsiliasi-bank.md`](../../erpApiServices/docs/manualBook/accounting/08-rekonsiliasi-bank.md)
 
-**Input di:** `Finance → Bank Accounts` (`/finance/bank-accounts`) dan `Finance → Bank Reconciliations` (`/finance/bank-reconciliations`).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Rekonsiliasi Bank (draf) | Setup akun bank Sentosa Farma, lakukan rekonsiliasi dengan rekening koran bank, selesaikan selisih dan catat jurnal koreksi | Saldo buku dan rekening koran bank cocok, selisih terjawab dengan jurnal koreksi yang benar |
-| Negatif — Input Data Salah (draf) | Setup akun bank dengan data salah, coba lakukan rekonsiliasi | Sistem menolak setup akun karena data tidak valid, tampilkan pesan kesalahan yang jelas tentang kesalahan input |
+| Positif — Rekonsiliasi Bank (draf) | Setup bank account Sentosa Farma; Buat rekonsiliasi; Selesaikan selisih dengan jurnal koreksi; Selisih teridentifikasi dan diperbaiki | Saldo buku dan rekening koran sejalan, akuntansi benar |
+| Negatif — Rekonsiliasi Bank (draf) | Setup bank account tanpa data valid; Buat rekonsiliasi tanpa saldo awal | Proses tidak dapat dilanjutkan, muncul pesan kesalahan tentang data yang harus diisi terlebih dahulu |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Rekonsiliasi bank adalah proses mencocokkan dua catatan yang seharusnya sama tapi seringkali beda karena beda waktu pencatatan: |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -164,14 +127,10 @@ Bab manual: [`accounting/08-rekonsiliasi-bank.md`](../../erpApiServices/docs/man
 
 Bab manual: [`accounting/09-laporan-pajak-ppn.md`](../../erpApiServices/docs/manualBook/accounting/09-laporan-pajak-ppn.md)
 
-**Input di:** `Reports → Tax Summary` (`/reports/tax-summary`).
-
-**Prasyarat:** jurnal dengan baris PPN (akun ber-flag `Is Tax`) sudah diposting — lihat chapter _02. Jurnal Manual_.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membaca rekap PPN (draf) | Lihat rekap PPN Masukan/Keluaran Sentosa Farma; hitung Net Payable | Net Payable sesuai dengan perhitungan |
-| Negatif — Retur tidak diinput (draf) | Input transaksi retur tanpa mengurangi total PPN Keluaran | Sistem menolak input dan memberi pesan penolakan yang jelas |
+| Positif — Cek PPN Masukan (draf) | Input rekap PPN masukan, hitung net payable, periksa batasan cakupan | Net payable sesuai harapan, laporan valid |
+| Negatif — Input data salah (draf) | Input jumlah PPN masukan tidak akurat, terlalu besar | Laporan ditolak, pesan penolakan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -179,11 +138,25 @@ Bab manual: [`accounting/09-laporan-pajak-ppn.md`](../../erpApiServices/docs/man
 
 Bab manual: [`accounting/10-chart-of-accounts.md`](../../erpApiServices/docs/manualBook/accounting/10-chart-of-accounts.md)
 
-**Input di:** `Client Master → Chart of Accounts` (`/client-master/chart-of-accounts`) · `Client Master → Chart of Accounts Balances` (`/client-master/chart-of-accounts-balances`) · `Client Master → General Journal Type` (`/client-master/general-journal-type`).
+| Skenario | Langkah dan data uji | Hasil yang diharapkan |
+| --- | --- | --- |
+| Positif — Struktur Akun (draf) | Buat akun baru untuk Paracetamol 500 mg strip (SKU OBT-001) dan lihat strukturnya sebagai pohon; otomatis disusun ke akun induk Obat & Alat Kesehatan | Menampilkan struktur akun Paracetamol 500 mg strip di bawah akun induk Obat & Alat Kesehatan |
+| Negatif — Saldo Akun (draf) | Input saldo awal untuk Jamu Kunyit Asam sachet (HRB-001) tanpa memilih jenis jurnal; coba simpan | Muncul pesan kesalahan bahwa harus memilih jenis jurnal sebelum menyimpan saldo akun |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Syarat: asisten AI harus aktif dan pengungkapan AI cabang sudah dikonfirmasi. Pengguna yang boleh menambah akun otomatis boleh memakai bantuan ini. Aturan simpan tetap dicek server, misalnya laba ditahan hanya boleh satu per cabang |
+| Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
+| Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
+
+## 11. Diagram Alur Accounting — Modul Accounting
+
+Bab manual: [`accounting/11-diagram-alur-accounting.md`](../../erpApiServices/docs/manualBook/accounting/11-diagram-alur-accounting.md)
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Struktur Akun (draf) | Buat akun baru "Kas", pilih induk "Aset Lancar" & simpan | Struktur tampil dengan "Aset Lancarpesan yang jelasKas" di bawahnya |
-| Negatif — Input Salah (draf) | Masukkan nama akun kosong & coba simpan | Terima inputan gagal, pesan penolakan yang jelas |
+| Positif — jalur normal (draf) | Sentosa Farma membuat jurnal penjualan obat Paracetamol 500 mg strip ke Apotek Mitra Sehat | Jurnal terdaftar dan diposting dengan benar di modul accounting |
+| Negatif — input salah (draf) | Input harga jual obat yang salah pada draft jurnal | Sistem menolak inputan, memberikan pesan kesalahan harga harus sesuai data master produk |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jurnal yang belum seimbang tetap tersimpan sebagai Draft, tetapi tidak bisa di-Post |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tanggal jurnal harus berada di Accounting Period yang masih terbuka |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | B --/"Ya"/ C["Ditolak: jurnal sudah di-reverse"] |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | D --/"Ya, dan pembalikan penutup tidak diizinkan cabang"/ E["Ditolak"] |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

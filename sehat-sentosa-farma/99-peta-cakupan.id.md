@@ -19,8 +19,10 @@ Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder 
 | platform-owner | Sistem: Terjemahan, Bahasa, Data Acuan, Lampiran, dan Log | `platform-owner/06-sistem-bahasa-data-acuan-dan-log.md` | `02` bagian 6 |
 | platform-owner | Dashboard Platform, Langganan, dan Monitor Notifikasi | `platform-owner/07-dashboard-platform-owner-dan-langganan.md` | `02` bagian 7 |
 | platform-owner | Akun Gateway Platform dan Kode Kanal Transfer Bank | `platform-owner/08-akun-gateway-platform-dan-kode-kanal-bank.md` | `02` bagian 8 |
-| mulai-menggunakan | Masuk ke Aplikasi, Pusat Bantuan, dan Riwayat Perubahan | `mulai-menggunakan/01-login-bantuan-dan-riwayat-perubahan.md` | `02` bagian 9 |
-| pengaturan-akun | Pengaturan Akun Saya: Tampilan, Keamanan, dan Langganan | `pengaturan-akun/01-pengaturan-akun-saya.md` | `02` bagian 10 |
+| platform-owner | Pendaftaran Mandiri Klien dan Persetujuan | `platform-owner/09-pendaftaran-mandiri-klien.md` | `02` bagian 9 |
+| platform-owner | Diagram Alur Langganan Klien — Platform Owner | `platform-owner/10-diagram-alur-langganan-klien.md` | `02` bagian 10 |
+| mulai-menggunakan | Masuk ke Aplikasi, Pusat Bantuan, dan Riwayat Perubahan | `mulai-menggunakan/01-login-bantuan-dan-riwayat-perubahan.md` | `02` bagian 11 |
+| pengaturan-akun | Pengaturan Akun Saya: Tampilan, Keamanan, dan Langganan | `pengaturan-akun/01-pengaturan-akun-saya.md` | `02` bagian 12 |
 | konfigurasi-umum | Mata Uang (Currencies) — Konfigurasi Umum | `konfigurasi-umum/01-mata-uang.md` | `03` bagian 1 |
 | konfigurasi-umum | Warehouse — Konfigurasi Umum | `konfigurasi-umum/02-warehouse.md` | `03` bagian 2 |
 | konfigurasi-umum | Kategori & Satuan Produk — Konfigurasi Umum | `konfigurasi-umum/03-kategori-dan-satuan-produk.md` | `03` bagian 3 |
@@ -40,15 +42,18 @@ Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder 
 | konfigurasi-umum | Kurs Mata Uang per Cabang (Exchange Rates) | `konfigurasi-umum/17-kurs-mata-uang-per-cabang.md` | `03` bagian 17 |
 | konfigurasi-umum | Pengaturan Tampilan PDF (PDF Layout Settings) | `konfigurasi-umum/18-pengaturan-tampilan-pdf.md` | `03` bagian 18 |
 | konfigurasi-umum | Denominasi Uang dan Deposit Kasir | `konfigurasi-umum/19-denominasi-uang-dan-deposit-kasir.md` | `03` bagian 19 |
-| konfigurasi-umum | Pola Transaksi | `konfigurasi-umum/23-pola-transaksi.md` | `03` bagian 20 |
-| konfigurasi-umum | Tipe Dokumen Legal dan Permintaan Data Pribadi | `konfigurasi-umum/24-dokumen-legal-dan-permintaan-data-pribadi.md` | `03` bagian 21 |
-| konfigurasi-umum | Tata Letak Menu dan Log Pribadi | `konfigurasi-umum/25-tata-letak-menu-dan-log-pribadi.md` | `03` bagian 22 |
-| konfigurasi-umum | Pergerakan Stok | `konfigurasi-umum/26-pergerakan-stok.md` | `03` bagian 23 |
+| konfigurasi-umum | Tipe Dokumen Legal dan Permintaan Data Pribadi | `konfigurasi-umum/24-dokumen-legal-dan-permintaan-data-pribadi.md` | `03` bagian 20 |
+| konfigurasi-umum | Tata Letak Menu dan Log Pribadi | `konfigurasi-umum/25-tata-letak-menu-dan-log-pribadi.md` | `03` bagian 21 |
+| konfigurasi-umum | Pergerakan Stok | `konfigurasi-umum/26-pergerakan-stok.md` | `03` bagian 22 |
+| konfigurasi-umum | Gambar Produk Massal dan Saran Gambar dari Internet | `konfigurasi-umum/27-gambar-produk-massal-dan-saran-gambar.md` | `03` bagian 23 |
+| konfigurasi-umum | Diagram Urutan Setup Awal Cabang — Konfigurasi Umum | `konfigurasi-umum/28-diagram-urutan-setup-awal.md` | `03` bagian 24 |
 | core | Konfigurasi Approval Workflow — Lintas Modul | `core/01-konfigurasi-approval-workflow.md` | `04` bagian 1 |
 | core | Asisten AI In-App — Modul Core | `core/02-asisten-ai.md` | `04` bagian 2 |
 | core | Cara Dapat API Key AI Provider — Modul Core | `core/03-cara-dapat-api-key-ai.md` | `04` bagian 3 |
 | core | Memproses Approval Requests — Sisi Approver | `core/04-approval-requests.md` | `04` bagian 4 |
 | core | Agen AI, Aksi, Mode Tutorial, Rangkaian, dan Jadwal — Modul Core | `core/05-agen-ai-aksi-tutorial-dan-jadwal.md` | `04` bagian 5 |
+| core | Diagram Alur Persetujuan — Modul Core | `core/06-diagram-alur-persetujuan.md` | `04` bagian 6 |
+| core | Hubungan Antar Modul — Modul Core | `core/07-hubungan-antar-modul.md` | `04` bagian 7 |
 | purchasing | Konfigurasi Alur Purchasing — Modul Purchasing | `purchasing/01-konfigurasi-alur-purchasing.md` | `05` bagian 1 |
 | purchasing | Purchase Request — Modul Purchasing | `purchasing/02-purchase-request.md` | `05` bagian 2 |
 | purchasing | Purchase Quotation — Modul Purchasing | `purchasing/03-purchase-quotation.md` | `05` bagian 3 |
@@ -61,12 +66,17 @@ Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder 
 | purchasing | Tagihan Biaya Logistik (Purchase Charge Invoice) — Modul Purchasing | `purchasing/10-tagihan-biaya-logistik.md` | `05` bagian 10 |
 | purchasing | Blanket Agreement (Kontrak Payung) — Modul Purchasing | `purchasing/11-blanket-agreement.md` | `05` bagian 11 |
 | purchasing | Konfigurasi Biaya Tambahan Pembelian | `purchasing/12-konfigurasi-biaya-tambahan-pembelian.md` | `05` bagian 12 |
+| purchasing | Jadwal Pembelian Berulang dari Kontrak Payung | `purchasing/14-jadwal-pembelian-berulang.md` | `05` bagian 13 |
+| purchasing | Diagram Alur Purchasing — Modul Purchasing | `purchasing/15-diagram-alur-purchasing.md` | `05` bagian 14 |
+| purchasing | Dampak Stok dari Pembelian — Modul Purchasing | `purchasing/16-dampak-stok-dari-pembelian.md` | `05` bagian 15 |
 | inventory | Konfigurasi Inventory — Modul Inventory | `inventory/01-konfigurasi-inventory.md` | `06` bagian 1 |
 | inventory | Stock Adjustment — Modul Inventory | `inventory/02-stock-adjustment.md` | `06` bagian 2 |
 | inventory | Stock Transfer — Modul Inventory | `inventory/03-stock-transfer.md` | `06` bagian 3 |
 | inventory | Stock Take (Opname) — Modul Inventory | `inventory/04-stock-take.md` | `06` bagian 4 |
 | inventory | Stock Lots & Serials — Modul Inventory | `inventory/05-stock-lots-dan-serials.md` | `06` bagian 5 |
 | inventory | Consignment Settlements — Modul Inventory | `inventory/06-consignment-settlements.md` | `06` bagian 6 |
+| inventory | Valuasi Persediaan — Metode Eceran dan Penutupan Selisih Harga Beli | `inventory/07-valuasi-metode-eceran-dan-selisih-harga-beli.md` | `06` bagian 7 |
+| inventory | Diagram Alur Inventory — Modul Inventory | `inventory/08-diagram-alur-inventory.md` | `06` bagian 8 |
 | sales | Konfigurasi Alur Sales — Modul Sales | `sales/01-konfigurasi-alur-sales.md` | `07` bagian 1 |
 | sales | Quotation — Modul Sales | `sales/02-quotation.md` | `07` bagian 2 |
 | sales | Sales Order — Modul Sales | `sales/03-sales-order.md` | `07` bagian 3 |
@@ -76,6 +86,7 @@ Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder 
 | sales | Sales Return — Modul Sales | `sales/07-sales-return.md` | `07` bagian 7 |
 | sales | Verifikasi Sales ke Accounting — Modul Sales | `sales/08-verifikasi-ke-accounting.md` | `07` bagian 8 |
 | sales | Konfigurasi Jurnal Penjualan | `sales/09-konfigurasi-jurnal-penjualan.md` | `07` bagian 9 |
+| sales | Diagram Alur Sales — Modul Sales | `sales/10-diagram-alur-sales.md` | `07` bagian 10 |
 | canvassing | Konfigurasi Wilayah dan Rute — Modul Sales Canvassing | `canvassing/01-konfigurasi-wilayah-dan-rute.md` | `08` bagian 1 |
 | canvassing | Target Penjualan — Modul Sales Canvassing | `canvassing/02-target-penjualan.md` | `08` bagian 2 |
 | canvassing | Titipan Stock Sales — Modul Sales Canvassing | `canvassing/03-titipan-stock-sales.md` | `08` bagian 3 |
@@ -84,6 +95,12 @@ Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder 
 | canvassing | Competitor Tracking — Modul Sales Canvassing | `canvassing/06-competitor-tracking.md` | `08` bagian 6 |
 | canvassing | Kunjungan ke Calon Pelanggan — Modul Sales Canvassing | `canvassing/07-kunjungan-ke-calon-pelanggan.md` | `08` bagian 7 |
 | canvassing | Konfigurasi Canvassing — Hasil Kunjungan, Calon Pelanggan, dan Pengaturan Cabang | `canvassing/08-konfigurasi-canvassing.md` | `08` bagian 8 |
+| canvassing | Pelacakan Gerak dan Klaim Biaya Sales — Modul Sales Canvassing | `canvassing/09-pelacakan-gerak-dan-klaim-biaya.md` | `08` bagian 9 |
+| canvassing | Konfigurasi Klaim Biaya Sales Lapangan | `canvassing/10-konfigurasi-klaim-biaya.md` | `08` bagian 10 |
+| canvassing | Konfigurasi Pelacakan Lapangan (GPS) | `canvassing/11-konfigurasi-pelacakan-lapangan.md` | `08` bagian 11 |
+| canvassing | Sesi Kerja, Tujuan Perhentian, Pelacakan Langsung, dan Harga Pesaing | `canvassing/12-sesi-kerja-perhentian-dan-harga-pesaing.md` | `08` bagian 12 |
+| canvassing | Diagram Alur Canvassing — Modul Canvassing | `canvassing/13-diagram-alur-canvassing.md` | `08` bagian 13 |
+| canvassing | Kebijakan Kerja Sales, Kepemilikan Pelanggan, dan Kolam Lead — Modul Canvassing | `canvassing/14-kepemilikan-pelanggan-dan-kolam-lead.md` | `08` bagian 14 |
 | pos | Setup Toko & Cash Session — Modul POS | `pos/01-setup-toko-dan-cash-session.md` | `09` bagian 1 |
 | pos | Transaksi Penjualan — Modul POS | `pos/02-transaksi-penjualan.md` | `09` bagian 2 |
 | pos | Void & Refund — Modul POS | `pos/03-void-dan-refund.md` | `09` bagian 3 |
@@ -91,22 +108,29 @@ Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder 
 | pos | Verifikasi POS ke Accounting — Modul POS | `pos/05-verifikasi-ke-accounting.md` | `09` bagian 5 |
 | pos | Konfigurasi POS Lanjutan — Modul POS | `pos/06-konfigurasi-pos-lanjutan.md` | `09` bagian 6 |
 | pos | Diskon, Promo, Member Tier, dan Cashback — Modul POS | `pos/07-diskon-promo-member-dan-cashback.md` | `09` bagian 7 |
+| pos | Diagram Alur POS — Modul POS | `pos/08-diagram-alur-pos.md` | `09` bagian 8 |
+| pos | Pembayaran QRIS, Kas Masuk dan Keluar Manual, serta Deposit Kasir — Modul POS | `pos/09-qris-kas-masuk-keluar-dan-deposit-kasir.md` | `09` bagian 9 |
 | restaurant | Konfigurasi Restoran — Modul Restaurant | `restaurant/01-konfigurasi-restoran.md` | `10` bagian 1 |
 | restaurant | Menu dan Kitchen Routing — Modul Restaurant | `restaurant/02-menu-dan-kitchen-routing.md` | `10` bagian 2 |
 | restaurant | Pemesanan dan Order Meja — Modul Restaurant | `restaurant/03-pemesanan-dan-order-meja.md` | `10` bagian 3 |
 | restaurant | Kitchen Display System dan Order Items — Modul Restaurant | `restaurant/04-kitchen-display-dan-order-items.md` | `10` bagian 4 |
 | restaurant | Reservasi Meja (Booking) — Modul Restaurant | `restaurant/05-reservasi-meja.md` | `10` bagian 5 |
 | restaurant | QR Self-Order — Modul Restaurant | `restaurant/06-qr-self-order.md` | `10` bagian 6 |
+| restaurant | Diagram Alur Restaurant — Modul Restaurant | `restaurant/07-diagram-alur-restaurant.md` | `10` bagian 7 |
+| restaurant | Pencatatan Bahan dan Estimasi Porsi — Modul Restaurant | `restaurant/08-pencatatan-bahan-dan-estimasi-porsi.md` | `10` bagian 8 |
+| restaurant | Restoran di Terminal POS: Denah, Booking, Pesanan QR, dan Panggilan Siap — Modul Restaurant | `restaurant/09-restoran-di-terminal-pos.md` | `10` bagian 9 |
 | manufacturing | Konfigurasi Manufaktur & Work Center — Modul Manufacturing | `manufacturing/01-konfigurasi-manufaktur.md` | `11` bagian 1 |
 | manufacturing | Bill of Materials (BOM) — Modul Manufacturing | `manufacturing/02-bill-of-materials-bom.md` | `11` bagian 2 |
 | manufacturing | Routing Produksi — Modul Manufacturing | `manufacturing/03-routing-produksi.md` | `11` bagian 3 |
 | manufacturing | Production Order — Modul Manufacturing | `manufacturing/04-production-order.md` | `11` bagian 4 |
+| manufacturing | Diagram Alur Manufaktur — Modul Manufacturing | `manufacturing/05-diagram-alur-manufaktur.md` | `11` bagian 5 |
 | mining | Konfigurasi Tambang — Modul Mining | `mining/01-konfigurasi-tambang.md` | `12` bagian 1 |
 | mining | Parameter Kualitas — Modul Mining | `mining/02-parameter-kualitas.md` | `12` bagian 2 |
 | mining | Produksi dan Hauling — Modul Mining | `mining/03-produksi-dan-hauling.md` | `12` bagian 3 |
 | mining | Stockpile — Modul Mining | `mining/04-stockpile.md` | `12` bagian 4 |
 | mining | Royalti — Modul Mining | `mining/05-royalti.md` | `12` bagian 5 |
 | mining | Rekonsiliasi Survey — Modul Mining | `mining/06-rekonsiliasi-survey.md` | `12` bagian 6 |
+| mining | Diagram Alur Mining — Modul Mining | `mining/07-diagram-alur-mining.md` | `12` bagian 7 |
 | rental | Konfigurasi Alur Rental — Modul Rental | `rental/01-konfigurasi-alur-rental.md` | `13` bagian 1 |
 | rental | Rental Assets — Modul Rental | `rental/02-rental-assets.md` | `13` bagian 2 |
 | rental | Rental Quotation — Modul Rental | `rental/03-rental-quotation.md` | `13` bagian 3 |
@@ -116,6 +140,7 @@ Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder 
 | rental | Rental Payment Bill — Modul Rental | `rental/07-rental-payment-bill.md` | `13` bagian 7 |
 | rental | Rental Return — Modul Rental | `rental/08-rental-return.md` | `13` bagian 8 |
 | rental | Verifikasi Rental ke Accounting — Modul Rental | `rental/09-verifikasi-ke-accounting.md` | `13` bagian 9 |
+| rental | Diagram Alur Rental — Modul Rental | `rental/10-diagram-alur-rental.md` | `13` bagian 10 |
 | accounting | Setup Master Data & Saldo Awal — Modul Akuntansi | `accounting/01-setup-master-data-dan-saldo-awal.md` | `14` bagian 1 |
 | accounting | Jurnal Manual — Modul Akuntansi | `accounting/02-jurnal-manual.md` | `14` bagian 2 |
 | accounting | General Ledger & Neraca Saldo — Modul Akuntansi | `accounting/03-general-ledger-dan-neraca-saldo.md` | `14` bagian 3 |
@@ -126,8 +151,10 @@ Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder 
 | accounting | Rekonsiliasi Bank — Modul Akuntansi | `accounting/08-rekonsiliasi-bank.md` | `14` bagian 8 |
 | accounting | Laporan Pajak PPN — Modul Akuntansi | `accounting/09-laporan-pajak-ppn.md` | `14` bagian 9 |
 | accounting | Chart of Accounts — Tree View, Saldo Akun & Jenis Jurnal | `accounting/10-chart-of-accounts.md` | `14` bagian 10 |
+| accounting | Diagram Alur Accounting — Modul Accounting | `accounting/11-diagram-alur-accounting.md` | `14` bagian 11 |
 | finance | Kategori & Pencatatan Biaya — Modul Expense | `finance/01-kategori-dan-pencatatan-biaya.md` | `15` bagian 1 |
 | finance | Pembayaran Online, Rute Penyedia, dan Penyelesaian Dana | `finance/02-pembayaran-online-dan-penyelesaian.md` | `15` bagian 2 |
+| finance | Diagram Alur Finance — Modul Finance | `finance/03-diagram-alur-finance.md` | `15` bagian 3 |
 | hrm | Konfigurasi HRM — Modul HRM | `hrm/01-konfigurasi-hrm.md` | `16` bagian 1 |
 | hrm | Struktur Organisasi — Modul HRM | `hrm/02-struktur-organisasi.md` | `16` bagian 2 |
 | hrm | Data Karyawan — Modul HRM | `hrm/03-data-karyawan.md` | `16` bagian 3 |
@@ -142,77 +169,50 @@ Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder 
 | hrm | Komisi Sales — Modul HRM | `hrm/12-komisi-sales.md` | `16` bagian 12 |
 | hrm | Perubahan Status Karyawan | `hrm/15-perubahan-status-karyawan.md` | `16` bagian 13 |
 | hrm | Log Aktivitas, Tipe Aktivitas, dan Kriteria KPI | `hrm/16-log-aktivitas-tipe-aktivitas-dan-kpi.md` | `16` bagian 14 |
+| hrm | Konfigurasi Pelanggaran dan Sanksi Karyawan | `hrm/17-konfigurasi-pelanggaran.md` | `16` bagian 15 |
+| hrm | Master Pelanggaran dan Sanksi Karyawan | `hrm/18-master-pelanggaran-dan-sanksi.md` | `16` bagian 16 |
+| hrm | Melaporkan Pelanggaran, Banding, dan Sidang | `hrm/19-melaporkan-pelanggaran-banding-dan-sidang.md` | `16` bagian 17 |
+| hrm | Menjatuhkan Sanksi Karyawan | `hrm/20-sanksi-karyawan.md` | `16` bagian 18 |
+| hrm | Mesin Absensi (Fingerprint dan Wajah) | `hrm/21-mesin-absensi.md` | `16` bagian 19 |
+| hrm | Halaman Karier Publik dan Absensi Saya | `hrm/22-halaman-karier-dan-absensi-saya.md` | `16` bagian 20 |
+| hrm | Diagram Alur HRM — Modul HRM | `hrm/23-diagram-alur-hrm.md` | `16` bagian 21 |
+| hrm | KPI Karyawan: Rencana, Hasil, dan Tinjauan — Modul HRM | `hrm/24-kpi-karyawan-rencana-hasil-dan-tinjauan.md` | `16` bagian 22 |
+| hrm | KPI: Kompetensi, Jenjang Karier, Promosi, Sasaran, 360, dan Pengembangan — Modul HRM | `hrm/25-kpi-kompetensi-karier-promosi-dan-pengembangan.md` | `16` bagian 23 |
 | proyek-dan-tugas | Pengaturan Proyek, Tipe Tugas, Label, dan Peran — Modul Proyek & Tugas | `proyek-dan-tugas/01-konfigurasi-dan-master.md` | `17` bagian 1 |
 | proyek-dan-tugas | Proyek, Tugas, dan Tampilan — Modul Proyek & Tugas | `proyek-dan-tugas/02-proyek-dan-tugas.md` | `17` bagian 2 |
 | proyek-dan-tugas | Catatan Waktu, Tarif, Penagihan, dan Alokasi — Modul Proyek & Tugas | `proyek-dan-tugas/03-waktu-tarif-dan-penagihan.md` | `17` bagian 3 |
 | proyek-dan-tugas | Integrasi Git (GitHub dan GitLab) — Modul Proyek & Tugas | `proyek-dan-tugas/04-integrasi-git.md` | `17` bagian 4 |
 | proyek-dan-tugas | Otomasi, Webhook, Portal Klien, Change Request, dan Tiket — Modul Proyek & Tugas | `proyek-dan-tugas/05-otomasi-portal-dan-tiket.md` | `17` bagian 5 |
 | proyek-dan-tugas | Laporan, Dasbor, LogBook, dan Asisten AI — Modul Proyek & Tugas | `proyek-dan-tugas/06-laporan-logbook-dan-asisten-ai.md` | `17` bagian 6 |
+| proyek-dan-tugas | Diagram Alur Proyek dan Tugas — Modul Proyek | `proyek-dan-tugas/07-diagram-alur-proyek.md` | `17` bagian 7 |
 | dashboard | Dashboard Akuntansi, Penjualan, Pembelian, dan Inventori | `dashboard/01-dashboard-keuangan-penjualan-dan-pembelian.md` | `18` bagian 1 |
 | dashboard | Dashboard POS, Restoran, Canvassing, Manufaktur, dan Pertambangan | `dashboard/02-dashboard-operasional.md` | `18` bagian 2 |
 | dashboard | Dashboard HRM, Karyawan, dan Pemakaian AI | `dashboard/03-dashboard-sdm-notifikasi-dan-lainnya.md` | `18` bagian 3 |
 | reports | Laporan Lintas Modul — Reports | `reports/01-laporan-lintas-modul.md` | `19` bagian 1 |
+| reports | Katalog Laporan per Modul — Laporan | `reports/02-katalog-laporan-per-modul.md` | `19` bagian 2 |
 | halaman-publik | Halaman untuk Pihak Luar: Pelamar, Penawaran, Restoran, dan Pengiriman Pemasok | `halaman-publik/01-halaman-untuk-pihak-luar.md` | `20` bagian 1 |
-| accounting | Diagram Alur Accounting — Modul Accounting | `accounting/11-diagram-alur-accounting.md` | `22` bagian A |
-| canvassing | Pelacakan Gerak dan Klaim Biaya Sales — Modul Sales Canvassing | `canvassing/09-pelacakan-gerak-dan-klaim-biaya.md` | belum ada kasus uji (perlu digenerate) |
-| canvassing | Konfigurasi Klaim Biaya Sales Lapangan | `canvassing/10-konfigurasi-klaim-biaya.md` | belum ada kasus uji (perlu digenerate) |
-| canvassing | Konfigurasi Pelacakan Lapangan (GPS) | `canvassing/11-konfigurasi-pelacakan-lapangan.md` | belum ada kasus uji (perlu digenerate) |
-| canvassing | Sesi Kerja, Tujuan Perhentian, Pelacakan Langsung, dan Harga Pesaing | `canvassing/12-sesi-kerja-perhentian-dan-harga-pesaing.md` | belum ada kasus uji (perlu digenerate) |
-| canvassing | Diagram Alur Canvassing — Modul Canvassing | `canvassing/13-diagram-alur-canvassing.md` | `22` bagian A |
-| canvassing | Kebijakan Kerja Sales, Kepemilikan Pelanggan, dan Kolam Lead — Modul Canvassing | `canvassing/14-kepemilikan-pelanggan-dan-kolam-lead.md` | belum ada kasus uji (perlu digenerate) |
-| core | Diagram Alur Persetujuan — Modul Core | `core/06-diagram-alur-persetujuan.md` | `22` bagian A |
-| core | Hubungan Antar Modul — Modul Core | `core/07-hubungan-antar-modul.md` | `22` bagian B |
-| finance | Diagram Alur Finance — Modul Finance | `finance/03-diagram-alur-finance.md` | `22` bagian A |
-| general-affairs | Konfigurasi General Affairs | `general-affairs/01-konfigurasi-general-affairs.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Barang dan Unit General Affairs | `general-affairs/02-barang-dan-unit.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Jatah, Aturan Kapitalisasi, dan Kategori Kesalahan General Affairs | `general-affairs/03-jatah-kapitalisasi-dan-kategori-kesalahan.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Kebijakan Penyelesaian Ganti Rugi General Affairs | `general-affairs/04-kebijakan-ganti-rugi.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Penerimaan Barang General Affairs | `general-affairs/05-penerimaan-barang.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Permintaan Barang dan Pengeluaran ke Pegawai | `general-affairs/06-permintaan-dan-pengeluaran-barang.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Pengembalian Barang General Affairs | `general-affairs/07-pengembalian-barang.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Pemesanan Unit Bersama General Affairs | `general-affairs/08-pemesanan-unit-bersama.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Perawatan Unit dan Masa Berlaku General Affairs | `general-affairs/09-perawatan-dan-masa-berlaku.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Pengadaan Barang Kantor dan Program Kegiatan General Affairs | `general-affairs/10-pengadaan-dan-program-kegiatan.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Penyelesaian Ganti Rugi Barang General Affairs | `general-affairs/11-penyelesaian-ganti-rugi.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Bebas Tanggungan dan Laporan General Affairs | `general-affairs/12-bebas-tanggungan-dan-laporan.md` | belum ada kasus uji (perlu digenerate) |
-| general-affairs | Diagram Alur General Affairs — Modul General Affairs | `general-affairs/13-diagram-alur-general-affairs.md` | `22` bagian A |
-| halaman-publik | Halaman Publik: Bayar Tagihan, Portal Proyek, Karier, dan Berhenti Berlangganan — Halaman Publik | `halaman-publik/02-bayar-tagihan-portal-proyek-karier-dan-berhenti-berlangganan.md` | belum ada kasus uji (perlu digenerate) |
-| hrm | Konfigurasi Pelanggaran dan Sanksi Karyawan | `hrm/17-konfigurasi-pelanggaran.md` | belum ada kasus uji (perlu digenerate) |
-| hrm | Master Pelanggaran dan Sanksi Karyawan | `hrm/18-master-pelanggaran-dan-sanksi.md` | belum ada kasus uji (perlu digenerate) |
-| hrm | Melaporkan Pelanggaran, Banding, dan Sidang | `hrm/19-melaporkan-pelanggaran-banding-dan-sidang.md` | belum ada kasus uji (perlu digenerate) |
-| hrm | Menjatuhkan Sanksi Karyawan | `hrm/20-sanksi-karyawan.md` | belum ada kasus uji (perlu digenerate) |
-| hrm | Mesin Absensi (Fingerprint dan Wajah) | `hrm/21-mesin-absensi.md` | belum ada kasus uji (perlu digenerate) |
-| hrm | Halaman Karier Publik dan Absensi Saya | `hrm/22-halaman-karier-dan-absensi-saya.md` | belum ada kasus uji (perlu digenerate) |
-| hrm | Diagram Alur HRM — Modul HRM | `hrm/23-diagram-alur-hrm.md` | `22` bagian A |
-| hrm | KPI Karyawan: Rencana, Hasil, dan Tinjauan — Modul HRM | `hrm/24-kpi-karyawan-rencana-hasil-dan-tinjauan.md` | belum ada kasus uji (perlu digenerate) |
-| hrm | KPI: Kompetensi, Jenjang Karier, Promosi, Sasaran, 360, dan Pengembangan — Modul HRM | `hrm/25-kpi-kompetensi-karier-promosi-dan-pengembangan.md` | belum ada kasus uji (perlu digenerate) |
-| inventory | Valuasi Persediaan — Metode Eceran dan Penutupan Selisih Harga Beli | `inventory/07-valuasi-metode-eceran-dan-selisih-harga-beli.md` | belum ada kasus uji (perlu digenerate) |
-| inventory | Diagram Alur Inventory — Modul Inventory | `inventory/08-diagram-alur-inventory.md` | `22` bagian A |
-| kerjasama | Pengaturan, Tipe Kerjasama, dan Katalog Paket — Modul Kerjasama | `kerjasama/01-pengaturan-tipe-dan-katalog-paket.md` | belum ada kasus uji (perlu digenerate) |
-| kerjasama | Perjanjian Kerjasama dan Rantai Klien — Modul Kerjasama | `kerjasama/02-perjanjian-dan-rantai-klien.md` | belum ada kasus uji (perlu digenerate) |
-| kerjasama | Penawaran Berversi — Modul Kerjasama | `kerjasama/03-penawaran-berversi.md` | belum ada kasus uji (perlu digenerate) |
-| kerjasama | Pemakaian, Rekap Periodik, dan Tagihan — Modul Kerjasama | `kerjasama/04-pemakaian-rekap-dan-tagihan.md` | belum ada kasus uji (perlu digenerate) |
-| kerjasama | Kewajiban, Penyesuaian Biaya, Kerja Custom, dan Laporan — Modul Kerjasama | `kerjasama/05-kewajiban-penyesuaian-kerja-custom-dan-laporan.md` | belum ada kasus uji (perlu digenerate) |
-| kerjasama | Diagram Alur Kerjasama — Modul Kerjasama | `kerjasama/06-diagram-alur-kerjasama.md` | `22` bagian A |
-| konfigurasi-umum | Gambar Produk Massal dan Saran Gambar dari Internet | `konfigurasi-umum/27-gambar-produk-massal-dan-saran-gambar.md` | belum ada kasus uji (perlu digenerate) |
-| konfigurasi-umum | Diagram Urutan Setup Awal Cabang — Konfigurasi Umum | `konfigurasi-umum/28-diagram-urutan-setup-awal.md` | `22` bagian A |
-| manufacturing | Diagram Alur Manufaktur — Modul Manufacturing | `manufacturing/05-diagram-alur-manufaktur.md` | `22` bagian A |
-| mining | Diagram Alur Mining — Modul Mining | `mining/07-diagram-alur-mining.md` | `22` bagian A |
-| outreach | Kampanye Sales Outreach — Modul Outreach | `outreach/01-kampanye-sales-outreach.md` | belum ada kasus uji (perlu digenerate) |
-| outreach | Diagram Alur Outreach — Modul Outreach | `outreach/02-diagram-alur-outreach.md` | `22` bagian A |
-| platform-owner | Pendaftaran Mandiri Klien dan Persetujuan | `platform-owner/09-pendaftaran-mandiri-klien.md` | belum ada kasus uji (perlu digenerate) |
-| platform-owner | Diagram Alur Langganan Klien — Platform Owner | `platform-owner/10-diagram-alur-langganan-klien.md` | `22` bagian A |
-| pos | Diagram Alur POS — Modul POS | `pos/08-diagram-alur-pos.md` | `22` bagian A |
-| pos | Pembayaran QRIS, Kas Masuk dan Keluar Manual, serta Deposit Kasir — Modul POS | `pos/09-qris-kas-masuk-keluar-dan-deposit-kasir.md` | belum ada kasus uji (perlu digenerate) |
-| proyek-dan-tugas | Diagram Alur Proyek dan Tugas — Modul Proyek | `proyek-dan-tugas/07-diagram-alur-proyek.md` | `22` bagian A |
-| purchasing | Jadwal Pembelian Berulang dari Kontrak Payung | `purchasing/14-jadwal-pembelian-berulang.md` | belum ada kasus uji (perlu digenerate) |
-| purchasing | Diagram Alur Purchasing — Modul Purchasing | `purchasing/15-diagram-alur-purchasing.md` | `22` bagian A |
-| purchasing | Dampak Stok dari Pembelian — Modul Purchasing | `purchasing/16-dampak-stok-dari-pembelian.md` | belum ada kasus uji (perlu digenerate) |
-| rental | Diagram Alur Rental — Modul Rental | `rental/10-diagram-alur-rental.md` | `22` bagian A |
-| reports | Katalog Laporan per Modul — Laporan | `reports/02-katalog-laporan-per-modul.md` | belum ada kasus uji (perlu digenerate) |
-| restaurant | Diagram Alur Restaurant — Modul Restaurant | `restaurant/07-diagram-alur-restaurant.md` | `22` bagian A |
-| restaurant | Pencatatan Bahan dan Estimasi Porsi — Modul Restaurant | `restaurant/08-pencatatan-bahan-dan-estimasi-porsi.md` | belum ada kasus uji (perlu digenerate) |
-| restaurant | Restoran di Terminal POS: Denah, Booking, Pesanan QR, dan Panggilan Siap — Modul Restaurant | `restaurant/09-restoran-di-terminal-pos.md` | belum ada kasus uji (perlu digenerate) |
-| sales | Diagram Alur Sales — Modul Sales | `sales/10-diagram-alur-sales.md` | `22` bagian A |
+| halaman-publik | Halaman Publik: Bayar Tagihan, Portal Proyek, Karier, dan Berhenti Berlangganan — Halaman Publik | `halaman-publik/02-bayar-tagihan-portal-proyek-karier-dan-berhenti-berlangganan.md` | `20` bagian 2 |
+| general-affairs | Konfigurasi General Affairs | `general-affairs/01-konfigurasi-general-affairs.md` | `23` bagian 1 |
+| general-affairs | Barang dan Unit General Affairs | `general-affairs/02-barang-dan-unit.md` | `23` bagian 2 |
+| general-affairs | Jatah, Aturan Kapitalisasi, dan Kategori Kesalahan General Affairs | `general-affairs/03-jatah-kapitalisasi-dan-kategori-kesalahan.md` | `23` bagian 3 |
+| general-affairs | Kebijakan Penyelesaian Ganti Rugi General Affairs | `general-affairs/04-kebijakan-ganti-rugi.md` | `23` bagian 4 |
+| general-affairs | Penerimaan Barang General Affairs | `general-affairs/05-penerimaan-barang.md` | `23` bagian 5 |
+| general-affairs | Permintaan Barang dan Pengeluaran ke Pegawai | `general-affairs/06-permintaan-dan-pengeluaran-barang.md` | `23` bagian 6 |
+| general-affairs | Pengembalian Barang General Affairs | `general-affairs/07-pengembalian-barang.md` | `23` bagian 7 |
+| general-affairs | Pemesanan Unit Bersama General Affairs | `general-affairs/08-pemesanan-unit-bersama.md` | `23` bagian 8 |
+| general-affairs | Perawatan Unit dan Masa Berlaku General Affairs | `general-affairs/09-perawatan-dan-masa-berlaku.md` | `23` bagian 9 |
+| general-affairs | Pengadaan Barang Kantor dan Program Kegiatan General Affairs | `general-affairs/10-pengadaan-dan-program-kegiatan.md` | `23` bagian 10 |
+| general-affairs | Penyelesaian Ganti Rugi Barang General Affairs | `general-affairs/11-penyelesaian-ganti-rugi.md` | `23` bagian 11 |
+| general-affairs | Bebas Tanggungan dan Laporan General Affairs | `general-affairs/12-bebas-tanggungan-dan-laporan.md` | `23` bagian 12 |
+| general-affairs | Diagram Alur General Affairs — Modul General Affairs | `general-affairs/13-diagram-alur-general-affairs.md` | `23` bagian 13 |
+| kerjasama | Pengaturan, Tipe Kerjasama, dan Katalog Paket — Modul Kerjasama | `kerjasama/01-pengaturan-tipe-dan-katalog-paket.md` | `24` bagian 1 |
+| kerjasama | Perjanjian Kerjasama dan Rantai Klien — Modul Kerjasama | `kerjasama/02-perjanjian-dan-rantai-klien.md` | `24` bagian 2 |
+| kerjasama | Penawaran Berversi — Modul Kerjasama | `kerjasama/03-penawaran-berversi.md` | `24` bagian 3 |
+| kerjasama | Pemakaian, Rekap Periodik, dan Tagihan — Modul Kerjasama | `kerjasama/04-pemakaian-rekap-dan-tagihan.md` | `24` bagian 4 |
+| kerjasama | Kewajiban, Penyesuaian Biaya, Kerja Custom, dan Laporan — Modul Kerjasama | `kerjasama/05-kewajiban-penyesuaian-kerja-custom-dan-laporan.md` | `24` bagian 5 |
+| kerjasama | Diagram Alur Kerjasama — Modul Kerjasama | `kerjasama/06-diagram-alur-kerjasama.md` | `24` bagian 6 |
+| outreach | Kampanye Sales Outreach — Modul Outreach | `outreach/01-kampanye-sales-outreach.md` | `25` bagian 1 |
+| outreach | Diagram Alur Outreach — Modul Outreach | `outreach/02-diagram-alur-outreach.md` | `25` bagian 2 |
+| core | Hubungan Antar Modul | `core/07-hubungan-antar-modul.md` | `22` bagian B |
 
 Alur lintas modul ada di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md); izin, isolasi dan kasus batas di [`98`](./98-izin-isolasi-dan-kasus-batas.id.md).

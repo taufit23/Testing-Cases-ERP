@@ -9,12 +9,6 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
-**Dikerjakan oleh:** Konfigurasi dan transaksi oleh **Dr. Rahmat** atau pengguna yang kamu beri peran restoran (file `00` tidak memuat staf kafe khusus).
-
-**Cabang aktif:** Kafe Sehat (lobi klinik).
-
-**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
-
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Pesanan per meja, kirim ke dapur (KDS), pisah tagihan, reservasi dan pesanan mandiri lewat QR.
@@ -25,14 +19,10 @@ visibility: internal
 
 Bab manual: [`restaurant/01-konfigurasi-restoran.md`](../../erpApiServices/docs/manualBook/restaurant/01-konfigurasi-restoran.md)
 
-**Input di:** `Restaurant → Areas`, `Restaurant → Tables`, `Restaurant → Floor Plan`, `Restaurant → Kitchen Stations`, `Restaurant → Config`.
-
-**Prasyarat:** Branch sudah aktif; modul Restaurant sudah diaktifkan untuk branch tersebut.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Membuat meja satuan di area Zona1 dengan nomor 101; menambahkan stok awal 50 piring | Meja 101 muncul dalam daftar meja dan stok piring ditambahkan ke inventaris |
-| Negatif — input salah (draf) | Menambahkan stok negatif pada meja 101 | Tidak dapat disimpan; pesan penolakan yang jelas |
+| Positif — jalur normal (draf) | Menambahkan area "Kafe Sehat" di lobi klinik; membuat 5 meja duduk; mengimport data meja dari Excel; menyiapkan denah lantai dengan area Kafe Sehat; mengatur stasiun dapur untuk memasak makanan; mengonfigurasi pengaturan umum restoran | Area, meja, dan stasiun dapur berhasil ditambahkan; data meja diimport dengan benar; denah lantai dan pengaturan umum restoran disetup sesuai harapan |
+| Negatif — input salah (draf) | Menambahkan area "Kafe Sehat" tanpa memasukkan detail area; mencoba membuat 50 meja sekaligus tanpa template; mengimport data meja dari file PDF; menyiapkan stasiun dapur tanpa bahan masakan; mengonfigurasi pengaturan umum restoran dengan nilai tidak valid | Input area, meja, dan stasiun dapur ditolak karena detail atau format yang salah; proses import data meja gagal karena file yang dimasukkan tidak sesuai; konfigurasi pengaturan umum restoran harus memenuhi syarat tertentu sebelum disetup |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Area adalah pengelompokan meja, misalnya "Lantai 1", "Lantai 2", "Outdoor", "VIP Room". Setiap meja wajib terhubung ke satu area |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Table Number — nomor/kode meja (wajib), contoh A1, B12 |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Status — Available (kosong), Occupied (terisi), Reserved (dipesan), Maintenance (tidak bisa dipakai). Biasanya dibiarkan Available saat pertama dibuat — status berubah otomatis begitu ada order/booking berjalan |
@@ -44,14 +34,9 @@ Bab manual: [`restaurant/01-konfigurasi-restoran.md`](../../erpApiServices/docs/
 
 Bab manual: [`restaurant/02-menu-dan-kitchen-routing.md`](../../erpApiServices/docs/manualBook/restaurant/02-menu-dan-kitchen-routing.md)
 
-**Input di:** `Restaurant → Menu` (`/restaurant/menu`).
-
-**Prasyarat:** Produk/SKU sudah didaftarkan di `Client-Master → Products`; Kitchen Stations sudah di-setup (opsional, lihat chapter _01_).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambahkan Menu (draf) | Tambah Paracetamol 500 mg strip (SKU OBT-001) ke daftar menu; routing ke stasiun obat; biaya resep ditampilkan | Menu Paracetamol 500 mg strip terlihat di daftar dan dikirim ke stasiun obat dengan estimasi biaya resep yang benar |
-| Negatif — Menandai Menu Tidak Tersedia (draf) | Menandai Vitamin C 1000 mg botol (SUP-001) sebagai tidak tersedia; mencoba memesan | Pesan pesan yang jelas ditampilkan dan pesanan tidak dapat diproses |
+| Positif — Menambahkan Menu (draf) | Tambah menu pesan yang jelas dengan harga dan stok; routing ke stasiun "Pengemasan"; lihat estimasi biaya resep | Menu ditambahkan, otomatis di-86'd, routing ke stasiun yang benar & estimasi biaya muncul |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau bahan suatu menu habis di tengah jam operasional, staf bisa langsung menonaktifkan menu itu tanpa harus masuk ke halaman Products: |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -60,14 +45,10 @@ Bab manual: [`restaurant/02-menu-dan-kitchen-routing.md`](../../erpApiServices/d
 
 Bab manual: [`restaurant/03-pemesanan-dan-order-meja.md`](../../erpApiServices/docs/manualBook/restaurant/03-pemesanan-dan-order-meja.md)
 
-**Input di:** `Restaurant → Orders` (`/restaurant/orders`).
-
-**Prasyarat:** Meja sudah terdaftar (chapter _01_), menu sudah tersedia (chapter _02_).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuka Order Baru (draf) | Buka modul Restaurant, klik "Buat Pesanan", masukkan data meja 123, pilih kafe Sehat, tambah item Paracetamol 500 mg strip 2 buah, konfirmasi. | Order meja 123 terbuka dengan item Paracetamol 500 mg strip 2 buah. |
-| Negatif — Menambah Item ke Order (draf) | Buka order meja 123, coba tambah item tanpa login sebagai kasir, pesan penolakan yang jelas. | Pesan error muncul dan tidak dapat menambah item tanpa login. |
+| Positif — Membuka Order Baru (draf) | Buka modul Restaurant, klik 'Membuka Order Baru', masukkan data pelanggan, pilih meja 102, tambah item Paracetamol 500 mg strip 2 buah | Order meja 102 terbuka dengan item yang ditambahkan dan status pending di dapur |
+| Negatif — Menambah Item ke Order (draf) | Coba tambahkan item tanpa membuka order meja, masukkan data pelanggan dan meja, pilih item Paracetamol 500 mg strip 2 buah, klik 'Tambah' | Tampilan error: pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Table — meja yang dipakai (wajib). Meja berstatus Occupied akan tampil disabled di daftar |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pax — jumlah tamu (wajib, minimal 1) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item yang berasal dari QR Self-Order pelanggan (badge "Needs Confirmation") harus dikonfirmasi waiter dulu sebelum bisa masuk proses dapur — lihat chapter 06. QR Self-Order |
@@ -79,17 +60,14 @@ Bab manual: [`restaurant/03-pemesanan-dan-order-meja.md`](../../erpApiServices/d
 
 Bab manual: [`restaurant/04-kitchen-display-dan-order-items.md`](../../erpApiServices/docs/manualBook/restaurant/04-kitchen-display-dan-order-items.md)
 
-**Input di:** `Restaurant → KDS` (`/restaurant/kds`), `Restaurant → Order Items` (`/restaurant/order-items`).
-
-**Prasyarat:** Ada order dine-in yang sudah dikirim ke dapur (chapter _03_).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Kitchen Display System (draf) | Memasukkan pesanan ke KDS, memfilter per stasiun, memproses item dengan benar | Tiket pesanan ditampilkan di layar dapur sesuai stasiun dan item diproses dengan akurat |
-| Negatif — Order Items (draf) | Input nama item salah, mencoba mengonfirmasi pesanan tanpa item | Sistem menolak input dan memberikan pesan kesalahan yang jelas tentang syarat yang tidak terpenuhi |
+| Positif — KDS (draf) | Input pesanan di Apotek Sentosa Bandung; tampilan tiket di kantor pusat | Tampilan tiket sesuai pesanan dan dikirim ke stasiun dapur |
+| Negatif — Order Items (draf) | Menambah item yang tidak ada di daftar; input jumlah negatif | Pesan error pesan yang jelas atau pesan yang jelas, input tidak disimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Atau klik ikon centang per item untuk konfirmasi satu-satu, atau ikon X untuk menolak item tertentu (misalnya karena bahan sudah habis atau salah pesan) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item yang belum dikonfirmasi tidak akan diproses di dapur/KDS — panel ini adalah gerbang wajib sebelum pesanan pelanggan lanjut ke dapur (kecuali fitur konfirmasi dimatikan di Config, lihat chapter 01 dan 06) |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Untuk item dari self-order dengan konfirmasi wajib aktif: |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item yang sudah served tidak bisa dimajukan lagi, kecuali dikembalikan ke preparing |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item yang sudah ready atau served untuk menu yang dibuat saat dipesan tidak bisa dibatalkan begitu saja |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -97,14 +75,9 @@ Bab manual: [`restaurant/04-kitchen-display-dan-order-items.md`](../../erpApiSer
 
 Bab manual: [`restaurant/05-reservasi-meja.md`](../../erpApiServices/docs/manualBook/restaurant/05-reservasi-meja.md)
 
-**Input di:** `Restaurant → Bookings` (`/restaurant/bookings`).
-
-**Prasyarat:** Meja sudah terdaftar (chapter _01_).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Reservasi Baru (draf) | Klik "Booking", masukkan nama tamu, jumlah orang, tanggal dan waktu, pilih meja, konfirmasi detail, bayar deposit 20% | Reservasi terdaftar dengan status "Pending" |
-| Negatif — Tanggal sudah lewat (draf) | Masukkan tanggal di masa lalu, coba kirim | Ditolak: pesan yang jelas |
+| Positif — Membuat Reservasi Baru (draf) | Input nama tamu, jumlah orang, tanggal dan waktu, pilih meja; klik 'Reservasi' | Meja terbooking, notifikasi tamu dan kasir, status reservasi muncul di daftar |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Table — meja yang direservasi (wajib) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Guest Name — nama tamu (wajib) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Guest Count — jumlah tamu, minimal 1 (wajib) |
@@ -116,11 +89,49 @@ Bab manual: [`restaurant/05-reservasi-meja.md`](../../erpApiServices/docs/manual
 
 Bab manual: [`restaurant/06-qr-self-order.md`](../../erpApiServices/docs/manualBook/restaurant/06-qr-self-order.md)
 
-**Input di:** sisi staf: `Restaurant → Tables` (`/restaurant/tables`, cetak QR di `/restaurant/tables/print-qr`), `Restaurant → Order Items` (`/restaurant/order-items`, konfirmasi pesanan), dan `Restaurant → Config` (`/restaurant/config`, saklar QR). Sisi pelanggan: halaman publik hasil scan QR meja, tanpa login.
+| Skenario | Langkah dan data uji | Hasil yang diharapkan |
+| --- | --- | --- |
+| Positif — jalur normal (draf) | Tamu scan QR meja, pilih menu Paracetamol 500 mg strip; waiter konfirmasi pesanan | Pesanan masuk ke dapur untuk diproses dan diantarkan |
+| Negatif — input salah (draf) | Tamu scan QR meja, pilih menu Jamu Kunyit Asam sachet yang tidak bisa dipesan lewat QR; waiter melihat pesanan tidak valid | Pesanan ditolak dengan notifikasi pesan yang jelas |
+| Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
+| Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
+
+## 7. Diagram Alur Restaurant — Modul Restaurant
+
+Bab manual: [`restaurant/07-diagram-alur-restaurant.md`](../../erpApiServices/docs/manualBook/restaurant/07-diagram-alur-restaurant.md)
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Pemesanan Paracetamol (draf) | Tamu scan QR meja, pilih Paracetamol; waiter konfirmasi; pesanan masuk dapur | Pesanan berhasil diteruskan ke dapur |
-| Negatif — Pemesanan Amoxicillin tanpa resep (draf) | Tamu scan QR meja, pilih Amoxicillin; sistem menolak & meminta resep dari waiter | Tidak dapat memesan obat resep tanpa resep dokter |
+| Positif — jalur normal (draf) | Pelanggan memesan makanan di kafe Sehat menggunakan metode bayar belakangan; pesanan masuk ke dapur; status item berubah menjadi diproses, selesai, dan siap; pelanggan membayar dan pesanan ditutup | Proses pesanan berjalan lancar sesuai langkah-langkah yang terdefinisi |
+| Negatif — input salah (draf) | Pelanggan memesan makanan tanpa metode bayar dulu atau belakangan; sistem menolak pesanan pesan penolakan yang jelas | Pesanan ditolak karena syarat pembayaran tidak dipenuhi oleh pelanggan |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item yang sudah Served tidak bisa dimajukan lagi, kecuali dikembalikan ke Preparing |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | B --/"Belum"/ C["Complete ditolak<br/pesanan belum dibayar"] |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | D --/"Ya"/ E["Complete ditolak<br/masih ada item belum dihidangkan"] |
+| Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
+| Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
+
+## 8. Pencatatan Bahan dan Estimasi Porsi — Modul Restaurant
+
+Bab manual: [`restaurant/08-pencatatan-bahan-dan-estimasi-porsi.md`](../../erpApiServices/docs/manualBook/restaurant/08-pencatatan-bahan-dan-estimasi-porsi.md)
+
+| Skenario | Langkah dan data uji | Hasil yang diharapkan |
+| --- | --- | --- |
+| Positif — jalur normal (draf) | Menetapkan estimasi porsi untuk Masker Medis box 50 (ALK-001) di Kafe Sehat; mencatat bahan masuk, hitungan fisik, dan terbuang; membaca laporan selisih | Estimasi sisa porsi dan perkiraan habis sesuai input; laporan selisih akurat |
+| Negatif — input salah (draf) | Menginput estimasi untuk produk yang tidak ada di Kafe Sehat; mencatat bahan masuk tanpa hitungan fisik atau terbuang | Ditolak pesan penolakan yang jelas dan pesan yang jelas |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Hanya produk yang menjadi bahan di sebuah resep yang bisa dicatat. Produk lain ditolak |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi qty (tidak boleh negatif) dan, bila perlu, biaya per unit dan catatan. Satu pencatatan boleh memuat sampai 200 baris |
+| Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
+| Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
+
+## 9. Restoran di Terminal POS: Denah, Booking, Pesanan QR, dan Panggilan Siap — Modul Restaurant
+
+Bab manual: [`restaurant/09-restoran-di-terminal-pos.md`](../../erpApiServices/docs/manualBook/restaurant/09-restoran-di-terminal-pos.md)
+
+| Skenario | Langkah dan data uji | Hasil yang diharapkan |
+| --- | --- | --- |
+| Positif — Memasukkan denah meja (draf) | Input denah meja restoran Kafe Sehat; tampilan meja berwarna sesuai status | Meja terlihat dengan warna yang tepat sesuai status |
+| Negatif — Input nomor meja tidak valid (draf) | Masukan nomor meja 9999; sistem menolak | Input nomor meja harus antara 1-50, silakan cek kembali input Anda |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pesanan ditolak bila bahan tidak cukup, bila pengaturan penolakan penjualan saat bahan kurang aktif |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Makanan yang sudah siap tidak bisa dibatalkan dari terminal. Dapur bisa mengembalikannya ke preparing |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

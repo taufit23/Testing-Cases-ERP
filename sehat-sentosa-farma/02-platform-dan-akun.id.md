@@ -9,12 +9,6 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
-**Dikerjakan oleh:** Bagian 1 sampai 8: **Pemilik Platform** (login akun owner, bukan akun Dr. Rahmat). Bagian 9: siapa saja, termasuk tanpa login. Bagian 10: **Dr. Rahmat**.
-
-**Cabang aktif:** tidak berlaku (tingkat platform); bagian 10 di cabang mana saja.
-
-**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
-
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Paket menentukan modul dan batas (cabang, pengguna, karyawan); modul di luar paket hilang dari menu dan endpoint-nya 403.
@@ -27,12 +21,9 @@ visibility: internal
 
 Bab manual: [`platform-owner/01-provider-cabang-pengguna-dan-peran.md`](../../erpApiServices/docs/manualBook/platform-owner/01-provider-cabang-pengguna-dan-peran.md)
 
-**Input di:** `Core → Providers` (`/core/providers`) · `Core → Branch Offices` (`/core/branches`) · `Core → Users` (`/core/users`) · `Core → Roles` (`/core/roles`) · `Core → Permissions` (`/core/permissions`) · `Core → Licenses` (`/core/licenses`).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Cabang (draf) | Tambah cabang "Surabaya", alamat "Jl. Surabaya", tipe klinik | Cabang "Surabaya" ditambahkan dengan detail yang benar |
-| Negatif — Input Alamat Kosong (draf) | Tambah cabang "Malang", alamat kosong, tipe klinik | Input ditolak karena alamat tidak boleh kosong, pesan: pesan yang jelas |
+| Positif — Menambah Cabang (draf) | Tambah data cabang baru: Klinik Sentosa Depok; Konfirmasi penambahan sukses. | Cabang baru ditambahkan dengan status aktif. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kolom wajib yang kosong menghasilkan pesan seperti Please fill all required provider fields atau Role name is required |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Customer Name (wajib) dan Email pelanggan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Pilih jenis lisensi: Subscription (berbatas waktu; wajib diberi tanggal kedaluwarsa, kalau tidak muncul A subscription license needs an expiry date) atau Perpetual (tanpa kedaluwarsa) |
@@ -44,16 +35,14 @@ Bab manual: [`platform-owner/01-provider-cabang-pengguna-dan-peran.md`](../../er
 
 Bab manual: [`platform-owner/02-paket-langganan-dan-mitra.md`](../../erpApiServices/docs/manualBook/platform-owner/02-paket-langganan-dan-mitra.md)
 
-**Input di:** `Core → Subscription Plans` (`/core/subscription-plans`) · `Core → Subscriptions` (`/core/subscriptions`) · `Core → Billing Prices` (`/core/billing-prices`) · `Core → Module Packages` (`/core/module-packages`) · `Core → Modules` (`/core/modules`) · `Core → Partners` (`/core/partners`) · `Core → Partner Verification` (`/core/partner-overview`) · `Core → Partner Statements` (`/core/partner-statements`).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Paket (draf) | Input data lengkap untuk paket baru; konfirmasi berhasil membuat paket | Paket baru terdaftar dengan detail sesuai input |
-| Negatif — Input Harga Nol (draf) | Masukkan harga nol pada modul; pesan kesalahan karena harga tidak boleh nol | Tidak dapat menyimpan paket, muncul notifikasi pesan yang jelas |
+| Positif — Membuat Paket (draf) | Buat paket 'Basic' untuk Sentosa Farma dengan harga Rp100.000/minggu; Aktifkan | Paket 'Basic' berhasil dibuat dan aktif |
+| Negatif — Input Harga Nol (draf) | Coba masukkan harga 0 untuk Basic; Simpan | Input gagal, pesan penolakan yang jelas |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Permintaan ditolak sistem bila perusahaan sudah memakai paket dan siklus itu, atau bila sudah ada permintaan yang masih menunggu. Paket dan siklus yang diminta harus yang ditawarkan |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Approve langsung mengganti paket (aturan dan pengamannya sama dengan Change Plan oleh pemilik platform, tanpa prorata). Reject tidak mengubah apa pun. Keputusan disertai catatan, dan permintaan yang sudah diputuskan tidak bisa diputuskan lagi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Name (wajib), Icon, Order (urutan tampil), dan Description. Atur Active In Catalog agar paket muncul di pilihan onboarding |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Modul infrastruktur yang selalu aktif ditampilkan terpisah (Always-on infrastructure modules) dan tidak bisa dimatikan |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Name (wajib), Contact Person, Email, Phone, dan Notes |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Mitra yang masih punya klien, atau sudah punya riwayat tagihan, tidak bisa dihapus; nonaktifkan saja. Rekap bulanan tiap mitra ada di Partner Statements, dan pemeriksaan angka bersama mitra di Partner Verification |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -61,12 +50,10 @@ Bab manual: [`platform-owner/02-paket-langganan-dan-mitra.md`](../../erpApiServi
 
 Bab manual: [`platform-owner/03-template-keuangan-dan-akuntansi.md`](../../erpApiServices/docs/manualBook/platform-owner/03-template-keuangan-dan-akuntansi.md)
 
-**Input di:** `Core → Chart Of Accounts Templates` (`/core/chart-of-account-templates`) · `Core → Chart Of Accounts Type Templates` (`/core/chart-of-account-type-templates`) · `Core → Taxes Templates` (`/core/taxes-templates`) · `Core → Payment Method Templates` (`/core/payment-method-templates`) · `Core → Price List Templates` (`/core/price-list-templates`) · `Core → Charge Type Templates` (`/core/charge-type-templates`).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Template Bagan Akun (draf) | Inputkan kode akun, nama, dan type; Simpan | Tampilan template baru di Chart Of Accounts Templates |
-| Negatif — Input Kode Akun Sama (draf) | Masukkan kode yang sudah ada; Coba Simpan | Pesan pesan yang jelas muncul |
+| Positif — jalur normal (draf) | Menambah template bagan akun untuk cabang baru Klinik Pratama & Laboratorium Bekasi dengan data lengkap dan benar | Template bagan akun berhasil disalin ke cabang Klinik Pratama & Laboratorium Bekasi, siap digunakan |
+| Negatif — input salah (draf) | Menggunakan kode bagan akun yang sudah ada tanpa menambah template baru | Input ditolak karena harus menambah template baru sebelum menggunakan kode bagan akun tersebut |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -74,12 +61,10 @@ Bab manual: [`platform-owner/03-template-keuangan-dan-akuntansi.md`](../../erpAp
 
 Bab manual: [`platform-owner/04-template-operasional.md`](../../erpApiServices/docs/manualBook/platform-owner/04-template-operasional.md)
 
-**Input di:** `Core → Status Templates` (`/core/status-templates`) · `Core → Approval Workflow Templates` (`/core/approval-workflow-templates`) · `Core → Branch Menu Template` (`/core/branch-menu-templates`) · `Core → Contact Templates` (`/core/contact-templates`) · `Core → Order Type Templates` (`/core/order-type-templates`) · `Core → Product Unit Templates` (`/core/product-unit-templates`) · `Core → Stock Adjustment Reason Templates` (`/core/stock-adjustment-reason-templates`) · `Core → Attendance Status Templates` (`/core/attendance-status-templates`) · `Core → Employment Type Templates` (`/core/employment-type-templates`).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Template Status (draf) | Masukkan nama "Stok Habispesan yang jelasProduksi", klik simpan | Berhasil menambahkan template status baru |
-| Negatif — Menghapus Template Alur Persetujuan Tanpa Konfirmasi (draf) | Coba hapus tanpa konfirmasi, tidak memilih template | Muncul pesan kesalahan tentang perlunya konfirmasi terlebih dahulu |
+| Positif — Menambah Template Status (draf) | Tambah status 'Sick Leave' dengan alasan penyesuaian stok | Sukses menambahkan template status baru |
+| Negatif — Menghapus Template Alur Persetujuan (draf) | Menghapus template yang masih digunakan | Ditolak: Template masih terkait, hapus terlebih dahulu hubungannya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pastikan untuk mengisi semua field wajib sebelum menambahkan template status |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kode tidak dapat diubah setelah template dibuat karena logika absensi, penggajian, dan cuti bergantung pada kode tersebut |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Code tidak dapat diubah setelah template dibuat. Cabang memakai kode ini sebagai titik awal untuk tipe kepegawaian dalam HRM |
@@ -90,12 +75,10 @@ Bab manual: [`platform-owner/04-template-operasional.md`](../../erpApiServices/d
 
 Bab manual: [`platform-owner/05-konten-landing-page.md`](../../erpApiServices/docs/manualBook/platform-owner/05-konten-landing-page.md)
 
-**Input di:** `Core → Landing Settings` (`/core/landing-settings`) · `Core → Landing Banners` (`/core/landing-banners`) · `Core → Landing Features` (`/core/landing-features`) · `Core → Landing Pricing Plans` (`/core/landing-pricing-plans`) · `Core → Landing Products` (`/core/landing-products`) · `Core → Landing Testimonials` (`/core/landing-testimonials`) · `Core → Landing Clients` (`/core/landing-clients`) · `Core → Landing Faqs` (`/core/landing-faqs`) · `Core → Landing Team Members` (`/core/landing-team-members`) · `Core → Landing Owner Profile` (`/core/landing-owner-profile`) · `Core → Landing Leads` (`/core/landing-leads`) · `Core → Landing Seo Pages` (`/core/landing-seo-pages`).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mengubah Pengaturan (draf) | Mengubah domain menjadi sehatfarma.id; menyimpan perubahan | Domain Landing Page berubah menjadi sehatfarma.id |
-| Negatif — Menambah Banner dengan URL kosong (draf) | Menambah banner tanpa URL; mendapatkan pesan kesalahan | Harus mengisi URL untuk banner yang ditambahkan |
+| Positif — jalur normal (draf) | Menambah fitur "Hubungi Kami" pada landing page; mengubah nomor telepon menjadi 0812-3456-7890; menyimpan perubahan | Fitur "Hubungi Kami" ditampilkan dengan nomor baru |
+| Negatif — input salah (draf) | Menghapus semua banner tanpa alasan; menolak permintaan pesan penolakan yang jelas | Semua banner tetap terpajang, muncul notifikasi untuk memberikan alasan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Unggah Gambar Banner (wajib) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 6. Pilih Search Engine Instruction: boleh diindeks dan diikuti tautannya, atau salah satu kombinasi yang melarang indeks atau pengikutan tautan. Halaman yang dilarang diindeks tidak masuk sitemap dan ditutup di robots.txt |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 7. Isi Structured Data (JSON-LD) bila Anda memakainya. Isinya harus JSON yang valid; kalau tidak, penyimpanan ditolak |
@@ -106,12 +89,10 @@ Bab manual: [`platform-owner/05-konten-landing-page.md`](../../erpApiServices/do
 
 Bab manual: [`platform-owner/06-sistem-bahasa-data-acuan-dan-log.md`](../../erpApiServices/docs/manualBook/platform-owner/06-sistem-bahasa-data-acuan-dan-log.md)
 
-**Input di:** `Core → Translations` (`/core/translations`) · `Core → Languages` (`/core/languages`) · `Core → Page Educations` (`/core/page-educations`) · `Core → Attachments` (`/core/attachment`) · `Core → Banks` (`/core/banks`) · `Core → Currencies` (`/core/currencies`) · `Core → Family Relationships` (`/core/family-relationships`) · `Core → Failed Request Logs` (`/core/fail-logs`) · `Core → Login Logs` (`/core/login-logs`).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Terjemahan (draf) | Menambahkan terjemahan "English" untuk halaman "About Us" di Sentosa Farma | Terjemahan berhasil ditambahkan dan dapat dilihat di panel admin |
-| Negatif — Bahasa Sudah Ada (draf) | Mencoba menambahkan bahasa "Indonesia" yang sudah ada | Pesan kesalahan pesan yang jelas muncul dan tidak dapat disimpan ulang |
+| Positif — Menambah Terjemahan (draf) | Tambah bahasa Inggris untuk produk Paracetamol 500 mg strip (SKU OBT-001) di Sentosa Farma | Berhasil menambah terjemahan dalam bahasa Inggris dengan data yang benar |
+| Negatif — Menghapus Bahasa (draf) | Menghapus bahasa Indonesia dari produk Amoxicillin 500 mg (OBT-002) tanpa alasan | Ditolak karena harus ada alasan penghapusan dan konfirmasi ulang sebelum hapus benar |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -119,12 +100,10 @@ Bab manual: [`platform-owner/06-sistem-bahasa-data-acuan-dan-log.md`](../../erpA
 
 Bab manual: [`platform-owner/07-dashboard-platform-owner-dan-langganan.md`](../../erpApiServices/docs/manualBook/platform-owner/07-dashboard-platform-owner-dan-langganan.md)
 
-**Input di:** `Dashboard → Platform Dashboard` (`/dashboard/core`) · `Dashboard → Subscription dashboard` (`/dashboard/subscriptions`) · `Dashboard → Notifications Monitor` (`/dashboard/notifications`).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Dashboard Platform (draf) | Memeriksa angka utama, grafik penjualan, daftar langganan aktif | Angka utama akurat, grafik menunjukkan tren penjualan, langganan terdaftar dengan benar |
-| Negatif — Notifications Monitor (draf) | Menginput notifikasi tidak relevan | Ditolak pesan penolakan yang jelas |
+| Positif — jalur normal (draf) | Pemilik membaca dasbor platform, langganan, dan monitor notifikasi; angka utama dan grafik sesuai; permintaan ganti paket diproses; notifikasi diteruskan dengan benar | Semua fitur berfungsi dengan baik; informasi akurat; proses ganti paket lancar; notifikasi diterima dengan tepat |
+| Negatif — input salah (draf) | Input status langganan salah; permintaan ganti paket tanpa syarat valid ditolak dengan pesan jelas; notifikasi tidak diteruskan | Permintaan ditolak dengan pesan yang jelas; proses ganti paket tidak diproses; notifikasi gagal dikirim dengan pesan kesalahan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Klik Approve untuk menyetujui, atau Reject untuk menolak |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -133,39 +112,63 @@ Bab manual: [`platform-owner/07-dashboard-platform-owner-dan-langganan.md`](../.
 
 Bab manual: [`platform-owner/08-akun-gateway-platform-dan-kode-kanal-bank.md`](../../erpApiServices/docs/manualBook/platform-owner/08-akun-gateway-platform-dan-kode-kanal-bank.md)
 
-**Input di:** `Core → Platform Gateway Accounts` (`/core/platform-gateway-accounts`) · `Core → Bank Gateway Codes` (`/core/bank-gateway-codes`) · hanya untuk **pemilik platform**..
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Input akun gateway platform dan kode kanal bank yang benar; cek manual pembayaran berhasil; transfer keluar sesuai kebutuhan | Proses pembayaran berjalan lancar; notifikasi sukses diterima |
-| Negatif — input salah (draf) | Input akun gateway atau kode kanal bank salah; sistem menolak transaksi dengan pesan kesalahan validasi | Sistem menampilkan pesan error dan tidak memproses transfer, mengarahkan untuk memeriksa kembali data yang dimasukkan |
+| Positif — jalur normal (draf) | Input akun gateway platform dan kode kanal bank yang benar; cek manual sukses; transfer otomatis terkonfirmasi | Akun berhasil diisi, proses pembayaran lancar, status transfer valid |
+| Negatif — input salah (draf) | Input akun salah atau kode kanal bank tidak sesuai; pemberitahuan kesalahan dengan detail masalah | Pendaftaran ditolak, pesan error jelas tentang syarat yang belum terpenuhi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Penting: bank yang belum punya kode kanal tidak dapat menerima transfer dari penyedia itu; baris transfer ke bank tersebut diblokir. Kolom Banks linked menunjukkan berapa bank yang sudah terhubung |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
-## 9. Masuk ke Aplikasi, Pusat Bantuan, dan Riwayat Perubahan
+## 9. Pendaftaran Mandiri Klien dan Persetujuan
 
-Bab manual: [`mulai-menggunakan/01-login-bantuan-dan-riwayat-perubahan.md`](../../erpApiServices/docs/manualBook/mulai-menggunakan/01-login-bantuan-dan-riwayat-perubahan.md)
-
-**Input di:** `Login → Login` (`/auth/login`) · `Help → Support` (`/help`) · `Changelog → Changelog` (`/changelog`).
+Bab manual: [`platform-owner/09-pendaftaran-mandiri-klien.md`](../../erpApiServices/docs/manualBook/platform-owner/09-pendaftaran-mandiri-klien.md)
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Masuk ke Aplikasi (draf) | Login dengan akun valid; Verifikasi dua langkah berhasil; Sesi berakhir setelah waktu tertentu | Berhasil masuk dan menggunakan aplikasi sesuai hak akses akun |
-| Negatif — Masuk ke Aplikasi (draf) | Input password salah; Tidak ada verifikasi dua langkah; Waktu login melebihi batas | Ditolak pesan penolakan yang jelas atau pesan yang jelas dan diminta untuk login kembali |
+| Positif — Pendaftaran Mandiri Klien (draf) | Calon klien Bandung masuk halaman pendaftaran, mengisi data dengan benar, klik setuju syarat & ketentuan, dan submit | Langganan diterapkan secara otomatis untuk Apotek Sentosa Bandung, status menjadi 'aktif' di sistem platform-owner |
+| Negatif — Pendaftaran Mandiri Klien (draf) | Calon klien mengisi data tidak lengkap, syarat tidak terpenuhi, klik setuju tetapi tidak submit | Pengajuan ditolak dengan pesan 'data tidak lengkap, silakan periksa kembali', status tetap 'pending' di sistem platform-owner |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kata sandi hanya disimpan dalam bentuk hash dan dihapus dari pengajuan begitu akun terbentuk. Email yang sudah terdaftar atau sedang diajukan ditolak. Kolom jebakan dan pembatasan 5 pengajuan per menit melindungi dari spam |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Atau klik Tolak pengajuan dan isi alasan (wajib); calon klien melihatnya di halaman status |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tombol berstatus nonaktif dengan penjelasan bila pengajuan bukan pengajuan mandiri atau sudah diputuskan. Provision manual tidak bisa dipakai untuk pengajuan mandiri: persetujuan adalah satu-satunya jalan |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pengaturan subscriptionselfserviceenabled mematikan pendaftaran mandiri bila bernilai salah: halaman /subscribe menyatakan tidak tersedia dan pengajuan baru ditolak |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
-## 10. Pengaturan Akun Saya: Tampilan, Keamanan, dan Langganan
+## 10. Diagram Alur Langganan Klien — Platform Owner
 
-Bab manual: [`pengaturan-akun/01-pengaturan-akun-saya.md`](../../erpApiServices/docs/manualBook/pengaturan-akun/01-pengaturan-akun-saya.md)
-
-**Input di:** `Settings → Settings` (`/settings`) · `Settings → Appearance` (`/settings/appearance`) · `Settings → Security` (`/settings/security`) · `Settings → Subscription` (`/settings/subscription`).
+Bab manual: [`platform-owner/10-diagram-alur-langganan-klien.md`](../../erpApiServices/docs/manualBook/platform-owner/10-diagram-alur-langganan-klien.md)
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Pengaturan Akun Saya (draf) | Mengakses halaman Settings, mengubah password, memverifikasi dua langkah, dan menyimpan perubahan dengan sukses | Perubahan disimpan, tampilan akun diperbarui, verifikasi dua langkah aktif |
-| Negatif — Keamanan Sentosa Farma (draf) | Mengganti password dengan kata sandi yang terlalu pendek atau tidak memenuhi syarat keamanan, menerima pesan kesalahan | Pengubahan ditolak, tetap menggunakan password lama, tampilan error menunjukkan syarat yang belum terpenuhi |
+| Positif — jalur normal (draf) | Klien baru mendaftar, pemilik platform memvalidasi, kirim notifikasi aktivasi, klien mengaktifkan akun, langganan aktif | Langganan klien berstatus aktif sesuai persyaratan |
+| Negatif — input salah (draf) | Klien mendaftar tanpa email valid, sistem menolak pendaftaran pesan penolakan yang jelas | Pendaftaran ditolak dan klien diberi informasi tentang kesalahan input |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | B --/"Tidak"/ X1["Halaman menyatakan tidak tersedia<br/pengajuan baru ditolak"] |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | D --/"Ya"/ X2["Pengajuan ditolak"] |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | F --/"Tolak, alasan wajib"/ G(["Calon klien melihat alasan<br/boleh mengajukan lagi"]) |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Hanya pemilik platform yang bisa menyetujui atau menolak pengajuan |
+| Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
+| Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
+
+## 11. Masuk ke Aplikasi, Pusat Bantuan, dan Riwayat Perubahan
+
+Bab manual: [`mulai-menggunakan/01-login-bantuan-dan-riwayat-perubahan.md`](../../erpApiServices/docs/manualBook/mulai-menggunakan/01-login-bantuan-dan-riwayat-perubahan.md)
+
+| Skenario | Langkah dan data uji | Hasil yang diharapkan |
+| --- | --- | --- |
+| Positif — Masuk ke Aplikasi (draf) | Login dengan akun valid; masukkan username dan password; verifikasi dua langkah berhasil; akses aplikasi terbuka | Berhasil masuk ke dashboard utama |
+| Negatif — Masuk ke Aplikasi (draf) | Login dengan username kosong; klik masuk; menerima pesan kesalahan | Harus mengisi username dan password yang valid untuk dapat login |
+| Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
+| Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
+
+## 12. Pengaturan Akun Saya: Tampilan, Keamanan, dan Langganan
+
+Bab manual: [`pengaturan-akun/01-pengaturan-akun-saya.md`](../../erpApiServices/docs/manualBook/pengaturan-akun/01-pengaturan-akun-saya.md)
+
+| Skenario | Langkah dan data uji | Hasil yang diharapkan |
+| --- | --- | --- |
+| Positif — Pengaturan Akun (draf) | Ganti password, aktivasi 2FA, override PIN manajer, cek status langganan | Berhasil mengubah pengaturan akun dan memperbarui status langganan |
+| Negatif — Input Password Salah (draf) | Masukkan password yang salah berulang kali | Ditolak pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Ubah Name (minimal 2 karakter) dan Email (harus berformat email yang valid) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi New Password (minimal 8 karakter, harus berbeda dari yang lama) dan Confirm Password (harus sama) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Save these recovery codes now: tiap kode hanya bisa dipakai sekali dan satu-satunya jalan masuk bila ponsel hilang; kode tidak ditampilkan lagi. Gunakan Copy all, lalu klik I saved them |

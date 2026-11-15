@@ -9,12 +9,6 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
-**Dikerjakan oleh:** Konfigurasi dan produksi oleh **Joko Santoso** (Kepala Produksi); konfigurasi awal oleh **Dr. Rahmat**.
-
-**Cabang aktif:** Pabrik Herbal Sukabumi.
-
-**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
-
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Biaya bahan per BOM menjadi HPP barang jadi.
@@ -25,15 +19,12 @@ visibility: internal
 
 Bab manual: [`manufacturing/01-konfigurasi-manufaktur.md`](../../erpApiServices/docs/manualBook/manufacturing/01-konfigurasi-manufaktur.md)
 
-**Input di:** `Manufacturing → Config` (`/manufacturing/config`) dan `Manufacturing → Work Centers` (`/manufacturing/work-centers`).
-
-**Prasyarat:** Warehouse dan Chart of Accounts sudah disiapkan.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi Manufaktur (draf) | Setup awal modul Manufacturing dengan aturan approval dan warehouse default untuk pabrik herbal Sukabumi; pemetaan jurnal biaya produksi untuk SKU OBT-001; Work Center dikonfigurasi dengan benar. | Modul manufacturing berjalan lancar, data konfigurasi tersimpan dengan baik. |
-| Negatif — Warehouse Default (draf) | Input warehouse default salah (warehouse tidak ada); pesan kesalahan pesan yang jelas. | Konfigurasi ditolak dengan pesan jelas pesan yang jelas, perbaiki input warehouse. |
+| Positif — Konfigurasi Manufaktur (draf) | Setup awal modul Manufacturing di Pabrik Herbal Sukabumi; aturan approval dan warehouse default sesuai prosedur; pemetaan jurnal biaya produksi untuk SKU OBT-001; Work Center dikonfigurasi dengan benar. | Modul Manufacturing berfungsi dengan baik, proses produksi Paracetamol 500 mg dapat dilacak. |
+| Negatif — Warehouse Default Salah (draf) | Input warehouse default salah pada setup awal di Pabrik Herbal Sukabumi; pesan error pesan yang jelas. | Setup tidak berhasil, harus memilih warehouse yang benar untuk SKU OBT-001. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sebelum mulai membuat Bill of Materials (BOM) atau Production Order, dua hal ini wajib disiapkan dulu: Konfigurasi Manufaktur (aturan approval, warehouse default, pemetaan akun biaya) dan Work Center (lokasi/stasiun kerja tempat proses produksi berlangsung) |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau toleransi reject diisi dan ada reject di atasnya, akun untuk fungsi Production Loss harus sudah dipetakan di bagian pemetaan akun. Kalau belum, Complete ditolak dengan pesan untuk memetakan akunnya dulu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -41,13 +32,10 @@ Bab manual: [`manufacturing/01-konfigurasi-manufaktur.md`](../../erpApiServices/
 
 Bab manual: [`manufacturing/02-bill-of-materials-bom.md`](../../erpApiServices/docs/manualBook/manufacturing/02-bill-of-materials-bom.md)
 
-**Input di:** `Manufacturing → Bills of Materials` (`/manufacturing/boms`).
-
-**Prasyarat:** Produk (SKU) bahan baku dan produk jadi sudah terdaftar di Product Catalog.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat BOM (draf) | Input komposisi bahan baku untuk Jamu Kunyit Asam (HRB-001), termasuk kalsium karbonat dari CV Kapur Medika; cek dan simpan data | BOM HRB-001 terdaftar dengan komponen bahan baku yang benar |
+| Positif — jalur normal (draf) | Membuat BOM Paracetamol 500 mg strip dengan bahan kalsium karbonat; menghitung biaya material teoritis; menetapkan sebagai default | BOM terbentuk, biaya material ditampilkan, dan disetel sebagai default sukses |
+| Negatif — input salah (draf) | Input komposisi bahan tidak sesuai resep; menghasilkan pesan kesalahan | Penginputan gagal, pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Bill of Materials (BOM) adalah "resep" produksi — daftar bahan baku (komponen) dan jumlahnya yang dibutuhkan untuk menghasilkan satu produk jadi. Setiap Production Order harus mengacu ke satu BOM |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi tabel Components (bahan baku) — wajib minimal 1 baris: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Satu produk tidak bisa dipilih dua kali sebagai komponen dalam BOM yang sama, dan produk jadi yang sedang dibuat resepnya tidak bisa dipilih sebagai komponennya sendiri |
@@ -58,14 +46,10 @@ Bab manual: [`manufacturing/02-bill-of-materials-bom.md`](../../erpApiServices/d
 
 Bab manual: [`manufacturing/03-routing-produksi.md`](../../erpApiServices/docs/manualBook/manufacturing/03-routing-produksi.md)
 
-**Input di:** `Manufacturing → Routings` (`/manufacturing/routings`).
-
-**Prasyarat:** Bill of Materials (BOM) dan Work Center sudah dibuat.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Routing (draf) | Input: Paracetamol 500 mg strip (SKU OBT-001), work center Pemotongan & Pengemasan, waktu kerja 30 menit | Routing disusun dengan benar dan tersimpan dalam sistem |
-| Negatif — Waktu Kerja Tidak Sesuai (draf) | Input: Paracetamol 500 mg strip (SKU OBT-001), work center Pemotongan & Pengemasan, waktu kerja 60 menit | Sistem menolak input pesan penolakan yang jelas |
+| Positif — Membuat Routing (draf) | Input: Paracetamol 500 mg strip (SKU OBT-001), Work Center Produksi Obat, Waktu Kerja 30 menit | Routing berhasil disusun untuk Paracetamol 500 mg strip dengan work center dan waktu kerja yang sesuai |
+| Negatif — Input Salah (draf) | Input: Jamu Kunyit Asam sachet (HRB-001), Work Center Produksi Obat, Waktu Kerja 30 menit | Tolak input karena HRB-001 adalah produk herbal, bukan obat; routing harus disusun untuk work center produksi herbal dengan waktu kerja yang sesuai |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Setiap operasi di Routing akan disalin ke Production Order sebagai daftar Operations yang harus di-Start dan di-Finish satu per satu selama proses produksi berjalan (lihat chapter Production Order) |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -74,17 +58,27 @@ Bab manual: [`manufacturing/03-routing-produksi.md`](../../erpApiServices/docs/m
 
 Bab manual: [`manufacturing/04-production-order.md`](../../erpApiServices/docs/manualBook/manufacturing/04-production-order.md)
 
-**Input di:** `Manufacturing → Production Orders` (`/manufacturing/production-orders`).
-
-**Prasyarat:** Bill of Materials (BOM) sudah dibuat; Routing dan Work Center disiapkan kalau ingin memantau operasi per tahapan.
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Production Order (draf) | Buat PO untuk Jamu Kunyit Asam (HRB-001), approve & release, catat operasi, terima produk ke stok | Proses berjalan lancar, status PO menjadi Complete, stok HRB-001 bertambah |
-| Negatif — Input Jumlah Negatif (draf) | Masukkan jumlah negatif untuk keluar bahan baku | Tidak dapat submit, pesan penolakan yang jelas |
+| Positif — Membuat Production Order (draf) | Buat PO OBT-001 500 unit dari draft, approve & release | Status menjadi 'Running', bahan keluar, operasi dicatat, produksi selesai, stok diterima |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau order ditolak (Rejected) saat approval, order kembali bisa diedit dan disubmit ulang |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau order memakai Routing, bagian Operations menampilkan daftar tahapan kerja sesuai urutan di Routing. Operasi hanya bisa dicatat saat order berstatus In Progress, dan harus dikerjakan sesuai urutan pending-nya: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Klik Complete Production untuk finalisasi. Syarat: Produced Quantity harus lebih dari 0 |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Production Order hanya bisa dihapus selama masih berstatus Draft atau Cancelled |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Order harus berstatus In Progress dan semua operasi Routing sudah selesai |
+| Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
+| Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
+
+## 5. Diagram Alur Manufaktur — Modul Manufacturing
+
+Bab manual: [`manufacturing/05-diagram-alur-manufaktur.md`](../../erpApiServices/docs/manualBook/manufacturing/05-diagram-alur-manufaktur.md)
+
+| Skenario | Langkah dan data uji | Hasil yang diharapkan |
+| --- | --- | --- |
+| Positif — jalur normal (draf) | Resep Amoxicillin 500 mg diterima, BOM dan Routing dikonfigurasi, PO disiapkan, produksi dimulai hingga selesai, hasil masuk stok | Status Production Order berubah menjadi "Selesai", bahan terpengaruh dikurangi, stok produk bertambah |
+| Negatif — input salah (draf) | Resep tidak valid, syarat produksi belum terpenuhi | Produksi ditolak pesan penolakan yang jelas dan status PO tetap pesan yang jelas |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Submitted -- Rejected: Ditolak |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Bahan hanya bisa dikeluarkan atau dikembalikan saat order berstatus Released atau In Progress |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Operasi hanya bisa dicatat saat order In Progress |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Cancel ditolak bila masih ada bahan yang dikeluarkan dan belum dikembalikan. Kembalikan bahan dulu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

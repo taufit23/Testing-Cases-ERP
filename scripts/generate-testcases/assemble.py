@@ -97,6 +97,17 @@ FILES = {
  "20": ("halaman-publik", "Halaman Publik", ["halaman-publik"], "Halaman tanpa login untuk pihak luar.",
    ["Token kedaluwarsa dan tidak dapat ditebak; data internal tidak bocor.",
     "Halaman karier, penawaran, tautan bayar, pemberitahuan pengiriman pemasok dan penangguhan klien menutup semuanya."]),
+ "23": ("general-affairs", "General Affairs", ["general-affairs"], "Barang dan unit, permintaan, pengadaan, perawatan, ganti rugi dan bebas tanggungan.",
+   ["Permintaan barang lewat persetujuan; stok keluar dan kapitalisasi mengikuti jatah dan kategori.",
+    "Penyelesaian ganti rugi dari pelanggaran karyawan tertaut ke HRM; bebas tanggungan memeriksa semua kewajiban.",
+    "Pengadaan GA menautkan PR dan PO; unit GA dapat tertaut aset tetap."]),
+ "24": ("kerjasama", "Kerjasama (Partnership)", ["kerjasama"], "Tipe, katalog paket, perjanjian berversi, pemakaian dan tagihan mitra.",
+   ["Penawaran berversi dan perjanjian lewat persetujuan; rantai klien.",
+    "Pemakaian direkap menjadi tagihan; penyelesaian terjurnal.",
+    "Kewajiban dan penyesuaian kerja custom tercatat dan terlaporkan."]),
+ "25": ("outreach", "Sales Outreach", ["outreach"], "Kampanye, audiens, pengiriman, dan penggunaan.",
+   ["Pratinjau audiens sebelum jadwal; kampanye terjadwal dikirim lewat gerbang pengiriman.",
+    "Pemakaian outreach tercatat per cabang dan tampil di dashboard."])
 }
 
 # Bab yang draf Ollama-nya gagal: ditulis tangan dari isi bab manual.
@@ -217,6 +228,7 @@ m = ["---", "title: (PT Sehat Sentosa Farma) — 99. Peta Cakupan Bab Manual Boo
      "| Modul manual | Bab | Berkas bab | Kasus uji |", "| --- | --- | --- | --- |"]
 for folder, title, f, where in matrix:
     m.append("| %s | %s | `%s` | %s |" % (folder, title, f, where))
+m.append("| core | Hubungan Antar Modul | `core/07-hubungan-antar-modul.md` | `22` bagian B |")
 m += ["", "Alur lintas modul ada di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md); izin, isolasi dan kasus batas di [`98`](./98-izin-isolasi-dan-kasus-batas.id.md)."]
 open(os.path.join(DEST, "99-peta-cakupan.id.md"), "w", encoding="utf-8").write("\n".join(m))
 print("matrix", len(matrix), "aturan tegas", rule_total)

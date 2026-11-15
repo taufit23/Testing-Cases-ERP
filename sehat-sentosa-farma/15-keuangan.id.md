@@ -9,12 +9,6 @@ visibility: internal
 
 > Prasyarat: file [`00`](./00-profil-perusahaan-dan-prasyarat.id.md) dan, untuk transaksi, langkah terkait di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md). Tiap bagian di bawah sama dengan **satu bab manual book** (tautan di bawah judul bagian). Ada tiga jenis baris: **(draf)** dirancang Ollama lokal dari isi bab dan harus disesuaikan penguji dengan layar sebenarnya; **aturan tegas di manual** adalah kalimat larangan/kewajiban yang dikutip langsung dari bab (fakta, bukan karangan model); **izin** dan **netralisasi** ditulis tangan dan berlaku untuk semua bab.
 
-**Dikerjakan oleh:** Pencatatan biaya oleh **Sari Wulandari**; persetujuan biaya di atas Rp 2.000.000 oleh **Dr. Rahmat**. Pembayaran online memakai kunci **sandbox**.
-
-**Cabang aktif:** Kantor Pusat & Distribusi Jakarta.
-
-**Cara membaca baris "Input di":** tiap bagian di bawah diawali satu baris itu, berisi menu sidebar dan alamat halaman tempat data dimasukkan. Data yang harus diisi ada di kolom "Langkah dan data uji" dan di file `00` (data acuan).
-
 ## Titik uji kunci modul ini (ditulis tangan)
 
 - Biaya per kategori dengan persetujuan di atas batas; jurnal biaya saat disetujui.
@@ -25,16 +19,14 @@ visibility: internal
 
 Bab manual: [`finance/01-kategori-dan-pencatatan-biaya.md`](../../erpApiServices/docs/manualBook/finance/01-kategori-dan-pencatatan-biaya.md)
 
-**Input di:** `Finance → Expense Categories` (`/expense/expense-categories`) dan `Finance → Expenses` (`/expense/expenses`).
-
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Expense Category (draf) | Buat kategori 'Biaya Gudang' di Sentosa Farma; Tambah item biaya 'Gaji Karyawan Gudang', status draft; Simpan | Berhasil membuat kategori dengan item biaya dan status draft |
-| Negatif — Menandai Expense Sudah Dibayar (draf) | Coba tandai expense 'Biaya Gaji Januari' yang belum dibayar; Terima permintaan dengan pesan 'Harus dalam status Draft' | Permintaan ditolak dengan pesan 'Harus dalam status Draft untuk diubah ke Paid' |
+| Positif — Membuat kategori & mencatat expense (draf) | Buat kategori "Gaji Karyawanpesan yang jelasUpah Bulan Des 2023", tag "Dibayar", status "Draft" | Expense tercatat dengan benar, status menjadi "Disetujui" setelah disahkan |
+| Negatif — Input data expense salah (draf) | Masukkan kategori "Gaji Karyawan", item pesan yang jelas, tag "Belum Dibayar" saat masih draft | Tidak dapat disimpan, pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Pilih Expense Category (wajib) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi Expense Date (wajib) dan Due Date (opsional, kalau biaya ini punya tenggat pembayaran) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 7. Minimal harus ada 1 item dan setiap item wajib punya deskripsi sebelum bisa disimpan |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Expense hanya bisa diedit dan dihapus selama masih berstatus draft. Begitu status berubah (misalnya sudah ditandai Paid), tombol Delete di halaman detail otomatis nonaktif — ini untuk menjaga riwayat pengeluaran yang sudah difinalisasi tidak berubah-ubah |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Expense yang ditolak kembali bisa diperbaiki lalu di-Submit lagi |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -42,12 +34,25 @@ Bab manual: [`finance/01-kategori-dan-pencatatan-biaya.md`](../../erpApiServices
 
 Bab manual: [`finance/02-pembayaran-online-dan-penyelesaian.md`](../../erpApiServices/docs/manualBook/finance/02-pembayaran-online-dan-penyelesaian.md)
 
-**Input di:** `Client Master → Payment Routes` (`/client-master/payment-routes`) · `Finance → Online Payments` (`/finance/online-payments`) · `Finance → Payment Settlements` (`/finance/payment-settlements`).
+| Skenario | Langkah dan data uji | Hasil yang diharapkan |
+| --- | --- | --- |
+| Positif — jalur normal (draf) | Menambahkan QRIS dari bank BCA dan mandiri dengan detail akun valid; memantau transaksi sukses; mencatat dana dicairkan ke rekening perusahaan | Transaksi tercatat dengan benar, saldo perusahaan bertambah sesuai nominal yang dicairkan |
+| Negatif — input salah (draf) | Menginput QRIS tanpa nomor rekening tujuan; mengajukan pencairan dana saat saldo kurang; mencatat cairan dari penyedia tak valid | Transaksi ditolak, sistem memberikan pesan kesalahan dan tidak memproses transaksi, saldo tetap sama |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sebelum bisa mencatat penyelesaian, akun penampung pembayaran online harus sudah dipetakan di POS → POS Configs; bila belum, halaman menampilkan peringatan |
+| Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
+| Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
+
+## 3. Diagram Alur Finance — Modul Finance
+
+Bab manual: [`finance/03-diagram-alur-finance.md`](../../erpApiServices/docs/manualBook/finance/03-diagram-alur-finance.md)
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Urutan Penyedia dan Cadangan (draf) | Konfigurasi QRIS dengan cadangan bank BCA dan Mandiri; memantau transaksi; mencatat dana dicairkan ke rekening bank | Proses pembayaran online lancar, catatan pencairan dana akurat |
-| Negatif — Input Data Penyedia Salah (draf) | Menginput nama penyedia pembayaran yang tidak ada; pesan kesalahan muncul | Pengisian data penyedia pembayaran harus sesuai dengan daftar yang tersedia |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sebelum bisa mencatat penyelesaian, akun penampung pembayaran online harus sudah dipetakan di POS → POS Configs; bila belum, halaman menampilkan peringatan |
+| Positif — Pencatatan Expense (draf) | Apoteker memasukkan detail biaya obat OBT-001 ke modul finance; sistem otomatis mengupdate ledger dan kasir membayar supplier PT Bintang Farmasi Utama | Biaya tercatat dengan benar, pembayaran online berhasil, dana dikreditkan ke rekening supplier |
+| Negatif — Pembayaran Expense (draf) | Apoteker memasukkan SKU OBT-002 (resep) sebagai biaya; sistem menolak input karena bukan biaya operasional | Input ditolak pesan penolakan yang jelas |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | J --/"Transfer bank"/ L["Mark as Paid ditolak<br/gunakan Prepare dan Release"] |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Expense hanya bisa diedit dan dihapus selama masih Draft |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | H --/"Kedaluwarsa atau ditolak"/ J["Transaksi Voided<br/stok tidak pernah berkurang"] |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Penyedia yang kredensialnya belum lengkap tidak bisa dipakai. Lengkapi di halaman Integrations |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
