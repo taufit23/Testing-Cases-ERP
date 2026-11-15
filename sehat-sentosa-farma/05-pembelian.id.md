@@ -23,8 +23,8 @@ Bab manual: [`purchasing/01-konfigurasi-alur-purchasing.md`](../../erpApiService
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi Alur Purchasing (draf) | Atur alur persetujuan, urutan GR vs Invoice OBT-001, dan map akun jurnal otomatis; cek posting jurnal; pilih Bintang Farmasi Utama; konfirmasi PO; terima barang & invoice sesuai; bayar ke pemasok | Alur persetujuan berjalan lancar, GR vs Invoice OBT-001 sesuai, jurnal otomatis benar, pembayaran dilakukan dengan tepat |
-| Negatif — Konfigurasi Alur Purchasing (draf) | Input alur GR sebelum setting persetujuan; coba posting jurnal tanpa setting GR vs Invoice; pilih pemasok baru tanpa kontrak; terima invoice tanpa PO; bayar ke pemasok tanpa PO | Sistem menolak input, memberikan pesan kesalahan tentang alur GR, syarat persetujuan belum lengkap, tidak bisa memproses invoice tanpa PO, pembayaran ditolak karena PO belum ada |
+| Positif — Konfigurasi alur purchasing (draf) | Masuk ke `Purchasing → Purchase Configs`, aktifkan pesan yang jelas, pilih pesan yang jelas untuk PO Flow Mode, simpan konfigurasi. | Alur purchasing berubah menjadi memerlukan persetujuan PO dan GR harus diterima terlebih dahulu sebelum PI bisa dibuat. |
+| Negatif — Konfigurasi alur purchasing (draf) | Masuk ke `Purchasing → Purchase Configs`, cek pesan yang jelas tanpa mengaktifkannya, coba membuat PO baru. | Muncul pesan kesalahan bahwa persetujuan PO diperlukan sebelum membuat PO baru. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Urutan GR vs PI — barang harus diterima dulu baru bisa ditagih, atau tagihan boleh datang duluan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Ini pengaturan paling penting untuk dipahami — menentukan urutan wajib antara menerima barang (GR) dan menagih (PI) setelah PO dibuat: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Penting: begitu satu PO sudah punya minimal 1 Goods Receipt atau 1 Purchase Invoice, PO tersebut terkunci — item-nya tidak bisa diubah lagi. Pastikan PO sudah benar sebelum lanjut ke GR/PI |
@@ -38,8 +38,8 @@ Bab manual: [`purchasing/02-purchase-request.md`](../../erpApiServices/docs/manu
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Karyawan membuat PR OBT-001 di modul purchasing, memasukkan detail produk, jumlah, dan pemasok Bintang Farmasi Utama; karyawan menyetujui | Purchase Request OBT-001 disetujui dan masuk antrian pengadaan |
-| Negatif — input salah (draf) | Karyawan membuat PR tanpa memilih pemasok; sistem menolak pesan penolakan yang jelas | Purchase Request ditolak, karyawan diminta memilih pemasok terlebih dahulu |
+| Positif — Membuat PR untuk Paracetamol 500 mg strip (draf) | Buka Purchase Requests; klik "+ Create"; isi Date: 2023-10-01, Expected Date Needed: 2023-10-05, Department: Gudang; tambah item Paracetamol 500 mg strip (SKU OBT-001), Unit: box, Qty: 100; klik Save | PR dibuat dengan status Draft, nomor otomatis, item Paracetamol 500 mg strip terdaftar |
+| Negatif — Submit PR tanpa menambahkan item (draf) | Buka detail PR, klik "Submit"; PR tidak boleh diajukan tanpa item | PR ditolak pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | PR yang sudah Submit tidak bisa diedit lagi — kalau ada revisi, PR harus dibatalkan (Cancel) dan dibuat ulang, atau ditolak (Reject, kalau lewat approval) lalu dibuatkan versi baru |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -50,8 +50,8 @@ Bab manual: [`purchasing/03-purchase-quotation.md`](../../erpApiServices/docs/ma
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Purchase Quotation (draf) | Membuat PQ untuk Paracetamol 500 mg strip (SKU OBT-001) dari PT Bintang Farmasi Utama; memasukkan harga tier; mengirim RFQ, memilih pemenang, submit dan approve | Berhasil membuat PO untuk Paracetamol 500 mg strip dengan supplier terpilih |
-| Negatif — Purchase Quotation (draf) | Membuat PQ untuk Paracetamol 500 mg strip (SKU OBT-001) dari PT Bintang Farmasi Utama; memasukkan harga tier, mengirim RFQ tapi salah alamat penerima; tidak memilih pemenang sebelum submit | Ditolak karena alamat penerima tidak valid dan belum memilih pemenang |
+| Positif — Membuat PQ untuk supplier baru (draf) | Buka Purchase Quotations; klik "+ Create"; pilih PT Alkes Prima Mandiri sebagai Contact; masukkan tanggal 10 Januari 2023 dan Expected Date Needed 15 Januari 2023; tambahkan item Paracetamol 500 mg strip dengan Qty Requested 1000; klik Save | Purchase Quotation berhasil dibuat untuk PT Alkes Prima Mandiri, status menjadi Draft |
+| Negatif — Mengirim RFQ tanpa menentukan pemenang (draf) | Dari detail PQ Draft, klik Mark RFQ Sent; unduh dan kirim RFQ ke supplier; tidak memilih pemenang di halaman Compare Quotations; coba Submit PQ | Muncul pesan error pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Setelah supplier membalas, isi harga satu per satu atau klik Import Prices dan unggah Excel RFQ yang sudah diisi supplier. Baris yang tidak cocok dengan item di PQ ditolak, dan impor hanya bisa selama PQ masih Draft |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Kalau supplier tidak menyediakan sebuah item, tandai Not Available at this supplier. Harga harus lebih dari nol. Selain itu, tiap item harus punya harga supplier atau ditandai tidak tersedia sebelum PQ bisa di-Submit |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau satu produk ditawarkan oleh lebih dari satu PQ, Anda wajib memilih supplier pemenang di halaman Compare Quotations sebelum PQ bisa di-Submit. Hanya satu penawaran boleh dipilih per produk |
@@ -65,8 +65,8 @@ Bab manual: [`purchasing/04-purchase-order.md`](../../erpApiServices/docs/manual
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat PO (draf) | Buat PO untuk Paracetamol 500 mg strip (SKU OBT-001) dari Bintang Farmasi Utama; isi detail sesuai penawaran; submit & approve; lanjut ke GR/PI | Purchase Order dibuat, disetujui, dan berlanjut ke Goods Receipt/Purchase Invoice dengan benar |
-| Negatif — Input Supplier Salah (draf) | Masukkan nama supplier yang tidak ada (PT XYZ) pada PO Paracetamol 500 mg strip; submit & approve | PO ditolak karena supplier tidak valid; pesan penolakan yang jelas dengan detail entitas uji |
+| Positif — Membuat PO dari PQ (draf) | Login sebagai Apoteker Penanggung Jawab; klik "Convert to POpesan yang jelasSavepesan yang jelasDraft". | Form PO ter-prefill dengan detail PQ, subtotal, tax dan total otomatis; tombol "Submit" muncul. |
+| Negatif — Mengubah item PO setelah GR (draf) | Login sebagai Kepala Gudang; buka PO OBT-001 yang sudah ada GR; coba ubah qty item; pesan muncul pesan yang jelas. | Item PO tidak bisa diubah, hanya bisa dilakukan penyesuaian melalui Purchase Return. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Anggaran: bila Budget Enforcement aktif (bab 01), total PO dari satu Purchase Request tidak boleh melebihi perkiraan anggaran di PR itu |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item Purchase Request yang sudah dipesan lewat PO lain tidak bisa dipesan lagi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Expected Delivery Date tidak boleh sebelum tanggal PO |
@@ -80,8 +80,8 @@ Bab manual: [`purchasing/05-goods-receipt.md`](../../erpApiServices/docs/manualB
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mencatat Penerimaan Barang (draf) | Input PO: OBT-001; Qty: 100; Tambah Landed Cost: Rp500; Approve & Post | Persediaan OBT-001 bertambah 100, jurnal terposting |
-| Negatif — Menerima Melebihi Qty PO (draf) | Input PO: OBT-001; Qty: 200; Approve | Tidak bisa approve, pesan penolakan yang jelas |
+| Positif — Mencatat penerimaan barang (draf) | Buka pesan yang jelas; "+ Create", pilih PO dari Sentosa Farma; isi qty diterima 100 unit Paracetamol 500 mg strip OBT-001; klik Save. | Status GR berubah menjadi Approved, stok Persediaan bertambah 100 unit Paracetamol 500 mg strip OBT-001, jurnal terbentuk dari Debit akun Persediaan ke Kredit Utang Dagang. |
+| Negatif — Menerima melebihi qty PO (draf) | Buka GR, isi qty diterima 120 unit Paracetamol 500 mg strip OBT-001 (melebihi sisa 100 unit); coba klik Save. | Sistem menampilkan pesan error pesan yang jelas, GR tidak bisa disimpan. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tiap baris punya isian Rejected Quantity untuk barang yang diterima tetapi ditolak. Nilainya tidak boleh melebihi qty diterima. Bagian yang ditolak tidak ikut masuk stok (lihat bab 16. Dampak Stok dari Pembelian) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sistem menolak kalau qty yang diinput di GR melebihi sisa qty yang belum diterima untuk item tersebut — muncul pesan error jelas di form sebelum sempat disimpan. Ini mencegah pencatatan penerimaan barang lebih banyak dari yang sebenarnya dipesan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | GR yang sudah di-export tidak bisa di-export ulang — sistem menolak untuk mencegah jurnal tercatat dobel |
@@ -94,8 +94,8 @@ Bab manual: [`purchasing/06-purchase-invoice.md`](../../erpApiServices/docs/manu
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mencatat Tagihan Supplier (draf) | Input PO: OBT-001; PPN 10%; Jumlah: 500 unit; Harga: Rp2.000/unit; Total: Rp1.000.000; Approve & Post | Berhasil mencatat tagihan dan memposting ke jurnal utang dagang dengan benar |
-| Negatif — Input PO Tidak Sesuai (draf) | PO: OBT-003; Jumlah: 600 unit (tidak sesuai); PPN 10% | Ditolak, pesan penolakan yang jelas dan tidak dapat diapprove & diposting |
+| Positif — Mencatat Tagihan Supplier (draf) | Buka Purchase Invoices; klik "+ Create"; pilih PO OBT-001 sumbernya; isi item Paracetamol 500 mg strip 200 box; masukkan PPN Masukan 11%; klik Save | Subtotal PO ditampilkan; tagihan disimpan dengan status draft |
+| Negatif — Tombol Create Disabled (draf) | Buka PO OBT-001; cek tombol Create Purchase Invoice; PO belum Approved; Flow Mode = Goods Receipt First tanpa GR yang sudah dibuat | Tombol Create Purchase Invoice terkunci; pesan penolakan yang jelas muncul |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -105,7 +105,8 @@ Bab manual: [`purchasing/07-purchase-payment-bill.md`](../../erpApiServices/docs
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membayar Invoice (draf) | Input invoice OBT-001, pilih metode lunas, masukkan jumlah dan tanggal bayar; approve oleh manajer keuangan | Invoice OBT-001 terbayar secara langsung dan postingan jurnal muncul |
+| Positif — Membayar invoice (draf) | Buka Purchase Payment Bills; pilih PI OBT-001 (sisa: Rp 500.000); pilih mode Single; masukkan Amount Rp 500.000; pilih Payment Method Transfer Bank; klik Save | Invoice OBT-001 tercatat lunas, jurnal debit Utang Dagang dan kredit Kas/Bank dibuat |
+| Negatif — Membayar invoice tanpa approval (draf) | Buka Purchase Payment Bills; pilih PI OBT-002 (sisa: Rp 750.000); pilih mode Single; masukkan Amount Rp 750.000; pilih Payment Method Transfer Bank; coba klik Save | Sistem menolak pembuatan Payment Bill pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Bukti pembayaran: kalau Require Payment Proof aktif di Purchase Configs, Payment Bill tidak bisa disimpan tanpa mengunggah file bukti pembayaran. Pesan galatnya "proof file required" |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Payment Bill yang sudah Paid tidak bisa diedit, dihapus, atau dipecah |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Hanya Payment Bill yang sudah Approved yang bisa disiapkan. Mark as Paid ditolak pada mode ini |
@@ -119,7 +120,8 @@ Bab manual: [`purchasing/08-purchase-return.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mencatat Retur (draf) | Input: Purchase Order OBT-001, Quantity 50, Price Rp2.000, Date 2023-09-15; Approve & Complete; Posting Jurnal | Berhasil mencatat retur pembelian dan memperbarui Utang Dagang supplier |
+| Positif — Mencatat retur obat Paracetamol 500 mg strip (draf) | Buka Purchase Returns; pilih GR OBT-001; isi qty 20; Save | Retur disimpan dengan status Draft, qty diterima 20, stok Persediaan berkurang |
+| Negatif — Mencoba retur obat Paracetamol 500 mg strip melebihi qty diterima (draf) | Buka Purchase Returns; pilih GR OBT-001; isi qty 30; Save | Sistem menolak input, pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Menu: Purchasing → Purchase Returns (/purchasing/purchase-returns) · Prasyarat: ada Goods Receipt yang sudah tercatat (barang harus sudah "diterima" dulu sebelum bisa "dikembalikan") |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Retur tidak bisa melebihi qty yang diterima (dikurangi retur sebelumnya untuk item yang sama) — sama seperti guard over-receipt di Goods Receipt (chapter 05), sistem menolak input yang melebihi batas ini |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Complete ditolak kalau stok di gudang tempat barang diterima lebih sedikit dari qty yang diretur (misalnya sebagian sudah terjual atau dipindahkan). Tidak ada baris yang berubah. Selesaikan dulu penyebabnya lalu coba lagi |
@@ -132,8 +134,8 @@ Bab manual: [`purchasing/09-verifikasi-ke-accounting.md`](../../erpApiServices/d
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Verifikasi PR-PQ-PO-GR-PI-Payment untuk Paracetamol 500 mg strip (SKU OBT-001) | Seluruh transaksi tercatat dengan benar di General Ledger, Trial Balance, dan AP Aging |
-| Negatif — input salah (draf) | Input PO tanpa QRIS untuk Amoxicillin 500 mg (OBT-002) | Verifikasi ditolak: PO harus disertai QRIS untuk resep obat |
+| Positif — Verifikasi purchasing ke accounting berjalan dengan baik (draf) | Buka General Ledger; cek Detail Ledger akun Persediaan, Utang Dagang, PPN Masukan, Kas/Bank; cek Trial Balance; lihat AP Aging; semua dokumen sudah Approved dan Export to Journal; Total Debit = Total Kredit seimbang; saldo Utang Dagang supplier kembali ke 0 | Akun-akun tercatat dengan benar; Trial Balance seimbang; AP Aging tidak menunjukkan invoice yang sudah lunas; saldo Utang Dagang supplier menjadi 0 |
+| Negatif — GR belum di-export ke jurnal (draf) | Buka Goods Receipt untuk PR-001; status Export to Journal belum dilakukan | Persediaan tidak bertambah; Trial Balance tidak seimbang; AP Aging masih menunjukkan invoice yang sudah lunas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Persediaan — harus bertambah sesuai total Goods Receipt yang sudah di-export |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -144,8 +146,8 @@ Bab manual: [`purchasing/10-tagihan-biaya-logistik.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mencatat Biaya Logistik (draf) | Input: Purchase Charge Configs dengan jenis biaya Ongkos Kirim; Buat Purchase Charge Invoice; Approve & Posting; Rebill ke Apotek Mitra Sehat; Bayar melalui transfer bank; Terima PDF dan notifikasi WhatsApp | Biaya logistik tercatat, dikalkulasikan ke HPP, dibebankan kepada customer dengan benar |
-| Negatif — Input Jenis Biaya Salah (draf) | Input: Purchase Charge Configs dengan jenis biaya Bea Masuk; Tapi input sebagai Ongkos Kirim; Approve & Posting | Sistem menolak dan menginformasikan bahwa jenis biaya tidak sesuai dengan konfigurasi yang ada |
+| Positif — Membuat tagihan biaya logistik (draf) | Buka `/purchasing/purchase-charge-invoices`, pilih PO, konfigurasi, jenis biaya, alokasi; Approve & Posting. | Biaya logistik ditambahkan ke harga pokok barang dan jurnal posting terbentuk. |
+| Negatif — Membuat tagihan tanpa konfigurasi (draf) | Mencoba membuat tagihan tanpa mengaktifkan `Enable Logistics Charge Invoice` di `/purchasing/purchase-charge-configs`. | Tidak bisa membuat tagihan biaya logistik, pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tombol "Reverse" membatalkan tagihan yang sudah posted — otomatis mengembalikan harga pokok barang ke nilai semula dan membalik jurnalnya. Tidak bisa reverse kalau masih ada pembayaran yang berstatus lunas; batalkan dulu pembayarannya |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -156,8 +158,8 @@ Bab manual: [`purchasing/11-blanket-agreement.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Blanket Agreement (draf) | PT Sehat Sentosa Farma membuat kontrak dengan PT Bintang Farmasi Utama untuk obat Paracetamol 500 mg strip selama 6 bulan | Kontrak berhasil dibuat dengan detail dan nilai yang sesuai |
-| Negatif — Input Data Salah (draf) | Input kode produk OBT-001 salah saat membuat PO dari kontrak | Sistem menolak input dan memberikan pesan kesalahan kode produk tidak valid |
+| Positif — Membuat kontrak dengan supplier (draf) | Buka Purchasing → Blanket Agreements; klik pesan yang jelas; isikan PT Alkes Prima Mandiri sebagai Supplier, tanggal mulai 1 Januari 2023, dan selesai 31 Desember 2023; pilih Total Value dengan total komitmen Rp 50.000.000; tambahkan Paracetamol 500 mg strip (SKU OBT-001) dengan harga kontrak Rp 2.000 per unit dan batas maksimal 10.000 unit; klik Save | Kontrak berstatus Draft, bisa langsung mengulas detail |
+| Negatif — Menarik PO tanpa kontrak aktif (draf) | Buka halaman Purchase Order; coba tarik PO dari kontrak yang statusnya Expired; isikan Kafe Sehat sebagai penerima | Sistem menolak dan memberi pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Supplier, Valid From, dan Valid Until (tanggal akhir wajib diisi dan harus setelah tanggal mulai) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Isi Contract Price — harga yang terkunci selama masa kontrak, wajib lebih dari 0 |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Satu produk tidak boleh muncul dua kali dalam kontrak yang sama |
@@ -171,7 +173,8 @@ Bab manual: [`purchasing/12-konfigurasi-biaya-tambahan-pembelian.md`](../../erpA
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Aktifkan tagihan logistik untuk cabang Bandung, alokasikan ke harga pokok, atur akuntansi sebagai biaya operasional, tentukan klinik sebagai penanggung, aktifkan notifikasi sukses | Tagihan logistik diterapkan dengan benar dan notifikasi sukses muncul |
+| Positif — Konfigurasi biaya logistik (draf) | Masuk ke `/purchasing/purchase-charge-configs`; aktifkan fitur tagihan biaya logistik; pilih metode masukan biaya `Inline on purchase invoice` untuk cabang Apotek Sentosa Bandung; simpan. | Fitur tagihan biaya logistik aktif di cabang Apotek Sentosa Bandung dan terlihat pada form Purchase Invoice. |
+| Negatif — Penolakan alokasi sebelum diterima (draf) | Masuk ke `/purchasing/purchase-charge-configs`; aktifkan `Allow Allocation Before Goods Are Received` untuk cabang Pabrik Herbal Sukabumi; coba alokasikan biaya tanpa penerimaan barang. | Muncul pesan penolakan yang jelas dan alokasi tidak dapat disimpan. |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -181,8 +184,8 @@ Bab manual: [`purchasing/14-jadwal-pembelian-berulang.md`](../../erpApiServices/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Jadwal Pembelian Berulang (draf) | Buat jadwal baru dari kontrak Payung Bintang Farmasi; atur ulang 1 minggu; jalankan sekarang; input valid | Jadwal terdaftar dengan detail pesanan dan tindakan sesuai aturan |
-| Negatif — Kontrak Tidak Aktif (draf) | Masukkan kontrak non-aktif sebagai payung; coba eksekusi jadwal | Tolakan: pesan yang jelas |
+| Positif — Jadwal berulang untuk Paracetamol 500 mg strip (draf) | Buka Purchasing → Recurring Schedules; Pilih Blanket Agreement OBT-001, Aturan pengulangan harian, Tanggal mulai 1 Januari 2023, Baris barang Paracetamol 500 mg strip; Simpan; Jalankan sekarang | PO untuk Paracetamol 500 mg strip terbit, stok diperbarui, riwayat eksekusi ditambahkan |
+| Negatif — Hapus jadwal yang sudah membuat pesanan (draf) | Coba hapus jadwal OBT-001; Dapat pesan penolakan yang jelas | Tidak ada perubahan, jadwal tetap berada dalam daftar dan masih aktif |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jadwal yang sudah selesai tidak bisa diubah |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jadwal yang sudah membuat pesanan tidak bisa dihapus. Gunakan Jeda sebagai gantinya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pesanan tetap tunduk pada aturan lain di Purchasing (persetujuan PO bila diwajibkan) |
@@ -196,8 +199,8 @@ Bab manual: [`purchasing/15-diagram-alur-purchasing.md`](../../erpApiServices/do
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Apoteker membuat Purchase Request, disetujui Kepala Gudang, PO dibuat dan disetujui Manajer Keuangan, Goods Receipt dan Invoice diterima, status PO menjadi Paid | Proses pengadaan berjalan lancar, status PO valid dan pembayaran dilakukan dengan benar |
-| Negatif — input salah (draf) | Apoteker membuat Purchase Request tanpa nomor urut, ditolak Kepala Gudang karena syarat tidak terpenuhi, harus dimasukkan nomor urut yang valid | Purchase Request ditolak pesan penolakan yang jelas dan diberikan petunjuk untuk memperbaiki |
+| Positif — Membuat Purchase Order (draf) | Masuk ke menu Purchase Request; pilih produk Paracetamol 500 mg strip (SKU OBT-001); isi jumlah 100 box; klik tombol "Create PO"; masuk ke menu Purchase Order; lihat PO baru dengan status Draft | Purchase Order dengan nomor dan tanggal muncul di menu Purchase Order, status menjadi Draft |
+| Negatif — Membuat Purchase Order tanpa Goods Receipt First aktif (draf) | Masuk ke menu Purchase Request; pilih produk Paracetamol 500 mg strip (SKU OBT-001); isi jumlah 100 box; klik tombol "Create POpesan yang jelasPO Flow Mode tidak memungkinkan pembuatan PO tanpa GR" | Tampilan error muncul dan PO tidak dibuat, status tetap Draft di menu Purchase Request |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Begitu Purchase Order punya satu Goods Receipt atau satu Purchase Invoice, item PO terkunci dan tidak bisa diubah lagi (bab 04) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Submitted -- Rejected: Ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Cancel hanya bisa dari status Draft |
@@ -210,8 +213,8 @@ Bab manual: [`purchasing/16-dampak-stok-dari-pembelian.md`](../../erpApiServices
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Stok Gudang Tambah (draf) | Goods Receipt OBT-001 Approved; Stok Paracetamol 500 mg strip ditambah | Stok gudang bertambah sesuai jumlah terima |
-| Negatif — Retur Ditolak (draf) | Purchase Return OBT-001 Complete; Alkohol Swab tidak sesuai; Sistem menolak retur pesan penolakan yang jelas | Retur ditolak, stok gudang tidak berkurang dan sistem memberikan pesan kesalahan yang jelas |
+| Positif — Stok Masuk Saat Approved (draf) | Save Goods Receipt OBT-001; Approve dengan gudang Sentosa Farma; Submit Purchase Order OBT-001 dengan harga 5000 | Stok OBT-001 masuk ke gudang Sentosa Farma dengan jumlah dan harga sesuai PO |
+| Negatif — Retur Ditolak Karena Kurang Stok (draf) | Buat Purchase Return OBT-001; Approve; Coba Complete dengan qty melebihi stok di gudang | Sistem menolak retur pesan penolakan yang jelas dan stok tetap tidak berubah |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Kalau baris Goods Receipt mencatat qty yang ditolak (rejected), bagian itu tidak ikut masuk stok. Yang dihitung hanya qty yang diterima |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

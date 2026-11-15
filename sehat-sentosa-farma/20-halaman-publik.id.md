@@ -20,8 +20,8 @@ Bab manual: [`halaman-publik/01-halaman-untuk-pihak-luar.md`](../../erpApiServic
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Job Applications (draf) | Pelamar mengisi form dengan data lengkap; Direksi menyetujui aplikasi | Pelamar diterima dan diinformasikan proses selanjutnya |
-| Negatif — Quotations (draf) | Penawaran tanpa detail produk; Ditolak karena kurang informasi | Tidak valid, perlu mencantumkan SKU, jumlah, dan harga produk secara spesifik |
+| Positif — Job Applications (draf) | Pelamar mengisi form dengan nama: "John Doepesan yang jelasSaya tertarik" | Pesan pesan yang jelas muncul |
+| Negatif — Supplier Shipment (draf) | Pemasok mengakses halaman dengan tautan yang salah, contoh: pesan yang jelas | Tampilan pesan yang jelas dan tidak dapat melaporkan pengiriman |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Your Name, Email (keduanya wajib), Phone Number, dan Company Name |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Di Items You Want To Request, isi nama atau deskripsi produk dan Qty untuk tiap barang; klik Add Item untuk menambah baris. Tiap barang harus punya deskripsi dan jumlah |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Decline Offer — menolak penawaran |
@@ -35,8 +35,8 @@ Bab manual: [`halaman-publik/02-bayar-tagihan-portal-proyek-karier-dan-berhenti-
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membayar Faktur Penjualan (draf) | Kunjungi tautan, masukkan nomor faktur dan jumlah bayar, klik bayar; terima konfirmasi pembayaran berhasil | Berhasil membayar tagihan dengan notifikasi email |
-| Negatif — Membayar Tagihan Langganan (draf) | Tidak login, coba bayar tagihan; pesan penolakan yang jelas | Harus login terlebih dahulu sebelum dapat membayar tagihan langganan |
+| Positif — Membayar Faktur Penjualan (draf) | Pelanggan membuka tautan bayar; melihat faktur; membuat QR sisa tagihan; memverifikasi status pembayaran | Status pembayaran diperbarui; pelanggan bisa melanjutkan pembayaran jika tersedia |
+| Negatif — Tautan Token Salah (draf) | Pelanggan membuka tautan dengan token yang salah; mencoba bayar | Halaman menunjukkan pesan kesalahan sama persis, tidak memberikan akses ke data internal |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Token yang salah, dicabut, atau kedaluwarsa dijawab sama persis dengan token yang tidak ada, sehingga token tidak bisa ditebak dengan mencoba-coba |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Portal tidak menampilkan tarif, biaya, margin, gaji, atau data karyawan selain nama tampilan. Portal tidak dapat dibuka bila token dicabut atau kedaluwarsa, portal dimatikan, cabang disuspensi, atau proyek sudah tertutup. Semua kegagalan itu dijawab sama |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Penerima membuka tautan. Halaman hanya menampilkan konfirmasi, karena pemindai tautan di kotak surat sering membuka semua tautan dan tidak boleh memberhentikan langganan secara tidak sengaja |

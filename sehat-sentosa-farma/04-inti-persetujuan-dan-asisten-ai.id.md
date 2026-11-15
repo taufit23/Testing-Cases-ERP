@@ -22,8 +22,8 @@ Bab manual: [`core/01-konfigurasi-approval-workflow.md`](../../erpApiServices/do
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi Approval Workflow (draf) | Salin template, sesuaikan untuk Apotek Sentosa Bandung; atur tahap approval 3 level; batas nominal Rp10jt | Approve transaksi dengan nilai di bawah Rp10jt oleh kasir, persetujuan lanjut ke kepala gudang, dan final approve oleh direktur |
-| Negatif — Konfigurasi Approval Workflow (draf) | Input batas nominal negatif; mencoba approve transaksi Rp20jt | Tampilan error: pesan yang jelas dan penolakan otomatis transaksi |
+| Positif — Menyiapkan konfigurasi approve PO (draf) | Klik "Use Templatepesan yang jelasBasicpesan yang jelasReview Manager"; Tambah role "Kepala Gudangpesan yang jelasIs Required" dan "Is Final" untuk step ini | Step "Review Managerpesan yang jelasKepala Gudang", status step wajib dan final |
+| Negatif — Menambah tahap approve tanpa mengcopy template (draf) | Coba klik "Add Steppesan yang jelasSave" | Muncul pesan error pesan yang jelas karena konfigurasi PO belum dibuat sebelumnya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Module Name dan Module Group — nama tampilan config ini (Module aslinya sendiri tetap mengikuti template yang dipilih, tidak bisa diganti di sini) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Approver harus di departemen yang sama dengan requester (toggle, opsional) |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -35,8 +35,8 @@ Bab manual: [`core/02-asisten-ai.md`](../../erpApiServices/docs/manualBook/core/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Aktivasi Asisten AI (draf) | Admin mengambil API key, memasukkan ke aplikasi, uji di server; asisten muncul dalam mode dock; jawab pertanyaan "cara cara..."; siapkan tombol pintasan ke form dengan prefilled data | Asisten AI berfungsi dengan baik, membantu pengguna dengan cepat dan akurat |
-| Negatif — Input API key salah (draf) | Admin memasukkan API key yang salah; asisten tidak muncul; menerima pesan kesalahan pesan yang jelas | Pengaturan ditolak dengan pesan jelas, perbaiki input sebelum mencoba lagi |
+| Positif — Aktivasi asisten AI (draf) | Admin mengambil API key dari penyedia gratis; memasukkan ke aplikasi; menguji fitur Tanya-jawab. | Panel chat muncul dengan tampilan Bubble, menjawab pertanyaan pesan yang jelas tanpa membuka halaman atau form. |
+| Negatif — Input API key salah (draf) | Admin memasukkan API key yang tidak valid ke aplikasi; menguji fitur Tanya-jawab. | Aplikasi menampilkan pesan kesalahan pesan yang jelas dan asisten tidak aktif sampai API key diperbaiki. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tampilan mengambang dan dock tidak bisa aktif bersamaan. Menutup panel juga menutup jendela terpisah |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tiap penyedia diuji dua hal: (1) balasan chat biasa, (2) satu pemanggilan tool. Harus muncul ✓ plain chat dan ✓ tool call. Output hanya menampilkan model + latensi + lulus/gagal — tidak menampilkan API key |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -48,8 +48,8 @@ Bab manual: [`core/03-cara-dapat-api-key-ai.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Google Gemini (draf) | Mendapatkan API key gratis; mengaktifkan Asisten AI; syarat: billing disabled | Sukses mendapatkan API key dan mengaktifkan Asisten AI dengan lancar |
-| Negatif — OpenRouter (draf) | Menggunakan key yang salah; syarat billing tidak terpenuhi; harus menolak permintaan | Permintaan ditolak karena key tidak valid dan syarat billing belum terpenuhi; berikan pesan jelas tentang syarat yang belum terpenuhi |
+| Positif — Mendapatkan API Key Google Gemini (draf) | Buka https://aistudio.google.com; Sign in dengan akun Gmail; Setujui ToS; Klik Create API key; Pilih Create API key in new project; Klik Copy | Key muncul diawali AIza… dan bisa digunakan dalam aplikasi |
+| Negatif — Tidak Mendapatkan API Key Google Gemini (draf) | Input data sign in salah; Belum setuju ToS; Cabut key sebelum salin | Muncul pesan kesalahan, tidak dapat membuat key baru; Tidak bisa mengakses halaman API keys; Cabut key berhasil tetapi key hilang |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi saldo dulu — tanpa saldo, semua permintaan API ditolak: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Akun baru dapat ±$5 kredit uji coba tanpa kartu kredit (butuh verifikasi nomor HP). Setelah habis, harus isi billing untuk lanjut |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Verifikasi nomor HP (kode SMS) — wajib |
@@ -63,8 +63,8 @@ Bab manual: [`core/04-approval-requests.md`](../../erpApiServices/docs/manualBoo
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Approver menyetujui request pembelian obat (draf) | Approver melihat daftar request OBT-001 di inbox, memilih dan mengapprove dengan catatan setuju | Request disetujui dan status berubah ke approved |
-| Negatif — Approver menolak request pembelian obat karena stok terlalu banyak (draf) | Approver melihat daftar request OBT-001, menolak dan memberikan alasan stok sudah mencukupi | Request ditolak pesan penolakan yang jelas dan status tetap pending |
+| Positif — Approver mengapprove request Purchase Order (draf) | Login sebagai approver; Pilih "Approve" pada PO dari Sentosa Farma; Isi catatan jika diperlukan | Status PO berubah menjadi Approved, ditandai dengan tanda ceklis di kolom Step dan timestamp di Completed At |
+| Negatif — Approver mencoba reject request Purchase Invoice tanpa login sebagai approver (draf) | Coba klik "Rejectpesan yang jelasAnda tidak memiliki hak akses untuk melakukan tindakan ini" | Tidak ada perubahan status, tetap menunjukkan status Pending di PI |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tombol "View Approval Config" (kalau tersedia) jadi jalan pintas untuk melihat konfigurasi lengkap workflow ini di Client Master → Approval Workflow Configs, berguna kalau perlu memastikan siapa saja yang seharusnya bisa approve |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Catatan wajib saat memilih Reject atau Request Revision |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Penyetuju harus berhak pada langkah yang sedang berjalan (peran atau pengguna yang ditetapkan) |
@@ -78,8 +78,10 @@ Bab manual: [`core/05-agen-ai-aksi-tutorial-dan-jadwal.md`](../../erpApiServices
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Agen AI (draf) | Menggunakan Agen AI untuk membuat draft kartu konfirmasi aksi di Sentosa Farma | Sukses membuat draft dengan data yang valid |
-| Negatif — Mode Tutorial (draf) | Memasukkan input tidak sesuai dalam Mode Tutorial | Ditolak pesan penolakan yang jelas |
+| Positif — Membuat draft purchase request (draf) | pesan yang jelas | Kartu draft purchase request muncul dengan detail, bisa diperiksa sebelum disubmit. |
+| Negatif — Input supplier salah (draf) | pesan yang jelas | Kartu dibuang dan tampil pesan penolakan yang jelas. |
+| Positif — Mengisi form Quotation (draf) | pesan yang jelas saat membuka halaman Buat Quotation | Form Quotation terisi dengan detail sesuai permintaan. |
+| Negatif — Tanggal di masa lalu (draf) | pesan yang jelas saat membuka halaman Buat Quotation | Muncul error validasi dan tampil pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Asisten bekerja sebagai kamu. Dia hanya bisa melakukan yang memang boleh kamu lakukan di aplikasi. Izin, validasi, dan catatan perubahan sama dengan kalau kamu mengerjakannya sendiri |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau aplikasi menolak (mis. "Quotation wajib dulu" atau periode tertutup), alasan penolakan tampil di kartu — itu aturan cabang, bukan kesalahan asisten |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -91,7 +93,8 @@ Bab manual: [`core/06-diagram-alur-persetujuan.md`](../../erpApiServices/docs/ma
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Submit OBT-001 (draf) | Pengguna memilih OBT-001, masuk ke jenjang pertama penyetuju | Keputusan Approve oleh Penyetuju 1 dengan catatan |
+| Positif — jalur normal bab ini | Ikuti langkah di bab manual dengan data acuan file `00` (draf Ollama tidak dapat dipakai, isi manual) | Hasil sesuai uraian bab |
+| Negatif — input tidak valid | Kosongkan field wajib atau isi di luar batas | Ditolak dengan pesan yang jelas, tidak ada data tersimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | H --/"Reject, catatan wajib"/ L(["Dokumen Rejected"]) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | H --/"Request Revision, catatan wajib"/ M(["Dokumen kembali ke Draft"]) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | B --/"Ya"/ X1["Ditolak: permintaan sudah selesai"] |
@@ -105,8 +108,8 @@ Bab manual: [`core/07-hubungan-antar-modul.md`](../../erpApiServices/docs/manual
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal bab ini | Ikuti langkah di bab manual dengan data acuan file `00` (draf Ollama tidak dapat dipakai, isi manual) | Hasil sesuai uraian bab |
-| Negatif — input tidak valid | Kosongkan field wajib atau isi di luar batas | Ditolak dengan pesan yang jelas, tidak ada data tersimpan |
+| Positif — Delivery Approved (draf) | Approve delivery OBT-001 di Sales; stok Paracetamol 500 mg strip (SKU OBT-001) bertambah | Stok dan jurnal terbentuk sesuai data delivery approved |
+| Negatif — Purchase Return Rejected (draf) | Input Purchase Return OBT-002 tanpa PO asal; klik Submit | Muncul pesan penolakan yang jelas dan Purchase Return tidak disimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Hubungan di atas ikut cabang aktif; dokumen cabang lain tidak bisa ditautkan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Dokumen yang sudah punya dampak di modul lain umumnya tidak bisa dihapus; batalkan atau buat dokumen pembalik |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |

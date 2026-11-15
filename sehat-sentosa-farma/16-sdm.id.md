@@ -22,8 +22,8 @@ Bab manual: [`hrm/01-konfigurasi-hrm.md`](../../erpApiServices/docs/manualBook/h
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi Shift Kerja (draf) | Membuat shift 8-16 di klinik dan 9-17 di apotek | Shift berhasil dibuat dengan jadwal yang tepat |
-| Negatif — Input Jam Kerja Salah (draf) | Membuat shift 24-32 di klinik | Ditolak: Jam kerja harus dalam rentang 0-23 |
+| Positif — Pengaturan umum HRM (draf) | Buka `HRM → HRM Configs`; Aktifkan `Require Leave Approval`; Klik Save | Status pengaturan berubah menjadi disetujui dan mengaktifkan proses approval cuti. |
+| Negatif — Pengaturan geofence (draf) | Masuk area cakupan absensi yang tidak diizinkan; Cek-in tanpa lokasi pusat | Tampilan pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kode tidak bisa diubah setelah tipe dibuat. Kalau salah ketik kode, buat tipe baru dan nonaktifkan yang lama |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Master data status yang bisa dipasang ke satu baris absensi karyawan, misalnya Hadir, Terlambat, Alpha, Sakit, Cuti, Libur. Wajib diatur sebelum menggunakan menu Attendances (chapter 05) |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -35,8 +35,8 @@ Bab manual: [`hrm/02-struktur-organisasi.md`](../../erpApiServices/docs/manualBo
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Departemen (draf) | Tambah departemen "Kepatuhan" dengan posisi pesan yang jelas, gaji Rp 15.000.000, role "Manager" | Berhasil menambah departemen dan posisi, bagan struktur organisasi diperbarui |
-| Negatif — Menghapus Departemen (draf) | Menghapus departemen "Kepatuhan" tanpa konfirmasi | Tidak dapat menghapus, pesan penolakan yang jelas |
+| Positif — Menambah Departemen (draf) | Klik pesan yang jelas; Isi Kode `HR-001`, Nama "Human Resourcespesan yang jelasDepartemen HR untuk manajemen karyawan"; Save. | Tampilan konfirmasi penyimpanan dan muncul data baru di daftar departemen. |
+| Negatif — Menghapus Departemen dengan Sub-Departemen (draf) | Klik tombol Delete pada Departemen "Operasional" yang memiliki sub-departemen; Perhatikan peringatan dan tidak dapat menghapus sampai sub-departemennya dipindahkan atau dihapus. | Tampilan peringatan pesan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Departemen yang masih punya sub-departemen tidak bisa dihapus — tombol Delete akan menampilkan peringatan dan konfirmasi hapus tetap diblokir sampai seluruh sub-departemennya dipindahkan atau dihapus lebih dulu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -47,8 +47,8 @@ Bab manual: [`hrm/03-data-karyawan.md`](../../erpApiServices/docs/manualBook/hrm
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Karyawan (draf) | Tambah satu karyawan (Form Lengkap) dengan detail lengkap; Akun login otomatis dibuat; Detail gaji dan struktur terlihat | Berhasil ditambahkan, akun login aktif, detail gaji sesuai input |
-| Negatif — Input Data Salah (draf) | Menambah karyawan dengan data salah; Tidak valid; Ditolak pesan penolakan yang jelas | Input ditolak, perbaiki data dan coba lagi |
+| Positif — Menambah satu karyawan baru (draf) | Klik "+ Add Employee"; Isi form dengan data lengkap (Nama Depan: Novi, Nama Belakang: Wijaya, Posisi: Apoteker, Departemen: Apotek Sentosa Bandung) dan klik Save; Konfirmasi di modal yang muncul. | Akun login otomatis dibuat; Detail karyawan terlihat di halaman daftar. |
+| Negatif — Menambah karyawan tanpa email (draf) | Klik "+ Add Employee"; Isi form tanpa mengisi kolom Email, klik Save; Cek form untuk pesan kesalahan. | Form pesan penolakan yang jelas dan tidak membuat akun login. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Informasi Pribadi: Nama Depan (wajib), Nama Belakang, Jenis Kelamin, Tanggal Lahir, Tempat Lahir, NIK, NPWP, Email, No. HP, Alamat |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau pengaturan "Auto-create Login Account for New Employees" di HRM Configs (chapter 01) aktif, checkbox "Create a login account for this employee" pada form tambah karyawan akan tercentang secara default — hanya bisa dicentang kalau kolom Email sudah diisi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Klik Edit di halaman detail atau di menu titik tiga pada daftar karyawan. Catatan: karyawan dengan status selain Active (misalnya sudah resign/nonaktif) tidak bisa diedit lagi lewat menu ini — tombol Edit akan nonaktif dengan keterangan alasan |
@@ -62,8 +62,8 @@ Bab manual: [`hrm/04-rekrutmen.md`](../../erpApiServices/docs/manualBook/hrm/04-
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuka Lowongan (draf) | Membuka lowongan pekerjaan apoteker di kantor pusat Jakarta | Lowongan berhasil dibuat dan diterbitkan |
-| Negatif — Input Data Pribadi (draf) | Mengisi nama lamaran dengan angka 1234567890 | Lamaran ditolak: input nama tidak valid, masukkan nama lengkap yang benar |
+| Positif — Membuka lowongan (draf) | HR klik "+ Create", masukkan "Apotekerpesan yang jelasApotek Sentosa Bandungpesan yang jelasS1 Farmasi", Deskripsi pesan yang jelas, centang Active | Lowongan berstatus Active dan otomatis diarahkan ke halaman detail lowongan |
+| Negatif — Menjadwalkan wawancara tanpa input data (draf) | HR klik pesan yang jelas tanpa mengisi Tanggal & Jam, Lokasi/Tautan | Muncul pesan error pesan yang jelas dan tidak bisa menyimpan jadwal wawancara |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Judul Lowongan (wajib), Departemen, Posisi, Tanggal Berakhir (opsional), Kualifikasi, dan Deskripsi |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -74,8 +74,8 @@ Bab manual: [`hrm/05-absensi.md`](../../erpApiServices/docs/manualBook/hrm/05-ab
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Absensi Karyawan (draf) | Input absen karyawan menggunakan mesin absensi di klinik Bekasi | Absen tercatat dengan benar dan tersedia dalam rekap payroll |
-| Negatif — Koreksi Absensi (draf) | Mengajukan koreksi tanpa approval HR | Tidak dapat mengajukan koreksi, pesan penolakan yang jelas |
+| Positif — Menambahkan absensi karyawan (draf) | Klik "Check In" pada navbar; pilih karyawan; konfirmasi lokasi GPS; ambil foto kehadiran; simpan | Absensi ditambahkan dengan status "Hadir", jam masuk, dan foto terlampir |
+| Negatif — Mengajukan koreksi absensi yang sudah terkunci (draf) | Pilih baris absensi karyawan; klik "Koreksi" (Attendance Adjustments); masukkan alasan; ajukan untuk approval | Muncul pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Simpan — sistem menampilkan Token perangkat satu kali saja (modal khusus, wajib disalin sebelum ditutup). Token ini yang dipasang di mesin/middleware sebagai kredensial pengiriman data |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Isi Alasan (wajib) dan Catatan tambahan (opsional) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Approved → tidak bisa dibatalkan; buat koreksi baru untuk membalikkannya |
@@ -88,8 +88,8 @@ Bab manual: [`hrm/06-cuti.md`](../../erpApiServices/docs/manualBook/hrm/06-cuti.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Jenis Cuti (draf) | HR menambah jenis cuti Tahun Baru dengan kuota 5 hari untuk karyawan | Sukses menambahkan jenis cuti baru |
-| Negatif — Mengajukan Cuti Tanpa Saldo (draf) | Karyawan mengajukan cuti 10 hari padahal saldo hanya 3 hari | Ditolak: saldo tidak mencukupi, maksimal 3 hari |
+| Positif — Menambah Jenis Cuti Tahunan (draf) | Buka HRM → Leave Types; klik pesan yang jelas; masukkan Code `ANNUAL`, Leave Type Name "Cuti Tahunan", Quota Days 10, Is Paid checked, Requires Approval unchecked, Allow Half Day unchecked, Active checked; klik Save. | Jenis cuti "Cuti Tahunan" ditambahkan dengan saldo awal 10 hari untuk semua karyawan. |
+| Negatif — Mengajukan Cuti Tanpa Jenis Cuti (draf) | Buka HRM → Leave Requests; pilih Employee, Choose Leave Type "Tidak Ditemukan", masukkan Start Date dan End Date; klik Submit. | Pengajuan cuti ditolak pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sebelum ada pengajuan cuti, HR wajib mendefinisikan dulu jenis-jenis cuti yang berlaku di perusahaan (misalnya Cuti Tahunan, Cuti Sakit, Cuti Melahirkan, dsb) lewat menu Leave Types |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 0 = tidak boleh mundur sama sekali (tanggal mulai harus hari ini atau ke depan) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Allow Half Day — kalau aktif, pengajuan jenis cuti ini boleh setengah hari (pagi atau sore). Tanggal mulai dan selesai harus sama. Kalau tidak aktif, pengajuan setengah hari ditolak |
@@ -103,8 +103,8 @@ Bab manual: [`hrm/07-komponen-gaji.md`](../../erpApiServices/docs/manualBook/hrm
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambahkan Tunjangan (draf) | Membuat komponen gaji 'transportasi' dengan jumlah 50 ribu; menyimpan | Tunjangan transportasi ditambahkan ke daftar komponen gaji |
-| Negatif — Menghapus Gaji Pokok (draf) | Menghapus komponen 'gaji pokok'; tidak dapat dihapus karena syarat mutlak | Tidak bisa menghapus, pesan penolakan yang jelas |
+| Positif — jalur normal (draf) | Buat komponen gaji "Tunjangan Makan" dengan tipe Earning, formula Fixed 50000, aktifkan Taxable dan BPJS Base, nonaktifkan Active; Klik Save | Komponen "Tunjangan Makan" ditambahkan ke daftar dengan status Aktif, nominal default 50000, kena pajak dan masuk dasar hitung BPJS |
+| Negatif — input salah (draf) | Coba hapus komponen gaji yang pernah digunakan di slip gaji; Klik Delete | Muncul pesan penolakan yang jelas dan komponen tidak terhapus |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -114,8 +114,8 @@ Bab manual: [`hrm/08-referensi-pajak-dan-bpjs.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mengatur PPh 21 (draf) | Input PTKP, TER, dan tarif PPh 21 untuk karyawan | Referensi pajak disetel dengan benar |
-| Negatif — Input tarif PPh 21 salah (draf) | Menyertakan persentase yang tidak valid | Tidak berhasil: pesan penolakan yang jelas |
+| Positif — Mengatur PPh 21 untuk karyawan (draf) | Buka `/hrm/payroll-tax-reference`; pilih karyawan; ubah nilai PTKP, TER, PPh 21; simpan | Nilai pajak diperbarui otomatis saat proses payroll |
+| Negatif — Menetapkan PTKP di bawah minimum (draf) | Buka `/hrm/payroll-tax-reference`; pilih karyawan; masukkan PTKP < Rp24 juta; coba simpan | Muncul pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Menu: HRM → Payroll → Payroll Tax Reference (/hrm/payroll-tax-reference) dan HRM → Payroll → BPJS Settings (/hrm/bpjs-settings) · Prasyarat: tidak ada, tapi harus dicek/diisi sebelum proses payroll pertama supaya potongan pajak & BPJS karyawan terhitung benar |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | BPJS Settings — tempat mengatur tarif iuran BPJS (yang bisa diedit), plus tampilan referensi saja (tidak bisa diedit dari sini) untuk tabel TER dan PTKP yang sama datanya dengan halaman Payroll Tax Reference |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau login sebagai user cabang biasa: hanya bisa mengisi kolom "Override untuk Cabang Ini" — nilai nasional tetap tampil sebagai referensi tapi tidak bisa diubah dari sini |
@@ -129,8 +129,8 @@ Bab manual: [`hrm/09-proses-payroll.md`](../../erpApiServices/docs/manualBook/hr
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Proses Payroll Bulanan (draf) | Membuka periode bulan ini, memproses gaji karyawan, menyetujui dan membayar, terbitnya slip gaji resmi | Proses payroll berjalan lancar, slip gaji diterbitkan dengan benar |
-| Negatif — Periode sudah dibayar (draf) | Mencoba menandai periode yang telah dibayar sebagai dibayar kembali | Tidak dapat disetujui, sistem menolak karena periode tersebut sudah dibayarkan |
+| Positif — Membuat periode payroll bulan ini (draf) | Klik pesan yang jelas pada halaman Payroll Periods; status menjadi processing | Status Payroll Period berubah menjadi processing, tabel Payroll Items kosong |
+| Negatif — Menyetujui periode tanpa proses (draf) | Coba klik Approve pada periode dengan status draft; pesan penolakan yang jelas | Tidak ada perubahan pada status Payroll Period dan tidak ada jurnal yang dibuat |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Process ditolak bila ada karyawan aktif tanpa status PTKP (sistem menampilkan daftar namanya), dan memberi peringatan untuk karyawan yang tidak ikut dihitung karena statusnya bukan status aktif bawaan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Card "Period Summary" menampilkan total keseluruhan periode: Total Gross (total gaji kotor semua karyawan), Total Deductions (total potongan), Total Net (total gaji bersih yang harus dibayarkan), beserta tanggal Process dan tanggal Paid (kalau sudah ada) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sama seperti Payroll Period: dari daftar Payslips, tiap baris punya aksi Approve (hanya bisa dari status draft) dan Mark as Paid (hanya bisa dari status approved) lewat menu titik tiga. Payslip berstatus draft juga bisa dihapus kalau ternyata salah |
@@ -144,8 +144,8 @@ Bab manual: [`hrm/10-slip-gaji-karyawan.md`](../../erpApiServices/docs/manualBoo
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Karyawan (draf) | Login My Payslips, pilih slip gaji Januari 2023, unduh sebagai PDF | Mendapatkan file PDF lengkap dengan detail slip gaji Januari 2023 |
-| Negatif — Karyawan (draf) | Memilih bulan yang tidak tersedia, misal Februari 2023 | Ditolak: pesan yang jelas |
+| Positif — Karyawan Sentosa Farma (draf) | Login ke My Payslips; klik nomor slip gaji OBT-001 periode Januari 2023 | Detail slip gaji muncul dengan ringkasan, earnings, deductions dan tombol "Download PDF" aktif |
+| Negatif — Karyawan Sentosa Farma (draf) | Coba download PDF tanpa generate slip gaji HR dulu | Tombol "Download PDF" tidak aktif dan muncul pesan untuk menghubungi HR tentang status payroll |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Halaman ini adalah menu self-service — setiap karyawan yang login bisa melihat sendiri daftar slip gajinya tanpa perlu izin khusus dari HR, tapi hanya bisa melihat slip gajinya sendiri, tidak bisa melihat slip gaji karyawan lain |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -156,8 +156,8 @@ Bab manual: [`hrm/11-mapping-jurnal-payroll.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Mapping akun gaji untuk Sentosa Farma, termasuk potongan pajak dan iuran BPJS; proses payroll otomatis tercatat ke jurnal yang tepat | Biaya gaji, potongan pajak, dan iuran BPJS tercatat secara otomatis ke jurnal yang sesuai dalam sistem akuntansi |
-| Negatif — input salah (draf) | Input akun gaji tidak valid untuk Sentosa Farma; proses payroll ditolak | Pemetaan akun gagal, sistem menampilkan pesan kesalahan tentang akun gaji yang tidak valid dan perlu diperbaiki sebelum proses payroll dapat dilanjutkan |
+| Positif — jalur normal (draf) | Pilih "Autopesan yang jelasSave Configurationpesan yang jelasSave Configuration". | Konfigurasi berhasil disimpan dan jurnal payroll otomatis akan dibuat sesuai dengan mapping yang diberikan. |
+| Negatif — input salah (draf) | Tidak mengaktifkan Chart of Accounts sebelum melakukan konfigurasi; coba simpan. | Sistem menolak konfigurasi karena Chart of Accounts belum terdefinisi, pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tanpa pengaturan ini, tim finance harus mencatat jurnal biaya gaji secara manual setiap bulan. Dengan mapping yang benar, sistem bisa otomatis membuat jurnal akuntansi setiap kali: |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -168,8 +168,8 @@ Bab manual: [`hrm/12-komisi-sales.md`](../../erpApiServices/docs/manualBook/hrm/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Atur komisi sales (draf) | Masukkan aturan komisi untuk produk Paracetamol 500 mg strip (SKU OBT-001) dengan persentase 2% | Aturan komisi ditambahkan dan terlihat di sistem |
-| Negatif — Input produk tidak ditemukan (draf) | Coba masukkan komisi untuk produk yang tidak ada, seperti SKU OBT-999 | Sistem menolak input dan memberikan pesan penolakan yang jelas |
+| Positif — Aturan komisi sales berhasil dibuat (draf) | HRM → Commission Rules; "+ Add"; Name: pesan yang jelas; Rule Type: Percentage; Basis: Revenue; Rate: 2%; Active: checked; Create | Aturan komisi pesan yang jelas muncul di daftar dengan status active, ready untuk menghitung komisi otomatis |
+| Negatif — Komisi tidak terbentuk karena invoice tanpa salesperson (draf) | HRM → Sales Invoice; Approve invoice tanpa salesperson; Cek Commission Rules dan Commissions | Pesan error pesan yang jelas muncul, dan tidak ada entri komisi baru di halaman Commission |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Setelah komisi memang sudah dibayarkan ke karyawan sales (biasanya digabung dengan gaji atau dibayar terpisah), klik menu titik tiga pada baris komisi tersebut lalu pilih "Mark as Paid" — hanya bisa dilakukan untuk komisi berstatus pending |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -180,8 +180,8 @@ Bab manual: [`hrm/15-perubahan-status-karyawan.md`](../../erpApiServices/docs/ma
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Perubahan status karyawan (draf) | Masa percobaan di konfirmasi, kontrak diperpanjang, tipe kepegawaian berubah, riwayat karier tercatat dengan benar | Proses perubahan status selesai, notifikasi dikirimkan kepada pihak yang berkepentingan |
-| Negatif — Syarat tidak terpenuhi (draf) | Input data tidak lengkap, syarat perubahan status tidak dipenuhi, permintaan ditolak dengan alasan jelas | Permintaan perubahan status ditolak, notifikasi kesalahan dikirimkan kepada pengaju permohonan |
+| Positif — Mengajukan perubahan status karyawan (draf) | Klik New Status Change; Pilih Apoteker Penanggung Jawab; Pilih Kontrak tetap; Isi 31 Des 2023; Centang Adjust Salary; Isi Reason dan Notes; Klik Submit | Perubahan status diteruskan untuk persetujuan, Current Employment Type berubah menjadi Kontrak tetap, New Contract End Date ditetapkan, Salary Adjustment dilakukan jika dipilih. |
+| Negatif — Mengajukan perubahan status tanpa menentukan tipe kontrak baru (draf) | Klik New Status Change; Pilih Apoteker Penanggung Jawab; Tidak memilih New Employment Type; Coba Submit | Muncul pesan penolakan yang jelas dan permintaan tidak dapat disubmit. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Pilih New Employment Type (wajib) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Isi New Contract End Date. Wajib untuk tipe kepegawaian yang berkontrak; kalau kosong muncul pesan Contract end date is required for this employment type |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 6. Isi Reason (wajib) dan Notes |
@@ -195,8 +195,8 @@ Bab manual: [`hrm/16-log-aktivitas-tipe-aktivitas-dan-kpi.md`](../../erpApiServi
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Jenis Aktivitas (draf) | Tambah "Pembelian Obatpesan yang jelasSimpanpesan yang jelasTipe aktivitas berhasil ditambahkan." | Tampilan Activity Types berisi "Pembelian Obat". |
-| Negatif — Menghapus Kriteria Tanpa Memilih (draf) | Klik "Hapuspesan yang jelasSilakan pilih kriteria terlebih dahulu." | Tidak menghapus kriteria apa pun. |
+| Positif — Menambah Jenis Aktivitas (draf) | Klik Create; Isi Name: Pelatihan Internal; Code: INTL; Category: Pendidikan; Active In Catalog: checked; Klik Create | Tampilan berhasil menambah jenis aktivitas Pelatihan Internal dengan status active |
+| Negatif — Menghapus Kriteria KPI (draf) | Centang baris KPI Criteria, klik Bulk Actions, pilih Delete; Konfirmasi hapus | Muncul pesan penolakan yang jelas karena tidak ada baris tercentang; Tidak menghapus kriteria apapun |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi Title (wajib), Occurred At (kapan terjadi), dan Description |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Submit For Review mengirim log untuk ditinjau; hanya log berstatus draft yang bisa dikirim (tooltip menjelaskan bila tidak bisa) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Name (wajib; kalau kosong muncul Name is required), Code, dan Category |
@@ -210,8 +210,8 @@ Bab manual: [`hrm/17-konfigurasi-pelanggaran.md`](../../erpApiServices/docs/manu
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi pelanggaran (draf) | Konfigurasi cabang Bandung; persetujuan Kepala Gudang; notifikasi ke General Affairs; sanksi potongan gaji 10% | Sukses konfigurasi dengan notifikasi dan persetujuan sesuai |
-| Negatif — Input data salah (draf) | Menginput nama karyawan yang tidak ada di sistem; mengeset sanksi tanpa persetujuan | Gagal konfigurasi, muncul pesan galat pesan yang jelas dan pesan yang jelas |
+| Positif — Konfigurasi mode eskalasi berdasarkan jumlah pelanggaran (draf) | Buka HRM → Violation Configs; pilih Mode eskalasi Jumlah; atur batas 3 pelanggaran; klik Simpan | Pengaturan tersimpan, sanksi ditentukan otomatis jika mencapai 3 pelanggaran |
+| Negatif — Menyalakan potongan gaji tanpa konfirmasi dasar tertulis (draf) | Buka HRM → Violation Configs; nyalakan Potong gaji karena sanksi; klik Simpan tanpa centang Konfirmasi dasar tertulis | Ditolak pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Potongan gaji karena sanksi tidak bisa dinyalakan sebelum dasar tertulis dikonfirmasi: pengguna harus mencentang bahwa potongan memiliki dasar tertulis dalam perjanjian kerja atau peraturan perusahaan. Tanpa konfirmasi itu, penyimpanan ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Potongan dibatasi persen maksimum dari gaji kotor. Agent tidak boleh menyebut angka batas tertentu; angkanya diisi perusahaan |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -223,8 +223,8 @@ Bab manual: [`hrm/18-master-pelanggaran-dan-sanksi.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Menyiapkan pelanggaran "sakit palsu", tingkat keparahan ringan, sanksi penurunan gaji 10%, eskalasi HR, pelapor Kepala Gudang; cakupan otomatis | Input valid, sanksi teraplikasikan dan notifikasi HR & Kepala Gudang |
-| Negatif — input salah (draf) | Menyiapkan pelanggaran tanpa tingkat keparahan; input tidak lengkap | Tolakan pesan penolakan yang jelas dan fokus pada field tersebut |
+| Positif — Menambah jenis pelanggaran (draf) | Buka `HRM → Violation Types`; tambah pesan yang jelas dengan kode VTF, nama "Kekecewaan Kas", kategori "Integritas", poin 50, dapat dibanding, wajib sidang, rahasia tidak | Jenis pelanggaran "Kekecewaan Kas" muncul di form pelaporan |
+| Negatif — Tidak memilih cakupan pelapor (draf) | Buka `HRM → Violation Reporting Scopes`; pilih jabatan "Apoteker", tetapi tidak memilih cakupan dan peringkat keparahan maksimum | Muncul pesan galat pesan yang jelas saat menyimpan form |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tingkat sanksi punya mode denda: tanpa, nominal tetap, persen gaji pokok, upah per hari; juga hari skorsing, tanda pemutusan hubungan kerja, dan wajib surat |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Buka HRM → Violation Severities; tambah atau pilih dari katalog: kode, nama, peringkat, poin bawaan, wajib sidang, rahasia, warna |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Buka Sanction Levels; isi kode, nama, peringkat, masa berlaku (bulan), mode denda dan jumlahnya, hari skorsing, wajib surat, dan tanda pemutusan hubungan kerja |
@@ -238,8 +238,8 @@ Bab manual: [`hrm/19-melaporkan-pelanggaran-banding-dan-sidang.md`](../../erpApi
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Melaporkan Pelanggaran (draf) | Karyawan melaporkan pelanggaran, manajer keuangan memvalidasi, karyawan menandatangani banding, sidang ditutup oleh direktur | Proses pelaporan dan penyelesaian pelanggaran selesai dengan baik |
-| Negatif — Data Karyawan Salah (draf) | Input data karyawan tidak valid, sistem menolak laporan dan memberikan pesan kesalahan | Laporan ditolak karena data karyawan salah, meminta input ulang data yang benar |
+| Positif — Melaporkan pelanggaran (draf) | Buka HRM → Employee Violations; pilih Karyawan: Apoteker Penanggung Jawab; Jenis Pelanggaran: Tidak Hadir Tanpa Alasan; Tanggal: 2023-10-05; Uraian: Tidak hadir tanpa izin; Ajukan ke karyawan | Draf pelanggaran masuk daftar, status Draft |
+| Negatif — Melaporkan pelanggaran (draf) | Pilih Karyawan: Apoteker Penanggung Jawab; Jenis Pelanggaran: tidak ada; Tanggal: 2023-10-05; Uraian: Tidak hadir tanpa izin; Ajukan ke karyawan | Pesan galat: Jenis pelanggaran wajib diisi, status tetap draf |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jenis pelanggaran dapat dibanding: karyawan diberi jendela banding beberapa hari; jenis tidak dapat dibanding: pelanggaran langsung ke persetujuan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Banding hanya mungkin selama pelanggaran sedang ditinjau. Banding diterima: pelanggaran gugur. Banding ditolak: pelanggaran tetap berlaku |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Selesaikan persetujuan bila diwajibkan (Lihat Persetujuan) |
@@ -253,8 +253,8 @@ Bab manual: [`hrm/20-sanksi-karyawan.md`](../../erpApiServices/docs/manualBook/h
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menjatuhkan Sanksi Karyawan (draf) | Karyawan pelanggaran disetujui, sanksi diterbitkan, surat sanksi diunduh, rekomendasi pemutusan hubungan kerja ditindaklanjuti | Sanksi tercatat, surat sanksi ada, tindak lanjut rekomendasi jelas |
-| Negatif — Input Data Salah (draf) | Data karyawan tidak lengkap, sanksi tidak diterbitkan, surat sanksi tidak diunduh, tindak lanjut rekomendasi tidak dilakukan | Sanksi gagal tercatat, pesan galat data harus lengkap, perbaiki data sebelum melanjutkan |
+| Positif — Menjatuhkan sanksi (draf) | Buka HRM → Employee Sanctions; Pilih karyawan Sentosa Farma, tingkat sanksi, tanggal terbit, pelanggaran OBT-001; Simpan, Terbitkan; Unduh surat sanksi | Sanksi tampil di daftar, surat sanksi bisa diunduh |
+| Negatif — Menjatuhkan sanksi tanpa persetujuan (draf) | Buka HRM → Employee Sanctions; Pilih karyawan Sentosa Farma, tingkat sanksi, tanggal terbit, pelanggaran OBT-001; Simpan, coba Terbitkan tanpa persetujuan; Terbitkan setelah disetujui | Muncul pesan penolakan yang jelas bila tidak disetujui |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Bila persetujuan sanksi diwajibkan di konfigurasi, sanksi diajukan dulu dan menunggu persetujuan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Surat sanksi hanya bisa diunduh setelah sanksi diterbitkan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Klik Ajukan bila persetujuan diwajibkan dan tunggu disetujui; selainnya langsung Terbitkan |
@@ -268,8 +268,8 @@ Bab manual: [`hrm/21-mesin-absensi.md`](../../erpApiServices/docs/manualBook/hrm
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mendaftar Absensi (draf) | Mendaftarkan mesin absensi Sentosa Farma, memetakan format data, memutar token, dan memantau absen yang cocok | Absen karyawan tercatat dengan benar di aplikasi HRM |
-| Negatif — Input Wajah Salah (draf) | Menginput wajah karyawan yang tidak terdaftar, mencoba login | Sistem menolak akses pesan penolakan yang jelas dan meminta input ulang data valid |
+| Positif — Mendaftarkan mesin absensi Sentosa Farma (draf) | Buka HRM → Attendance Devices; tambah perangkat; isikan nama "Sentosa Farma"; vendor pesan yang jelas; nomor seri "SF001"; zona waktu "Asia/Jakartapesan yang jelasemployee_id"; jalur waktu "timestamp"; format waktu pesan yang jelas; peta arah pesan yang jelas, tempel payload valid; uji pemetaan; simpan | Mesin Sentosa Farma muncul dengan nama dan terakhir terlihat; absen cocok masuk di catatan, absen belum cocok 0 |
+| Negatif — Token tidak disalin saat putar token (draf) | Buka HRM → Attendance Devices; sentuh "Putar Token"; klik konfirmasi; alamat push dan token baru ditampilkan; tidak salin token; kirim kiriman mesin | Muncul pesan galat pesan yang jelas dan token lama masih berlaku; absen belum cocok bertambah |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Memutar token membuat token lama langsung berhenti berlaku. Mesin harus dikonfigurasi ulang dengan token baru |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jangan menebak jalur field untuk merek tertentu; jalurnya harus diambil dari contoh data nyata mesin |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -281,8 +281,8 @@ Bab manual: [`hrm/22-halaman-karier-dan-absensi-saya.md`](../../erpApiServices/d
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Kunjungi Halaman Karier Publik; Persetujuan pelamar terdaftar; Cek Absensi Saya; Kehadiran pribadi tercatat | Lowongan dilihat dan persetujuan valid; Rekap kehadiran pribadi ditampilkan dengan benar |
-| Negatif — input salah (draf) | Masuk sebagai tamu; Pilih lowongan tanpa melamar; Input data absen salah | Akses ditolak; Lowongan harus dilamar terlebih dahulu; Data absen tidak valid, perbaiki input sebelum mengajukan |
+| Positif — Menampilkan halaman karier publik (draf) | Buka HRM → Career Pages; nyalakan status online; masukkan alamat halaman; isi profil perusahaan; pilih tampil departemen; isikan teks persetujuan bahasa Indonesia dan Inggris; simpan | Halaman karier tampil publik berisi lowongan dan profil |
+| Negatif — Status offline tetapi diakses (draf) | Buka HRM → Career Pages; tidak nyalakan status online; coba akses halaman karier | Pesan galat: pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Teks persetujuan per bahasa wajib dicentang pelamar sebelum mengirim; teks yang disetujui disimpan bersama lamaran. Bila kosong, kata-kata bawaan dipakai |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -293,8 +293,8 @@ Bab manual: [`hrm/23-diagram-alur-hrm.md`](../../erpApiServices/docs/manualBook/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Karyawan baru di rekrutmen, proses cuti disetujui, payroll periode terbayar dengan benar, kinerja KPI memenuhi target | Alur HRM berjalan lancar, data payroll akurat, karyawan puas dengan pengalaman kerja |
-| Negatif — input salah (draf) | Input data absensi salah, karyawan tidak memenuhi target KPI, cuti ditolak karena syarat tidak terpenuhi | Proses HRM terhambat, payroll tidak tepat waktu, kinerja karyawan turun, karyawan tidak puas dengan manajemen |
+| Positif — Alur HRM dari awal sampai akhir (draf) | 1. Masuk ke menu Rekrutmen; 2. Pilih status lamaran Hired; 3. Klik Approve pada proses payroll; 4. Cek slip gaji karyawan yang terapprove | Status lamaran berubah menjadi Hired, proses payroll diteruskan dan slip gaji dibuat |
+| Negatif — Alur HRM dari awal sampai akhir (draf) | 1. Masuk ke menu Rekrutmen; 2. Pilih status lamaran Rejected; 3. Coba Approve pada proses payroll tanpa melakukan persetujuan rekrutmen terlebih dahulu | Sistem menolak dan memberikan pesan bahwa harus melakukan persetujuan rekrutmen terlebih dahulu sebelum dapat mengapprove payroll |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Process ditolak kalau ada karyawan aktif yang belum punya status PTKP. Sistem menampilkan daftar namanya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau persetujuan payroll aktif tetapi belum ada alur persetujuannya, Approve ditolak. Atur alurnya dulu |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau pembayaran memakai transfer bank, Mark As Paid ditolak dan gaji dibayar lewat batch transfer: Prepare dan Release (diagram 5) |
@@ -308,8 +308,8 @@ Bab manual: [`hrm/24-kpi-karyawan-rencana-hasil-dan-tinjauan.md`](../../erpApiSe
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Direksi menyiapkan rencana KPI untuk Manajer Keuangan, dihitung dan divalidasi oleh atasan, karyawan mengakui hasilnya | Skor akhir diterima, tidak ada keberatan dari karyawan |
-| Negatif — input salah (draf) | Manajer Keuangan menolak hasil yang diberikan tanpa alasan, direksi meminta klarifikasi dan koreksi jika perlu | Rencana KPI harus diulangi sesuai prosedur hingga diterima karyawan |
+| Positif — Meninjau hasil karyawan (draf) | Buka "KPI Resultspesan yang jelasPerlu peningkatan komunikasi"; klik Finalize. | Status hasil menjadi Reviewed dan Final, dengan catatan tinjauan diarsipkan. |
+| Negatif — Meninjau hasil tanpa penugasan (draf) | Buka "KPI Resultspesan yang jelasPerlu peningkatan komunikasi". | Sistem menolak pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | KPI harus dinyalakan di KPI Settings cabang. Bila belum menyala, perhitungan ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Bawaan cabang adalah mode bayangan: hasil dihitung tanpa skor resmi dan tidak punya alur tinjauan. Hasil bayangan tidak bisa ditinjau, difinalkan, atau diakui. Matikan mode bayangan setelah data dianggap layak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Rencana KPI per jabatan punya tiga kelompok: kinerja, kompetensi, dan perilaku. Bobot ketiga kelompok harus berjumlah 100, dan bobot baris di tiap kelompok juga berjumlah 100 |
@@ -323,8 +323,8 @@ Bab manual: [`hrm/25-kpi-kompetensi-karier-promosi-dan-pengembangan.md`](../../e
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Input karyawan baru (draf) | Masukkan kompetensi, jenjang karier, sasaran, catatan pelatihan, umpan balik 360, dan rencana pengembangan untuk karyawan baru Sentosa Farma | KPI lengkap dengan data valid ditambahkan ke sistem tanpa perubahan gaji atau jabatan |
-| Negatif — Input jenjang karier kosong (draf) | Menyisipkan data karyawan tanpa mengisi jenjang karier | Penambahan data gagal: jenjang karier wajib diisi sebelum disimpan |
+| Positif — Menilai kompetensi karyawan (draf) | Buka KPI Competencies; Buat master kompetensi Laravel, SQL, desain API; Di KPI Competency Matrix, atasan menilai tingkat kompetensi karyawan dengan hasil 3 untuk Laravel dan 4 untuk SQL | Tampilan matriks kompetensi berubah, menunjukkan penilaian baru |
+| Negatif — Menilai kompetensi tanpa login HR (draf) | Buka KPI Competencies; Buat master kompetensi Laravel, SQL, desain API; Tanpa login sebagai HR, coba di KPI Competency Matrix menilai tingkat kompetensi karyawan dengan hasil 3 untuk Laravel dan 4 untuk SQL | Muncul pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Umpan balik 360 dinyalakan per cabang. Bila belum menyala, permintaan ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Di KPI Promotion Recommendations, HR klik Approved atau Rejected. Rekomendasi yang sudah diputuskan tidak bisa diputuskan lagi |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |

@@ -21,8 +21,8 @@ Bab manual: [`proyek-dan-tugas/01-konfigurasi-dan-master.md`](../../erpApiServic
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Pengaturan Proyek (draf) | Setup proyek Sentosa Farma; aturan tugas dan proyek; tipe tugas; label; peran proyek; preset IT konsultan | Semua pengaturan berhasil, sistem memuat data dengan benar |
-| Negatif — Input Tipe Tugas Salah (draf) | Menetapkan tipe tugas untuk produk Paracetamol 500 mg strip (SKU OBT-001) sebagai pesan yang jelas ketika seharusnya "resep" | Sistem menolak input dan memberikan pesan bahwa tipe tugas harus sesuai dengan jenis produk, yaitu "resep" untuk obat resep |
+| Positif — Setup proyek klinik Bekasi (draf) | Masuk ke `Proyek → Pengaturan Proyek`; atur akses penugasan, tugas baru selesai; masukkan pengingat 2 hari sebelum tenggat; simpan | Akses dan penugasan disetel, status tugas baru selesai sesuai aturan, pengingat dikirim 2 hari sebelum tenggat |
+| Negatif — Menghapus tipe tugas Fitur (draf) | Masuk ke `Tipe Tugas`; coba hapus tipe tugas "Fitur" yang masih dipakai; coba simpan perubahan | Tidak bisa menghapus, pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tipe yang masih dipakai tugas tidak bisa dihapus |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -33,7 +33,10 @@ Bab manual: [`proyek-dan-tugas/02-proyek-dan-tugas.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Proyek (draf) | Buat proyek pesan yang jelas, tugas: pesan yang jelas, status: "Sedang Berjalan" | Sukses membuat proyek dengan tugas dan status sesuai harapan |
+| Positif — Membuat proyek baru (draf) | Pilih "Proyek → Proyekpesan yang jelasSentosa Farma-1", manajer "Budi", anggota pesan yang jelas, status "Rancangan"; klik "Simpan" | Proyek "Sentosa Farma-1pesan yang jelasRancangan" |
+| Negatif — Mengubah status proyek tanpa persetujuan (draf) | Pilih proyek "ACME-1pesan yang jelasSelesai", bukan "Dikerjakan"; cek tombol "Simpan" | Tombol "Simpan" nonaktif pesan penolakan yang jelas |
+| Positif — Menambah tugas ke proyek (draf) | Pilih "Proyek → Tugas", klik "Buat tugaspesan yang jelasPembelian Obatpesan yang jelasAndi", tenggat "2023-10-15", label "Obat"; klik "Simpan" | Tugas "Pembelian Obatpesan yang jelasBelum mulai" |
+| Negatif — Mengubah tugas tanpa checklist selesai (draf) | Pilih tugas "OBT-002pesan yang jelasReviewpesan yang jelasSimpan" | Tombol "Simpan" nonaktif pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Dependensi (selesai-ke-mulai dan tiga jenis lain) mencegah atau memperingatkan sesuai pengaturan; siklus ditolak |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -44,8 +47,10 @@ Bab manual: [`proyek-dan-tugas/03-waktu-tarif-dan-penagihan.md`](../../erpApiSer
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mencatat Waktu (draf) | Input jam kerja karyawan; Approve oleh manajer | Data waktu disimpan dengan benar; Timer otomatis berhenti setelah persetujuan |
-| Negatif — Tarif Tidak Ditemukan (draf) | Input nama layanan tanpa tarif; Coba submit | Form tidak valid: Tarif untuk layanan ini belum ditentukan; Tolong hubungi admin |
+| Positif — Menambahkan entri waktu (draf) | Masuk ke menu Catatan Waktu; klik tombol Timer; mulai timer untuk 2 jam; setujui entri dengan manajer proyek | Entri waktu ditambahkan, status menjadi Disetujui; muncul peringatan jika melebihi batas harian |
+| Negatif — Menambahkan tarif tanpa persetujuan (draf) | Masuk ke menu Kartu Tarif; ubah tarif tanpa persetujuan; coba simpan | Tidak dapat disimpan, pesan penolakan yang jelas |
+| Positif — Menagih milestone proyek (draf) | Masuk ke menu Keuangan Proyek; tag milestone sebagai siap ditagih; cek faktur draf | Faktur draf dibuat, status milestone menjadi Ditagih |
+| Negatif — Menghapus faktur yang sudah diposting (draf) | Coba hapus faktur penjualan yang sudah diposting di proyek | Tidak dapat dihapus, pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Bila persetujuan waktu diwajibkan: entri berstatus Draf → Ajukan → manajer proyek Setujui atau Tolak (alasan wajib). Entri yang sudah disetujui dapat dibuka kembali selama belum ditagih. Tugas yang punya catatan waktu tidak bisa dihapus |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -56,8 +61,8 @@ Bab manual: [`proyek-dan-tugas/04-integrasi-git.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Integrasi Git (draf) | Hubungkan repositori GitHub/GitLab; konfigurasi webhook; commit teraut dengan tugas Sentosa Farma; pipeline otomatis; rilis otomatis | Integrasi berhasil; webhook berfungsi; tugas dan pipeline sesuai; rilis otomatis |
-| Negatif — Tidak ada webhook (draf) | Commit dilakukan tanpa konfigurasi webhook; tidak teraut dengan tugas; pipeline tidak berjalan; rilis gagal | Integrasinya ditolak; perlu konfigurasi webhook untuk integrasi yang benar; pesan error jelas tentang kebutuhan webhook |
+| Positif — jalur normal (draf) | Aktifkan integrasi Git; tambah koneksi GitHub dengan URL webhook dan rahasia; daftar repositori `sentosa-farma/main-proyek` ke proyek; petakan username pengembang ke karyawan | Tugas dalam repositori terhubung otomatis ke tugas proyek, status tugas diperbarui sesuai peristiwa Git |
+| Negatif — input salah (draf) | Mencoba menghubungkan repositori tanpa admin priviliege di GitHub; petakan username pengembang yang tidak ada di sistem | Tampilan pesan kesalahan tentang kebutuhan hak akses admin dan username yang valid di sistem |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -67,8 +72,8 @@ Bab manual: [`proyek-dan-tugas/05-otomasi-portal-dan-tiket.md`](../../erpApiServ
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Otomasi (draf) | Menjalankan aturan otomasi untuk pengiriman stok minimum; data uji: SKU OBT-001, threshold 50 unit | Sistem mengirim notifikasi ke gudang untuk restock dengan stok 48 unit tersisa |
-| Negatif — Webhook keluar (draf) | Mengirim data pesanan yang salah; data uji: ID pesanan OBT-999, status "selesai" | Sistem menolak dan memberikan pesan bahwa ID pesanan tidak ditemukan |
+| Positif — Aturan otomasi berjalan (draf) | Aktifkan aturan pada Pengaturan Proyek; buat tugas baru dengan pemicu "tugas dibuat"; tunggu 1 menit | Tugas otomatis berubah status sesuai aksi yang ditentukan, notifikasi dikirim ke pengguna yang dituju |
+| Negatif — Aturan tidak berjalan (draf) | Matikan saklar otomasi pada Pengaturan Proyek; coba buat tugas baru dengan pemicu "tugas dibuat"; tunggu 1 menit | Aturan tidak berjalan, status tugas tetap sama, tidak ada notifikasi yang dikirim ke pengguna yang dituju |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Perubahan status oleh aturan tetap melewati pemeriksaan status; bila ditolak, run tercatat Dilewati beserta alasannya |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -79,8 +84,8 @@ Bab manual: [`proyek-dan-tugas/06-laporan-logbook-dan-asisten-ai.md`](../../erpA
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Direksi meminta laporan laba rugi bulanan; sistem menghasilkan laporan dengan detail keuangan dan visualisasi grafik | Laporan disajikan dengan benar dan lengkap sesuai permintaan |
-| Negatif — input salah (draf) | Direksi meminta laporan yang tidak ada dalam sistem seperti laporan penjualan khusus obat resep; sistem menolak permintaan tersebut pesan penolakan yang jelas | Permintaan ditolak dengan alasan yang jelas karena laporan tidak ada dalam sistem |
+| Positif — jalur normal (draf) | Masuk ke Dasbor Proyek; pilih proyek Sentosa Farma; cek tugas terbuka | Menampilkan tugas terbuka dan terlambat, jumlah tugas, proyek berisiko, tiket melanggar SLA |
+| Negatif — input salah (draf) | Coba ekspor laporan tanpa memilih rentang tanggal atau proyek | Pesan error: pesan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -90,8 +95,8 @@ Bab manual: [`proyek-dan-tugas/07-diagram-alur-proyek.md`](../../erpApiServices/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Alur Proyek (draf) | Menentukan tujuan proyek di klinik, merencanakan tugas dan timeline, melaksanakan tugas, mengevaluasi hasil, menutup proyek | Alur proyek terlihat jelas dengan langkah-langkah yang sesuai dan hasil evaluasi mencerminkan peningkatan kinerja klinik |
-| Negatif — Status Tugas (draf) | Mengubah status tugas tanpa persetujuan manajer, menginput data waktu tidak valid | Perubahan ditolak karena syarat belum terpenuhi, pesan error muncul meminta persetujuan manajer atau memasukkan data waktu yang benar |
+| Positif — Mengubah status tugas dari Todo ke In Progress (draf) | Login sebagai Kepala Gudang; Pilih tugas OBT-001 Todo; Klik tombol "Mulai"; Masukkan tanggal mulai 2023-10-05 | Status tugas berubah menjadi In Progress, jurnal transaksi terbentuk, pesan konfirmasi muncul |
+| Negatif — Menghapus status tugas tanpa alasan (draf) | Login sebagai Kepala Gudang; Pilih tugas OBT-001 Todo; Klik tombol "Hapus"; Tidak ada alasan penolakan | Muncul pesan peringatan meminta alasan penghapusan, tidak bisa menghapus tanpa alasan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | D --/"Tidak"/ X2["Ditolak: perpindahan tidak diizinkan"] |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | E --/"Tidak"/ X3["Ditolak dengan alasan<br/tombol dinonaktifkan dengan tooltip"] |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau Require Project Close Approval aktif, penyelesaian proyek harus melewati persetujuan penutupan dulu |

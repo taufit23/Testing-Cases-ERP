@@ -21,8 +21,10 @@ Bab manual: [`rental/01-konfigurasi-alur-rental.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Konfigurasi tahap persetujuan, pemetaan akun jurnal otomatis, mode posting jurnal, aset banyak, persetujuan otomatis rental; alat medis kursi roda dipinjamkan | Alur persetujuan berjalan lancar, jurnal otomatis terbentuk, transaksi rental kursi roda masuk akun dengan benar |
-| Negatif — input salah (draf) | Persetujuan tahap 2 kosong, alat medis tabung oksigen dipinjamkan; tanpa persetujuan | Transaksi ditolak, pesan: pesan yang jelas |
+| Positif — Konfigurasi alur persetujuan rental (draf) | Masuk ke `/rental/rental-configs`, Aktifkan pesan yang jelas, pesan yang jelas dan pesan yang jelas; pilih "Auto" untuk Mode Posting Jurnal; konfigurasi Aset Berjumlah Banyak. | Alur persetujuan rental ditentukan, jurnal otomatis disetup, mode posting jurnal diaktifkan, aset berjumlah banyak dikonfigurasi dengan benar. |
+| Negatif — Pengaturan alur persetujuan tidak lengkap (draf) | Masuk ke `/rental/rental-configs`, Aktifkan pesan yang jelas saja; coba submit dokumen rental. | Submit gagal, pesan penolakan yang jelas. |
+| Positif — Pemetaan akun jurnal otomatis (draf) | Masuk ke `/rental/rental-configs`, pilih "Rental AR", "Rental Revenuepesan yang jelasAuto Map". | Akun jurnal otomatis rental dipetakan, jurnal pengembalian deposit menggunakan pemetaan ini. |
+| Negatif — Pemetaan akun tidak lengkap (draf) | Masuk ke `/rental/rental-configs`, hanya pilih "Rental AR"; coba submit dokumen rental. | Submit gagal, pesan penolakan yang jelas. |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -32,8 +34,8 @@ Bab manual: [`rental/02-rental-assets.md`](../../erpApiServices/docs/manualBook/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mendaftarkan Aset (draf) | Input data aset (Nama: kursi roda, Tahun Beli: 2021, Harga Beli: 500000, Tarif Harian: 20000) | Aset berhasil didaftarkan dengan status tersedia |
-| Negatif — Input Tarif Harian Nol (draf) | Input tarif harian 0 | Pengisian gagal: tarif harus lebih dari nol |
+| Positif — Mendaftarkan kursi roda (draf) | Klik "+ Add Asset"; Isi Asset Code: ALK-001, Asset Name: Kursi Roda Medis, Description: Kursi roda medis untuk pasien; Daily Rate: 25000; Klik Create | Aset Kursi Roda Medis muncul di daftar aset dengan status Available |
+| Negatif — Mendaftarkan aset tanpa stok (draf) | Isi Asset Code: ALK-001, Asset Name: Kursi Roda Medis, Daily Rate: 25000; Coba klik Create tanpa menambahkan stok di gudang | Muncul pesan penolakan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -43,8 +45,8 @@ Bab manual: [`rental/03-rental-quotation.md`](../../erpApiServices/docs/manualBo
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Quotation (draf) | Input SKU HRB-001, masa sewa 2 minggu, alamat klinik, total harga, dikirim ke Kepala Gudang | Quotation diterbitkan dan masuk inbox Kepala Gudang |
-| Negatif — Masa Sewa Tidak Valid (draf) | Input masa sewa negatif, mengirim ke Kepala Gudang | Penawaran ditolak pesan penolakan yang jelas |
+| Positif — Membuat Quotation baru (draf) | Buka Quotations; "+ Create"; Contact: Apotek Mitra Sehat; Start Date: 1 Januari 2023; End Date: 31 Desember 2023; Tambah item: kursi roda qty 5, tarif Rp 100.000/hari; Klik Save → Submit | Quotation baru berstatus Submitted dengan detail sesuai input |
+| Negatif — Mencoba hapus Quotation yang sudah dikonversi (draf) | Buka Quotation yang sudah dikonversi ke Rental Order; Coba klik Delete | Pesan error muncul: pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Menu: Rental → Quotations (/rental/quotations) · Opsional — Rental Order tetap bisa dibuat langsung tanpa Quotation, kecuali dikonfigurasi wajib |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -55,8 +57,8 @@ Bab manual: [`rental/04-rental-order.md`](../../erpApiServices/docs/manualBook/r
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Membuat order sewa kursi roda untuk klinik, memasukkan detail produk, jumlah, periode, dan deposit | Order berhasil dibuat dengan status draft, dapat diperiksa dalam daftar order |
-| Negatif — input salah (draf) | Menginput harga deposit kurang dari minimal diatur, mencoba submit | Ditolak pesan penolakan yang jelas, tidak bisa disubmit |
+| Positif — Membuat Rental Order (draf) | Klik pesan yang jelas dari detail Quotation OBT-001; isi Contact Sehat Sentosa Farma, Start Date 1 Januari 2023, End Date 31 Januari 2023; tambah item Alkohol Swab ALK-002 qty 50; klik "Preview Price"; Save | Order OBT-001 dibuat dengan total harga sesuai preview; status Draft |
+| Negatif — Deposit Tidak Tersedia (draf) | Cek detail Order OBT-001 setelah Save; deposit tidak muncul di form Create | Harus mengisi field Deposit Amount lewat halaman Edit Order; pesan penolakan yang jelas jika ditinggalkan kosong |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Klik "Preview Price" untuk melihat estimasi total sebelum benar-benar submit — berguna untuk memberi gambaran biaya ke calon penyewa tanpa harus commit dulu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -79,8 +81,8 @@ Bab manual: [`rental/06-rental-invoice.md`](../../erpApiServices/docs/manualBook
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Tagihan (draf) | Input Rental Order OBT-001, pilih periode rental, klik Approve & Posting; tagihan muncul dengan total yang benar | Tagihan berisi detail rental order dan jurnal piutang terposting dengan benar |
-| Negatif — Input Data Salah (draf) | Input SKU salah pada Rental Invoice, ceklist Approve & Posting; sistem menolak input pesan penolakan yang jelas | Sistem menolak input dan memberikan pesan kesalahan yang jelas tentang masalah SKU |
+| Positif — Membuat tagihan rental (draf) | Buka Invoices; "+ Create"; pilih Rental Order OBT-001; Save | Tagihan ditampilkan dengan total sesuai order; status Draft |
+| Negatif — Tidak ada usage entry (draf) | Semua Usage Entry untuk order ini sudah pernah ditagih; cek Usage Entries | Tidak ada opsi Usage Entry yang bisa dipilih, tagihan tidak dapat dibuat |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -90,8 +92,8 @@ Bab manual: [`rental/07-rental-payment-bill.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Penerimaan pembayaran dari Kafe Sehat; Invoice RENT-001; Jumlah Rp500.000; Tanggal 2023-09-15 | Status invoice RENT-001 diterima dan ter-update menjadi "Diterima"; Jurnal penagihan dibuat otomatis |
-| Negatif — input salah (draf) | Penerimaan pembayaran dari Kafe Sehat; Invoice RENT-002; Tanggal 2023-09-15; Jumlah Rp750.000 (lebih dari nominal invoice) | Input ditolak: pesan yang jelas |
+| Positif — Mencatat bayaran rental (draf) | Buka Payment Bills; klik "+ Create"; pilih Rental Invoice OBT-001; isikan Amount 50000, Payment Method Transfer; klik Save | Payment Bill terbentuk; status Rental Invoice OBT-001 menjadi Partial |
+| Negatif — Menciptakan Payment tanpa approval invoice (draf) | Buka Payment Bills; klik "+ Create"; pilih Rental Invoice OBT-002; isikan Amount 75000, Payment Method Cash; klik Save | Tidak bisa membuat Payment Bill; pesan penolakan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -101,8 +103,8 @@ Bab manual: [`rental/08-rental-return.md`](../../erpApiServices/docs/manualBook/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Pengembalian kursi roda ke kafe; approve kondisi baik; tidak ada kerusakan; deposit penuh dikembalikan | Proses pengembalian berhasil; sisa deposit dikreditkan ke penyewa; status asset dan deposit diperbarui dengan benar |
-| Negatif — input salah (draf) | Pengembalian kursi roda ke kafe; approve kondisi buruk; kerusakan terdeteksi; deposit tidak cukup untuk mengganti kerusakan | Proses ditolak; pesan error tentang kerusakan dan kekurangan deposit; asset dan deposit tetap sama sebelumnya |
+| Positif — Pengembalian kondisi baik (draf) | Buka Returns; pilih Rental Order OBT-001; tentukan Condition "Good"; qty 50; klik Save | Aset OBT-001 kembali ke status Available; tidak ada potongan deposit; jurnal terbentuk mengurangi Rental AR/Revenue |
+| Negatif — Kondisi item masih Good (draf) | Buka Returns; pilih item OBT-001; tentukan Condition "Damaged"; Damage Charge Amount 5000; qty 50; klik Save | Damage Charge Amount tidak bisa diisi; pesan penolakan yang jelas muncul; Condition tetap Good; jurnal tidak terbentuk |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi qty yang dikembalikan (tidak boleh melebihi qty yang disewakan di order tersebut) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Field Damage Charge Amount hanya bisa diisi kalau Condition bukan "Good" — otomatis nonaktif untuk pengembalian kondisi baik |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -114,8 +116,8 @@ Bab manual: [`rental/09-verifikasi-ke-accounting.md`](../../erpApiServices/docs/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Verifikasi Rental ke Accounting (draf) | Cek General Ledger akun 71201 Sewa Alat Medis; cek Trial Balance seluruh transaksi rental | Semua transaksi rental tercatat dengan benar di pembukuan, saldo akun seimbang |
-| Negatif — Verifikasi Rental ke Accounting (draf) | Input data quotation tanpa nomor invoice; Order tanpa tanggal; Invoice tanpa detail order; Payment tanpa invoice; Return tanpa payment | Transaksi ditolak karena tidak lengkap, pesan: pesan yang jelas |
+| Positif — Verifikasi Rental ke Accounting berhasil (draf) | Buka General Ledger; Detail Ledger Rental AR bertambah; Rental Revenue bertambah; Rental Deposit Liability berkurang; Kas/Bank bertambah; Trial Balance seimbang | Semua akun tercatat dengan benar, transaksi rental dorekkan dengan akuntansi |
+| Negatif — Invoice belum di-Export to Journal (draf) | Buka detail invoice OBT-001; Export to Journal tidak dilakukan; Rental Revenue tidak bertambah; Trial Balance tidak seimbang | Periksa dan export invoice ke jurnal, perbaiki keseimbangan trial balance |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -125,8 +127,8 @@ Bab manual: [`rental/10-diagram-alur-rental.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Alur Sewa (draf) | Input data lengkap, proses rental mulai dari quotation hingga order, penagihan dan pembayaran selesai, aset dikembalikan sesuai aturan | Proses sewa berjalan lancar, status Rental Order dan aset diperbarui dengan benar |
-| Negatif — Alur Sewa (draf) | Input data tidak lengkap atau syarat tidak terpenuhi, seperti tanggal pengembalian melebihi batas | Pengajuan ditolak dengan pesan jelas tentang kesalahan input atau syarat yang belum terpenuhi |
+| Positif — Alur sewa dari awal sampai akhir (draf) | Masuk ke modul Rental; Buat Quotation OBT-001; Konversi Quotation menjadi Order; Bayar Invoice; Kembalikan Aset ALK-001; Approve Pengembalian | Quotation diterima, Order Active, Invoice dibuat, Pembayaran dilakukan, Aset dikembalikan status Available, Jurnal pembayaran terbentuk |
+| Negatif — Input salah dalam Rental Quotation (draf) | Masuk ke modul Rental; Buat Quotation OBT-001 dengan data salah; Coba Konversi Quotation menjadi Order | Muncul pesan penolakan yang jelas atau pesan yang jelas, Quotation tidak berubah status |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Submitted -- Rejected: Ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | MenungguCustomer -- DitolakCustomer: Customer Decline |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | state "Ditolak Customer" as DitolakCustomer |

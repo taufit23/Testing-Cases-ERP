@@ -20,8 +20,8 @@ Bab manual: [`reports/01-laporan-lintas-modul.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Filter Utang Piutang Jatuh Tempo (draf) | Input tanggal awal dan akhir, pilih cabang, klik filter; laporan berisi data utang piutang jatuh tempo sesuai kriteria | Laporan mengandung data utang piutang jatuh tempo dari periode dan cabang yang ditentukan |
-| Negatif — Filter Umur Utang Piutang Tidak Valid (draf) | Input tanggal tidak valid, klik filter; pesan penolakan yang jelas | Laporan ditolak pesan penolakan yang jelas |
+| Positif — Menampilkan laporan AP Aging (draf) | Pilih menu `Reports → Accounts Payable Aging`; Isi As Of Date 31 Desember 2023; Klik "Run Report"; Cek tabel hasil | Tabel menampilkan utang ke supplier, umur utang, dan total utang |
+| Negatif — Filter tanggal tidak valid (draf) | Pilih menu `Reports → Accounts Payable Aging`; Isi As Of Date 31 Desember 2024 (tanggal di masa depan); Klik "Run Report" | Muncul pesan penolakan yang jelas; Tabel kosong |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Fitur ini berguna untuk pemilik yang mau melihat kondisi seluruh jaringan cabang dari satu tempat, tanpa harus login/pindah ke tiap cabang satu per satu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -32,7 +32,9 @@ Bab manual: [`reports/02-katalog-laporan-per-modul.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Katalog Laporan (draf) | Langkah: Pilih modul Accounting, pilih laporan Ringkasan Keuangan, klik 'Lihat' | Harapkan tampilan laporan Ringkasan Keuangan dengan data keuangan terbaru |
-| Negatif — Katalog Laporan (draf) | Input: Memilih modul yang tidak ada, misal Modul X, dan pilih laporan apapun | Harus ditolak pesan penolakan yang jelas |
+| Positif — Menampilkan laporan neraca (draf) | Kunjungi `/reports/balance-sheet`; perusahaan memiliki izin laporan neraca; modul Accounting aktif | Laporan neraca ditampilkan dengan detail akun, saldo, dan penjelasan di manual Accounting bab 05. |
+| Negatif — Menampilkan laporan tanpa izin (draf) | Kunjungi `/reports/income-statement`; perusahaan tidak memiliki izin laporan laba rugi; modul Accounting aktif | Tampilan menunjukkan pesan penolakan yang jelas |
+| Positif — Menampilkan laporan arus kas (draf) | Kunjungi `/reports/cash-flow-statement`; perusahaan memiliki izin laporan arus kas; modul Accounting aktif | Laporan arus kas ditampilkan dengan detail sumber dan penggunaan kas, penjelasan di manual Accounting bab 05. |
+| Negatif — Menampilkan laporan arus kas tanpa izin (draf) | Kunjungi `/reports/cash-flow-statement`; perusahaan tidak memiliki izin laporan arus kas; modul Accounting aktif | Tampilan menunjukkan pesan penolakan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

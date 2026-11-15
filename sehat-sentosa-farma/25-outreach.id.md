@@ -20,8 +20,8 @@ Bab manual: [`outreach/01-kampanye-sales-outreach.md`](../../erpApiServices/docs
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menyiapkan kampanye sales outreach (draf) | PT Sehat Sentosa Farma menyiapkan pengirim, templat email, daftar prospek dan penolakan, menyusun kampanye, menjadwalkan, dan memantau pesan | Kampanye terkirim dengan baik, statistik dan pemakaian diperiksa secara berkala |
-| Negatif — Mengisi data prospek kosong (draf) | PT Sehat Sentosa Farma mencoba mengirim email tanpa mengisi daftar prospek | Tidak dapat menjadwalkan kampanye: masukkan daftar prospek terlebih dahulu, pesan error muncul |
+| Positif — Menyiapkan konfigurasi pengirim (draf) | Buka Sales Outreach Settings; klik "+ Createpesan yang jelasPT Sehat Sentosa Farmapesan yang jelasinfo@sehatsentosafarma.compesan yang jelassupport@sehatsentosafarma.com"; batas harian 50 email | Sender PT Sehat Sentosa Farma ditambahkan dan status menjadi aktif |
+| Negatif — Menyiapkan konfigurasi pengirim tanpa persetujuan (draf) | Buka Sales Outreach Settings; klik "+ Createpesan yang jelasPT Sehat Sentosa Farmapesan yang jelasinfo@sehatsentosafarma.compesan yang jelassupport@sehatsentosafarma.com"; batas harian 50 email tanpa centang persetujuan kampanye | Tampilan pesan kesalahan meminta konfirmasi persetujuan sebelum pengiriman email |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Modul Outreach harus aktif untuk cabang. Bila tidak, kampanye tidak bisa dijadwalkan dan tidak ada email yang dikirim |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kampanye hanya bisa diubah atau dihapus selagi Draft |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Berhenti berlangganan, pental keras, keluhan, dan permintaan subjek data tidak bisa dicabut dari daftar penolakan. Itu pilihan penerima atau sinyal dari penyedia email. Pengguna hanya bisa mencabut alamat yang ditambahkan manual |
@@ -35,8 +35,8 @@ Bab manual: [`outreach/02-diagram-alur-outreach.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Persiapan: Data valid, email valid, status 'Draft' | Proses berjalan, status berubah menjadi 'Pending' |
-| Negatif — input salah (draf) | Email kosong, syarat tidak terpenuhi | Ditolak, pesan: pesan yang jelas |
+| Positif — Kampanye baru dimulai (draf) | Persiapan data; klik "Schedule" pada kampanye Draft | Status berubah menjadi Running, email pertama dikirim sesuai jadwal |
+| Negatif — Email gagal pemeriksaan (draf) | Masukkan data yang tidak memenuhi syarat; klik "Send Now" | Tampilan pesan error menginformasikan alasan penolakan dan status tetap Draft |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Draft -- Scheduled: Schedule Campaign, bila siap dan persetujuan tidak diwajibkan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Draft -- PendingApproval: Schedule Campaign, bila persetujuan diwajibkan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | PendingApproval -- Draft: Ditolak atau diminta revisi |

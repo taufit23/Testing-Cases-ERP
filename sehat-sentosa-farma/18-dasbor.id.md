@@ -19,7 +19,8 @@ Bab manual: [`dashboard/01-dashboard-keuangan-penjualan-dan-pembelian.md`](../..
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Filter Tanggal Dashboard (draf) | Memilih tanggal 1 Januari 2023 hingga 31 Desember 2023; memastikan data lengkap | Menampilkan angka utama, hal yang perlu ditindaklanjuti, grafik, dan ringkasan untuk periode tersebut |
+| Positif — Filter Tanggal Dashboard (draf) | Pilih periode "Bulan Lalupesan yang jelasBulan Lalu" | Header menampilkan periode akuntansi "Bulan Lalu", laba rugi, saldo kas dan bank, piutang, utang, dan jurnal yang masih menunggu diposting atau disetujui untuk periode tersebut |
+| Negatif — Filter Tanggal Dashboard (draf) | Masukkan tanggal masa depan pada filter; klik tombol "Apply" | Sistem memotong ke hari ini, tidak menampilkan data untuk tanggal masa depan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Dasbor Persediaan menunjukkan kesehatan stok di seluruh gudang: SKU yang menipis, opname dan transfer yang masih berjalan, nilai persediaan, dan pergerakan stok terbaru. Tujuannya memunculkan masalah yang butuh tindakan tanpa harus membuka tiap daftar |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -30,8 +31,8 @@ Bab manual: [`dashboard/02-dashboard-operasional.md`](../../erpApiServices/docs/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Memasukkan transaksi penjualan obat Paracetamol 500 mg strip (SKU OBT-001) melalui POS di Apotek Sentosa Bandung | Dashboard POS menampilkan peningkatan omzet, notifikasi kecukupan stok, dan grafik penjualan harian |
-| Negatif — input salah (draf) | Menambahkan produk Jamu Kunyit Asam sachet (HRB-001) tanpa data bahan baku di Pabrik Herbal Sukabumi | Sistem menolak input pesan penolakan yang jelas dan tidak memperbarui database produk |
+| Positif — Dashboard POS (draf) | Buka `/dashboard/pos`, lihat `Todays Sales` 500.000, `Open Cash Sessions` 2, `Top Selling Products Last 7 Days` Paracetamol 500 mg strip 300 unit | Menampilkan ringkasan kinerja POS hari ini dengan data yang sesuai |
+| Negatif — Dashboard Canvassing (draf) | Buka `/dashboard/canvassing`, masukkan geofence tidak valid, `Geofence Compliance` 60% | Muncul pesan penolakan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -41,8 +42,10 @@ Bab manual: [`dashboard/03-dashboard-sdm-notifikasi-dan-lainnya.md`](../../erpAp
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Karyawan masuk My Dashboard, lakukan check-in dan check-out dengan benar; data akurat | Check-in dan check-out tercatat dengan baik, status hadir terupdate secara real-time |
-| Negatif — input salah (draf) | Karyawan melakukan check-in tanpa check-out; syarat tidak terpenuhi | Tidak dapat menutup hari kerja, sistem menolak dan memberikan pesan bahwa check-out diperlukan terlebih dahulu |
+| Positif — Hrm Dashboard (draf) | Buka `/dashboard/hrm`, lihat angka utama, klik `Open Attendance Recap` | Muncul halaman rekap absensi dengan tombol untuk menghitung rekap absensi |
+| Negatif — Hrm Dashboard (draf) | Tidak login sebagai HR, coba buka `/dashboard/hrm` | Muncul pesan penolakan yang jelas |
+| Positif — My Dashboard (draf) | Login sebagai karyawan, buka `/dashboard/employee`, klik `Check In` saat bekerja, `Check Out` selesai | Status hari ini berubah menjadi "Checked In" dan "Checked Out", slip gaji terbaru muncul |
+| Negatif — My Dashboard (draf) | Login sebagai karyawan, coba klik `Check In` tanpa absen | Muncul pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | di luar area: muncul You are outside the attendance area dan absensi ditolak, |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Bila perusahaan mewajibkan foto, klik Take Photo lalu ambil foto sebelum mengirim |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |

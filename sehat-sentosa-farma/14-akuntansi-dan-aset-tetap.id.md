@@ -79,8 +79,10 @@ Bab manual: [`accounting/05-laporan-keuangan.md`](../../erpApiServices/docs/manu
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Neraca Sehat Sentosa Farma (draf) | Memasukkan data aset dan kewajiban tahunan; memeriksa saldo modal; mengevaluasi rasio likuiditas | Neraca seimbang dengan total aset = total kewajiban + modal, rasio likuiditas sesuai standar industri farmasi |
-| Negatif — Laba Rugi Sentosa Farma (draf) | Menginput data penjualan dan biaya yang tidak valid; mengabaikan syarat penilaian laba rugi | Input ditolak: pesan yang jelas |
+| Positif — Neraca (Balance Sheet) berhasil diproses (draf) | Masuk ke `Reports → Balance Sheet`, isikan `As Of Date` 31 Desember 2023, klik **Run Report** | Laporan menampilkan Aset, Liabilitas, dan Ekuitas dengan total seimbang |
+| Negatif — Neraca (Balance Sheet) tidak seimbang (draf) | Masuk ke `Reports → Balance Sheet`, isikan `As Of Date` 31 Desember 2023, klik **Run Report**, laporan menampilkan `is_balanced: false` | Laporan menunjukkan kesalahan kategori akun di Chart of Accounts, periksa ulang kategorisasi akun |
+| Positif — Laba Rugi (Income Statement) ditampilkan (draf) | Masuk ke `Reports → Income Statement`, isikan `Start Date` 1 Januari 2023, `End Date` 31 Desember 2023, klik **Run Report** | Laporan menampilkan Pendapatan, Beban, dan Laba Bersih |
+| Negatif — Laba Rugi (Income Statement) tidak ada transaksi (draf) | Masuk ke `Reports → Income Statement`, isikan `Start Date` 1 Januari 2023, `End Date` 31 Desember 2023, klik **Run Report** | Laporan menampilkan semua nilai 0, bukan pesan error |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Baru curigai konfigurasi Chart of Account Type — field Category, Normal Balance, dan Cash Flow Section per akun harus benar sejak awal setup |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -91,8 +93,8 @@ Bab manual: [`accounting/06-anggaran-budget.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | PT Sehat Sentosa Farma membuat anggaran untuk klinik Bekasi & apotek Bandung; membandingkan dengan realisasi; status budget diperbarui secara otomatis | Anggaran akun terbentuk, dibandingkan dengan realisasi, dan status budget diperbarui sesuai periode |
-| Negatif — input salah (draf) | PT Sehat Sentosa Farma mencoba membuat anggaran untuk periode yang telah berlalu; syarat masa depan gagal | Input tidak valid: anggaran hanya bisa dibuat untuk periode aktif/masa depan, silakan pilih periode masa depan |
+| Positif — jalur normal (draf) | PT Sehat Sentosa Farma membuat anggaran untuk tahun 2027; memilih akun Beban Sewa, Unit Bisnis Kantor Pusat, periode Januari 2027 dengan jumlah Rp1.500.000; klik "Save Budget" | Anggaran disimpan dan status menjadi Draft |
+| Negatif — input salah (draf) | PT Sehat Sentosa Farma mencoba membuat anggaran untuk periode yang sudah closed; memilih akun Beban Sewa, Unit Bisnis Kantor Pusat, periode Januari 2026 dengan jumlah Rp1.500.000; klik "Save Budget" | Sistem menolak dan memberikan pesan bahwa periode tidak aktif |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Isi Fiscal Year (wajib) dan Name (nama anggaran, misalnya "Anggaran Operasional 2027") |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -103,8 +105,8 @@ Bab manual: [`accounting/07-aset-tetap-dan-penyusutan.md`](../../erpApiServices/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mendaftarkan Aset (draf) | PT Sehat Sentosa Farma memasukkan aset tetap kantor pusat, termasuk nilai historis dan estimasi umur manfaat | Aset tetap terdaftar dengan benar di sistem akuntansi |
-| Negatif — Metode Penyusutan Salah (draf) | Menggunakan metode garis lurus untuk aset yang lebih cocok menggunakan saldo menurun | Sistem memberikan pesan kesalahan tentang pemilihan metode yang tidak tepat |
+| Positif — jalur normal (draf) | Pilih menu Aset; masukkan data aset baru (SKU OBT-001, Harga Perolehan 5.000.000, Masa Manfaat 60 bulan, Nilai Residu 500.000) | Aset baru ditambahkan dengan status pesan yang jelas dan jurnal penambahan aset muncul |
+| Negatif — input salah (draf) | Menggunakan metode yang tidak sesuai (Saldo Menurun untuk aset yang sebaiknya menggunakan Garis Lurus) | Sistem menolak input pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Wajib dijalankan tiap bulan, per aset — sistem tidak otomatis menyusutkan semua aset sekaligus setiap bulan berjalan (tidak ada cron/scheduler bawaan untuk ini). Kalau ada beberapa aset, ulangi langkah ini untuk masing-masing aset setiap bulannya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sistem mencegah penyusutan ganda untuk periode yang sama — kalau Run Depreciation diklik lagi dengan Period Date bulan yang sudah pernah diproses, akan ditolak. Ini penting supaya Beban Penyusutan tidak tercatat dobel di laporan keuangan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Neraca (Balance Sheet) — cari akun Akumulasi Penyusutan di Trial Balance/COA, saldonya harus negatif (mengurangi total Aset Tetap) |
@@ -118,8 +120,8 @@ Bab manual: [`accounting/08-rekonsiliasi-bank.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Rekonsiliasi Bank (draf) | Setup bank account Sentosa Farma; Buat rekonsiliasi; Selesaikan selisih dengan jurnal koreksi; Selisih teridentifikasi dan diperbaiki | Saldo buku dan rekening koran sejalan, akuntansi benar |
-| Negatif — Rekonsiliasi Bank (draf) | Setup bank account tanpa data valid; Buat rekonsiliasi tanpa saldo awal | Proses tidak dapat dilanjutkan, muncul pesan kesalahan tentang data yang harus diisi terlebih dahulu |
+| Positif — Setup Bank Account (draf) | Isi pesan yang jelas untuk Account Name; "BNIpesan yang jelas1234567890" untuk Account Number; Rupiah untuk Currency; 10.000.000 untuk Opening Balance; dan hubungkan ke akun kas yang sesuai | Bank account Sehat Sentosa Farma dibuat dengan status Save berhasil |
+| Negatif — Setup Bank Account (draf) | Tidak memilih Chart of Account sebelum klik Save | Muncul pesan penolakan yang jelas saat mencoba menyimpan bank account baru |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Rekonsiliasi bank adalah proses mencocokkan dua catatan yang seharusnya sama tapi seringkali beda karena beda waktu pencatatan: |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -130,8 +132,8 @@ Bab manual: [`accounting/09-laporan-pajak-ppn.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Cek PPN Masukan (draf) | Input rekap PPN masukan, hitung net payable, periksa batasan cakupan | Net payable sesuai harapan, laporan valid |
-| Negatif — Input data salah (draf) | Input jumlah PPN masukan tidak akurat, terlalu besar | Laporan ditolak, pesan penolakan yang jelas |
+| Positif — jalur normal (draf) | Buka Reports → Tax Summary; Isi Start Date 01-01-2023, End Date 31-12-2023; Klik Run Report | Menampilkan Total PPN Masukan, Total PPN Keluaran, dan Net Payable dengan nilai sesuai transaksi di perusahaan uji |
+| Negatif — input salah (draf) | Buka Reports → Tax Summary; Isi Start Date 01-01-2023, End Date 30-06-2023; Klik Run Report | Menampilkan "No data" dan semua kartu total menunjukkan Rp 0 karena tidak ada transaksi berpajak dalam rentang tanggal yang dipilih |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -141,8 +143,8 @@ Bab manual: [`accounting/10-chart-of-accounts.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Struktur Akun (draf) | Buat akun baru untuk Paracetamol 500 mg strip (SKU OBT-001) dan lihat strukturnya sebagai pohon; otomatis disusun ke akun induk Obat & Alat Kesehatan | Menampilkan struktur akun Paracetamol 500 mg strip di bawah akun induk Obat & Alat Kesehatan |
-| Negatif — Saldo Akun (draf) | Input saldo awal untuk Jamu Kunyit Asam sachet (HRB-001) tanpa memilih jenis jurnal; coba simpan | Muncul pesan kesalahan bahwa harus memilih jenis jurnal sebelum menyimpan saldo akun |
+| Positif — jalur normal (draf) | Buka halaman Chart of Accounts; klik ikon Tree View; filter pencarian "Kas & Bank"; cek indentasi sub-akun. | Tampilan berubah menjadi pohon akun dengan "Kas & Bankpesan yang jelasKas & Bank" berhasil. |
+| Negatif — input salah (draf) | Buka halaman Chart of Accounts; coba klik ikon Tree View tanpa membuat akun terlebih dahulu; cek tampilan. | Sistem pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Syarat: asisten AI harus aktif dan pengungkapan AI cabang sudah dikonfirmasi. Pengguna yang boleh menambah akun otomatis boleh memakai bantuan ini. Aturan simpan tetap dicek server, misalnya laba ditahan hanya boleh satu per cabang |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -153,8 +155,8 @@ Bab manual: [`accounting/11-diagram-alur-accounting.md`](../../erpApiServices/do
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Sentosa Farma membuat jurnal penjualan obat Paracetamol 500 mg strip ke Apotek Mitra Sehat | Jurnal terdaftar dan diposting dengan benar di modul accounting |
-| Negatif — input salah (draf) | Input harga jual obat yang salah pada draft jurnal | Sistem menolak inputan, memberikan pesan kesalahan harga harus sesuai data master produk |
+| Positif — Siklus Jurnal Manual (draf) | Input jurnal draft untuk Paracetamol 500 mg strip (SKU OBT-001) dengan tanggal dalam periode terbuka; Approve jika persyaratan ada; Post jurnal. | Jurnal draft berubah menjadi posted, saldo akun ter-update sesuai transaksi. |
+| Negatif — Siklus Jurnal Manual (draf) | Input jurnal draft untuk Paracetamol 500 mg strip (SKU OBT-001) dengan tanggal di luar periode terbuka; Approve. | Sistem menolak input, pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jurnal yang belum seimbang tetap tersimpan sebagai Draft, tetapi tidak bisa di-Post |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tanggal jurnal harus berada di Accounting Period yang masih terbuka |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | B --/"Ya"/ C["Ditolak: jurnal sudah di-reverse"] |

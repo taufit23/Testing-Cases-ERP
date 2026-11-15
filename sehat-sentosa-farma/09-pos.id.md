@@ -22,8 +22,8 @@ Bab manual: [`pos/01-setup-toko-dan-cash-session.md`](../../erpApiServices/docs/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Setup warehouse toko Sentosa Farma, isi stok awal produk Paracetamol 500 mg strip (SKU OBT-001), buka cash session di meja kasir kantor pusat | Transaksi POS dapat dimulai dengan lancar dan data transaksi tercatat dengan benar |
-| Negatif — input salah (draf) | Mencoba membuka cash session tanpa setup warehouse atau isi stok awal, mencoba menggunakan meja kasir yang tidak diberikan izin | Sistem menolak akses pesan penolakan yang jelas dan pesan yang jelas |
+| Positif — Membuka Cash Session di Apotek Sentosa Bandung (draf) | Buka POS → Cash Sessions; Pilih warehouse Store pesan yang jelas; Pilih cash register "Register 1"; Masukkan opening balance Rp 500.000; Klik Open Session | Session Number terbentuk, status menjadi Open; Meja kasir "Register 1" tersedia untuk transaksi |
+| Negatif — Membuka Cash Session di Warehouse Central (draf) | Buka POS → Cash Sessions; Pilih warehouse Central pesan yang jelas; Coba klik Open Session | Sesi ditolak pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Transfer akan ditolak kalau qty yang diminta melebihi stok tersedia di warehouse asal |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Pilih Warehouse (harus bertipe Store dan punya stok yang bisa dijual) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Sesi dan penjualan milik pembukanya. Kasir biasa hanya melihat sesi dan transaksi dari sesi yang ia buka sendiri. Ia tidak bisa menjual, menahan pesanan, menutup, atau melihat laporan sesi milik kasir lain; sistem menolaknya |
@@ -36,8 +36,8 @@ Bab manual: [`pos/02-transaksi-penjualan.md`](../../erpApiServices/docs/manualBo
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Transaksi Penjualan Tunai (draf) | Pelanggan membeli Paracetamol 500 mg strip (SKU OBT-001) di Apotek Sentosa Bandung; kasir memasukkan SKU dan jumlah, total dibayar pelanggan; transaksi selesai dengan kembalian jika ada. | Transaksi berhasil dilakukan, tercatat pada sistem POS. |
-| Negatif — Split Payment Ditolak (draf) | Pelanggan mencoba split payment di Apotek Sentosa Bandung tetapi saldo di kartu hanya 50%; kasir menolak transaksi dan memberikan pesan penolakan yang jelas. | Transaksi ditolak dengan pesan jelas bahwa saldo tidak memadai. |
+| Positif — Transaksi penjualan tunai (draf) | Buka POS Transactions; tambahkan Paracetamol 500 mg strip (SKU OBT-001) 2 pcs; pilih Payment Method "Tunai"; isi Amount Tendered Rp30.000; klik Complete | Total transaksi Rp24.000, change_amount Rp6.000, transaksi selesai dengan status paid |
+| Negatif — Pembayaran kurang dari total transaksi (draf) | Buka POS Transactions; tambahkan Paracetamol 500 mg strip (SKU OBT-001) 2 pcs; pilih Payment Method "Tunai"; isi Amount Tendered Rp20.000; klik Complete | Sistem menolak dan pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tunai — isi Amount Tendered (uang yang diberikan pelanggan); changeamount (kembalian) terhitung otomatis. Amount Tendered harus ≥ total transaksi, tidak bisa kurang |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kartu Debit/Kredit — tidak ada kembalian, nominal harus pas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pesanan yang sudah Completed atau Voided tidak bisa di-Resume lagi |
@@ -67,8 +67,8 @@ Bab manual: [`pos/04-tutup-cash-session.md`](../../erpApiServices/docs/manualBoo
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menutup Sesi Kasir (draf) | Apotek Sentosa Bandung menutup sesi kasir, menghitung selisih Rp 25.000, terposting ke jurnal penjualan | Selisih tercatat dan otomatis masuk jurnal penjualan |
-| Negatif — Input Uang Laci Salah (draf) | Apotek Sentosa Bandung memasukkan uang laci Rp 1.000.000 namun seharusnya Rp 975.000, sistem menolak input dan memberikan pesan kesalahan | Input ditolak pesan penolakan yang jelas |
+| Positif — Menutup sesi dengan selisih kurang (draf) | POS → Cash Sessions; Report; Close Session; Isi Closing Balance; Close; Debit Selisih Kas (beban), Kredit Kas Hasil Penjualan POS di Jurnal | Sesinya ditutup dan jurnal koreksi terbentuk otomatis |
+| Negatif — Menutup sesi dengan closing balance lebih dari expected (draf) | POS → Cash Sessions; Close Session; Isi Closing Balance lebih besar dari Expected Balance; Tidak dapat menutup sesi, muncul pesan kesalahan | Penutupan sesi ditolak dan meminta pengisian kembali Closing Balance yang benar |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau ada kekurangan kas yang harus ditanggung kasir, sistem meminta konfirmasi dulu dan baru menutup sesi setelah kasir mengonfirmasi. Penanganan kekurangan mengikuti pengaturan cabang dan saldo deposit kasir |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sesi berstatus Closed tidak bisa dipakai lagi untuk transaksi POS baru — mencoba membuat transaksi dengan sesi yang sudah closed akan ditolak |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -80,8 +80,8 @@ Bab manual: [`pos/05-verifikasi-ke-accounting.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Verifikasi POS ke Accounting (draf) | Transaksi OBT-001 di POS masuk jurnal dengan benar; metode pembayaran masuk akun kas 12101; HPP dan persediaan diperbarui; laporan keuangan akurat. | Transaksi tercatat dan disesuaikan dengan benar, laporan keuangan akurat. |
-| Negatif — Input HPP Salah (draf) | Transaksi OBT-001 di POS input HPP 5000 per item; jurnal POS tidak sesuai; HPP tidak diperbarui; pesan kesalahan "HPP tidak valid". | Input HPP salah, transaksi ditolak dengan pesan jelas. |
+| Positif — Verifikasi transaksi POS ke Accounting (draf) | Buka Accounting → Journals; Cek jurnal penjualan dan HPP dari transaksi POS di Jakarta | Semua transaksi tercatat dengan benar, stok Persediaan berkurang sesuai penjualan, Trial Balance seimbang |
+| Negatif — Persediaan tidak berkurang meski banyak penjualan POS (draf) | Buka Accounting → Journals; Cek Konfigurasi POS di Jakarta; Pastikan HPP dan Persediaan dipetakan dengan benar | Fungsi HPP dan Persediaan belum dipetakan, atau biaya barang yang terjual nol; Petakan keduanya di Konfigurasi POS dan pastikan stok punya biaya |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -91,8 +91,8 @@ Bab manual: [`pos/06-konfigurasi-pos-lanjutan.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Konfigurasi struk untuk apotek Sentosa Bandung dengan logo dan informasi khusus | Struk terkonfigurasi dengan benar, mencakup logo dan informasi spesifik apotek |
-| Negatif — input salah (draf) | Mencoba mengonfigurasi struk tanpa logo atau informasi yang diperlukan | Konfigurasi ditolak pesan penolakan yang jelas |
+| Positif — Konfigurasi Struk (draf) | Pilih "Full-width cartpesan yang jelasShow Product Picturespesan yang jelasTerima kasih telah berbelanja bersama kami!"; cetak struk. | Struk mencetak logo di tengah, menampilkan foto produk, dan footer teks sesuai yang dimasukkan. |
+| Negatif — Waktu Posting Jurnal (draf) | Aktifkan pesan yang jelas tanpa melakukan transaksi; tutup cash session. | Muncul pesan error karena tidak ada transaksi untuk diposting dalam jurnal. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Saklar "Require Journal Approval" — kalau aktif, jurnal otomatis yang terbentuk dari transaksi POS dan Refund tidak langsung masuk ke General Ledger, tapi harus melalui alur persetujuan (Approval) dulu |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Auto-map hanya bekerja untuk branch yang memakai struktur Chart of Accounts standar bawaan sistem. Kalau branch memakai Chart of Accounts custom (dibuat manual dari nol), tombol ini tidak akan mengisi apa-apa — mapping harus diisi manual satu per satu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -104,8 +104,8 @@ Bab manual: [`pos/07-diskon-promo-member-dan-cashback.md`](../../erpApiServices/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Member Tiers (draf) | Buat aturan member: Platinum (10%), Gold (5%), Silver (2%) | Kasir dapat memilih tingkatan member saat transaksi dan diskon diterapkan sesuai aturan |
-| Negatif — Promo "Beli 3 Gratis 1" (draf) | Input produk tidak termasuk dalam promo | Transaksi ditolak pesan penolakan yang jelas |
+| Positif — Aturan diskon flash sale (draf) | Pilih "Flash Sale" pada Discount Type; isi Valid From 10:00 25/10/2023, Valid Until 14:00 25/10/2023; pilih tingkatan member Gold; cek apakah diskon muncul di transaksi kasir pada waktu 12:00 25/10/2023 | Diskon muncul dalam pilihan di POS, berlaku untuk pelanggan Gold |
+| Negatif — Flash sale luar jangka waktu (draf) | Pilih "Flash Sale" pada Discount Type; isi Valid From 10:00 26/10/2023, Valid Until 14:00 25/10/2023; cek apakah diskon muncul di transaksi kasir pada waktu 12:00 25/10/2023 | Diskon tidak muncul dalam pilihan di POS, pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Opsional: Minimum Order Amount (transaksi harus mencapai nominal ini dulu supaya dapat cashback) dan Maximum Cashback Amount (batas cashback maksimal per transaksi, untuk diskon tipe persentase) |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -116,8 +116,8 @@ Bab manual: [`pos/08-diagram-alur-pos.md`](../../erpApiServices/docs/manualBook/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Buka kasir, transaksi penjualan obat Paracetamol 500 mg strip (SKU OBT-001), bayar QRIS, tutup kasir; stok berkurang, transaksi tercatat | Proses selesai dengan benar, stok dan transaksi akurat |
-| Negatif — input salah (draf) | Void transaksi tanpa buka kasir terlebih dahulu; pesan penolakan yang jelas muncul | Tidak dapat void tanpa memenuhi syarat, pesan jelas diberikan |
+| Positif — Transaksi penjualan dengan QRIS (draf) | Buka kasir; pilih produk OBT-002; masukkan jumlah 1; cek stok; bayar menggunakan QRIS; konfirmasi pembayaran berhasil | Stok OBT-002 berkurang, transaksi disimpan, jurnal pembayaran QRIS terbentuk |
+| Negatif — Refund transaksi yang belum selesai (draf) | Coba refund transaksi status Held; cek pesan error | Tidak bisa melakukan refund, pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | H --/"Ya, mode Block"/ I["Close ditolak<br/Resume atau batalkan dulu"] |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | H --/"Tidak"/ K["Hitung kas fisik<br/bandingkan dengan kas seharusnya"] |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kasir hanya bisa memakai Cash Session yang ia buka sendiri, kecuali ia manager |
@@ -131,8 +131,8 @@ Bab manual: [`pos/09-qris-kas-masuk-keluar-dan-deposit-kasir.md`](../../erpApiSe
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menerima pembayaran QRIS (draf) | Kasir menerima pembayaran QRIS pelanggan, transaksi tercatat dengan benar di POS, pelanggan mendapatkan struk resmi | Transaksi sukses, struk diberikan kepada pelanggan |
-| Negatif — Input nomor QRIS salah (draf) | Sistem menolak transaksi, memberikan pesan kesalahan input nomor QRIS tidak valid, kasir memasukkan nomor QRIS yang benar kembali | Transaksi ditolak, kasir diminta memasukkan nomor QRIS yang valid |
+| Positif — Menerima pembayaran QRIS (draf) | Di layar pembayaran terminal, pilih metode QRIS; Kode QR muncul dengan nominal 20.000; Layar pelanggan menampilkan kode QR dan sisa waktu 30 detik; Tunggu konfirmasi pembayaran dari penyedia; Transaksi status Completed | Transaksi terposting ke akun Kliring Pembayaran Online, stok berkurang sesuai penjualan, jurnal terbentuk otomatis |
+| Negatif — Mencatat kas keluar melebihi uang di laci (draf) | Di layar sesi kasir yang terbuka, pilih Kas Keluar; Isi jumlah 50.000, akun lawan Kas Laci, alasan Penjualan; Coba simpan dengan saldo laci hanya 40.000 | Sistem menolak input dan memberikan pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kas keluar tidak boleh lebih besar dari uang yang ada di laci |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Catatan kas masuk dan kas keluar tidak bisa diubah atau dihapus. Koreksi dengan Balikkan, hanya selama sesi masih terbuka |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | QRIS toko sendiri (EDC atau bank): kasir mengonfirmasi sendiri bahwa pembayaran sudah diterima, karena sistem tidak bisa mengeceknya ke penyedia |

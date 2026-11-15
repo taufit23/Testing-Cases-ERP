@@ -21,8 +21,8 @@ Bab manual: [`general-affairs/01-konfigurasi-general-affairs.md`](../../erpApiSe
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi General Affairs (draf) | Konfigurasi mode pengadaan, gudang, penegakan jatah, bebas tanggungan, jurnal, persetujuan, dan fitur terjadwal untuk cabang Klinik Pratama & Laboratorium Bekasi; hasil yang diharapkan adalah pengaturan berjalan dengan lancar | Pengaturan General Affairs berhasil dikonfigurasi sesuai aturan baku perusahaan |
-| Negatif — Konfigurasi General Affairs (draf) | Menginput data jurnal tanpa persetujuan terlebih dahulu; hasil yang diharapkan adalah penolakan konfigurasi pesan penolakan yang jelas | Konfigurasi ditolak dengan pesan kesalahan yang jelas dan konfigurasi tidak berubah |
+| Positif — Konfigurasi GA untuk Klinik Pratama (draf) | Buka `General Affairs → Configs`; pilih mode pengadaan `Purchase Request`; pilih gudang; nyalakan jurnal akuntansi dengan akun persediaan 12345, biaya 67890, dan lawan 11223; klik **Simpan Konfigurasi** | Pesan sukses muncul; halaman memuat ulang konfigurasi GA Klinik Pratama |
+| Negatif — Mode pengadaan tanpa Purchasing diaktifkan (draf) | Buka `General Affairs → Configs`; pilih mode pengadaan `Blanket Agreement`; coba klik **Simpan Konfigurasi** | Muncul pesan penolakan yang jelas; konfigurasi GA tidak disimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Mode pengadaan Purchase Request dan Blanket Agreement terkunci (tidak bisa dipilih) bila cabang belum memakai modul Purchasing. Mode Manual selalu bisa dipilih |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Penjadwal berjalan di server. Bila tidak ada tanda aktif dalam dua hari, halaman menampilkan peringatan; pengguna biasa tidak dapat memperbaikinya |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -34,8 +34,8 @@ Bab manual: [`general-affairs/02-barang-dan-unit.md`](../../erpApiServices/docs/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mendaftar Jamu (draf) | Input: Jenis Item Jamu, Kondisi Baik, Perawatan Rutin, Pensiun Tidak, Riwayat Pemegang HRB-001 | Berhasil mendaftar jamu dengan detail kondisi dan riwayat pemegang |
-| Negatif — Mendaftar Unit Tanpa Nomor Tag (draf) | Input: Jenis Item Amoxicillin, Tidak Memasukkan Nomor Tag | Ditolak karena wajib memasukkan nomor tag untuk unit fisik |
+| Positif — Mendaftarkan unit obat (draf) | Buka `/ga/units`; pilih Paracetamol 500 mg strip (SKU OBT-001), isi jumlah 10, tag otomatis; klik Simpan | Unit Paracetamol 500 mg strip muncul di daftar Units dengan status Available dan pemegang kosong |
+| Negatif — Mendaftarkan unit tanpa stok (draf) | Buka `/ga/units`; pilih Paracetamol 500 mg strip (SKU OBT-001), isi jumlah 20, tag kosong; klik Simpan | Muncul pesan penolakan yang jelas dan tidak ada unit yang terdaftar |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jenis barang ada empat dan tidak bisa dikarang: habis pakai, serah-terima, inventaris pegawai (custody), fasilitas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Nama, kode SKU, dan satuan wajib diisi pada Item |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Unit yang masih dipegang pegawai tidak boleh dianggap bebas; pemegang saat ini ditampilkan di daftar dan detail unit |
@@ -49,8 +49,8 @@ Bab manual: [`general-affairs/03-jatah-kapitalisasi-dan-kategori-kesalahan.md`](
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Jatah (draf) | Menentukan jatah pengambilan barang untuk staf pembelian sebesar 500 unit per hari | Staf pembelian diberikan akses dengan batas 500 unit per hari |
-| Negatif — Aturan kapitalisasi (draf) | Memasukkan obat Paracetamol ke dalam aset tetap tanpa syarat menjadi aset tetap | Sistem menolak input dan memberikan pesan penolakan yang jelas |
+| Positif — Menetapkan jatah stok untuk pegawai (draf) | Buka /ga/quotas; tambah; pilih Paracetamol 500 mg strip (SKU OBT-001); berlaku untuk Pegawai; masukkan kuantitas 200; periode Bulanan; simpan | Jatah stok Paracetamol 500 mg strip (SKU OBT-001) ditetapkan untuk pegawai dengan batas 200 per bulan |
+| Negatif — Menggunakan nama kategori kesalahan yang sudah ada di cabang (draf) | Buka /ga/fault-categories; tambah; masukkan nama "Kehilangan"; persentase beban pegawai 50%; tandai wajib dokumen; simpan | Muncul pesan galat pesan yang jelas dan input tidak disimpan, tetapkan nama lain untuk kategori kesalahan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jatah dicek saat permintaan diajukan dan saat pengeluaran diposting. Hasilnya bergantung pada mode Penegakan jatah di Configs: Mati tidak mengecek, Peringatan memberi tahu dan tetap melanjutkan, Blokir menolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Nama kategori kesalahan harus unik per cabang; nama kembar ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi nama, persentase beban pegawai, dan tandai wajib dokumen bila bukti harus dilampirkan |
@@ -63,8 +63,8 @@ Bab manual: [`general-affairs/04-kebijakan-ganti-rugi.md`](../../erpApiServices/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Karyawan kehilangan obat Paracetamol 500 mg strip (SKU OBT-001) dan melaporkan ke gudang; ganti rugi dengan harga beli dikurangi potongan gaji | Ganti rugi diberikan sesuai kebijakan, potongan gaji dilakukan, catatan transaksi terperinci |
-| Negatif — input salah (draf) | Karyawan membeli obat Paracetamol 500 mg strip (SKU OBT-001) pribadi; laporan hilang disusupi | Laporan ditolak, karyawan diberikan penjelasan tentang kebijakan yang berlaku dan tidak dapat mengganti rugi barang yang dibeli pribadi |
+| Positif — Menambah kebijakan ganti rugi (draf) | Buka General Affairs → Settlement Policies; Tambah; Nama: Kebijakan A; Jenis penyelesaian: Kehilangan; Cara penyelesaian: Bayar nominal; Metode harga: Nominal tetap; Nominal tetap: 100000; Simpan | Kebijakan "Kebijakan A" muncul di daftar dan bisa dipilih saat membuat kasus penyelesaian. |
+| Negatif — Menambah kebijakan tanpa nama (draf) | Buka General Affairs → Settlement Policies; Tambah; Nama: kosong; Jenis penyelesaian: Kehilangan; Cara penyelesaian: Bayar nominal; Metode harga: Nominal tetap; Nominal tetap: 100000; Simpan | Muncul pesan penolakan yang jelas dan tidak ada kebijakan baru yang muncul di daftar. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Metode nominal tetap wajib mengisi jumlah. Metode persentase menurut umur wajib memiliki minimal satu rentang umur (bulan dari–sampai). Metode berbasis persentase wajib mengisi persentase |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jangan menyatakan potong gaji selalu sah; pasti ada catatan hukum yang harus dibaca pengguna di layar |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 5. Atur pembayaran: izinkan potong gaji (dan batas persen), izinkan cicilan (dan jumlah maksimum), wajib pengakuan pegawai, dan masa tenggang (hari) |
@@ -77,8 +77,8 @@ Bab manual: [`general-affairs/05-penerimaan-barang.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Penerimaan Barang General Affairs (draf) | Mencatat penerimaan barang kantor, mengisi form draf, menandatangani dan memasukkan ke sistem | Proses penerimaan berhasil, saldo awal tercatat dengan benar |
-| Negatif — Input data salah (draf) | Form draf tidak lengkap, tanpa nomor transaksi atau tanggal | Tolakan: pesan yang jelas |
+| Positif — Penerimaan barang dengan saldo awal (draf) | Buka `/ga/receipts`; tambah draf; pilih `Saldo Awal` untuk Paracetamol 500 mg strip, isi kuantitas 100 dan biaya per unit 15000; simpan sebagai draf; konfirmasi terima barang; ganti status menjadi 'Terima' | Stok Paracetamol 500 mg strip di gudang GA bertambah 100, jurnal terbentuk sesuai pemetaan akun |
+| Negatif — Penerimaan tanpa saldo awal untuk barang baru (draf) | Buka `/ga/receipts`; tambah draf; pilih Paracetamol 500 mg strip, isi kuantitas 100 dan biaya per unit 15000; simpan sebagai draf; coba konfirmasi terima barang | Pesan galat: pesan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -88,8 +88,8 @@ Bab manual: [`general-affairs/06-permintaan-dan-pengeluaran-barang.md`](../../er
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Pegawai meminta obat Paracetamol 500 mg strip (draf) | Pegawai meminta, bagian umum cek stok, keluarkan ke pegawai sesuai jatah | Obat dikeluarkan dan diserahkan kepada pegawai dengan catatan |
-| Negatif — Pegawai meminta obat yang tidak ada stok (draf) | Bagian umum menolak permintaan karena stok habis, berikan solusi alternatif | Permintaan ditolak dengan penjelasan stok habis dan saran penggantinya |
+| Positif — Pegawai meminta barang (draf) | Pegawai Jakarta meminta 50 strip Paracetamol 500 mg (SKU OBT-001) untuk klinik Bekasi; diajukan, disetujui, dan dikeluarkan ke Klinik Pratama | Stok gudang GA berkurang, pegawai Klinik Pratama tercatat sebagai pemegang barang bernomor tag, jumlah 50 strip Paracetamol 500 mg muncul di permintaan |
+| Negatif — Jatah melebihi batas (draf) | Pegawai Jakarta meminta 100 strip Paracetamol 500 mg (SKU OBT-001) untuk klinik Bekasi; diajukan, tetapi disetop karena jatah terlampaui di mode penegakan | Muncul pesan penolakan yang jelas; permintaan tidak bisa dikeluarkan ke gudang GA |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | My Requests hanya tersedia bila saklar Pegawai boleh meminta sendiri menyala; bila mati, halaman menyatakan pegawai tidak bisa meminta barang di cabang ini |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Hanya permintaan draf yang boleh diedit atau diajukan. Permintaan yang sudah berlanjut tidak bisa dibatalkan lagi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jangan mengeluarkan barang tanpa pegawai penerima; penerima wajib diisi |
@@ -103,8 +103,8 @@ Bab manual: [`general-affairs/07-pengembalian-barang.md`](../../erpApiServices/d
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Pengembalian barang (draf) | Pegawai mengembalikan obat Paracetamol (SKU OBT-001) dalam kondisi baik; dicatat dan disetujui oleh manajer keuangan | Transaksi pengembalian tercatat dengan benar, status stok diperbarui secara otomatis |
-| Negatif — Kondisi barang rusak (draf) | Pegawai mencatat obat Paracetamol (SKU OBT-001) dalam kondisi rusak; manajer keuangan menolak tanpa alasan | Tidak dapat disimpan, muncul pesan galat pesan yang jelas dan harus diisi ulang dengan alasan yang valid |
+| Positif — Pengembalian barang dengan kondisi baik (draf) | General Affairs → Returns; Pilih pengeluaran OBT-001; Isi jumlah 50, Tanggal pengembalian 2023-10-01, Kondisi baik; Simpan, Terima Pengembalian, Konfirmasi | Riwayat pemegang unit mencatat tanggal kembali 2023-10-01 dan kondisi baik; Stok gudang OBT-001 bertambah 50 |
+| Negatif — Jumlah lebih besar dari yang masih dipegang pegawai (draf) | General Affairs → Returns; Pilih pengeluaran OBT-001; Isi jumlah 60, Tanggal pengembalian 2023-10-01, Kondisi baik; Simpan | Pesan galat: Jumlah lebih besar dari yang masih dipegang pegawai; Status tetap draf dan stok gudang tidak berubah |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jumlah yang dikembalikan tidak boleh melebihi yang masih dipegang pegawai. Bila tidak ada sisa, layar menyatakan tidak ada yang bisa dikembalikan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kondisi tiap barang wajib dipilih: baik, rusak, atau hilang |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -116,8 +116,8 @@ Bab manual: [`general-affairs/08-pemesanan-unit-bersama.md`](../../erpApiService
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Pemesanan unit bersama (draf) | Menjadwalkan proyektor untuk klinik, mencatat check-in dan check-out | Proyektor disiapkan sesuai jadwal, catatan check-in dan check-out tercatat dengan benar |
-| Negatif — Input tanggal tidak valid (draf) | Memasukkan tanggal di masa lalu untuk pemesanan | Tidak dapat memproses pemesanan, silakan masukkan tanggal di masa depan |
+| Positif — Pemesanan unit proyektor untuk klinik (draf) | Buka General Affairs → Bookings; pilih proyektor; awal 10:00, akhir 12:00; tujuan Klinik Pratama; pegawai Kepala Gudang; Simpan; Check-out saat mengambil; Check-in saat kembali; pegawai Kepala Gudang | Pemesanan tampil di daftar dengan status "Check-in"; check-out dan check-in tercatat pada waktunya |
+| Negatif — Waktu akhir sebelum awal (draf) | Buka General Affairs → Bookings; pilih proyektor; awal 10:00, akhir 9:00; tujuan Klinik Pratama; pegawai Kepala Gudang; Simpan | Muncul pesan penolakan yang jelas; pemesanan tidak tersimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Waktu selesai harus setelah waktu mulai. Bila tidak, pemesanan ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Unit dengan rencana perawatan yang memblokir pemakaian saat terlambat tidak boleh dipakai selama perawatannya terlambat |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -129,8 +129,8 @@ Bab manual: [`general-affairs/09-perawatan-dan-masa-berlaku.md`](../../erpApiSer
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | PT Sehat Sentosa Farma membuat rencana perawatan untuk gudang dan alat kesehatan; mencatat hasil perawatan secara rapi; memantau masa berlaku barang dengan baik | Rencana perawatan teratur, catatan akurat, penanganan barang sesuai jadwal |
-| Negatif — input salah (draf) | Input data perawatan tidak lengkap; masa berlaku salah diinput | Tidak dapat membuat rencana perawatan yang valid; sistem menolak input dan memberikan pesan kesalahan yang jelas |
+| Positif — Membuat rencana perawatan (draf) | Buka `General Affairs → Maintenance Plans`; tambah nama pesan yang jelas, pilih unit pesan yang jelas, jenis "inspeksipesan yang jelasKepala Gudang", blokir pemakaian bila terlambat; simpan | Rencana perawatan muncul dengan status jatuh tempo 15 Des 2023 |
+| Negatif — Input interval kurang dari satu hari (draf) | Buka `General Affairs → Maintenance Plans`; tambah nama pesan yang jelas, pilih unit, jenis, interval 0 hari; coba simpan | Muncul pesan penolakan yang jelas dan tidak bisa disimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Rencana perawatan terikat pada satu unit. Nama wajib diisi, interval minimal satu hari, dan jatuh tempo berikutnya wajib diisi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Opsi blokir pemakaian bila terlambat membuat unit yang lewat jatuh tempo tidak bisa dipesan |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -142,8 +142,8 @@ Bab manual: [`general-affairs/10-pengadaan-dan-program-kegiatan.md`](../../erpAp
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Pengadaan Barang Kantor (draf) | Membuat permintaan pengadaan kertas toilet, diteruskan ke Purchasing; stok menipis | Permintaan berhasil dikirim ke Purchasing, stok diperbarui |
-| Negatif — Program Kegiatan Tidak Dibudgetkan (draf) | Input program tanpa alokasi anggaran; mencoba menyimpan | Ditolak pesan penolakan yang jelas |
+| Positif — Membuat permintaan pengadaan baru (draf) | Buka `General Affairs → Procurement Requests`; klik **Buat Permintaan Baru**; masukkan barang Paracetamol 500 mg strip, jumlah 100, tanggal dibutuhkan 2023-10-01; klik **Ajukan**; permintaan berubah menjadi Purchase Request | Purchase Request untuk Paracetamol 500 mg strip 100 di Purchasing |
+| Negatif — Membuat permintaan pengadaan tanpa persetujuan (draf) | Buka `General Affairs → Procurement Requests`; klik **Buat Permintaan Baru**; masukkan barang Paracetamol 500 mg strip, jumlah 100; coba klik **Ajukan**; pesan penolakan yang jelas | Tidak bisa mengajukan permintaan tanpa persetujuan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Permintaan pengadaan berstatus draf; hanya draf yang boleh diedit atau diajukan. Setelah diproses, permintaan tidak bisa dibatalkan lagi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Mode pengadaan yang membutuhkan Purchasing ditolak bila cabang tidak memakainya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Buka detail, klik Ajukan (bila persetujuan diwajibkan, tunggu disetujui; lewat tombol Buka Persetujuan) |
@@ -157,8 +157,8 @@ Bab manual: [`general-affairs/11-penyelesaian-ganti-rugi.md`](../../erpApiServic
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Ganti rugi obat (draf) | Pegawai mengajukan ganti rugi Paracetamol 500 mg strip (OBT-001), nilai taksiran Rp200.000, disetujui manajer keuangan, pembayaran dilakukan dalam jangka waktu 7 hari | Ganti rugi diberikan sesuai nilai taksiran dan proses ditutup dengan status "Selesai" |
-| Negatif — Ganti rugi alat medis (draf) | Pegawai mengajukan ganti rugi kursi roda (ALK-001) tanpa nilai taksiran, disetujui manajer keuangan | Pengajuan ditolak karena syarat nilai taksiran tidak terpenuhi pesan penolakan yang jelas |
+| Positif — Kasus ganti rugi obat oleh pegawai (draf) | Buka `General Affairs → Settlements`; pilih pegawai, unit Alkohol Swab (ALK-002), kebijakan, kategori kesalahan, nilai taksiran; ajukan persetujuan; pegawai mengakui; atur pembayaran tunai 3 kali dengan uang muka 100.000, jatuh tempo pertama 1 Januari 2024; catat pembayaran; tutup kasus | Jadwal pembayaran terbentuk dan jumlah dibayar bertambah tiap pembayaran. Kasus berstatus tertutup saat lunas. |
+| Negatif — Tidak ada persetujuan untuk draf kasus (draf) | Buka `General Affairs → Settlements`; pilih pegawai, unit Alkohol Swab (ALK-002), kebijakan, kategori kesalahan, nilai taksiran; coba atur pembayaran tanpa ajukan persetujuan | Muncul pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Urutan wajib: draf → ajukan persetujuan (bila diwajibkan) → pegawai mengakui → atur pembayaran → catat pembayaran → ditutup |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Bila kebijakan mewajibkan pengakuan, pegawai harus mengakui lebih dulu sebelum pembayaran diatur. Tombol Mengakui tidak bisa diulang |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jumlah cicilan tidak boleh melebihi maksimum kebijakan. Jadwal pembayaran hanya bisa diatur sekali |
@@ -172,8 +172,8 @@ Bab manual: [`general-affairs/12-bebas-tanggungan-dan-laporan.md`](../../erpApiS
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Bebas Tanggungan (draf) | Pegawai mengambil Paracetamol 500 mg strip (SKU OBT-001) tanpa tanggungan, tercatat di sistem | Status barang berubah menjadi "keluar" dengan nama pegawai yang mengambilnya |
-| Negatif — Input Salah (draf) | Pegawai mengambil obat tanpa nomor tanggungan, namun menulis kode SKU yang tidak sesuai | Sistem menolak permintaan dan memberikan pesan kesalahan tentang kebutuhan nomor tanggungan yang valid |
+| Positif — Pengecekan bebas tanggungan pegawai (draf) | Buka `/ga/clearances`; pilih Kepala Gudang; cek status | Menampilkan "bebas" atau daftar penghalang beserta rinciannya |
+| Negatif — Pengecekan tanpa menjalankan pengecekan di layar (draf) | Buka `/ga/clearances` tanpa memilih pegawai; klik "Cek"; pilih Kepala Gudang | Menampilkan pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Hasil pengecekan terlihat segera. Bila mode Blokir, pegawai yang punya penghalang tidak dapat diproses keluar sampai penghalang selesai |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -184,8 +184,8 @@ Bab manual: [`general-affairs/13-diagram-alur-general-affairs.md`](../../erpApiS
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Alur Barang GA (draf) | Penerimaan obat Paracetamol 500 mg strip dari pemasok, input data ke sistem | Sistem menerima data dan menambah stok dengan benar |
-| Negatif — Permintaan obat tak tersedia (draf) | Permintaan Vitamin C 1000 mg botol saat stok habis, tanpa pengadaan baru | Sistem menolak permintaan pesan penolakan yang jelas |
+| Positif — Membuat permintaan baru (draf) | Masuk My Requests; klik Permintaan Baru; pilih barang Paracetamol 500 mg strip (SKU OBT-001); isi jumlah 20 box; konfirmasi | Dokumen permintaan baru terbentuk, status Draft |
+| Negatif — Membatalkan permintaan tanpa login (draf) | Klik Batalkan pada dokumen permintaan; tidak bisa dilakukan | Pesan pesan yang jelas muncul |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Submitted -- Rejected: Ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | D --/"Stok kurang"/ E["Ditolak"] |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jadwal pemesanan satu unit tidak boleh bertabrakan dengan pemesanan lain yang masih berlaku |
