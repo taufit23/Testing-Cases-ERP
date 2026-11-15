@@ -175,7 +175,11 @@ def sanitize(rows):
     return out
 
 
-recs = [json.loads(l) for l in open(os.path.join(HERE, "chapters.jsonl"), encoding="utf-8")]
+recs = []
+for _n in ("chapters.v1.jsonl", "chapters.jsonl"):  # draf lama dulu, hasil baru menimpa
+    _p = os.path.join(HERE, _n)
+    if os.path.exists(_p):
+        recs += [json.loads(l) for l in open(_p, encoding="utf-8")]
 best = {}
 for r in recs:
     if r["rows"] or r["file"] not in best:

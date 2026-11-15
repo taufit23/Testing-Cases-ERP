@@ -1,2 +1,2 @@
-scripts/generate-testcases/chapters.jsonl
+scripts/generate-testcases/chapters*.jsonl
 scripts/generate-testcases/gen.log

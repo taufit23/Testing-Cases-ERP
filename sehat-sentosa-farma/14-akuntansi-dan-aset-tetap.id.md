@@ -23,8 +23,7 @@ Bab manual: [`accounting/01-setup-master-data-dan-saldo-awal.md`](../../erpApiSe
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Setup Chart of Account Type untuk Sentosa Farma; import template; verifikasi saldo awal di Journal & Reports | Semua account type terdefinisi dengan benar dan saldo awal akuntansi valid |
-| Negatif — input salah (draf) | Input salah dalam Chart of Account Type; coba import template yang tidak sesuai | Import ditolak pesan penolakan yang jelas |
+| Positif — Setup Chart of Account Type (draf) | Pilih "Use Template", pilih template ASSET, LIABILITY, EQUITY, REVENUE, EXPENSE; klik Apply/Use | Tampilan COA Type lengkap dengan 5 tipe akun yang dipilih, status sukses |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Langkah 5 (COA) butuh Chart of Account Type (Langkah 1) sudah ada, karena setiap akun wajib pilih tipe-nya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sama seperti Langkah 1 — tersedia Use Template, Add (manual satu-satu), Bulk Add, dan Import from Excel untuk COA. Setiap akun wajib terhubung ke Chart of Account Type (Langkah 1) yang sudah dibuat sebelumnya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Mengisi Opening Balance di sini otomatis memposting jurnal saldo awal ke General Ledger (lihat syarat di Langkah 5 — akun equity harus sudah ditandai). Tujuannya sama dengan Langkah 8, hanya beda titik masuk (dari Bank Account, bukan dari COA) |
@@ -37,7 +36,8 @@ Bab manual: [`accounting/02-jurnal-manual.md`](../../erpApiServices/docs/manualB
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Jurnal Penjualan Obat (draf) | Input jurnal penjualan obat Paracetamol 500 mg strip ke Apotek Sentosa Bandung; Approve & Post; Terlihat transaksi di laporan penjualan | Transaksi tercatat dengan benar, laporan penjualan update |
+| Positif — Membuat jurnal baru (draf) | Buka Journals; klik pesan yang jelas; masukkan Code: 202301, Date: 1 Januari 2023, Description: Pembelian obat; tambahkan baris dengan Account: Inventory (Debit), Tax %: 10%, Business Unit: Kantor Pusat & Distribusi Jakarta; klik Save | Header jurnal berubah status menjadi Balanced; jurnal baru muncul di daftar dengan status Draft |
+| Negatif — Menghapus jurnal yang sudah posted (draf) | Buka Journals; pilih jurnal yang sudah Posted; coba klik tombol Delete | Muncul pesan penolakan yang jelas; status jurnal tetap Posted |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jurnal yang sudah Posted tidak bisa dihapus atau diedit langsung — karena sudah resmi mengubah saldo dan mungkin sudah "dilaporkan" ke pihak lain (bank, kantor pajak, dst). Satu-satunya cara mengoreksi jurnal yang sudah posted adalah Reverse: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kedua jurnal (asli + kebalikannya) tetap tersimpan selamanya — ini prinsip audit trail: riwayat tidak boleh hilang atau berubah diam-diam, koreksi harus lewat entri baru, bukan mengubah yang lama |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jurnal yang masih Draft tidak bisa di-Reverse (tombolnya nonaktif) — untuk jurnal draft yang salah, langsung Delete saja, tidak perlu reverse |
@@ -51,8 +51,8 @@ Bab manual: [`accounting/03-general-ledger-dan-neraca-saldo.md`](../../erpApiSer
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Detail Ledger (draf) | Cek detail ledger Paracetamol 500 mg strip (SKU OBT-001) di kantor pusat | Jurnal tercatat dengan benar dan sesuai saldo akhir bulan |
-| Negatif — Summary by Account (draf) | Menggunakan filter salah untuk account non-exist | Tampilan error atau pesan bahwa account tidak ditemukan, tidak menampilkan data apa pun |
+| Positif — Menampilkan detail ledger akun Paracetamol 500 mg strip (SKU OBT-001) dari Januari hingga Desember 2026 (draf) | Buka General Ledger; Pilih Account: SKU OBT-001; Date From: 01/01/2026; Date To: 31/12/2026; Klik Search | Kartu Opening Balance, Period Movement, dan Closing Balance akun Paracetamol 500 mg strip ditampilkan. Tabel menunjukkan riwayat transaksi dengan saldo berjalan per tanggal. |
+| Negatif — Trial Balance tidak seimbang untuk periode Januari 2026 karena ada jurnal yang tercatat hanya sebelah (draf) | Buka Trial Balance; Pilih Period: Januari 2026; Klik Search; Periksa baris Total | Pesan error muncul menunjukkan Debit ≠ Kredit. Baris Total menunjukkan jumlah Debit dan Kredit yang tidak seimbang, mengindikasikan ada jurnal yang tercatat hanya sebelah. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi filter: Account (wajib pilih satu akun), Date From, Date To |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tabel menampilkan kolom Beginning/Period Movement/Ending Balance per akun, dengan baris Total di paling bawah. Baris Total inilah yang paling penting: total Debit harus sama dengan total Kredit untuk seluruh akun |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -64,7 +64,8 @@ Bab manual: [`accounting/04-tutup-periode-dan-tahun-fiskal.md`](../../erpApiServ
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Tutup Periode Bulanan (draf) | Langkah: Pilih periode Januari 2023, klik "Close", konfirmasi | Periode Januari 2023 terkunci dan laporan keuangan bulan tersebut tersedia |
+| Positif — Menutup Periode Bulanan (draf) | Masuk ke `/client-master/accounting-period`, cari periode Januari 2023, klik menu ⋮ → Close Period → konfirmasi; Kolom Closed berubah jadi badge merah. | Tidak ada jurnal baru yang bisa diposting untuk periode Januari 2023, tetapi masih bisa dibuka lagi jika diperlukan koreksi. |
+| Negatif — Menutup Periode Bulanan dengan Jurnal Draft Masih Ada (draf) | Masuk ke `/client-master/accounting-period`, cari periode Januari 2023 yang memiliki jurnal draft, klik menu ⋮ → Close Period; Sistem menolak pesan penolakan yang jelas | Tidak ada perubahan pada status periode, tetap bisa memasukkan jurnal baru. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Pastikan semua jurnal bertanggal bulan tersebut sudah Posted (bukan Draft) — kalau masih ada draft, Close akan ditolak dengan pesan jelas ("ada jurnal belum posted, post atau hapus dulu") |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Periode yang belum Closed tidak bisa langsung di-Lock (opsi ini otomatis nonaktif). Setelah Locked, sama seperti Closed — tidak ada jurnal baru yang bisa masuk ke tanggal tersebut |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Semua Accounting Period dalam tahun itu (biasanya 12 bulan) harus sudah Closed. Kalau bulan tertentu tidak ada transaksinya sama sekali, tetap bisa di-Close (tidak ada jurnal draft yang memblokir) |

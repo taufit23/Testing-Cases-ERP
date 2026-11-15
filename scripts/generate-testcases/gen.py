@@ -4,7 +4,8 @@ ROOT = r"C:/Users/LGRta/Desktop/personalRoom/ERP/ERP/ERP_PROJECT/erpApiServices/
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chapters.jsonl")
 SPINE = """Perusahaan uji: PT Sehat Sentosa Farma (merek "Sentosa Farma"), grup usaha kesehatan, NPWP PKP, mata uang Rupiah. Cabang: (1) Kantor Pusat & Distribusi Jakarta (gudang obat dan alat kesehatan, penjualan grosir ke klinik dan apotek mitra, akuntansi pusat); (2) Apotek Sentosa Bandung (POS, resep, QRIS); (3) Klinik Pratama & Laboratorium Bekasi (jasa, kasir, tenaga medis); (4) Pabrik Herbal Sukabumi (produksi jamu dan racikan, bahan baku kalsium karbonat dari tambang kapur CV Kapur Medika); (5) Kafe Sehat di lobi klinik (restoran); layanan Sewa Alat Medis (kursi roda, tabung oksigen, tempat tidur pasien).
 Contoh data: produk Paracetamol 500 mg strip (SKU OBT-001), Amoxicillin 500 mg (OBT-002, resep), Vitamin C 1000 mg botol (SUP-001), Masker Medis box 50 (ALK-001), Alkohol Swab (ALK-002), Jamu Kunyit Asam sachet (HRB-001); pemasok PT Bintang Farmasi Utama dan PT Alkes Prima Mandiri; pelanggan Klinik Pratama Harapan Sehat dan Apotek Mitra Sehat; peran: Apoteker Penanggung Jawab, Kepala Gudang, Kasir, Staf Pembelian, Manajer Keuangan, Direktur."""
-FORMAT = """Tulis HANYA 2 baris tabel markdown dengan 3 kolom `| Skenario | Langkah dan data uji | Hasil yang diharapkan |`. Baris 1 diawali "Positif — " (jalur normal berhasil), baris 2 diawali "Negatif — " (input salah atau syarat tidak terpenuhi, harus ditolak dengan pesan jelas). Pakai nama entitas dari data perusahaan uji. Tiap sel maksimal 30 kata, Bahasa Indonesia, tanpa baris header, tanpa teks lain, tanpa blok kode."""
+FORMAT = """ATURAN KETAT: gunakan HANYA nama menu, tombol, status, dan pesan yang tertulis di ISI BAB di bawah; jangan mengarang fitur. Kolom Langkah berisi urutan aksi konkret (menu, tombol, data dari perusahaan uji) dipisah titik koma. Kolom Hasil berisi akibat yang terlihat (status, stok, jurnal, pesan) menurut isi bab. Jangan menulis kalimat "hasil yang diharapkan" di kolom Langkah dan jangan mengulang judul fitur. Baris Negatif harus memakai satu aturan penolakan atau tabel masalah dari isi bab.
+Tulis HANYA 2 baris tabel markdown dengan 3 kolom `| Skenario | Langkah dan data uji | Hasil yang diharapkan |`. Baris 1 diawali "Positif — " (jalur normal berhasil), baris 2 diawali "Negatif — " (input salah atau syarat tidak terpenuhi, harus ditolak dengan pesan jelas). Pakai nama entitas dari data perusahaan uji. Tiap sel maksimal 30 kata, Bahasa Indonesia, tanpa baris header, tanpa teks lain, tanpa blok kode."""
 
 def fm(text):
     m = re.match(r"---\n(.*?)\n---", text, re.S)
@@ -18,8 +19,15 @@ def fm(text):
 def heads(text):
     return [h.strip() for h in re.findall(r"^#{2,3}\s+(.+)$", text, re.M)][:10]
 
+def body(text):
+    t = re.sub(r"^---"+chr(10)+".*?"+chr(10)+"---"+chr(10), "", text, count=1, flags=re.S)
+    t = re.sub(r"```.*?```", "", t, flags=re.S)
+    t = re.sub(r"<!--.*?-->|<span[^>]*>.*?</span>", "", t, flags=re.S)
+    t = re.sub(chr(10)+"{2,}", chr(10), t)
+    return t[:3800]
+
 def chat(prompt):
-    body = {"model": "qwen2.5:7b-instruct", "stream": False, "options": {"num_ctx": 8192, "temperature": 0.3, "num_predict": 300},
+    body = {"model": "qwen2.5:7b-instruct", "stream": False, "options": {"num_ctx": 8192, "temperature": 0.3, "num_predict": 420},
             "messages": [{"role": "system", "content": SPINE}, {"role": "user", "content": prompt}]}
     req = urllib.request.Request("http://localhost:11434/api/chat", data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
     return json.load(urllib.request.urlopen(req, timeout=900))["message"]["content"]
@@ -28,7 +36,7 @@ def work(item):
     mod, path = item
     t = open(path, encoding="utf-8").read()
     meta = fm(t)
-    prompt = f"Fitur yang diuji (bab manual book modul {mod}): {meta.get('title','')}\nRingkasan: {meta.get('description','')}\nBagian bab: {'; '.join(heads(t))}\n\n{FORMAT}"
+    prompt = f"Fitur yang diuji (bab manual book modul {mod}): {meta.get('title','')}\nRingkasan: {meta.get('description','')}\nBagian bab: {'; '.join(heads(t))}\n\nISI BAB:\n{body(t)}\n\n{FORMAT}"
     t0 = time.time()
     try:
         out = chat(prompt)
