@@ -7,7 +7,7 @@ visibility: internal
 
 # 99. Peta Cakupan
 
-Jumlah bab manual book yang dipetakan: **142**. Dihasilkan otomatis dari folder manual book; bab baru yang belum ada di sini berarti belum punya kasus uji.
+Jumlah bab manual book yang dipetakan: **203**. Dihasilkan otomatis dari folder manual book; bab baru yang belum ada di sini berarti belum punya kasus uji.
 
 | Modul manual | Bab | Berkas bab | Kasus uji |
 | --- | --- | --- | --- |
@@ -153,5 +153,66 @@ Jumlah bab manual book yang dipetakan: **142**. Dihasilkan otomatis dari folder 
 | dashboard | Dashboard HRM, Karyawan, dan Pemakaian AI | `dashboard/03-dashboard-sdm-notifikasi-dan-lainnya.md` | `18` bagian 3 |
 | reports | Laporan Lintas Modul — Reports | `reports/01-laporan-lintas-modul.md` | `19` bagian 1 |
 | halaman-publik | Halaman untuk Pihak Luar: Pelamar, Penawaran, Restoran, dan Pengiriman Pemasok | `halaman-publik/01-halaman-untuk-pihak-luar.md` | `20` bagian 1 |
+| accounting | Diagram Alur Accounting — Modul Accounting | `accounting/11-diagram-alur-accounting.md` | `22` bagian A |
+| canvassing | Pelacakan Gerak dan Klaim Biaya Sales — Modul Sales Canvassing | `canvassing/09-pelacakan-gerak-dan-klaim-biaya.md` | belum ada kasus uji (perlu digenerate) |
+| canvassing | Konfigurasi Klaim Biaya Sales Lapangan | `canvassing/10-konfigurasi-klaim-biaya.md` | belum ada kasus uji (perlu digenerate) |
+| canvassing | Konfigurasi Pelacakan Lapangan (GPS) | `canvassing/11-konfigurasi-pelacakan-lapangan.md` | belum ada kasus uji (perlu digenerate) |
+| canvassing | Sesi Kerja, Tujuan Perhentian, Pelacakan Langsung, dan Harga Pesaing | `canvassing/12-sesi-kerja-perhentian-dan-harga-pesaing.md` | belum ada kasus uji (perlu digenerate) |
+| canvassing | Diagram Alur Canvassing — Modul Canvassing | `canvassing/13-diagram-alur-canvassing.md` | `22` bagian A |
+| canvassing | Kebijakan Kerja Sales, Kepemilikan Pelanggan, dan Kolam Lead — Modul Canvassing | `canvassing/14-kepemilikan-pelanggan-dan-kolam-lead.md` | belum ada kasus uji (perlu digenerate) |
+| core | Diagram Alur Persetujuan — Modul Core | `core/06-diagram-alur-persetujuan.md` | `22` bagian A |
+| core | Hubungan Antar Modul — Modul Core | `core/07-hubungan-antar-modul.md` | `22` bagian B |
+| finance | Diagram Alur Finance — Modul Finance | `finance/03-diagram-alur-finance.md` | `22` bagian A |
+| general-affairs | Konfigurasi General Affairs | `general-affairs/01-konfigurasi-general-affairs.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Barang dan Unit General Affairs | `general-affairs/02-barang-dan-unit.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Jatah, Aturan Kapitalisasi, dan Kategori Kesalahan General Affairs | `general-affairs/03-jatah-kapitalisasi-dan-kategori-kesalahan.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Kebijakan Penyelesaian Ganti Rugi General Affairs | `general-affairs/04-kebijakan-ganti-rugi.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Penerimaan Barang General Affairs | `general-affairs/05-penerimaan-barang.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Permintaan Barang dan Pengeluaran ke Pegawai | `general-affairs/06-permintaan-dan-pengeluaran-barang.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Pengembalian Barang General Affairs | `general-affairs/07-pengembalian-barang.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Pemesanan Unit Bersama General Affairs | `general-affairs/08-pemesanan-unit-bersama.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Perawatan Unit dan Masa Berlaku General Affairs | `general-affairs/09-perawatan-dan-masa-berlaku.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Pengadaan Barang Kantor dan Program Kegiatan General Affairs | `general-affairs/10-pengadaan-dan-program-kegiatan.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Penyelesaian Ganti Rugi Barang General Affairs | `general-affairs/11-penyelesaian-ganti-rugi.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Bebas Tanggungan dan Laporan General Affairs | `general-affairs/12-bebas-tanggungan-dan-laporan.md` | belum ada kasus uji (perlu digenerate) |
+| general-affairs | Diagram Alur General Affairs — Modul General Affairs | `general-affairs/13-diagram-alur-general-affairs.md` | `22` bagian A |
+| halaman-publik | Halaman Publik: Bayar Tagihan, Portal Proyek, Karier, dan Berhenti Berlangganan — Halaman Publik | `halaman-publik/02-bayar-tagihan-portal-proyek-karier-dan-berhenti-berlangganan.md` | belum ada kasus uji (perlu digenerate) |
+| hrm | Konfigurasi Pelanggaran dan Sanksi Karyawan | `hrm/17-konfigurasi-pelanggaran.md` | belum ada kasus uji (perlu digenerate) |
+| hrm | Master Pelanggaran dan Sanksi Karyawan | `hrm/18-master-pelanggaran-dan-sanksi.md` | belum ada kasus uji (perlu digenerate) |
+| hrm | Melaporkan Pelanggaran, Banding, dan Sidang | `hrm/19-melaporkan-pelanggaran-banding-dan-sidang.md` | belum ada kasus uji (perlu digenerate) |
+| hrm | Menjatuhkan Sanksi Karyawan | `hrm/20-sanksi-karyawan.md` | belum ada kasus uji (perlu digenerate) |
+| hrm | Mesin Absensi (Fingerprint dan Wajah) | `hrm/21-mesin-absensi.md` | belum ada kasus uji (perlu digenerate) |
+| hrm | Halaman Karier Publik dan Absensi Saya | `hrm/22-halaman-karier-dan-absensi-saya.md` | belum ada kasus uji (perlu digenerate) |
+| hrm | Diagram Alur HRM — Modul HRM | `hrm/23-diagram-alur-hrm.md` | `22` bagian A |
+| hrm | KPI Karyawan: Rencana, Hasil, dan Tinjauan — Modul HRM | `hrm/24-kpi-karyawan-rencana-hasil-dan-tinjauan.md` | belum ada kasus uji (perlu digenerate) |
+| hrm | KPI: Kompetensi, Jenjang Karier, Promosi, Sasaran, 360, dan Pengembangan — Modul HRM | `hrm/25-kpi-kompetensi-karier-promosi-dan-pengembangan.md` | belum ada kasus uji (perlu digenerate) |
+| inventory | Valuasi Persediaan — Metode Eceran dan Penutupan Selisih Harga Beli | `inventory/07-valuasi-metode-eceran-dan-selisih-harga-beli.md` | belum ada kasus uji (perlu digenerate) |
+| inventory | Diagram Alur Inventory — Modul Inventory | `inventory/08-diagram-alur-inventory.md` | `22` bagian A |
+| kerjasama | Pengaturan, Tipe Kerjasama, dan Katalog Paket — Modul Kerjasama | `kerjasama/01-pengaturan-tipe-dan-katalog-paket.md` | belum ada kasus uji (perlu digenerate) |
+| kerjasama | Perjanjian Kerjasama dan Rantai Klien — Modul Kerjasama | `kerjasama/02-perjanjian-dan-rantai-klien.md` | belum ada kasus uji (perlu digenerate) |
+| kerjasama | Penawaran Berversi — Modul Kerjasama | `kerjasama/03-penawaran-berversi.md` | belum ada kasus uji (perlu digenerate) |
+| kerjasama | Pemakaian, Rekap Periodik, dan Tagihan — Modul Kerjasama | `kerjasama/04-pemakaian-rekap-dan-tagihan.md` | belum ada kasus uji (perlu digenerate) |
+| kerjasama | Kewajiban, Penyesuaian Biaya, Kerja Custom, dan Laporan — Modul Kerjasama | `kerjasama/05-kewajiban-penyesuaian-kerja-custom-dan-laporan.md` | belum ada kasus uji (perlu digenerate) |
+| kerjasama | Diagram Alur Kerjasama — Modul Kerjasama | `kerjasama/06-diagram-alur-kerjasama.md` | `22` bagian A |
+| konfigurasi-umum | Gambar Produk Massal dan Saran Gambar dari Internet | `konfigurasi-umum/27-gambar-produk-massal-dan-saran-gambar.md` | belum ada kasus uji (perlu digenerate) |
+| konfigurasi-umum | Diagram Urutan Setup Awal Cabang — Konfigurasi Umum | `konfigurasi-umum/28-diagram-urutan-setup-awal.md` | `22` bagian A |
+| manufacturing | Diagram Alur Manufaktur — Modul Manufacturing | `manufacturing/05-diagram-alur-manufaktur.md` | `22` bagian A |
+| mining | Diagram Alur Mining — Modul Mining | `mining/07-diagram-alur-mining.md` | `22` bagian A |
+| outreach | Kampanye Sales Outreach — Modul Outreach | `outreach/01-kampanye-sales-outreach.md` | belum ada kasus uji (perlu digenerate) |
+| outreach | Diagram Alur Outreach — Modul Outreach | `outreach/02-diagram-alur-outreach.md` | `22` bagian A |
+| platform-owner | Pendaftaran Mandiri Klien dan Persetujuan | `platform-owner/09-pendaftaran-mandiri-klien.md` | belum ada kasus uji (perlu digenerate) |
+| platform-owner | Diagram Alur Langganan Klien — Platform Owner | `platform-owner/10-diagram-alur-langganan-klien.md` | `22` bagian A |
+| pos | Diagram Alur POS — Modul POS | `pos/08-diagram-alur-pos.md` | `22` bagian A |
+| pos | Pembayaran QRIS, Kas Masuk dan Keluar Manual, serta Deposit Kasir — Modul POS | `pos/09-qris-kas-masuk-keluar-dan-deposit-kasir.md` | belum ada kasus uji (perlu digenerate) |
+| proyek-dan-tugas | Diagram Alur Proyek dan Tugas — Modul Proyek | `proyek-dan-tugas/07-diagram-alur-proyek.md` | `22` bagian A |
+| purchasing | Jadwal Pembelian Berulang dari Kontrak Payung | `purchasing/14-jadwal-pembelian-berulang.md` | belum ada kasus uji (perlu digenerate) |
+| purchasing | Diagram Alur Purchasing — Modul Purchasing | `purchasing/15-diagram-alur-purchasing.md` | `22` bagian A |
+| purchasing | Dampak Stok dari Pembelian — Modul Purchasing | `purchasing/16-dampak-stok-dari-pembelian.md` | belum ada kasus uji (perlu digenerate) |
+| rental | Diagram Alur Rental — Modul Rental | `rental/10-diagram-alur-rental.md` | `22` bagian A |
+| reports | Katalog Laporan per Modul — Laporan | `reports/02-katalog-laporan-per-modul.md` | belum ada kasus uji (perlu digenerate) |
+| restaurant | Diagram Alur Restaurant — Modul Restaurant | `restaurant/07-diagram-alur-restaurant.md` | `22` bagian A |
+| restaurant | Pencatatan Bahan dan Estimasi Porsi — Modul Restaurant | `restaurant/08-pencatatan-bahan-dan-estimasi-porsi.md` | belum ada kasus uji (perlu digenerate) |
+| restaurant | Restoran di Terminal POS: Denah, Booking, Pesanan QR, dan Panggilan Siap — Modul Restaurant | `restaurant/09-restoran-di-terminal-pos.md` | belum ada kasus uji (perlu digenerate) |
+| sales | Diagram Alur Sales — Modul Sales | `sales/10-diagram-alur-sales.md` | `22` bagian A |
 
 Alur lintas modul ada di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md); izin, isolasi dan kasus batas di [`98`](./98-izin-isolasi-dan-kasus-batas.id.md).
