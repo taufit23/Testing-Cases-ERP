@@ -23,8 +23,8 @@ Bab manual: [`purchasing/01-konfigurasi-alur-purchasing.md`](../../erpApiService
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi alur purchasing (draf) | Masuk ke `Purchasing → Purchase Configs`, aktifkan pesan yang jelas, pilih pesan yang jelas untuk PO Flow Mode, simpan konfigurasi. | Alur purchasing berubah menjadi memerlukan persetujuan PO dan GR harus diterima terlebih dahulu sebelum PI bisa dibuat. |
-| Negatif — Konfigurasi alur purchasing (draf) | Masuk ke `Purchasing → Purchase Configs`, cek pesan yang jelas tanpa mengaktifkannya, coba membuat PO baru. | Muncul pesan kesalahan bahwa persetujuan PO diperlukan sebelum membuat PO baru. |
+| Positif — Konfigurasi alur purchasing (draf) | Masuk ke `Purchasing → Purchase Configs`, aktifkan "Require PO Approval", pilih "Goods Receipt First" untuk PO Flow Mode, simpan konfigurasi. | Alur purchasing berubah menjadi memerlukan persetujuan PO dan GR harus diterima terlebih dahulu sebelum PI bisa dibuat. |
+| Negatif — Konfigurasi alur purchasing (draf) | Masuk ke `Purchasing → Purchase Configs`, cek "Require PO Approval" tanpa mengaktifkannya, coba membuat PO baru. | Muncul pesan kesalahan bahwa persetujuan PO diperlukan sebelum membuat PO baru. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Urutan GR vs PI — barang harus diterima dulu baru bisa ditagih, atau tagihan boleh datang duluan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Ini pengaturan paling penting untuk dipahami — menentukan urutan wajib antara menerima barang (GR) dan menagih (PI) setelah PO dibuat: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Penting: begitu satu PO sudah punya minimal 1 Goods Receipt atau 1 Purchase Invoice, PO tersebut terkunci — item-nya tidak bisa diubah lagi. Pastikan PO sudah benar sebelum lanjut ke GR/PI |
@@ -65,8 +65,8 @@ Bab manual: [`purchasing/04-purchase-order.md`](../../erpApiServices/docs/manual
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat PO dari PQ (draf) | Login sebagai Apoteker Penanggung Jawab; klik "Convert to POpesan yang jelasSavepesan yang jelasDraft". | Form PO ter-prefill dengan detail PQ, subtotal, tax dan total otomatis; tombol "Submit" muncul. |
-| Negatif — Mengubah item PO setelah GR (draf) | Login sebagai Kepala Gudang; buka PO OBT-001 yang sudah ada GR; coba ubah qty item; pesan muncul pesan yang jelas. | Item PO tidak bisa diubah, hanya bisa dilakukan penyesuaian melalui Purchase Return. |
+| Positif — Membuat PO dari PQ (draf) | Login sebagai Apoteker Penanggung Jawab; klik "Convert to PO" PQ OBT-001; pilih supplier PT Bintang Farmasi Utama; set item, qty 500; klik "Save"; status PO menjadi "Draft". | Form PO ter-prefill dengan detail PQ, subtotal, tax dan total otomatis; tombol "Submit" muncul. |
+| Negatif — Mengubah item PO setelah GR (draf) | Login sebagai Kepala Gudang; buka PO OBT-001 yang sudah ada GR; coba ubah qty item; pesan muncul "Item PO terkunci". | Item PO tidak bisa diubah, hanya bisa dilakukan penyesuaian melalui Purchase Return. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Anggaran: bila Budget Enforcement aktif (bab 01), total PO dari satu Purchase Request tidak boleh melebihi perkiraan anggaran di PR itu |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item Purchase Request yang sudah dipesan lewat PO lain tidak bisa dipesan lagi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Expected Delivery Date tidak boleh sebelum tanggal PO |
@@ -80,7 +80,7 @@ Bab manual: [`purchasing/05-goods-receipt.md`](../../erpApiServices/docs/manualB
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mencatat penerimaan barang (draf) | Buka pesan yang jelas; "+ Create", pilih PO dari Sentosa Farma; isi qty diterima 100 unit Paracetamol 500 mg strip OBT-001; klik Save. | Status GR berubah menjadi Approved, stok Persediaan bertambah 100 unit Paracetamol 500 mg strip OBT-001, jurnal terbentuk dari Debit akun Persediaan ke Kredit Utang Dagang. |
+| Positif — Mencatat penerimaan barang (draf) | Buka "Purchasing → Purchase Receipts"; "+ Create", pilih PO dari Sentosa Farma; isi qty diterima 100 unit Paracetamol 500 mg strip OBT-001; klik Save. | Status GR berubah menjadi Approved, stok Persediaan bertambah 100 unit Paracetamol 500 mg strip OBT-001, jurnal terbentuk dari Debit akun Persediaan ke Kredit Utang Dagang. |
 | Negatif — Menerima melebihi qty PO (draf) | Buka GR, isi qty diterima 120 unit Paracetamol 500 mg strip OBT-001 (melebihi sisa 100 unit); coba klik Save. | Sistem menampilkan pesan error pesan yang jelas, GR tidak bisa disimpan. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tiap baris punya isian Rejected Quantity untuk barang yang diterima tetapi ditolak. Nilainya tidak boleh melebihi qty diterima. Bagian yang ditolak tidak ikut masuk stok (lihat bab 16. Dampak Stok dari Pembelian) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sistem menolak kalau qty yang diinput di GR melebihi sisa qty yang belum diterima untuk item tersebut — muncul pesan error jelas di form sebelum sempat disimpan. Ini mencegah pencatatan penerimaan barang lebih banyak dari yang sebenarnya dipesan |
@@ -158,7 +158,7 @@ Bab manual: [`purchasing/11-blanket-agreement.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat kontrak dengan supplier (draf) | Buka Purchasing → Blanket Agreements; klik pesan yang jelas; isikan PT Alkes Prima Mandiri sebagai Supplier, tanggal mulai 1 Januari 2023, dan selesai 31 Desember 2023; pilih Total Value dengan total komitmen Rp 50.000.000; tambahkan Paracetamol 500 mg strip (SKU OBT-001) dengan harga kontrak Rp 2.000 per unit dan batas maksimal 10.000 unit; klik Save | Kontrak berstatus Draft, bisa langsung mengulas detail |
+| Positif — Membuat kontrak dengan supplier (draf) | Buka Purchasing → Blanket Agreements; klik "+ New Blanket Agreement"; isikan PT Alkes Prima Mandiri sebagai Supplier, tanggal mulai 1 Januari 2023, dan selesai 31 Desember 2023; pilih Total Value dengan total komitmen Rp 50.000.000; tambahkan Paracetamol 500 mg strip (SKU OBT-001) dengan harga kontrak Rp 2.000 per unit dan batas maksimal 10.000 unit; klik Save | Kontrak berstatus Draft, bisa langsung mengulas detail |
 | Negatif — Menarik PO tanpa kontrak aktif (draf) | Buka halaman Purchase Order; coba tarik PO dari kontrak yang statusnya Expired; isikan Kafe Sehat sebagai penerima | Sistem menolak dan memberi pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Supplier, Valid From, dan Valid Until (tanggal akhir wajib diisi dan harus setelah tanggal mulai) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Isi Contract Price — harga yang terkunci selama masa kontrak, wajib lebih dari 0 |
@@ -185,7 +185,7 @@ Bab manual: [`purchasing/14-jadwal-pembelian-berulang.md`](../../erpApiServices/
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Jadwal berulang untuk Paracetamol 500 mg strip (draf) | Buka Purchasing → Recurring Schedules; Pilih Blanket Agreement OBT-001, Aturan pengulangan harian, Tanggal mulai 1 Januari 2023, Baris barang Paracetamol 500 mg strip; Simpan; Jalankan sekarang | PO untuk Paracetamol 500 mg strip terbit, stok diperbarui, riwayat eksekusi ditambahkan |
-| Negatif — Hapus jadwal yang sudah membuat pesanan (draf) | Coba hapus jadwal OBT-001; Dapat pesan penolakan yang jelas | Tidak ada perubahan, jadwal tetap berada dalam daftar dan masih aktif |
+| Negatif — Hapus jadwal yang sudah membuat pesanan (draf) | Coba hapus jadwal OBT-001; Dapat pesan "Jadwal yang sudah membuat pesanan tidak bisa dihapus" | Tidak ada perubahan, jadwal tetap berada dalam daftar dan masih aktif |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jadwal yang sudah selesai tidak bisa diubah |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Jadwal yang sudah membuat pesanan tidak bisa dihapus. Gunakan Jeda sebagai gantinya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pesanan tetap tunduk pada aturan lain di Purchasing (persetujuan PO bila diwajibkan) |
@@ -200,7 +200,7 @@ Bab manual: [`purchasing/15-diagram-alur-purchasing.md`](../../erpApiServices/do
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membuat Purchase Order (draf) | Masuk ke menu Purchase Request; pilih produk Paracetamol 500 mg strip (SKU OBT-001); isi jumlah 100 box; klik tombol "Create PO"; masuk ke menu Purchase Order; lihat PO baru dengan status Draft | Purchase Order dengan nomor dan tanggal muncul di menu Purchase Order, status menjadi Draft |
-| Negatif — Membuat Purchase Order tanpa Goods Receipt First aktif (draf) | Masuk ke menu Purchase Request; pilih produk Paracetamol 500 mg strip (SKU OBT-001); isi jumlah 100 box; klik tombol "Create POpesan yang jelasPO Flow Mode tidak memungkinkan pembuatan PO tanpa GR" | Tampilan error muncul dan PO tidak dibuat, status tetap Draft di menu Purchase Request |
+| Negatif — Membuat Purchase Order tanpa Goods Receipt First aktif (draf) | Masuk ke menu Purchase Request; pilih produk Paracetamol 500 mg strip (SKU OBT-001); isi jumlah 100 box; klik tombol "Create PO"; masuk ke menu Purchase Order; lihat pesan error "PO Flow Mode tidak memungkinkan pembuatan PO tanpa GR" | Tampilan error muncul dan PO tidak dibuat, status tetap Draft di menu Purchase Request |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Begitu Purchase Order punya satu Goods Receipt atau satu Purchase Invoice, item PO terkunci dan tidak bisa diubah lagi (bab 04) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Submitted -- Rejected: Ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Cancel hanya bisa dari status Draft |

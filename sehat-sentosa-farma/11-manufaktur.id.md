@@ -34,7 +34,7 @@ Bab manual: [`manufacturing/02-bill-of-materials-bom.md`](../../erpApiServices/d
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat BOM untuk jamu kunyit asam (draf) | Klik pesan yang jelas; Isi Name: Jamu Kunyit Asam; Pilih SKU Produk Jadi HRB-001; Masukkan Output Quantity 500; Tambahkan Component: Bahan baku kunyit (SKU-001) x 200 gram, bahan baku asam jawa (SKU-002) x 100 gram; Aktifkan Default for this Product | BOM Jamu Kunyit Asam berhasil dibuat dengan default produk utama HRB-001 dan komponen yang sesuai |
+| Positif — Membuat BOM untuk jamu kunyit asam (draf) | Klik "+ Create Bill of Materials"; Isi Name: Jamu Kunyit Asam; Pilih SKU Produk Jadi HRB-001; Masukkan Output Quantity 500; Tambahkan Component: Bahan baku kunyit (SKU-001) x 200 gram, bahan baku asam jawa (SKU-002) x 100 gram; Aktifkan Default for this Product | BOM Jamu Kunyit Asam berhasil dibuat dengan default produk utama HRB-001 dan komponen yang sesuai |
 | Negatif — Menambahkan produk jadi sebagai component (draf) | Tambahkan SKU Produk Jadi HRB-001 ke dalam tabel Components; Coba simpan BOM | Muncul pesan kesalahan pesan yang jelas dan input tidak disimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Bill of Materials (BOM) adalah "resep" produksi — daftar bahan baku (komponen) dan jumlahnya yang dibutuhkan untuk menghasilkan satu produk jadi. Setiap Production Order harus mengacu ke satu BOM |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi tabel Components (bahan baku) — wajib minimal 1 baris: |
@@ -48,7 +48,7 @@ Bab manual: [`manufacturing/03-routing-produksi.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Klik pesan yang jelas; Isi Name: pesan yang jelas, Bill of Materials: Paracetamol 500 mg strip (SKU OBT-001), Operations: 3 baris dengan Operation: Pemotongan, Work Center: Gudang Jakarta, Setup Minutes: 10, Run Minutes per Unit: 20; Klik Save Routing | Routing pesan yang jelas berhasil disimpan dengan total Run Minutes per Unit 60 |
+| Positif — jalur normal (draf) | Klik "+ Create Routing"; Isi Name: "Pemotongan Rakit Kemas", Bill of Materials: Paracetamol 500 mg strip (SKU OBT-001), Operations: 3 baris dengan Operation: Pemotongan, Work Center: Gudang Jakarta, Setup Minutes: 10, Run Minutes per Unit: 20; Klik Save Routing | Routing pesan yang jelas berhasil disimpan dengan total Run Minutes per Unit 60 |
 | Negatif — input salah (draf) | Isi Name kosong saat membuat routing; Isi Bill of Materials tidak sesuai BOM yang ada | Tampilan error: pesan yang jelas dan pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Setiap operasi di Routing akan disalin ke Production Order sebagai daftar Operations yang harus di-Start dan di-Finish satu per satu selama proses produksi berjalan (lihat chapter Production Order) |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -60,7 +60,7 @@ Bab manual: [`manufacturing/04-production-order.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Klik pesan yang jelas; pilih BOM Paracetamol 500 mg strip (SKU OBT-001), masukkan Planned Quantity 100, Material Warehouse Gudang Jakarta, dan Finished Goods Warehouse Gudang Jakarta; klik Save Production Order | Daftar Materials menunjukkan kebutuhan bahan baku 5000 mg Paracetamol; Operations kosong karena tidak menggunakan Routing; status menjadi Draft |
+| Positif — jalur normal (draf) | Klik "+ Create Production Order"; pilih BOM Paracetamol 500 mg strip (SKU OBT-001), masukkan Planned Quantity 100, Material Warehouse Gudang Jakarta, dan Finished Goods Warehouse Gudang Jakarta; klik Save Production Order | Daftar Materials menunjukkan kebutuhan bahan baku 5000 mg Paracetamol; Operations kosong karena tidak menggunakan Routing; status menjadi Draft |
 | Negatif — input salah (draf) | Membuat Production Order tanpa mengisi field Bill of Materials; coba klik Save Production Order | Sistem pesan penolakan yang jelas dan tidak menyimpan order; status tetap Draft |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau order ditolak (Rejected) saat approval, order kembali bisa diedit dan disubmit ulang |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau order memakai Routing, bagian Operations menampilkan daftar tahapan kerja sesuai urutan di Routing. Operasi hanya bisa dicatat saat order berstatus In Progress, dan harus dikerjakan sesuai urutan pending-nya: |
@@ -75,8 +75,8 @@ Bab manual: [`manufacturing/05-diagram-alur-manufaktur.md`](../../erpApiServices
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Resep diterbitkan menjadi Production Order (draf) | 1. Masuk ke menu "Reseppesan yang jelasTerbitkan PO" <br>4. Input jumlah produksi 1000 unit | Production Order OBT-001 diterbitkan dengan status Draft, bahan baku diubah ke stok tersedia dan jurnal pengeluaran bahan dibuat |
-| Negatif — Coba menghapus Production Order yang sudah Released (draf) | 1. Masuk ke menu pesan yang jelas <br>2. Pilih PO OBT-001 status Released <br>3. Klik tombol "Hapus" <br>4. Input alasan penghapusan | Tampilan pesan penolakan yang jelas, Production Order tetap berstatus Released |
+| Positif — Resep diterbitkan menjadi Production Order (draf) | 1. Masuk ke menu "Resep" <br>2. Pilih resep Paracetamol 500 mg strip (SKU OBT-001) <br>3. Klik tombol "Terbitkan PO" <br>4. Input jumlah produksi 1000 unit | Production Order OBT-001 diterbitkan dengan status Draft, bahan baku diubah ke stok tersedia dan jurnal pengeluaran bahan dibuat |
+| Negatif — Coba menghapus Production Order yang sudah Released (draf) | 1. Masuk ke menu "Production Order" <br>2. Pilih PO OBT-001 status Released <br>3. Klik tombol "Hapus" <br>4. Input alasan penghapusan | Tampilan pesan penolakan yang jelas, Production Order tetap berstatus Released |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Submitted -- Rejected: Ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Bahan hanya bisa dikeluarkan atau dikembalikan saat order berstatus Released atau In Progress |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Operasi hanya bisa dicatat saat order In Progress |

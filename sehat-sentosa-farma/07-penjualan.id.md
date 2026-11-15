@@ -23,8 +23,8 @@ Bab manual: [`sales/01-konfigurasi-alur-sales.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi alur sales (draf) | Masuk ke `/sales/sales-configs`; Aktifkan pesan yang jelas; Isi persentase pesan yang jelas 50; Simpan konfigurasi | Alur approval SO sekarang memerlukan persetujuan, dan barang hanya boleh dikirim setelah 50% pembayaran diterima |
-| Negatif — Konfigurasi alur sales (draf) | Masuk ke `/sales/sales-configs`; Aktifkan pesan yang jelas; Tidak mengisi pesan yang jelas; Coba simpan konfigurasi | Gagal menyimpan konfigurasi dengan pesan error: pesan yang jelas |
+| Positif — Konfigurasi alur sales (draf) | Masuk ke `/sales/sales-configs`; Aktifkan "Require Sales Order Approval"; Isi persentase "Payment Threshold Percentage" 50; Simpan konfigurasi | Alur approval SO sekarang memerlukan persetujuan, dan barang hanya boleh dikirim setelah 50% pembayaran diterima |
+| Negatif — Konfigurasi alur sales (draf) | Masuk ke `/sales/sales-configs`; Aktifkan "Require Sales Order Approval"; Tidak mengisi "Payment Threshold Percentage"; Coba simpan konfigurasi | Gagal menyimpan konfigurasi dengan pesan error: pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Require Quotation for SO — kalau aktif, Sales Order wajib berasal dari Quotation yang sudah accepted customer (tidak bisa buat SO manual langsung) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Restrict Agreed Due Date to Quotation Range — kalau aktif, tanggal jatuh tempo yang disepakati di SO tidak boleh melebihi rentang validitas Quotation asalnya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kapan pakai "Minimum Payment Percentage": cocok untuk bisnis yang mewajibkan uang muka (DP) sebelum barang dikirim — misalnya wajib bayar 50% dulu baru barang jalan, sisanya ditagih belakangan |

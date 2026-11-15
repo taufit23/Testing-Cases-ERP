@@ -21,7 +21,7 @@ Bab manual: [`finance/01-kategori-dan-pencatatan-biaya.md`](../../erpApiServices
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat kategori biaya dan mencatat expense (draf) | Masuk ke `Finance → Expense Categories`, buat kategori "Listrik & Airpesan yang jelasListrik & Airpesan yang jelasTransfer Bank". | Kategori "Listrik & Air" terdaftar, expense berstatus Draft; jurnal otomatis dibuat di General Ledger. |
+| Positif — Membuat kategori biaya dan mencatat expense (draf) | Masuk ke `Finance → Expense Categories`, buat kategori "Listrik & Air"; masuk ke `Finance → Expenses`, buat expense untuk listrik dengan kategori "Listrik & Air" dan jumlah 100.000 Rupiah; pilih metode pembayaran "Transfer Bank". | Kategori "Listrik & Air" terdaftar, expense berstatus Draft; jurnal otomatis dibuat di General Ledger. |
 | Negatif — Mencoba menghapus expense yang sudah disetujui (draf) | Cari expense dengan status Approved, klik tiga titik, pilih Delete; cek apakah bisa menghapus. | Tidak dapat menghapus expense yang sudah disetujui, pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Pilih Expense Category (wajib) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi Expense Date (wajib) dan Due Date (opsional, kalau biaya ini punya tenggat pembayaran) |
@@ -49,7 +49,7 @@ Bab manual: [`finance/03-diagram-alur-finance.md`](../../erpApiServices/docs/man
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Pencatatan expense (draf) | Buka menu Expense; Input OBT-001, 250.000, Draft; Approve oleh manajer; Bayar dengan QRIS | Status expense berubah menjadi Paid; Jurnal pembayaran tercatat; Pesan konfirmasi pembayaran muncul |
-| Negatif — Pembayaran expense (draf) | Coba bayar OBT-001 yang masih Draft; Tidak bisa, pesan penolakan yang jelas | Sistem menolak dan memberikan pesan kesalahan |
+| Negatif — Pembayaran expense (draf) | Coba bayar OBT-001 yang masih Draft; Tidak bisa, muncul pesan "Expense belum Approved" | Sistem menolak dan memberikan pesan kesalahan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | J --/"Transfer bank"/ L["Mark as Paid ditolak<br/gunakan Prepare dan Release"] |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Expense hanya bisa diedit dan dihapus selama masih Draft |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | H --/"Kedaluwarsa atau ditolak"/ J["Transaksi Voided<br/stok tidak pernah berkurang"] |

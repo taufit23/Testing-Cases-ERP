@@ -37,8 +37,8 @@ Bab manual: [`inventory/02-stock-adjustment.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menyesuaikan stok awal produk Paracetamol 500 mg strip (draf) | Buka Stock Adjustments; klik "+ Createpesan yang jelasStok awal pengadaan mandiri sebelum PO pertama"; tambah item dengan Product SKU OBT-001, Qty 2000, Unit Cost 4000; klik Save | Stok Paracetamol 500 mg strip di Warehouse Jakarta berubah menjadi 2000 unit dengan nilai total 8.000.000; adjustment terposting dan tidak bisa diedit lagi |
-| Negatif — Menggunakan Reason yang belum dibuat untuk stok awal (draf) | Buka Stock Adjustments; klik "+ Createpesan yang jelasStok awal baru" tanpa membuatnya dulu; klik Save | Tidak bisa memilih Reason "Stok awal baru", pesan penolakan yang jelas; tidak ada perubahan pada stok atau adjustment |
+| Positif — Menyesuaikan stok awal produk Paracetamol 500 mg strip (draf) | Buka Stock Adjustments; klik "+ Create"; pilih Warehouse Jakarta; pilih Reason "Stok awal pengadaan mandiri sebelum PO pertama"; tambah item dengan Product SKU OBT-001, Qty 2000, Unit Cost 4000; klik Save | Stok Paracetamol 500 mg strip di Warehouse Jakarta berubah menjadi 2000 unit dengan nilai total 8.000.000; adjustment terposting dan tidak bisa diedit lagi |
+| Negatif — Menggunakan Reason yang belum dibuat untuk stok awal (draf) | Buka Stock Adjustments; klik "+ Create"; pilih Warehouse Jakarta; coba pilih Reason "Stok awal baru" tanpa membuatnya dulu; klik Save | Tidak bisa memilih Reason "Stok awal baru", pesan penolakan yang jelas; tidak ada perubahan pada stok atau adjustment |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Setiap Stock Adjustment wajib memilih alasan dari daftar yang sudah disiapkan (bukan teks bebas) — supaya riwayat penyesuaian tetap terkategori dan bisa dianalisis |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Stock Adjustment yang sudah Posted tidak bisa diedit langsung — kalau ada kesalahan, buat adjustment koreksi baru (bukan mengubah yang lama), demi menjaga jejak audit |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -88,7 +88,7 @@ Bab manual: [`inventory/06-consignment-settlements.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Settle konsinyasi Paracetamol 500 mg strip (draf) | Klik pesan yang jelas; pilih lot OBT-001; isikan Settlement Quantity 200; klik Save | Lot OBT-001 di-settle sebanyak 200 unit; status lot berubah; jurnal penjualan konsinyasi terbentuk |
+| Positif — Settle konsinyasi Paracetamol 500 mg strip (draf) | Klik "Settle Consignment"; pilih lot OBT-001; isikan Settlement Quantity 200; klik Save | Lot OBT-001 di-settle sebanyak 200 unit; status lot berubah; jurnal penjualan konsinyasi terbentuk |
 | Negatif — Coba settle lot yang bukan konsinyasi (draf) | Pilih lot Amoxicillin 500 mg OBT-002; coba klik Settle Consignment | Muncul pesan penolakan yang jelas dan proses ditolak |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

@@ -19,7 +19,7 @@ Bab manual: [`dashboard/01-dashboard-keuangan-penjualan-dan-pembelian.md`](../..
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Filter Tanggal Dashboard (draf) | Pilih periode "Bulan Lalupesan yang jelasBulan Lalu" | Header menampilkan periode akuntansi "Bulan Lalu", laba rugi, saldo kas dan bank, piutang, utang, dan jurnal yang masih menunggu diposting atau disetujui untuk periode tersebut |
+| Positif — Filter Tanggal Dashboard (draf) | Pilih periode "Bulan Lalu" pada dashboard akuntansi; klik tombol "Bulan Lalu" | Header menampilkan periode akuntansi "Bulan Lalu", laba rugi, saldo kas dan bank, piutang, utang, dan jurnal yang masih menunggu diposting atau disetujui untuk periode tersebut |
 | Negatif — Filter Tanggal Dashboard (draf) | Masukkan tanggal masa depan pada filter; klik tombol "Apply" | Sistem memotong ke hari ini, tidak menampilkan data untuk tanggal masa depan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Dasbor Persediaan menunjukkan kesehatan stok di seluruh gudang: SKU yang menipis, opname dan transfer yang masih berjalan, nilai persediaan, dan pergerakan stok terbaru. Tujuannya memunculkan masalah yang butuh tindakan tanpa harus membuka tiap daftar |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |

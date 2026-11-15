@@ -21,9 +21,9 @@ Bab manual: [`rental/01-konfigurasi-alur-rental.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi alur persetujuan rental (draf) | Masuk ke `/rental/rental-configs`, Aktifkan pesan yang jelas, pesan yang jelas dan pesan yang jelas; pilih "Auto" untuk Mode Posting Jurnal; konfigurasi Aset Berjumlah Banyak. | Alur persetujuan rental ditentukan, jurnal otomatis disetup, mode posting jurnal diaktifkan, aset berjumlah banyak dikonfigurasi dengan benar. |
-| Negatif — Pengaturan alur persetujuan tidak lengkap (draf) | Masuk ke `/rental/rental-configs`, Aktifkan pesan yang jelas saja; coba submit dokumen rental. | Submit gagal, pesan penolakan yang jelas. |
-| Positif — Pemetaan akun jurnal otomatis (draf) | Masuk ke `/rental/rental-configs`, pilih "Rental AR", "Rental Revenuepesan yang jelasAuto Map". | Akun jurnal otomatis rental dipetakan, jurnal pengembalian deposit menggunakan pemetaan ini. |
+| Positif — Konfigurasi alur persetujuan rental (draf) | Masuk ke `/rental/rental-configs`, Aktifkan "Require Rental Quotation Approval", "Require Rental Order Approval" dan "Require Rental Invoice Approval"; pilih "Auto" untuk Mode Posting Jurnal; konfigurasi Aset Berjumlah Banyak. | Alur persetujuan rental ditentukan, jurnal otomatis disetup, mode posting jurnal diaktifkan, aset berjumlah banyak dikonfigurasi dengan benar. |
+| Negatif — Pengaturan alur persetujuan tidak lengkap (draf) | Masuk ke `/rental/rental-configs`, Aktifkan "Require Rental Quotation Approval" saja; coba submit dokumen rental. | Submit gagal, pesan penolakan yang jelas. |
+| Positif — Pemetaan akun jurnal otomatis (draf) | Masuk ke `/rental/rental-configs`, pilih "Rental AR", "Rental Revenue" dll; klik tombol "Auto Map". | Akun jurnal otomatis rental dipetakan, jurnal pengembalian deposit menggunakan pemetaan ini. |
 | Negatif — Pemetaan akun tidak lengkap (draf) | Masuk ke `/rental/rental-configs`, hanya pilih "Rental AR"; coba submit dokumen rental. | Submit gagal, pesan penolakan yang jelas. |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -57,7 +57,7 @@ Bab manual: [`rental/04-rental-order.md`](../../erpApiServices/docs/manualBook/r
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Rental Order (draf) | Klik pesan yang jelas dari detail Quotation OBT-001; isi Contact Sehat Sentosa Farma, Start Date 1 Januari 2023, End Date 31 Januari 2023; tambah item Alkohol Swab ALK-002 qty 50; klik "Preview Price"; Save | Order OBT-001 dibuat dengan total harga sesuai preview; status Draft |
+| Positif — Membuat Rental Order (draf) | Klik "Convert to Order" dari detail Quotation OBT-001; isi Contact Sehat Sentosa Farma, Start Date 1 Januari 2023, End Date 31 Januari 2023; tambah item Alkohol Swab ALK-002 qty 50; klik "Preview Price"; Save | Order OBT-001 dibuat dengan total harga sesuai preview; status Draft |
 | Negatif — Deposit Tidak Tersedia (draf) | Cek detail Order OBT-001 setelah Save; deposit tidak muncul di form Create | Harus mengisi field Deposit Amount lewat halaman Edit Order; pesan penolakan yang jelas jika ditinggalkan kosong |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Klik "Preview Price" untuk melihat estimasi total sebelum benar-benar submit — berguna untuk memberi gambaran biaya ke calon penyewa tanpa harus commit dulu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |

@@ -23,7 +23,7 @@ Bab manual: [`platform-owner/01-provider-cabang-pengguna-dan-peran.md`](../../er
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Cabang (draf) | Klik Add Branch; Pilih provider Sehat Sentosa Farma; Isi Branch Name pesan yang jelas; Simpan dengan Create | Cabang baru ditambahkan dengan status Active, di bawah provider Sehat Sentosa Farma. |
+| Positif — Menambah Cabang (draf) | Klik Add Branch; Pilih provider Sehat Sentosa Farma; Isi Branch Name "Apotek Sentosa Bogor"; Simpan dengan Create | Cabang baru ditambahkan dengan status Active, di bawah provider Sehat Sentosa Farma. |
 | Negatif — Menghapus Provider (draf) | Klik Delete pada provider Sehat Sentosa Farma; Tidak diberikan izin | Tampil pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kolom wajib yang kosong menghasilkan pesan seperti Please fill all required provider fields atau Role name is required |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Customer Name (wajib) dan Email pelanggan |
@@ -38,7 +38,7 @@ Bab manual: [`platform-owner/02-paket-langganan-dan-mitra.md`](../../erpApiServi
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Paket Langganan Baru (draf) | Pilih pesan yang jelas; isi nama "Paket Gold", slug "gold-plan", deskripsi pesan yang jelas; pilih modul preset "All modules", mata uang "IDRpesan yang jelasTampilkan di halaman harga publik", status "Aktif"; simpan. | Paket "Paket Gold" ditambahkan dengan detail yang diberikan, terlihat dalam daftar paket langganan. |
+| Positif — Membuat Paket Langganan Baru (draf) | Pilih "Add subscription plan"; isi nama "Paket Gold", slug "gold-plan", deskripsi "Paket premium dengan fitur lengkap"; pilih modul preset "All modules", mata uang "IDR", harga bulanan 500.000, tahunan kosong; uji coba gratis 7 hari, masa tenggang 14 hari; batas pengguna maksimal 20, cabang 5, karyawan 30, kasir 10; termasuk bahasa Indonesia dan Inggris; aktifkan fitur AI assistant, WhatsApp, QRIS payment gateway, e-invoice tax, dua faktor autentikasi, logistik, metode valuasi LIFO, layout PDF custom, loyalitas, promosi, dan tampilan dapur, reservasi, dan peta lantai; aktifkan "Tampilkan di halaman harga publik", status "Aktif"; simpan. | Paket "Paket Gold" ditambahkan dengan detail yang diberikan, terlihat dalam daftar paket langganan. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Permintaan ditolak sistem bila perusahaan sudah memakai paket dan siklus itu, atau bila sudah ada permintaan yang masih menunggu. Paket dan siklus yang diminta harus yang ditawarkan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Approve langsung mengganti paket (aturan dan pengamannya sama dengan Change Plan oleh pemilik platform, tanpa prorata). Reject tidak mengubah apa pun. Keputusan disertai catatan, dan permintaan yang sudah diputuskan tidak bisa diputuskan lagi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Name (wajib), Icon, Order (urutan tampil), dan Description. Atur Active In Catalog agar paket muncul di pilihan onboarding |
@@ -52,7 +52,7 @@ Bab manual: [`platform-owner/03-template-keuangan-dan-akuntansi.md`](../../erpAp
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Tambah template bagan akun dengan nama "Gudang Jakartapesan yang jelasStok Obat" dengan kode 101.01; pilih template di cabang Apotek Sentosa Bandung; lihat akun baru tersedia | Status berhasil menambahkan template dan akun, opsi akun baru muncul di cabang |
+| Positif — jalur normal (draf) | Tambah template bagan akun dengan nama "Gudang Jakarta", kode 101, level 2; tambah akun "Stok Obat" dengan kode 101.01; pilih template di cabang Apotek Sentosa Bandung; lihat akun baru tersedia | Status berhasil menambahkan template dan akun, opsi akun baru muncul di cabang |
 | Negatif — input salah (draf) | Tambah template bagan akun dengan kode duplikat "101" | Pesan kesalahan tentang kode unik diperlukan muncul, tidak dapat menyimpan template |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -63,8 +63,8 @@ Bab manual: [`platform-owner/04-template-operasional.md`](../../erpApiServices/d
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah template status (draf) | Pilih "Add Template"; isi Name: "Stok Habis", Code: "STKHABIS", Module Type: "Inventorypesan yang jelasOperasionalpesan yang jelas#FF0000", Description: pesan yang jelas | Status templates ditambahkan dengan nama dan kode yang dimasukkan |
-| Negatif — Menambah template status tanpa mengisi field wajib (draf) | Pilih "Add Template"; klik "Createpesan yang jelasField Name is required" | Tidak dapat menambahkan template karena field Name tidak boleh kosong |
+| Positif — Menambah template status (draf) | Pilih "Add Template"; isi Name: "Stok Habis", Code: "STKHABIS", Module Type: "Inventory", Business Type: "Operasional", Sort Order: 3, Color: "#FF0000", Description: "Status stok habis" | Status templates ditambahkan dengan nama dan kode yang dimasukkan |
+| Negatif — Menambah template status tanpa mengisi field wajib (draf) | Pilih "Add Template"; klik "Create" tanpa mengisi Name; muncul pesan error "Field Name is required" | Tidak dapat menambahkan template karena field Name tidak boleh kosong |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pastikan untuk mengisi semua field wajib sebelum menambahkan template status |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kode tidak dapat diubah setelah template dibuat karena logika absensi, penggajian, dan cuti bergantung pada kode tersebut |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Code tidak dapat diubah setelah template dibuat. Cabang memakai kode ini sebagai titik awal untuk tipe kepegawaian dalam HRM |
@@ -141,7 +141,7 @@ Bab manual: [`platform-owner/10-diagram-alur-langganan-klien.md`](../../erpApiSe
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Pendaftaran mandiri klien baru (draf) | Klik pesan yang jelas, masukkan data, pilih paket, klik "Ajukan" | Akun klien terbentuk, status pesan yang jelas, kata sandi disimpan dalam hash |
+| Positif — Pendaftaran mandiri klien baru (draf) | Klik "Pendaftaran Mandiri", masukkan data, pilih paket, klik "Ajukan" | Akun klien terbentuk, status pesan yang jelas, kata sandi disimpan dalam hash |
 | Negatif — Persetujuan ditolak oleh pemilik platform (draf) | Klik "Persetujuan", pilih "Tolak", masukkan alasan penolakan | Status klien menjadi "Ditolak", pesan penolakan muncul, kata sandi dihapus dari pengajuan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | B --/"Tidak"/ X1["Halaman menyatakan tidak tersedia<br/pengajuan baru ditolak"] |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | D --/"Ya"/ X2["Pengajuan ditolak"] |
@@ -156,8 +156,8 @@ Bab manual: [`mulai-menggunakan/01-login-bantuan-dan-riwayat-perubahan.md`](../.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Login ke Aplikasi (draf) | Masuk dengan email pesan yang jelas, password "Admin1234", centang "Remember me"; klik "Login" | Dibawa ke halaman awal aplikasi sebagai admin, sesi berakhir setelah 30 menit inactivity |
-| Negatif — Login Gagal Tanpa Verifikasi Dua Langkah (draf) | Masuk dengan email pesan yang jelas, password salah; klik "Login" | Muncul pesan kesalahan verifikasi dua langkah, masukkan kode authenticator atau recovery code jika diperlukan |
+| Positif — Login ke Aplikasi (draf) | Masuk dengan email "admin@sentosafarma.com", password "Admin1234", centang "Remember me"; klik "Login" | Dibawa ke halaman awal aplikasi sebagai admin, sesi berakhir setelah 30 menit inactivity |
+| Negatif — Login Gagal Tanpa Verifikasi Dua Langkah (draf) | Masuk dengan email "admin@sentosafarma.com", password salah; klik "Login" | Muncul pesan kesalahan verifikasi dua langkah, masukkan kode authenticator atau recovery code jika diperlukan |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 

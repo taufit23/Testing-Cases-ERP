@@ -22,7 +22,7 @@ Bab manual: [`canvassing/01-konfigurasi-wilayah-dan-rute.md`](../../erpApiServic
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah outlet ke rute (draf) | Buka halaman detail rute pesan yang jelas; pilih pesan yang jelas dari dropdown; klik Add | Outlet pesan yang jelas ditambahkan ke rute dan muncul di bagian Stops |
+| Positif — Menambah outlet ke rute (draf) | Buka halaman detail rute "Rute Senin — Blok A"; pilih "Apotek Sentosa Bandung" dari dropdown; klik Add | Outlet pesan yang jelas ditambahkan ke rute dan muncul di bagian Stops |
 | Negatif — Menugaskan sales tanpa territory (draf) | Buka form Territory; tidak memilih territory untuk sales "Kepala Gudang"; klik Save | Muncul pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Modul Sales Canvassing dipakai untuk mengelola sales/salesman lapangan yang berkeliling ke outlet/toko. Sebelum sales bisa mulai kerja, dua hal wajib disiapkan dulu: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Route (Rute) — daftar outlet yang harus dikunjungi sales tersebut, beserta jadwalnya |
@@ -35,7 +35,7 @@ Bab manual: [`canvassing/02-target-penjualan.md`](../../erpApiServices/docs/manu
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Pilih Type "Territorypesan yang jelasJakarta"; masukkan target quantity 100; klik Save | Target penjualan berhasil disimpan untuk wilayah Jakarta dengan target kuantitas 100 unit |
+| Positif — jalur normal (draf) | Pilih Type "Territory"; pilih wilayah "Jakarta"; masukkan target quantity 100; klik Save | Target penjualan berhasil disimpan untuk wilayah Jakarta dengan target kuantitas 100 unit |
 | Negatif — input salah (draf) | Tidak memilih Type, hanya mengisi Year dan Month; coba klik Save | Tombol Save tidak aktif/error, pesan penolakan yang jelas atau pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Minimal salah satu dari Target Quantity atau Target Amount harus diisi — tidak boleh keduanya kosong |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -47,8 +47,8 @@ Bab manual: [`canvassing/03-titipan-stock-sales.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Klik pesan yang jelas; isi salesperson: Apoteker Penanggung Jawab, warehouse: Gudang Jakarta, tanggal: 10/10/2023, item: Paracetamol 500 mg strip (SKU OBT-001) qty: 10; klik Save | Custody baru terbentuk dengan status "issued", stok gudang berkurang 10 unit Paracetamol 500 mg strip, jurnal Persediaan Titipan Salesperson debit 10.000.000, Persediaan kredit 10.000.000 |
-| Negatif — input salah (draf) | Klik pesan yang jelas; tidak memilih salesperson; klik Save | Tampilan pesan error: pesan yang jelas dan tombol Save tetap nonaktif, status custody tidak berubah, stok gudang tidak berpengaruh, jurnal tidak terbentuk |
+| Positif — jalur normal (draf) | Klik "Issue Stock to Salesperson"; isi salesperson: Apoteker Penanggung Jawab, warehouse: Gudang Jakarta, tanggal: 10/10/2023, item: Paracetamol 500 mg strip (SKU OBT-001) qty: 10; klik Save | Custody baru terbentuk dengan status "issued", stok gudang berkurang 10 unit Paracetamol 500 mg strip, jurnal Persediaan Titipan Salesperson debit 10.000.000, Persediaan kredit 10.000.000 |
+| Negatif — input salah (draf) | Klik "Issue Stock to Salesperson"; tidak memilih salesperson; klik Save | Tampilan pesan error: pesan yang jelas dan tombol Save tetap nonaktif, status custody tidak berubah, stok gudang tidak berpengaruh, jurnal tidak terbentuk |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Di halaman detail custody, klik "Record Return", lalu untuk tiap item isi jumlah yang dikembalikan (tidak boleh melebihi sisa Outstanding item tersebut). Klik Save untuk menyimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Halaman ini berguna untuk cek cepat "sales A masih pegang stock apa saja" tanpa harus membuka satu per satu dokumen custody-nya |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -108,7 +108,7 @@ Bab manual: [`canvassing/08-konfigurasi-canvassing.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah hasil kunjungan baru (draf) | Masuk ke `/canvassing/visit-outcomes`, klik Create, masukkan kode "INT", nama "Minta informasipesan yang jelasInterested", isikan alasan dan tanggal tindak lanjut, simpan. | Hasil "Interested" muncul di daftar hasil kunjungan dengan status aktif |
+| Positif — Menambah hasil kunjungan baru (draf) | Masuk ke `/canvassing/visit-outcomes`, klik Create, masukkan kode "INT", nama "Minta informasi", pilih Category "Interested", isikan alasan dan tanggal tindak lanjut, simpan. | Hasil "Interested" muncul di daftar hasil kunjungan dengan status aktif |
 | Negatif — Mencoba menghapus hasil yang digunakan (draf) | Masuk ke `/canvassing/visit-outcomes`, pilih "Tertarik", cek tombol Delete, klik Delete. | Pesan pesan yang jelas muncul |
 | Negatif — Mencoba check-out tanpa alasan (draf) | Kunjungi apotek Sentosa Bandung, masuk ke Check-out, pilih hasil "Tertarik" tanpa mengisi alasan. | Pesan pesan yang jelas ditampilkan dan check-out ditolak |
 | Negatif — Mencoba check-out tanpa tanggal tindak lanjut (draf) | Kunjungi klinik Pratama Bekasi, masuk ke Check-out, pilih hasil "Minta penawaran", tidak mengisi tanggal tindak lanjut. | Pesan pesan yang jelas ditampilkan dan check-out ditolak |
@@ -179,7 +179,7 @@ Bab manual: [`canvassing/13-diagram-alur-canvassing.md`](../../erpApiServices/do
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Mengubah status kunjungan ke Completed (draf) | Kunjungi klinik Pratama & Laboratorium Bekasi; Check in; Upload foto bukti kunjungan; Pilih status Completed | Status kunjungan berubah menjadi Completed, tidak bisa lagi diubah; Foto bukti kunjungan terlampir |
-| Negatif — Menghapus kunjungan yang sudah Completed (draf) | Coba hapus kunjungan dengan status Completed; Muncul pesan penolakan yang jelas | Kunjungan tetap berstatus Completed, tidak bisa dihapus; Muncul pesan kesalahan yang jelas |
+| Negatif — Menghapus kunjungan yang sudah Completed (draf) | Coba hapus kunjungan dengan status Completed; Muncul pesan "Tidak dapat menghapus kunjungan yang sudah Completed" | Kunjungan tetap berstatus Completed, tidak bisa dihapus; Muncul pesan kesalahan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Skip dan Cancel bisa dilakukan dari status mana pun selain Completed dan Cancelled. Kunjungan yang sudah Completed atau Cancelled tidak bisa diubah lagi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | New -- Lost: Tidak jadi, alasan wajib |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Contacted -- Lost: Tidak jadi, alasan wajib |

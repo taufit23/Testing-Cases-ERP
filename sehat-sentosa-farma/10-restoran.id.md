@@ -23,8 +23,8 @@ Bab manual: [`restaurant/01-konfigurasi-restoran.md`](../../erpApiServices/docs/
 | --- | --- | --- |
 | Positif — Konfigurasi area duduk (draf) | Masuk ke menu `Restaurant → Areas`, klik "+ Create Area", isikan nama "Lantai 1", kapasitas 50, dan simpan. | Area "Lantai 1" muncul dalam daftar dengan status aktif. |
 | Negatif — Konfigurasi area duduk tanpa nama (draf) | Masuk ke menu `Restaurant → Areas`, klik "+ Create Area", isikan hanya kapasitas 50, dan simpan. | Sistem menolak pengisian data karena nama area wajib diisi dan menampilkan pesan kesalahan. |
-| Positif — Membuat meja satuan (draf) | Masuk ke menu `Restaurant → Tables`, klik "+ Create Table", pilih area "Lantai 1pesan yang jelasA1", dan simpan. | Meja dengan nomor "A1" di area "Lantai 1" muncul dalam daftar meja. |
-| Negatif — Membuat meja tanpa area (draf) | Masuk ke menu `Restaurant → Tables`, klik "+ Create Tablepesan yang jelasA1" dan simpan. | Sistem menolak pengisian data karena area wajib diisi dan menampilkan pesan kesalahan. |
+| Positif — Membuat meja satuan (draf) | Masuk ke menu `Restaurant → Tables`, klik "+ Create Table", pilih area "Lantai 1", isikan nomor meja "A1", dan simpan. | Meja dengan nomor "A1" di area "Lantai 1" muncul dalam daftar meja. |
+| Negatif — Membuat meja tanpa area (draf) | Masuk ke menu `Restaurant → Tables`, klik "+ Create Table", isikan hanya nomor meja "A1" dan simpan. | Sistem menolak pengisian data karena area wajib diisi dan menampilkan pesan kesalahan. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Area adalah pengelompokan meja, misalnya "Lantai 1", "Lantai 2", "Outdoor", "VIP Room". Setiap meja wajib terhubung ke satu area |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Table Number — nomor/kode meja (wajib), contoh A1, B12 |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Status — Available (kosong), Occupied (terisi), Reserved (dipesan), Maintenance (tidak bisa dipakai). Biasanya dibiarkan Available saat pertama dibuat — status berubah otomatis begitu ada order/booking berjalan |
@@ -51,7 +51,7 @@ Bab manual: [`restaurant/03-pemesanan-dan-order-meja.md`](../../erpApiServices/d
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Membuka Order Baru (draf) | Klik "+ New Order"; Area: "Kafe Sehat", Table: "T102", Pax: 4, Order Type: Dine In; Open Order | Meja T102 berubah status menjadi Occupied dan otomatis pindah ke halaman detail order |
-| Negatif — Menambah Item ke Order (draf) | Area: "Kafe Sehat", Table: "T102pesan yang jelastanpa efek samping"; Klik Add | Tombol Add disabled pesan penolakan yang jelas karena channel penjualan restaurant dimatikan untuk cabang ini |
+| Negatif — Menambah Item ke Order (draf) | Area: "Kafe Sehat", Table: "T102" (Occupied), Pax: 4, Order Type: Dine In; Pilih Paracetamol 500 mg strip (SKU OBT-001) di dropdown, isi Qty: 3, Unit Price: 8000, Notes: "tanpa efek samping"; Klik Add | Tombol Add disabled pesan penolakan yang jelas karena channel penjualan restaurant dimatikan untuk cabang ini |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Table — meja yang dipakai (wajib). Meja berstatus Occupied akan tampil disabled di daftar |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pax — jumlah tamu (wajib, minimal 1) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item yang berasal dari QR Self-Order pelanggan (badge "Needs Confirmation") harus dikonfirmasi waiter dulu sebelum bisa masuk proses dapur — lihat chapter 06. QR Self-Order |
@@ -66,7 +66,7 @@ Bab manual: [`restaurant/04-kitchen-display-dan-order-items.md`](../../erpApiSer
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Mengonfirmasi pesanan self-order (draf) | Pilih order OBT-001 dari dropdown; klik "Confirm All" | Semua item pesanan OBT-001 berubah status menjadi served, panel konfirmasi hilang, KDS menampilkan tiket OBT-001 |
-| Negatif — Menolak item self-order yang sudah ready (draf) | Pilih order ALK-002; klik ikon X pada item yang ready; pesan penolakan yang jelas muncul | Item tetap berstatus ready, status tidak berubah, pesan error jelas muncul di halaman |
+| Negatif — Menolak item self-order yang sudah ready (draf) | Pilih order ALK-002; klik ikon X pada item yang ready; pesan "Tidak bisa tolak item ready" muncul | Item tetap berstatus ready, status tidak berubah, pesan error jelas muncul di halaman |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Atau klik ikon centang per item untuk konfirmasi satu-satu, atau ikon X untuk menolak item tertentu (misalnya karena bahan sudah habis atau salah pesan) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item yang belum dikonfirmasi tidak akan diproses di dapur/KDS — panel ini adalah gerbang wajib sebelum pesanan pelanggan lanjut ke dapur (kecuali fitur konfirmasi dimatikan di Config, lihat chapter 01 dan 06) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Item yang sudah served tidak bisa dimajukan lagi, kecuali dikembalikan ke preparing |
@@ -80,8 +80,8 @@ Bab manual: [`restaurant/05-reservasi-meja.md`](../../erpApiServices/docs/manual
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Reservasi Baru (draf) | Klik pesan yang jelas; Pilih Table ALK-001; Isi Guest Name "John Doe", Guest Count 2, Booking Date & Time 2023-10-05 18:00; Klik Save | Reservasi dikonfirmasi dengan status pending |
-| Negatif — Tidak Bisa Save Reservasi (draf) | Klik pesan yang jelas; Meja kosong; Isi Guest Name "Jane Doe", Guest Count 4, Booking Date & Time 2023-10-05 19:00 tanpa pilih meja; Coba Save | Tampilan error pesan yang jelas dan tidak bisa Save |
+| Positif — Membuat Reservasi Baru (draf) | Klik "+ Create Booking"; Pilih Table ALK-001; Isi Guest Name "John Doe", Guest Count 2, Booking Date & Time 2023-10-05 18:00; Klik Save | Reservasi dikonfirmasi dengan status pending |
+| Negatif — Tidak Bisa Save Reservasi (draf) | Klik "+ Create Booking"; Meja kosong; Isi Guest Name "Jane Doe", Guest Count 4, Booking Date & Time 2023-10-05 19:00 tanpa pilih meja; Coba Save | Tampilan error pesan yang jelas dan tidak bisa Save |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Table — meja yang direservasi (wajib) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Guest Name — nama tamu (wajib) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Guest Count — jumlah tamu, minimal 1 (wajib) |

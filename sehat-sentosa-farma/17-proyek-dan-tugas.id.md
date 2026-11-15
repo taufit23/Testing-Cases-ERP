@@ -33,10 +33,10 @@ Bab manual: [`proyek-dan-tugas/02-proyek-dan-tugas.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat proyek baru (draf) | Pilih "Proyek → Proyekpesan yang jelasSentosa Farma-1", manajer "Budi", anggota pesan yang jelas, status "Rancangan"; klik "Simpan" | Proyek "Sentosa Farma-1pesan yang jelasRancangan" |
-| Negatif — Mengubah status proyek tanpa persetujuan (draf) | Pilih proyek "ACME-1pesan yang jelasSelesai", bukan "Dikerjakan"; cek tombol "Simpan" | Tombol "Simpan" nonaktif pesan penolakan yang jelas |
-| Positif — Menambah tugas ke proyek (draf) | Pilih "Proyek → Tugas", klik "Buat tugaspesan yang jelasPembelian Obatpesan yang jelasAndi", tenggat "2023-10-15", label "Obat"; klik "Simpan" | Tugas "Pembelian Obatpesan yang jelasBelum mulai" |
-| Negatif — Mengubah tugas tanpa checklist selesai (draf) | Pilih tugas "OBT-002pesan yang jelasReviewpesan yang jelasSimpan" | Tombol "Simpan" nonaktif pesan penolakan yang jelas |
+| Positif — Membuat proyek baru (draf) | Pilih "Proyek → Proyek", isi nama proyek "Sentosa Farma-1", manajer "Budi", anggota "Andi, Budi, Caca", status "Rancangan"; klik "Simpan" | Proyek "Sentosa Farma-1pesan yang jelasRancangan" |
+| Negatif — Mengubah status proyek tanpa persetujuan (draf) | Pilih proyek "ACME-1", klik tombol status, pilih "Selesai", bukan "Dikerjakan"; cek tombol "Simpan" | Tombol "Simpan" nonaktif pesan penolakan yang jelas |
+| Positif — Menambah tugas ke proyek (draf) | Pilih "Proyek → Tugas", klik "Buat tugas", isi nama tugas "Pembelian Obat", penanggung jawab "Andi", tenggat "2023-10-15", label "Obat"; klik "Simpan" | Tugas "Pembelian Obatpesan yang jelasBelum mulai" |
+| Negatif — Mengubah tugas tanpa checklist selesai (draf) | Pilih tugas "OBT-002", ubah status menjadi "Review" tanpa menandai semua checklist; cek tombol "Simpan" | Tombol "Simpan" nonaktif pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Dependensi (selesai-ke-mulai dan tiga jenis lain) mencegah atau memperingatkan sesuai pengaturan; siklus ditolak |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

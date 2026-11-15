@@ -164,8 +164,9 @@ def sanitize(rows):
             continue
         if len(cells) > 3:
             cells = cells[:2] + [" ".join(cells[2:])]
-        cells = [PAT_MSG.sub("pesan penolakan yang jelas", c) for c in cells]
-        cells = [PAT_Q.sub("pesan yang jelas", c) for c in cells]
+        # Kutipan di kolom langkah biasanya nama menu atau tombol dari bab (fakta); hanya kolom hasil yang bisa memuat pesan karangan model.
+        cells = [PAT_MSG.sub("pesan penolakan yang jelas", c) if i == 2 else c for i, c in enumerate(cells)]
+        cells[2] = PAT_Q.sub("pesan yang jelas", cells[2])
         m = re.match(r"^(Positif|Negatif)\s*[—-]?\s*(.*)$", cells[0])
         if not m:
             continue

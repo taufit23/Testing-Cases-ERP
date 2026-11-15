@@ -22,8 +22,8 @@ Bab manual: [`core/01-konfigurasi-approval-workflow.md`](../../erpApiServices/do
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menyiapkan konfigurasi approve PO (draf) | Klik "Use Templatepesan yang jelasBasicpesan yang jelasReview Manager"; Tambah role "Kepala Gudangpesan yang jelasIs Required" dan "Is Final" untuk step ini | Step "Review Managerpesan yang jelasKepala Gudang", status step wajib dan final |
-| Negatif — Menambah tahap approve tanpa mengcopy template (draf) | Coba klik "Add Steppesan yang jelasSave" | Muncul pesan error pesan yang jelas karena konfigurasi PO belum dibuat sebelumnya |
+| Positif — Menyiapkan konfigurasi approve PO (draf) | Klik "Use Template" Purchase Order; Pilih template "Basic"; Isi nama step 1 menjadi "Review Manager"; Tambah role "Kepala Gudang" ke step tersebut; Aktifkan "Is Required" dan "Is Final" untuk step ini | Step "Review Managerpesan yang jelasKepala Gudang", status step wajib dan final |
+| Negatif — Menambah tahap approve tanpa mengcopy template (draf) | Coba klik "Add Step" tanpa menyalin template terlebih dahulu; Klik "Save" | Muncul pesan error pesan yang jelas karena konfigurasi PO belum dibuat sebelumnya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Module Name dan Module Group — nama tampilan config ini (Module aslinya sendiri tetap mengikuti template yang dipilih, tidak bisa diganti di sini) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Approver harus di departemen yang sama dengan requester (toggle, opsional) |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -64,7 +64,7 @@ Bab manual: [`core/04-approval-requests.md`](../../erpApiServices/docs/manualBoo
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Approver mengapprove request Purchase Order (draf) | Login sebagai approver; Pilih "Approve" pada PO dari Sentosa Farma; Isi catatan jika diperlukan | Status PO berubah menjadi Approved, ditandai dengan tanda ceklis di kolom Step dan timestamp di Completed At |
-| Negatif — Approver mencoba reject request Purchase Invoice tanpa login sebagai approver (draf) | Coba klik "Rejectpesan yang jelasAnda tidak memiliki hak akses untuk melakukan tindakan ini" | Tidak ada perubahan status, tetap menunjukkan status Pending di PI |
+| Negatif — Approver mencoba reject request Purchase Invoice tanpa login sebagai approver (draf) | Coba klik "Reject" pada PI dari Sentosa Farma tanpa login; Dapat pesan error "Anda tidak memiliki hak akses untuk melakukan tindakan ini" | Tidak ada perubahan status, tetap menunjukkan status Pending di PI |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tombol "View Approval Config" (kalau tersedia) jadi jalan pintas untuk melihat konfigurasi lengkap workflow ini di Client Master → Approval Workflow Configs, berguna kalau perlu memastikan siapa saja yang seharusnya bisa approve |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Catatan wajib saat memilih Reject atau Request Revision |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Penyetuju harus berhak pada langkah yang sedang berjalan (peran atau pengguna yang ditetapkan) |
@@ -78,10 +78,10 @@ Bab manual: [`core/05-agen-ai-aksi-tutorial-dan-jadwal.md`](../../erpApiServices
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat draft purchase request (draf) | pesan yang jelas | Kartu draft purchase request muncul dengan detail, bisa diperiksa sebelum disubmit. |
-| Negatif — Input supplier salah (draf) | pesan yang jelas | Kartu dibuang dan tampil pesan penolakan yang jelas. |
-| Positif — Mengisi form Quotation (draf) | pesan yang jelas saat membuka halaman Buat Quotation | Form Quotation terisi dengan detail sesuai permintaan. |
-| Negatif — Tanggal di masa lalu (draf) | pesan yang jelas saat membuka halaman Buat Quotation | Muncul error validasi dan tampil pesan penolakan yang jelas. |
+| Positif — Membuat draft purchase request (draf) | "buatkan purchase request 10 kopi untuk PT Maju" | Kartu draft purchase request muncul dengan detail, bisa diperiksa sebelum disubmit. |
+| Negatif — Input supplier salah (draf) | "buatkan purchase request 10 kopi untuk PT TidakAda" | Kartu dibuang dan tampil pesan penolakan yang jelas. |
+| Positif — Mengisi form Quotation (draf) | "isi untuk PT Maju, 10 kopi, tanggal besok" saat membuka halaman Buat Quotation | Form Quotation terisi dengan detail sesuai permintaan. |
+| Negatif — Tanggal di masa lalu (draf) | "isi untuk PT Maju, 10 kopi, tanggal kemarin" saat membuka halaman Buat Quotation | Muncul error validasi dan tampil pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Asisten bekerja sebagai kamu. Dia hanya bisa melakukan yang memang boleh kamu lakukan di aplikasi. Izin, validasi, dan catatan perubahan sama dengan kalau kamu mengerjakannya sendiri |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau aplikasi menolak (mis. "Quotation wajib dulu" atau periode tertutup), alasan penolakan tampil di kartu — itu aturan cabang, bukan kesalahan asisten |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |

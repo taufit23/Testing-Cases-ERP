@@ -22,8 +22,8 @@ Bab manual: [`pos/01-setup-toko-dan-cash-session.md`](../../erpApiServices/docs/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuka Cash Session di Apotek Sentosa Bandung (draf) | Buka POS → Cash Sessions; Pilih warehouse Store pesan yang jelas; Pilih cash register "Register 1"; Masukkan opening balance Rp 500.000; Klik Open Session | Session Number terbentuk, status menjadi Open; Meja kasir "Register 1" tersedia untuk transaksi |
-| Negatif — Membuka Cash Session di Warehouse Central (draf) | Buka POS → Cash Sessions; Pilih warehouse Central pesan yang jelas; Coba klik Open Session | Sesi ditolak pesan penolakan yang jelas |
+| Positif — Membuka Cash Session di Apotek Sentosa Bandung (draf) | Buka POS → Cash Sessions; Pilih warehouse Store "Apotek Sentosa Bandung"; Pilih cash register "Register 1"; Masukkan opening balance Rp 500.000; Klik Open Session | Session Number terbentuk, status menjadi Open; Meja kasir "Register 1" tersedia untuk transaksi |
+| Negatif — Membuka Cash Session di Warehouse Central (draf) | Buka POS → Cash Sessions; Pilih warehouse Central "Kantor Pusat & Distribusi Jakarta"; Coba klik Open Session | Sesi ditolak pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Transfer akan ditolak kalau qty yang diminta melebihi stok tersedia di warehouse asal |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Pilih Warehouse (harus bertipe Store dan punya stok yang bisa dijual) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Sesi dan penjualan milik pembukanya. Kasir biasa hanya melihat sesi dan transaksi dari sesi yang ia buka sendiri. Ia tidak bisa menjual, menahan pesanan, menutup, atau melihat laporan sesi milik kasir lain; sistem menolaknya |
@@ -91,8 +91,8 @@ Bab manual: [`pos/06-konfigurasi-pos-lanjutan.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi Struk (draf) | Pilih "Full-width cartpesan yang jelasShow Product Picturespesan yang jelasTerima kasih telah berbelanja bersama kami!"; cetak struk. | Struk mencetak logo di tengah, menampilkan foto produk, dan footer teks sesuai yang dimasukkan. |
-| Negatif — Waktu Posting Jurnal (draf) | Aktifkan pesan yang jelas tanpa melakukan transaksi; tutup cash session. | Muncul pesan error karena tidak ada transaksi untuk diposting dalam jurnal. |
+| Positif — Konfigurasi Struk (draf) | Pilih "Full-width cart" pada Customer Display; klik "Show Product Pictures"; upload logo dengan posisi tengah; masukkan teks footer "Terima kasih telah berbelanja bersama kami!"; cetak struk. | Struk mencetak logo di tengah, menampilkan foto produk, dan footer teks sesuai yang dimasukkan. |
+| Negatif — Waktu Posting Jurnal (draf) | Aktifkan "Once When the Cash Session Closes" tanpa melakukan transaksi; tutup cash session. | Muncul pesan error karena tidak ada transaksi untuk diposting dalam jurnal. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Saklar "Require Journal Approval" — kalau aktif, jurnal otomatis yang terbentuk dari transaksi POS dan Refund tidak langsung masuk ke General Ledger, tapi harus melalui alur persetujuan (Approval) dulu |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Auto-map hanya bekerja untuk branch yang memakai struktur Chart of Accounts standar bawaan sistem. Kalau branch memakai Chart of Accounts custom (dibuat manual dari nol), tombol ini tidak akan mengisi apa-apa — mapping harus diisi manual satu per satu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
