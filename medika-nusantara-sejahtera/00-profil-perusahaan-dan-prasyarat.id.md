@@ -88,14 +88,54 @@ Cabang Pusat adalah **cabang utama** (laporan bisa digabung dengan cabang anak).
 | Staf HR | Indah Permatasari | SDM, rekrutmen, payroll |
 | Pemilik Platform | (akun owner) | Platform Owner: paket, klien, penangguhan |
 
-**Cara membuatnya:**
+### 2.1 Departemen dan jabatan (kerjakan SEBELUM membuat pengguna)
+
+Tiap peran di tabel di atas punya **jabatan**, dan form Jabatan **mewajibkan Departemen**. Jadi departemen harus ada lebih dulu. Form Jabatan juga punya pilihan **Peran Akses**:
+kamu bisa memilih peran yang sudah dibuat, atau mencentang "buat peran akses baru dengan nama jabatan ini" supaya peran terbentuk otomatis.
+
+**Langkah 1: buat 8 departemen** di `HRM → Departemen` (`/hrm/departments`), tombol **Tambah Departemen**. Kode dan nama wajib; Departemen Induk dan deskripsi boleh kosong.
+
+| Kode | Nama departemen | Departemen induk | Kenapa perlu |
+| --- | --- | --- | --- |
+| MNJ-001 | Manajemen | - | Menaungi Direktur |
+| KEU-001 | Keuangan dan Akuntansi | - | Menaungi Manajer Keuangan |
+| PBL-001 | Pembelian | - | Menaungi Staf Pembelian |
+| GDG-001 | Gudang dan Logistik | - | Menaungi Kepala Gudang |
+| FRM-001 | Farmasi | - | Menaungi Apoteker dan Kasir Apotek |
+| PJL-001 | Penjualan Lapangan | - | Menaungi Sales Lapangan |
+| PRD-001 | Produksi | - | Menaungi Kepala Produksi |
+| SDM-001 | SDM dan Umum | - | Menaungi Staf HR |
+
+**Langkah 2: buat peran** di `Client Master → Peran` dan atur izinnya (lihat "Cara membuatnya" di bawah). Kalau lebih suka cepat, lewati langkah ini dan biarkan form Jabatan membuat peran barunya (langkah 3), lalu atur izinnya belakangan.
+
+**Langkah 3: buat 9 jabatan** di `HRM → Jabatan` (`/hrm/positions`), tombol **Tambah Posisi**. Nama dan Departemen wajib; gaji minimum dan maksimum, deskripsi, dan Peran Akses boleh kosong.
+
+| Nama jabatan | Departemen | Peran Akses | Gaji minimum | Gaji maksimum |
+| --- | --- | --- | ---: | ---: |
+| Direktur | Manajemen | Direktur (admin klien) | 25.000.000 | 60.000.000 |
+| Manajer Keuangan | Keuangan dan Akuntansi | Manajer Keuangan | 12.000.000 | 22.000.000 |
+| Staf Pembelian | Pembelian | Staf Pembelian | 5.000.000 | 9.000.000 |
+| Kepala Gudang | Gudang dan Logistik | Kepala Gudang | 7.000.000 | 13.000.000 |
+| Apoteker Penanggung Jawab | Farmasi | Apoteker Penanggung Jawab | 9.000.000 | 16.000.000 |
+| Kasir Apotek | Farmasi | Kasir Apotek | 4.500.000 | 7.000.000 |
+| Sales Lapangan | Penjualan Lapangan | Sales Lapangan | 4.500.000 | 9.000.000 |
+| Kepala Produksi | Produksi | Kepala Produksi | 8.000.000 | 15.000.000 |
+| Staf HR | SDM dan Umum | Staf HR | 5.000.000 | 9.500.000 |
+
+> **Kenapa urutannya begini.** Departemen adalah wadah, jabatan duduk di dalam departemen, dan pengguna serta karyawan menempati jabatan. Kalau dibalik, form Jabatan tidak punya pilihan
+> Departemen dan tidak bisa disimpan. Angka gaji di atas hanya contoh untuk uji dan boleh disesuaikan; file `16` memakai jabatan ini saat mendaftarkan karyawan dan menghitung gaji.
+> Kalau satu departemen sudah ada, jangan dibuat ganda: periksa daftar dulu.
+
+### 2.2 Cara membuatnya (urutan lengkap)
 
 | Langkah | Menu dan URL | Isi |
 | --- | --- | --- |
-| 1. Buat peran | `Client Master → Peran` (`/client-master/roles`) | Nama peran (mis. `Kasir Apotek`), deskripsi, status aktif; lalu atur izinnya. Peran klien **hanya bisa memberi izin yang dimiliki pembuatnya** |
-| 2. Buat pengguna | `Client Master → Pengguna` (`/client-master/users`) | Nama, email, kata sandi dan konfirmasinya, status aktif, PIN override manajer (untuk kasir yang butuh persetujuan atasan) |
-| 3. Hubungkan pengguna ke cabang | `Client Master → Branch Manage` (`/client-master/branch-manage`), pilih cabang → **Assign user** | Pilih pengguna, tandai aktif di cabang itu |
-| 4. Data karyawan (untuk yang digaji) | `HRM → Karyawan` (`/hrm/employees`) | Dikerjakan di file `16`, bukan di sini |
+| 1. Buat departemen | `HRM → Departemen` (`/hrm/departments`) | 8 departemen di tabel 2.1: kode, nama, departemen induk (kosong), deskripsi |
+| 2. Buat peran | `Client Master → Peran` (`/client-master/roles`) | Nama peran (mis. `Kasir Apotek`), deskripsi, status aktif; lalu atur izinnya. Peran klien **hanya bisa memberi izin yang dimiliki pembuatnya**. Boleh dilewati bila peran dibuat lewat form Jabatan |
+| 3. Buat jabatan | `HRM → Jabatan` (`/hrm/positions`) | Nama, **Departemen (wajib)**, gaji minimum dan maksimum, deskripsi, **Peran Akses** (pilih peran langkah 2, atau centang buat peran baru) |
+| 4. Buat pengguna | `Client Master → Pengguna` (`/client-master/users`) | Nama, email, kata sandi dan konfirmasinya, status aktif, PIN override manajer (untuk kasir yang butuh persetujuan atasan) |
+| 5. Hubungkan pengguna ke cabang | `Client Master → Branch Manage` (`/client-master/branch-manage`), pilih cabang → **Assign user** | Pilih pengguna, tandai aktif di cabang itu |
+| 6. Data karyawan (untuk yang digaji) | `HRM → Karyawan` (`/hrm/employees`) | Dikerjakan di file `16`: karyawan memilih departemen dan jabatan dari langkah 1 dan 3 |
 
 Pengguna dibatasi **batas pengguna paket**. Untuk uji izin, masuk bergantian sebagai tiap peran dan buka halaman yang bukan haknya.
 
@@ -213,6 +253,7 @@ Dikerjakan oleh **Dr. Andika** (admin klien) setelah login. Untuk cabang selain 
 | 8 | Rekening bank, lalu saldo awal 1 Okt | `Keuangan → Rekening Bank`, `Chart of Accounts Balances` | langkah 6 dan 7 |
 | 9 | Awalan nomor dokumen | `Client Master → Pengaturan Cabang` (`/client-master/branch-setup`) | - |
 | 10 | Cabang lain, peran, pengguna | `Branch Manage`, `Peran`, `Pengguna` | langkah 1 sampai 8 untuk cabang baru |
+| 10a | Departemen, lalu jabatan (jabatan mewajibkan departemen dan boleh memilih peran) | `HRM → Departemen` (`/hrm/departments`), `HRM → Jabatan` (`/hrm/positions`); tabel di bagian 2.1 | langkah 10 (peran dan cabang) |
 | 11 | Kategori dan satuan produk | `Kategori Produk`, `Satuan Produk` | - |
 | 12 | Produk, lalu daftar harga | `Produk`, `Daftar Harga` | langkah 11 |
 | 13 | Pemasok dan pelanggan | `Client Master → Kontak` | langkah 1 |

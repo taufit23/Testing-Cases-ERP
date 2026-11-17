@@ -200,7 +200,9 @@ Satu baris per temuan. Format ini sengaja dibuat supaya bisa langsung dipakai un
 | 14 | Menu Partner Overview, Subscription Plans, Show Product Pictures | Ringkasan mitra / Paket langganan / Tampilkan gambar produk | Ringkasan Mitra / Paket Langganan / Tampilkan Gambar Produk | Tidak konsisten | Huruf besar kecil berbeda dari label lain (Title Case) |
 | 15 | Dasbor POS, Todays Sales | (sumber) Todays Sales | Today's Sales | Salah ketik (sumber Inggris) | Apostrof hilang di kunci aslinya |
 | 16 | Tombol Confirm All | Konfirmasikan Semua | Konfirmasi Semua | Terlalu panjang | Bandingkan Needs Confirmation = Perlu Konfirmasi |
-| 17 | | | | | |
-| 18 | | | | | |
+| 17 | HRM → Departemen, tombol tambah | Tambah Bagian / Tambah Departemen (dua versi) | Tambah Departemen | Tidak konsisten | Menu bernama Departemen tetapi tombolnya Bagian di sebagian bahasa |
+| 18 | HRM → Jabatan, tombol tambah | Tambah Posisi | Tambah Jabatan | Tidak konsisten | Menunya Jabatan, tombolnya Posisi |
+| 19 | | | | | |
+| 20 | | | | | |
 
 **Jenis yang disarankan:** Salah arti, Masih berbahasa Inggris, Tidak konsisten (dua kata untuk hal yang sama), Terlalu panjang atau terpotong, Salah ketik, Mentah (tampil seperti kode, mis. `content.xxx`).
