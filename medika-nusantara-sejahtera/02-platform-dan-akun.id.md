@@ -28,7 +28,7 @@ Bab manual: [`platform-owner/01-provider-cabang-pengguna-dan-peran.md`](../../er
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Cabang (draf) | Klik Add Branch; Pilih provider Medika Nusantara Sejahtera; Isi Branch Name "Apotek Sentosa Bogor"; Simpan dengan Create | Cabang baru ditambahkan dengan status Active, di bawah provider Medika Nusantara Sejahtera. |
+| Positif — Menambah Cabang (draf) | Klik Add Branch; Pilih provider Medika Nusantara Sejahtera; Isi Branch Name "Apotek Nusantara Bogor"; Simpan dengan Create | Cabang baru ditambahkan dengan status Active, di bawah provider Medika Nusantara Sejahtera. |
 | Negatif — Menghapus Provider (draf) | Klik Delete pada provider Medika Nusantara Sejahtera; Tidak diberikan izin | Tampil pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kolom wajib yang kosong menghasilkan pesan seperti Please fill all required provider fields atau Role name is required |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Customer Name (wajib) dan Email pelanggan |
@@ -57,7 +57,7 @@ Bab manual: [`platform-owner/03-template-keuangan-dan-akuntansi.md`](../../erpAp
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Tambah template bagan akun dengan nama "Gudang Jakarta", kode 101, level 2; tambah akun "Stok Obat" dengan kode 101.01; pilih template di cabang Apotek Sentosa Bandung; lihat akun baru tersedia | Status berhasil menambahkan template dan akun, opsi akun baru muncul di cabang |
+| Positif — jalur normal (draf) | Tambah template bagan akun dengan nama "Gudang Jakarta", kode 101, level 2; tambah akun "Stok Obat" dengan kode 101.01; pilih template di cabang Apotek Nusantara Bandung; lihat akun baru tersedia | Status berhasil menambahkan template dan akun, opsi akun baru muncul di cabang |
 | Negatif — input salah (draf) | Tambah template bagan akun dengan kode duplikat "101" | Pesan kesalahan tentang kode unik diperlukan muncul, tidak dapat menyimpan template |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -161,8 +161,8 @@ Bab manual: [`mulai-menggunakan/01-login-bantuan-dan-riwayat-perubahan.md`](../.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Login ke Aplikasi (draf) | Masuk dengan email "admin@sentosafarma.com", password "Admin1234", centang "Remember me"; klik "Login" | Dibawa ke halaman awal aplikasi sebagai admin, sesi berakhir setelah 30 menit inactivity |
-| Negatif — Login Gagal Tanpa Verifikasi Dua Langkah (draf) | Masuk dengan email "admin@sentosafarma.com", password salah; klik "Login" | Muncul pesan kesalahan verifikasi dua langkah, masukkan kode authenticator atau recovery code jika diperlukan |
+| Positif — Login ke Aplikasi (draf) | Masuk dengan email "admin@medikanusantara.test", password "MnsUji#2026", centang "Remember me"; klik "Login" | Dibawa ke halaman awal aplikasi sebagai admin, sesi berakhir setelah 30 menit inactivity |
+| Negatif — Login Gagal Tanpa Verifikasi Dua Langkah (draf) | Masuk dengan email "admin@medikanusantara.test", password salah; klik "Login" | Muncul pesan kesalahan verifikasi dua langkah, masukkan kode authenticator atau recovery code jika diperlukan |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 

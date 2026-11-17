@@ -27,7 +27,7 @@ Bab manual: [`canvassing/01-konfigurasi-wilayah-dan-rute.md`](../../erpApiServic
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah outlet ke rute (draf) | Buka halaman detail rute "Rute Senin — Blok A"; pilih "Apotek Sentosa Bandung" dari dropdown; klik Add | Outlet pesan yang jelas ditambahkan ke rute dan muncul di bagian Stops |
+| Positif — Menambah outlet ke rute (draf) | Buka halaman detail rute "Rute Senin — Blok A"; pilih "Apotek Nusantara Bandung" dari dropdown; klik Add | Outlet pesan yang jelas ditambahkan ke rute dan muncul di bagian Stops |
 | Negatif — Menugaskan sales tanpa territory (draf) | Buka form Territory; tidak memilih territory untuk sales "Kepala Gudang"; klik Save | Muncul pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Modul Sales Canvassing dipakai untuk mengelola sales/salesman lapangan yang berkeliling ke outlet/toko. Sebelum sales bisa mulai kerja, dua hal wajib disiapkan dulu: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Route (Rute) — daftar outlet yang harus dikunjungi sales tersebut, beserta jadwalnya |
@@ -65,7 +65,7 @@ Bab manual: [`canvassing/04-kunjungan-dan-order-lapangan.md`](../../erpApiServic
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Kunjungan Bandung (draf) | Check In; Quick Order (Sales mode) SKU OBT-001 qty 50, Collect Payment tunai Rp200.000; Proof; Check Out Outcome: Order Placed | Status kunjungan menjadi Completed, Sales Order draft dibuat dan terhubung ke kunjungan, kasir APOTek Sentosa Bandung diperbarui dengan pembayaran |
+| Positif — Kunjungan Bandung (draf) | Check In; Quick Order (Sales mode) SKU OBT-001 qty 50, Collect Payment tunai Rp200.000; Proof; Check Out Outcome: Order Placed | Status kunjungan menjadi Completed, Sales Order draft dibuat dan terhubung ke kunjungan, kasir Apotek Nusantara Bandung diperbarui dengan pembayaran |
 | Negatif — Kunjungan Sukabumi (offline) (draf) | Quick Order (Rental mode) tanpa koneksi internet; Save offline | Draft Rental order disimpan di antrean lokal perangkat, otomatis dikirim saat koneksi pulih, stok aset tidak berubah, limit kredit customer diperiksa setelah koneksi pulih |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Pilih mode: Sales (order barang biasa) atau Rental (sewa aset — hanya bisa dibuat saat online, karena kantor perlu cek ketersediaan aset) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Fitur ini butuh koneksi internet aktif — tidak bisa dipakai saat offline |
@@ -115,7 +115,7 @@ Bab manual: [`canvassing/08-konfigurasi-canvassing.md`](../../erpApiServices/doc
 | --- | --- | --- |
 | Positif — Menambah hasil kunjungan baru (draf) | Masuk ke `/canvassing/visit-outcomes`, klik Create, masukkan kode "INT", nama "Minta informasi", pilih Category "Interested", isikan alasan dan tanggal tindak lanjut, simpan. | Hasil "Interested" muncul di daftar hasil kunjungan dengan status aktif |
 | Negatif — Mencoba menghapus hasil yang digunakan (draf) | Masuk ke `/canvassing/visit-outcomes`, pilih "Tertarik", cek tombol Delete, klik Delete. | Pesan pesan yang jelas muncul |
-| Negatif — Mencoba check-out tanpa alasan (draf) | Kunjungi apotek Sentosa Bandung, masuk ke Check-out, pilih hasil "Tertarik" tanpa mengisi alasan. | Pesan pesan yang jelas ditampilkan dan check-out ditolak |
+| Negatif — Mencoba check-out tanpa alasan (draf) | Kunjungi Apotek Nusantara Bandung, masuk ke Check-out, pilih hasil "Tertarik" tanpa mengisi alasan. | Pesan pesan yang jelas ditampilkan dan check-out ditolak |
 | Negatif — Mencoba check-out tanpa tanggal tindak lanjut (draf) | Kunjungi klinik Pratama Bekasi, masuk ke Check-out, pilih hasil "Minta penawaran", tidak mengisi tanggal tindak lanjut. | Pesan pesan yang jelas ditampilkan dan check-out ditolak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Menambah hasil sendiri: klik Create, isi kode dan nama, tentukan aturan alasan/tindak lanjut, lalu simpan. Hasil yang sudah dipakai kunjungan tidak dapat dihapus; nonaktifkan |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |

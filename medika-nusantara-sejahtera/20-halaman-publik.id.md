@@ -25,7 +25,7 @@ Bab manual: [`halaman-publik/01-halaman-untuk-pihak-luar.md`](../../erpApiServic
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Job Applications (draf) | Pelamar mengisi form dengan nama: "John Doe", email: john.doe@example.com, nomor telepon: 081234567890, pendidikan: S1 Farmasi, CV link: <https://example.com/cv>, catatan: "Saya tertarik" | Pesan pesan yang jelas muncul |
+| Positif — Job Applications (draf) | Pelamar mengisi form dengan nama: "John Doe", email: pelamar.uji1@medikanusantara.test, nomor telepon: 081200000101, pendidikan: S1 Farmasi, CV link: <https://example.com/cv>, catatan: "Saya tertarik" | Pesan pesan yang jelas muncul |
 | Negatif — Supplier Shipment (draf) | Pemasok mengakses halaman dengan tautan yang salah, contoh: "https://example.com/public/supplier-shipment/invalid-link" | Tampilan pesan yang jelas dan tidak dapat melaporkan pengiriman |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Your Name, Email (keduanya wajib), Phone Number, dan Company Name |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Di Items You Want To Request, isi nama atau deskripsi produk dan Qty untuk tiap barang; klik Add Item untuk menambah baris. Tiap barang harus punya deskripsi dan jumlah |

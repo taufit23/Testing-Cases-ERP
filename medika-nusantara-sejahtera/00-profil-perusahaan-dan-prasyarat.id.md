@@ -39,7 +39,7 @@ Kalimat profil itu bukan satu formulir. Aplikasi memisahkan data menjadi **tiga 
 | Tingkat | Artinya | Siapa yang mengisi | Contoh di profil ini |
 | --- | --- | --- | --- |
 | **Perusahaan (provider)** | Entitas klien yang berlangganan. **Tidak ada halaman "profil perusahaan" yang bisa diedit klien.** Terbentuk sekali lewat pengajuan `/subscribe` yang disetujui owner | Calon klien saat mendaftar; owner saat menyetujui | Nama "PT Medika Nusantara Sejahtera", paket langganan, batas cabang dan pengguna |
-| **Cabang** | Satu lokasi atau unit usaha di bawah perusahaan. Hampir semua pengaturan operasional melekat di sini | Klien (Dr. Rahmat) | Alamat, cabang utama, mata uang bawaan, tahun fiskal, pajak, gudang |
+| **Cabang** | Satu lokasi atau unit usaha di bawah perusahaan. Hampir semua pengaturan operasional melekat di sini | Klien (Dr. Andika) | Alamat, cabang utama, mata uang bawaan, tahun fiskal, pajak, gudang |
 | **Data master milik cabang** | Isi yang dipakai transaksi: akun, produk, mitra, gudang, pengguna | Klien | Seluruh data acuan §3 |
 
 ### 1.2 Atribut profil dan tempat memasukkannya
@@ -65,7 +65,7 @@ Kalimat profil itu bukan satu formulir. Aplikasi memisahkan data menjadi **tiga 
 | Cabang | Fungsi | Modul yang dominan |
 | --- | --- | --- |
 | **Kantor Pusat & Distribusi Jakarta** (cabang utama) | gudang obat dan alat kesehatan, penjualan grosir ke klinik dan apotek mitra, pembukuan pusat | Pembelian, Persediaan, Penjualan, Kanvasing, Akuntansi, Keuangan, Aset Tetap |
-| **Apotek Sentosa Bandung** | apotek retail, resep, QRIS | POS, Persediaan, Pembayaran online |
+| **Apotek Nusantara Bandung** | apotek retail, resep, QRIS | POS, Persediaan, Pembayaran online |
 | **Klinik Pratama & Laboratorium Bekasi** | layanan medis, kasir, tenaga kesehatan | SDM, POS (kasir jasa), Proyek (akreditasi) |
 | **Pabrik Herbal Sukabumi** | produksi jamu dan suplemen, bahan baku kalsium karbonat | Manufaktur, Pertambangan |
 | **Kafe Sehat (lobi klinik)** | kafe pasien dan keluarga | Restoran |
@@ -77,15 +77,15 @@ Cabang Pusat adalah **cabang utama** (laporan bisa digabung dengan cabang anak).
 
 | Peran | Contoh pengguna | Ruang lingkup |
 | --- | --- | --- |
-| Direktur (admin klien) | Dr. Rahmat Hidayat | semua modul, persetujuan tingkat akhir |
-| Manajer Keuangan | Sari Wulandari | Akuntansi, Keuangan, Aset Tetap, laporan, persetujuan biaya dan jurnal |
-| Staf Pembelian | Bima Prakoso | Pembelian |
-| Kepala Gudang | Hendra Saputra | Persediaan, penerimaan barang, transfer, stok opname |
-| Apoteker Penanggung Jawab | Apt. Lestari Dewi | POS apotek, obat resep, persetujuan retur |
-| Kasir Apotek | Rina Marlina | POS (hanya sesi kasirnya sendiri) |
-| Sales Lapangan | Dewi Anggraini | Kanvasing |
-| Kepala Produksi | Joko Santoso | Manufaktur |
-| Staf HR | Maya Puspita | SDM, rekrutmen, payroll |
+| Direktur (admin klien) | Dr. Andika Pratama Wijaya | semua modul, persetujuan tingkat akhir |
+| Manajer Keuangan | Citra Maharani | Akuntansi, Keuangan, Aset Tetap, laporan, persetujuan biaya dan jurnal |
+| Staf Pembelian | Fajar Nugroho | Pembelian |
+| Kepala Gudang | Teguh Santosa | Persediaan, penerimaan barang, transfer, stok opname |
+| Apoteker Penanggung Jawab | Apt. Ratna Kusumawati | POS apotek, obat resep, persetujuan retur |
+| Kasir Apotek | Nadia Safitri | POS (hanya sesi kasirnya sendiri) |
+| Sales Lapangan | Rizky Aulia | Kanvasing |
+| Kepala Produksi | Slamet Riyadi | Manufaktur |
+| Staf HR | Indah Permatasari | SDM, rekrutmen, payroll |
 | Pemilik Platform | (akun owner) | Platform Owner: paket, klien, penangguhan |
 
 **Cara membuatnya:**
@@ -199,7 +199,7 @@ Kolom akun: Code, Name, Category, Effect, Normal balance, Report group.
 
 ### 4.1 Urutan memasukkan data acuan (jangan dibalik, tiap langkah memakai langkah sebelumnya)
 
-Dikerjakan oleh **Dr. Rahmat** (admin klien) setelah login. Untuk cabang selain Pusat, pindah cabang aktif dulu.
+Dikerjakan oleh **Dr. Andika** (admin klien) setelah login. Untuk cabang selain Pusat, pindah cabang aktif dulu.
 
 | # | Data | Menu dan URL | Bergantung pada |
 | ---: | --- | --- | --- |

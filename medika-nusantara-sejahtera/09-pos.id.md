@@ -27,7 +27,7 @@ Bab manual: [`pos/01-setup-toko-dan-cash-session.md`](../../erpApiServices/docs/
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuka Cash Session di Apotek Sentosa Bandung (draf) | Buka POS → Cash Sessions; Pilih warehouse Store "Apotek Sentosa Bandung"; Pilih cash register "Register 1"; Masukkan opening balance Rp 500.000; Klik Open Session | Session Number terbentuk, status menjadi Open; Meja kasir "Register 1" tersedia untuk transaksi |
+| Positif — Membuka Cash Session di Apotek Nusantara Bandung (draf) | Buka POS → Cash Sessions; Pilih warehouse Store "Apotek Nusantara Bandung"; Pilih cash register "Register 1"; Masukkan opening balance Rp 500.000; Klik Open Session | Session Number terbentuk, status menjadi Open; Meja kasir "Register 1" tersedia untuk transaksi |
 | Negatif — Membuka Cash Session di Warehouse Central (draf) | Buka POS → Cash Sessions; Pilih warehouse Central "Kantor Pusat & Distribusi Jakarta"; Coba klik Open Session | Sesi ditolak pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Transfer akan ditolak kalau qty yang diminta melebihi stok tersedia di warehouse asal |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Pilih Warehouse (harus bertipe Store dan punya stok yang bisa dijual) |

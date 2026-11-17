@@ -40,7 +40,7 @@ Bab manual: [`konfigurasi-umum/02-warehouse.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Warehouse Store (draf) | Klik "+ Create"; Isi Name "Apotek Sentosa Bandung", Code "APB", Phone "022123456789"; Pilih Type "Store"; Pilih Business Unit "Kantor Pusat & Distribusi Jakarta"; Isi alamat; Klik Save | Warehouse APB ditambahkan dan terhubung dengan Business Unit Kantor Pusat & Distribusi Jakarta |
+| Positif — Membuat Warehouse Store (draf) | Klik "+ Create"; Isi Name "Apotek Nusantara Bandung", Code "APB", Phone "0221000101"; Pilih Type "Store"; Pilih Business Unit "Kantor Pusat & Distribusi Jakarta"; Isi alamat; Klik Save | Warehouse APB ditambahkan dan terhubung dengan Business Unit Kantor Pusat & Distribusi Jakarta |
 | Negatif — Tidak bisa Save tipe Store (draf) | Tidak memilih Business Unit; Coba klik Save | Muncul pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Warehouse bertipe Store wajib dihubungkan ke Business Unit. Ini bukan cuma label administratif — hubungan ini yang memungkinkan laporan keuangan dipecah per toko (lihat manual book Akuntansi 02. Jurnal Manual, dimensi Business Unit) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Kalau Store, pilih Business Unit (wajib) |
@@ -66,7 +66,7 @@ Bab manual: [`konfigurasi-umum/04-metode-pembayaran-dan-tipe-order.md`](../../er
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah metode pembayaran untuk apotek Sentosa Bandung (draf) | Klik "+ Create", masukkan "QRIS DANA" sebagai Name, tandai Is Cash false, aktifkan Is Active, klik Save | Metode pembayaran QRIS DANA muncul di halaman Payment Methods |
+| Positif — Menambah metode pembayaran untuk Apotek Nusantara Bandung (draf) | Klik "+ Create", masukkan "QRIS DANA" sebagai Name, tandai Is Cash false, aktifkan Is Active, klik Save | Metode pembayaran QRIS DANA muncul di halaman Payment Methods |
 | Negatif — Mencoba menghapus metode pembayaran kartu debit BCA (draf) | Coba hapus metode "Kartu Debit BCA" tanpa mematikan Is Active | Tidak bisa menghapus, pesan: pesan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -147,8 +147,8 @@ Bab manual: [`konfigurasi-umum/11-kontak-supplier-dan-customer.md`](../../erpApi
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambahkan supplier baru (draf) | Buka menu Contacts; klik "+ Add"; pilih "Add Contact"; isikan Type: Supplier, Name: PT Bintang Farmasi Utama, Email: bintangfarmasi@bfu.com, Phone: 021-12345678, Currency: IDR; klik Save | Kontak PT Bintang Farmasi Utama berhasil ditambahkan dengan data sesuai input |
-| Negatif — Menambahkan supplier tanpa email (draf) | Buka menu Contacts; klik "+ Add"; pilih "Add Contact"; isikan Type: Supplier, Name: PT Alkes Prima Mandiri, Phone: 021-98765432; coba klik Save tanpa mengisi Email | Muncul pesan kesalahan meminta input email untuk kontak Supplier |
+| Positif — Menambahkan supplier baru (draf) | Buka menu Contacts; klik "+ Add"; pilih "Add Contact"; isikan Type: Supplier, Name: PT Bintang Farmasi Utama, Email: bintangfarmasi@bfu.com, Phone: 021-5550102, Currency: IDR; klik Save | Kontak PT Bintang Farmasi Utama berhasil ditambahkan dengan data sesuai input |
+| Negatif — Menambahkan supplier tanpa email (draf) | Buka menu Contacts; klik "+ Add"; pilih "Add Contact"; isikan Type: Supplier, Name: PT Alkes Prima Mandiri, Phone: 021-5550101; coba klik Save tanpa mengisi Email | Muncul pesan kesalahan meminta input email untuk kontak Supplier |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Klik "+ Add", pilih Contact yang dituju (wajib), lalu isi: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Account Number, Account Holder — wajib diisi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Type kontak membatasi kemunculannya di modul lain. Kontak Supplier hanya bisa dipilih sebagai supplier di Purchasing; kontak Customer hanya muncul di Sales/POS; Both muncul di kedua sisi |
@@ -186,7 +186,7 @@ Bab manual: [`konfigurasi-umum/14-manajemen-cabang.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat cabang baru (draf) | Buka Client Master → Branch Manage; Klik "+ Add Branch"; Isi Nama Cabang: "Apotek Sentosa Bandung", Alamat: Jl. Bandung 123, Provinsi: DKI Jakarta, Kota/Kabupaten: Jakarta Pusat, Kecamatan: Gambir, Kelurahan/Desa: Gambir, Kode Pos: 10110; Klik Save | Cabang pesan yang jelas ditambahkan dengan status aktif dan tampil di daftar cabang |
+| Positif — Membuat cabang baru (draf) | Buka Client Master → Branch Manage; Klik "+ Add Branch"; Isi Nama Cabang: "Apotek Nusantara Bandung", Alamat: Jl. Bandung 123, Provinsi: DKI Jakarta, Kota/Kabupaten: Jakarta Pusat, Kecamatan: Gambir, Kelurahan/Desa: Gambir, Kode Pos: 10110; Klik Save | Cabang pesan yang jelas ditambahkan dengan status aktif dan tampil di daftar cabang |
 | Negatif — Menugaskan staff ke cabang yang belum ada (draf) | Coba menugaskan user "Kasir A" ke cabang "Klinik Pratama", tetapi cabang ini belum dibuat; Klik Assign User, pilih Kasir A, Aktifkan Active in Branch, klik Assign | Muncul pesan kesalahan: pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Satu cabang tidak bisa sekaligus jadi Main Branch dan melapor ke Main Branch lain — kalau sudah jadi Main Branch, opsi "Reports To" otomatis terkunci, begitu juga sebaliknya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Cabang yang sudah punya cabang lain melapor kepadanya tidak bisa diubah untuk melapor ke Main Branch lain (hierarki hanya 1 tingkat, tidak berjenjang) |

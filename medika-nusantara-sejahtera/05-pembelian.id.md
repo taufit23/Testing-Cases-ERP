@@ -178,7 +178,7 @@ Bab manual: [`purchasing/12-konfigurasi-biaya-tambahan-pembelian.md`](../../erpA
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi biaya logistik (draf) | Masuk ke `/purchasing/purchase-charge-configs`; aktifkan fitur tagihan biaya logistik; pilih metode masukan biaya `Inline on purchase invoice` untuk cabang Apotek Sentosa Bandung; simpan. | Fitur tagihan biaya logistik aktif di cabang Apotek Sentosa Bandung dan terlihat pada form Purchase Invoice. |
+| Positif — Konfigurasi biaya logistik (draf) | Masuk ke `/purchasing/purchase-charge-configs`; aktifkan fitur tagihan biaya logistik; pilih metode masukan biaya `Inline on purchase invoice` untuk cabang Apotek Nusantara Bandung; simpan. | Fitur tagihan biaya logistik aktif di cabang Apotek Nusantara Bandung dan terlihat pada form Purchase Invoice. |
 | Negatif — Penolakan alokasi sebelum diterima (draf) | Masuk ke `/purchasing/purchase-charge-configs`; aktifkan `Allow Allocation Before Goods Are Received` untuk cabang Pabrik Herbal Sukabumi; coba alokasikan biaya tanpa penerimaan barang. | Muncul pesan penolakan yang jelas dan alokasi tidak dapat disimpan. |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

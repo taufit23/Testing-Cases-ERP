@@ -3,10 +3,65 @@
 Satu file ini adalah **peta jalan** untuk menjalankan seluruh suite di folder ini dari awal sampai akhir. Isi kasus ujinya tetap ada di file bernomor
 (`00` sampai `99`); README ini hanya menentukan **urutan, jadwal, dan centang progres** supaya tidak ada yang tertinggal.
 
-- **Akun uji:** Dr. Rahmat Hidayat, `rahmadhidayat@mail.com` (hasil pengajuan `/subscribe`, nomor ONB-202610-0001).
+- **Akun uji:** Dr. Andika Pratama Wijaya, `andika.wijaya@medikanusantara.test` (hasil pengajuan `/subscribe`; nomor onboarding dicatat di tabel identitas di bawah).
 - **Paket:** Enterprise Full, siklus bulanan, status `trialing`.
-- **Batas trial:** **5 November 2026**. Hari ke-1 = 22 Oktober 2026, jadi tersedia sekitar **15 hari kerja uji**. Jadwal di bagian 3 mengikuti batas ini.
+- **Batas trial:** **8 Desember 2026** (kalau pemilik platform menetapkan lain saat menyetujui, ikuti tanggal itu). Hari ke-1 = 18 November 2026, jadi tersedia sekitar **15 hari kerja uji**. Jadwal di bagian 3 mengikuti batas ini.
 - **Periode data uji:** Oktober 2026 (angka acuan di file `01` dihitung untuk bulan ini).
+
+---
+
+## Identitas dan akun uji (BARU, sengaja berbeda dari suite sebelumnya)
+
+Semua nama, email, dan nomor di bawah **khusus untuk usaha ini** dan tidak dipakai suite lain, jadi tidak akan bentrok dengan data provider sebelumnya.
+Domain email memakai `.test` (domain yang tidak pernah ada di internet) supaya **tidak ada email sungguhan terkirim ke orang asing** bila aplikasi mengirim notifikasi.
+Kalau formulir menolak domain `.test`, ganti hanya domainnya dengan domain milikmu sendiri dan catat penggantinya di sini.
+
+| Peran | Nama | Email | Kata sandi awal | Dibuat lewat |
+| --- | --- | --- | --- | --- |
+| Direktur (admin klien) | Dr. Andika Pratama Wijaya | `andika.wijaya@medikanusantara.test` | `MnsUji#2026` | Formulir `/subscribe` lalu disetujui pemilik platform |
+| Manajer Keuangan | Citra Maharani | `citra.maharani@medikanusantara.test` | `MnsUji#2026` | `Core → Users` oleh Direktur (file `02`) |
+| Staf Pembelian | Fajar Nugroho | `fajar.nugroho@medikanusantara.test` | `MnsUji#2026` | idem |
+| Kepala Gudang | Teguh Santosa | `teguh.santosa@medikanusantara.test` | `MnsUji#2026` | idem |
+| Apoteker Penanggung Jawab | Apt. Ratna Kusumawati | `ratna.kusumawati@medikanusantara.test` | `MnsUji#2026` | idem |
+| Kasir Apotek | Nadia Safitri | `nadia.safitri@medikanusantara.test` | `MnsUji#2026` | idem |
+| Sales Lapangan | Rizky Aulia | `rizky.aulia@medikanusantara.test` | `MnsUji#2026` | idem |
+| Kepala Produksi | Slamet Riyadi | `slamet.riyadi@medikanusantara.test` | `MnsUji#2026` | idem |
+| Staf HR | Indah Permatasari | `indah.permatasari@medikanusantara.test` | `MnsUji#2026` | idem |
+| Pelamar uji (halaman publik, file `20`) | (bebas) | `pelamar.uji1@medikanusantara.test` | tidak perlu login | formulir lowongan |
+
+**Isi sendiri saat berjalan (catat di sini supaya tidak hilang):**
+
+| Hal | Isi |
+| --- | --- |
+| Nomor onboarding dari `/subscribe` | `ONB-......` |
+| Tanggal hari ke-1 uji | 18 November 2026 (ubah bila mulai di hari lain) |
+| Batas trial yang ditetapkan pemilik platform | 8 Desember 2026 (sesuaikan) |
+| Telepon uji | `081200000101` dan `081200000102` (nomor palsu, tidak mengarah ke siapa pun) |
+
+> Kata sandi `MnsUji#2026` hanya untuk uji. Jangan dipakai di akun sungguhan. Aplikasi mungkin meminta kata sandi diganti saat login pertama; kalau begitu, catat yang baru di sini.
+
+---
+
+## Bingung mulai dari mana? Ikuti 12 langkah pertama ini
+
+Jangan buka semua file sekaligus. Urutan ini membawamu dari "belum ada apa-apa" sampai "satu transaksi penuh sudah jalan", dan **tiap langkah ada alasannya**.
+
+| # | Lakukan | Kenapa | File |
+| ---: | --- | --- | --- |
+| 1 | Pastikan kamu menguji di **database uji**, bukan data produksi | Pengujian menulis banyak data dan tutup periode tidak bisa dibatalkan | `00` bagian prasyarat |
+| 2 | Ajukan langganan lewat `/subscribe` dengan nama **PT Medika Nusantara Sejahtera** dan email Direktur di tabel di atas | Usaha ini belum ada; kamu sedang bertindak sebagai calon klien baru | `00a` S1 |
+| 3 | Login sebagai pemilik platform, setujui pengajuan itu | Tanpa persetujuan, klien belum bisa memakai aplikasi | `00a` S2 sampai S4 |
+| 4 | Login sebagai Direktur, catat nomor onboarding di tabel di atas | Kamu butuh jejak untuk menelusuri bila ada yang janggal | `00a` S5 |
+| 5 | Isi **Tahun fiskal 2026**, mata uang Rupiah, dan nama cabang | Tanpa tahun fiskal tidak ada jurnal yang bisa dibuat | `00` bagian 1.2 |
+| 6 | Tambah cabang lain dan tandai Pusat sebagai cabang utama | Banyak laporan menggabungkan cabang anak ke cabang utama | `00` bagian 1.2 |
+| 7 | Isi **daftar akun** (Chart of Accounts) | Setiap transaksi nanti butuh akun untuk dijurnal | `00b` |
+| 8 | Buat pengguna dan peran dari tabel di atas | Banyak uji membutuhkan orang berbeda | `02` |
+| 9 | Isi mitra, produk, gudang, dan saldo awal | Itulah bahan untuk transaksi | `00` bagian 3 |
+| 10 | Atur konfigurasi umum (pajak, penomoran dokumen) | Dokumen berikutnya otomatis bernomor dan berpajak benar | `03` |
+| 11 | Jalankan **satu alur penuh** bagian A di file `01` (beli, simpan, jual, bayar) | Ini membuktikan modul-modul benar-benar nyambung | `01` bagian A |
+| 12 | Baru lanjut mengikuti **urutan Fase di bagian 1** di bawah | Pondasi sudah kuat, sisanya tinggal menguji kedalaman tiap modul | bagian 1 |
+
+Kalau macet di salah satu langkah, **catat di tabel temuan (bagian 6)**, lalu lanjut ke langkah berikutnya yang tidak bergantung padanya.
 
 ---
 
@@ -33,8 +88,7 @@ selama masa percobaan, sambil memeriksa apakah aplikasinya bisa dipercaya. Kamu 
 **Yang baru di panduan ini:** file `26` Live Chat, `27` KPI Karyawan, `28` Laporan Baru dan Laporan Keuangan, `29` Fitur Terbaru Lintas Modul (restoran real-time,
 jurnal manual aset tetap, diagram dan baca suara di Help). Kerjakan setelah modul yang bersangkutan.
 
-> **Sebelum mulai, sesuaikan dua hal** (kami sengaja tidak mengarang datanya): (1) ajukan langganan baru lewat `/subscribe` dengan nama **PT Medika Nusantara Sejahtera**
-> dan ganti akun uji serta nomor onboarding di bagian atas file ini dengan milikmu; (2) tulis tanggal mulai dan batas masa percobaan yang berlaku untuk uji kali ini.
+> **Sebelum mulai:** isi nomor onboarding dan tanggal uji yang berlaku di tabel identitas di atas. Selebihnya (nama, email, kata sandi) sudah disiapkan khusus untuk usaha ini.
 
 ---
 
@@ -180,7 +234,7 @@ tetap diberikan setelah temuannya masuk tabel bagian 6.
 - [ ] §9 Masuk ke aplikasi, pusat bantuan, riwayat perubahan
 - [ ] §10 Pengaturan akun saya: tampilan, keamanan, langganan
 
-> Catatan: bagian `02` yang khusus **platform owner** (§1 sampai §8) dijalankan dengan akun owner, bukan akun Dr. Rahmat. Akun Dr. Rahmat
+> Catatan: bagian `02` yang khusus **platform owner** (§1 sampai §8) dijalankan dengan akun owner, bukan akun Dr. Andika. Akun Dr. Andika
 > hanya relevan untuk §9 dan §10.
 
 **`03` Konfigurasi umum dan master data**

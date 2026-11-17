@@ -52,7 +52,7 @@ Bab manual: [`hrm/03-data-karyawan.md`](../../erpApiServices/docs/manualBook/hrm
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah satu karyawan baru (draf) | Klik "+ Add Employee"; Isi form dengan data lengkap (Nama Depan: Novi, Nama Belakang: Wijaya, Posisi: Apoteker, Departemen: Apotek Sentosa Bandung) dan klik Save; Konfirmasi di modal yang muncul. | Akun login otomatis dibuat; Detail karyawan terlihat di halaman daftar. |
+| Positif — Menambah satu karyawan baru (draf) | Klik "+ Add Employee"; Isi form dengan data lengkap (Nama Depan: Novi, Nama Belakang: Wijaya, Posisi: Apoteker, Departemen: Apotek Nusantara Bandung) dan klik Save; Konfirmasi di modal yang muncul. | Akun login otomatis dibuat; Detail karyawan terlihat di halaman daftar. |
 | Negatif — Menambah karyawan tanpa email (draf) | Klik "+ Add Employee"; Isi form tanpa mengisi kolom Email, klik Save; Cek form untuk pesan kesalahan. | Form pesan penolakan yang jelas dan tidak membuat akun login. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Informasi Pribadi: Nama Depan (wajib), Nama Belakang, Jenis Kelamin, Tanggal Lahir, Tempat Lahir, NIK, NPWP, Email, No. HP, Alamat |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau pengaturan "Auto-create Login Account for New Employees" di HRM Configs (chapter 01) aktif, checkbox "Create a login account for this employee" pada form tambah karyawan akan tercentang secara default — hanya bisa dicentang kalau kolom Email sudah diisi |
@@ -67,7 +67,7 @@ Bab manual: [`hrm/04-rekrutmen.md`](../../erpApiServices/docs/manualBook/hrm/04-
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuka lowongan (draf) | HR klik "+ Create", masukkan "Apoteker" ke Judul Lowongan, Pilih Departemen "Apotek Sentosa Bandung", Tanggal Berakhir 30 Des 2023, Kualifikasi "S1 Farmasi", Deskripsi "Apoteker untuk Apotek Sentosa Bandung", centang Active | Lowongan berstatus Active dan otomatis diarahkan ke halaman detail lowongan |
+| Positif — Membuka lowongan (draf) | HR klik "+ Create", masukkan "Apoteker" ke Judul Lowongan, Pilih Departemen "Apotek Nusantara Bandung", Tanggal Berakhir 30 Des 2023, Kualifikasi "S1 Farmasi", Deskripsi "Apoteker untuk Apotek Nusantara Bandung", centang Active | Lowongan berstatus Active dan otomatis diarahkan ke halaman detail lowongan |
 | Negatif — Menjadwalkan wawancara tanpa input data (draf) | HR klik "Schedule Interview" tanpa mengisi Tanggal & Jam, Lokasi/Tautan | Muncul pesan error pesan yang jelas dan tidak bisa menyimpan jadwal wawancara |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Judul Lowongan (wajib), Departemen, Posisi, Tanggal Berakhir (opsional), Kualifikasi, dan Deskripsi |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |

@@ -18,7 +18,7 @@ visibility: internal
 
 ## 1. Cara memasukkannya
 
-**Dikerjakan oleh:** Dr. Rahmat. **Cabang aktif:** Kantor Pusat & Distribusi Jakarta (ulangi untuk cabang lain yang punya pembukuan sendiri).
+**Dikerjakan oleh:** Dr. Andika. **Cabang aktif:** Kantor Pusat & Distribusi Jakarta (ulangi untuk cabang lain yang punya pembukuan sendiri).
 
 | Langkah | Menu dan URL | Yang dikerjakan |
 | --- | --- | --- |
