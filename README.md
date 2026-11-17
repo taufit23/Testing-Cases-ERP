@@ -6,6 +6,10 @@ Format tiap file konsisten dengan `docs/testing-flow-core-to-purchasing.id.md`: 
 
 ## Isi
 
+### `medika-nusantara-sejahtera/` — PT Medika Nusantara Sejahtera (usaha lain, full fitur, bahasa lebih manusiawi)
+
+Salinan lengkap suite di bawah dengan **nama usaha baru**, dibuat supaya tiap langkah mudah dipahami tujuannya: setiap file diawali kotak *Kenapa bagian ini diuji*, README memuat cara membaca dalam bahasa sehari-hari, dan file baru `26` sampai `29` (Live Chat, KPI Karyawan, Laporan Baru dan Laporan Keuangan, Fitur Terbaru Lintas Modul) menjelaskan alasan di setiap baris. Mulai dari [`medika-nusantara-sejahtera/README.md`](./medika-nusantara-sejahtera/README.md). Sebelum mulai, ajukan langganan baru lewat `/subscribe` dengan nama usaha ini dan isi tanggal uji milikmu. Status Testing: **Belum ditest**.
+
 ### `sehat-sentosa-farma/` — PT Sehat Sentosa Farma (grup usaha kesehatan, SEMUA modul dan SEMUA bab manual book)
 
 Suite lintas modul paling lengkap: apotek, klinik dan laboratorium, distribusi obat dan alat kesehatan, pabrik herbal, tambang kapur (bahan baku), kafe, dan sewa alat medis dalam satu perusahaan. Suite dimulai dari **perjalanan berlangganan klien** (file `00a`), bukan dari admin yang mengisi data perusahaan. File `01` adalah **alur terpadu 40 langkah** (platform owner sampai laporan) dengan angka acuan yang bisa dihitung ulang dan titik periksa di modul lain; file `02`-`20` dan `23`-`25` adalah **kasus per modul, satu bagian per bab manual book**; file `98` memuat izin, isolasi, paket langganan, kasus batas dan pola tampilan; file `99` memetakan setiap bab manual ke kasus ujinya.
