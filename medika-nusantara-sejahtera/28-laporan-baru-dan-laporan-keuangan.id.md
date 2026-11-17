@@ -19,18 +19,18 @@ visibility: internal
 
 | # | Langkah | Kenapa kamu melakukan ini | Hasil yang diharapkan |
 | ---: | --- | --- | --- |
-| 1 | Buka `Reports → Income Statement`, pilih **periode akuntansi** Oktober | Cara paling umum memilih periode | Bagian Pendapatan dan Beban tampil berjudul, tiap bagian punya baris total, lalu Laba Bersih |
+| 1 | Buka `Laporan → Laporan Laba Rugi`, pilih **periode akuntansi** Oktober | Cara paling umum memilih periode | Bagian Pendapatan dan Beban tampil berjudul, tiap bagian punya baris total, lalu Laba Bersih |
 | 2 | Kosongkan pilihan periode, isi tanggal awal dan akhir sendiri | Pilihan lain untuk rentang bebas | Angka mengikuti rentang tanggal. Bila periode dan tanggal sama-sama diisi, **periode yang dipakai** |
 | 3 | Cocokkan Laba Bersih dengan hitungan file `01` | Angka acuan tidak boleh melenceng | Sama persis. Bila beda, catat sebagai temuan, jangan diubah |
 | 4 | Buat satu jurnal masih Draf, muat ulang laporan | Laporan hanya memuat jurnal yang sudah diposting | Muncul pemberitahuan kuning bahwa ada jurnal belum diposting dan tidak ikut dihitung |
 | 5 | Klik Ekspor PDF, lalu Ekspor Excel | Banyak orang menyerahkan laporan dalam bentuk berkas | Isi berkas sama dengan layar, lengkap dengan judul bagian dan total |
-| 6 | Buka `Balance Sheet`, pilih tanggal akhir Oktober | Neraca harus selalu seimbang | Aset sama dengan Liabilitas ditambah Ekuitas; muncul pemberitahuan hijau "seimbang" |
+| 6 | Buka `Neraca`, pilih tanggal akhir Oktober | Neraca harus selalu seimbang | Aset sama dengan Liabilitas ditambah Ekuitas; muncul pemberitahuan hijau "seimbang" |
 | 7 | Periksa baris **Laba Tahun Berjalan** di Ekuitas | Sebelum tutup tahun, laba belum masuk laba ditahan | Baris itu ada dan nilainya sama dengan Laba Bersih kumulatif |
-| 8 | Buka `Cash Flow Statement`, rentang Oktober | Arus kas menjawab "uangnya ke mana" | Tiga bagian (Operasi, Investasi, Pendanaan) lalu bagian posisi kas dengan Kas Akhir |
+| 8 | Buka `Laporan Arus Kas`, rentang Oktober | Arus kas menjawab "uangnya ke mana" | Tiga bagian (Operasi, Investasi, Pendanaan) lalu bagian posisi kas dengan Kas Akhir |
 | 9 | Bandingkan Kas Akhir dengan saldo akun kas di Buku Besar | Dua jalan menuju angka yang sama | Cocok, dan muncul pemberitahuan "terekonsiliasi". Bila belum ada akun kas yang ditandai, muncul peringatan |
 | 10 | Aktifkan **Sertakan cabang anak** (bila Pusat adalah cabang utama) | Laporan gabungan grup | Muncul pemberitahuan bahwa laporan menggabungkan beberapa cabang; akun digabung hanya bila kode dan nama sama persis |
-| 11 | Buka `Inventory Reconciliation` | Nilai stok harus sama dengan saldo akun persediaan | Selisih tampil per cabang; selisih di atas Rp 0,50 berwarna merah. Cabang tanpa akun persediaan terpetakan diberi peringatan |
-| 12 | Buka `Tax Summary` | Ringkasan PPN untuk dilaporkan | Satu tabel PPN Masukan dan Keluaran dengan kolom Jenis; total masukan, keluaran, dan hutang pajak bersih di kartu ringkasan |
+| 11 | Buka `Rekonsiliasi Inventaris` | Nilai stok harus sama dengan saldo akun persediaan | Selisih tampil per cabang; selisih di atas Rp 0,50 berwarna merah. Cabang tanpa akun persediaan terpetakan diberi peringatan |
+| 12 | Buka `Ringkasan Pajak` | Ringkasan PPN untuk dilaporkan | Satu tabel PPN Masukan dan Keluaran dengan kolom Jenis; total masukan, keluaran, dan hutang pajak bersih di kartu ringkasan |
 
 ## B. Laporan baru (cukup periksa bahwa hasilnya masuk akal dan bisa diekspor)
 

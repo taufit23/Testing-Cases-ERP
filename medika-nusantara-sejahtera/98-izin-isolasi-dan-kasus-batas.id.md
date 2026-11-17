@@ -33,7 +33,7 @@ visibility: internal
 | Skenario | Detail | Hasil |
 | --- | --- | --- |
 | Positif — peran memegang izin | Staf Pembelian membuat PO, Kepala Gudang menerima barang, Manajer Keuangan menyetujui | Setiap aksi berhasil hanya untuk peran yang memegang izin aksi itu |
-| Negatif — Kasir memanggil endpoint Pembelian | Panggil daftar PO dengan token Kasir | 403 "Access denied"; tidak ada data bocor |
+| Negatif — Kasir memanggil endpoint Pembelian | Panggil daftar PO dengan token Kasir | 403 "Akses ditolak"; tidak ada data bocor |
 | Negatif — role baru belum aktif | Tambahkan role Admin ke satu pengguna tanpa mengaktifkannya lalu buka halaman bermenu | Pengguna tidak memiliki izin sampai role diaktifkan lewat ganti role (Admin wajib PIN owner); tidak ada halaman setengah terbuka |
 | Positif — tombol nonaktif bersyarat | Buka PO yang sudah punya GR sebagai Staf Pembelian | Tombol Edit terlihat **nonaktif dengan tooltip alasan**, bukan hilang; aksi tidak bisa dipicu lewat klik |
 | Positif — override PIN rekan | Kasir meminta Apoteker memasukkan PIN untuk aksi yang butuh izin lebih tinggi | Aksi berjalan sekali dalam masa token; pencatatan penggunaan override tersimpan; PIN rekan yang rolenya tidak punya izin ditolak |

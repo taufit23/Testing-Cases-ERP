@@ -234,3 +234,4 @@ Alur lintas modul ada di [`01`](./01-alur-bisnis-terpadu-lintas-modul.id.md); iz
 | Jurnal manual Aset Tetap | `29-fitur-terbaru-lintas-modul.id.md` bagian B | Setup `fixed_asset_journal_mode` |
 | Diagram Mermaid dan Baca Suara di Help | `29-fitur-terbaru-lintas-modul.id.md` bagian C | |
 | Pembatalan kunjungan dan hapus rute kanvasing | `29-fitur-terbaru-lintas-modul.id.md` bagian D | |
+| Daftar istilah layar Indonesia dan lembar catatan string janggal | `30-daftar-istilah-layar-dan-catatan-string.id.md` | Dipakai untuk mengumpulkan terjemahan yang salah |

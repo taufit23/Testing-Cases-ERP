@@ -28,8 +28,8 @@ Bab manual: [`sales/01-konfigurasi-alur-sales.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Konfigurasi alur sales (draf) | Masuk ke `/sales/sales-configs`; Aktifkan "Require Sales Order Approval"; Isi persentase "Payment Threshold Percentage" 50; Simpan konfigurasi | Alur approval SO sekarang memerlukan persetujuan, dan barang hanya boleh dikirim setelah 50% pembayaran diterima |
-| Negatif — Konfigurasi alur sales (draf) | Masuk ke `/sales/sales-configs`; Aktifkan "Require Sales Order Approval"; Tidak mengisi "Payment Threshold Percentage"; Coba simpan konfigurasi | Gagal menyimpan konfigurasi dengan pesan error: pesan yang jelas |
+| Positif — Konfigurasi alur sales (draf) | Masuk ke `/sales/sales-configs`; Aktifkan "Wajibkan Persetujuan Pesanan Penjualan"; Isi persentase "Payment Threshold Percentage" 50; Simpan konfigurasi | Alur approval SO sekarang memerlukan persetujuan, dan barang hanya boleh dikirim setelah 50% pembayaran diterima |
+| Negatif — Konfigurasi alur sales (draf) | Masuk ke `/sales/sales-configs`; Aktifkan "Wajibkan Persetujuan Pesanan Penjualan"; Tidak mengisi "Payment Threshold Percentage"; Coba simpan konfigurasi | Gagal menyimpan konfigurasi dengan pesan error: pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Require Quotation for SO — kalau aktif, Sales Order wajib berasal dari Quotation yang sudah accepted customer (tidak bisa buat SO manual langsung) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Restrict Agreed Due Date to Quotation Range — kalau aktif, tanggal jatuh tempo yang disepakati di SO tidak boleh melebihi rentang validitas Quotation asalnya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kapan pakai "Minimum Payment Percentage": cocok untuk bisnis yang mewajibkan uang muka (DP) sebelum barang dikirim — misalnya wajib bayar 50% dulu baru barang jalan, sisanya ditagih belakangan |
@@ -43,12 +43,12 @@ Bab manual: [`sales/02-quotation.md`](../../erpApiServices/docs/manualBook/sales
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Quotation baru (draf) | Buka `/sales/quotations`; klik "+ Create"; masukkan Contact: Apotek Mitra Sehat; item: Paracetamol 500 mg strip (SKU OBT-001), harga: Rp2.000, PPN 10%; klik Save → Submit | Status Quotation berubah menjadi Submitted; jika Require Quotation Approval aktif, pergi ke View Approval Request; jika tidak aktif, status langsung Approved |
-| Negatif — Mengirim Quotation tanpa item (draf) | Buka `/sales/quotations`; klik "+ Create"; masukkan Contact: Apotek Mitra Sehat; klik Save → Submit | Sistem menolak submit karena item harganya masih kosong atau nol |
+| Positif — Membuat Quotation baru (draf) | Buka `/sales/quotations`; klik "+ Buat"; masukkan Contact: Apotek Mitra Sehat; item: Paracetamol 500 mg strip (SKU OBT-001), harga: Rp2.000, PPN 10%; klik Save → Submit | Status Quotation berubah menjadi Submitted; jika Require Quotation Approval aktif, pergi ke View Approval Request; jika tidak aktif, status langsung Approved |
+| Negatif — Mengirim Quotation tanpa item (draf) | Buka `/sales/quotations`; klik "+ Buat"; masukkan Contact: Apotek Mitra Sehat; klik Save → Submit | Sistem menolak submit karena item harganya masih kosong atau nol |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Klik Save → Submit. Submit ditolak kalau ada item yang harganya masih kosong atau nol |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tombol "Download PDF" dan "Resend to Customer" hanya aktif selama status masih Awaiting Customer Response. Begitu penawaran sudah diterima, ditolak customer, atau dikonversi, kedua tombol ini nonaktif karena penawaran sudah final |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. "Record Customer Declined": customer menolak. Catatan wajib diisi. Status menjadi Customer Declined |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. "Record Customer Negotiating": customer ingin menawar. Catatan wajib diisi. Quotation kembali ke Draft supaya harga bisa diubah, lalu di-Submit lagi |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Tombol "Unduh PDF" dan "Kirim Ulang ke Pelanggan" hanya aktif selama status masih Awaiting Customer Response. Begitu penawaran sudah diterima, ditolak customer, atau dikonversi, kedua tombol ini nonaktif karena penawaran sudah final |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. "Catatan Pelanggan Ditolak": customer menolak. Catatan wajib diisi. Status menjadi Customer Declined |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. "Catat Sedang Negosiasi": customer ingin menawar. Catatan wajib diisi. Quotation kembali ke Draft supaya harga bisa diubah, lalu di-Submit lagi |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -82,7 +82,7 @@ Bab manual: [`sales/05-sales-invoice.md`](../../erpApiServices/docs/manualBook/s
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Buka Sales Invoices; klik "+ Create"; pilih SO OBT-001; isi item Paracetamol 500 mg strip; masukkan PPN Keluaran 11%; klik Save. | Tagihan berhasil dibuat untuk SO OBT-001 dengan item Paracetamol 500 mg strip dan PPN Keluaran 11%. |
+| Positif — jalur normal (draf) | Buka Sales Invoices; klik "+ Buat"; pilih SO OBT-001; isi item Paracetamol 500 mg strip; masukkan PPN Keluaran 11%; klik Save. | Tagihan berhasil dibuat untuk SO OBT-001 dengan item Paracetamol 500 mg strip dan PPN Keluaran 11%. |
 | Negatif — input salah (draf) | Mencoba membuat tagihan tanpa SO yang dikonfirmasi; masukkan nilai invoice melebihi subtotal SO. | Sistem menolak input karena SO belum dikonfirmasi customer atau total invoice melebihi subtotal SO, pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Sudah Dibayar (Mark as Paid) — invoice langsung dianggap lunas saat disimpan; kalau Require Payment Proof aktif di Sales Configs, wajib upload bukti pembayaran di step ini juga |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Invoice dari SO hanya bisa dibuat bila SO sudah dikonfirmasi customer. Pada mode Delivery Before Invoice, SO harus sudah punya pengiriman |
@@ -97,8 +97,8 @@ Bab manual: [`sales/06-sales-payment-bill.md`](../../erpApiServices/docs/manualB
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mencatat penerimaan pembayaran (draf) | Buka Sales Payment Bills; "+ Create"; Pilih OBT-001 (Sales Invoice); Isi Amount 50000; Payment Method Transfer; Upload Bukti; Save | Pembayaran berhasil dicatat, sisa tagihan invoice berkurang |
-| Negatif — Membuat payment tanpa bukti (draf) | Buka Sales Payment Bills; "+ Create"; Pilih OBT-001 (Sales Invoice); Isi Amount 50000; Payment Method Transfer; Tidak upload Bukti; Save | Tidak bisa simpan, pesan penolakan yang jelas |
+| Positif — Mencatat penerimaan pembayaran (draf) | Buka Sales Payment Bills; "+ Buat"; Pilih OBT-001 (Sales Invoice); Isi Amount 50000; Payment Method Transfer; Upload Bukti; Save | Pembayaran berhasil dicatat, sisa tagihan invoice berkurang |
+| Negatif — Membuat payment tanpa bukti (draf) | Buka Sales Payment Bills; "+ Buat"; Pilih OBT-001 (Sales Invoice); Isi Amount 50000; Payment Method Transfer; Tidak upload Bukti; Save | Tidak bisa simpan, pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi Amount, Payment Method, dan bukti pembayaran (wajib kalau Require Payment Proof aktif di konfigurasi — lihat chapter 01) |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

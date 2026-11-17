@@ -19,7 +19,7 @@ Kalau formulir menolak domain `.test`, ganti hanya domainnya dengan domain milik
 | Peran | Nama | Email | Kata sandi awal | Dibuat lewat |
 | --- | --- | --- | --- | --- |
 | Direktur (admin klien) | Dr. Andika Pratama Wijaya | `andika.wijaya@medikanusantara.test` | `MnsUji#2026` | Formulir `/subscribe` lalu disetujui pemilik platform |
-| Manajer Keuangan | Citra Maharani | `citra.maharani@medikanusantara.test` | `MnsUji#2026` | `Core → Users` oleh Direktur (file `02`) |
+| Manajer Keuangan | Citra Maharani | `citra.maharani@medikanusantara.test` | `MnsUji#2026` | `Core → Pengguna` oleh Direktur (file `02`) |
 | Staf Pembelian | Fajar Nugroho | `fajar.nugroho@medikanusantara.test` | `MnsUji#2026` | idem |
 | Kepala Gudang | Teguh Santosa | `teguh.santosa@medikanusantara.test` | `MnsUji#2026` | idem |
 | Apoteker Penanggung Jawab | Apt. Ratna Kusumawati | `ratna.kusumawati@medikanusantara.test` | `MnsUji#2026` | idem |
@@ -64,6 +64,9 @@ Jangan buka semua file sekaligus. Urutan ini membawamu dari "belum ada apa-apa" 
 Kalau macet di salah satu langkah, **catat di tabel temuan (bagian 6)**, lalu lanjut ke langkah berikutnya yang tidak bergantung padanya.
 
 ---
+
+> **Bahasa layar:** uji ini dijalankan dengan aplikasi **berbahasa Indonesia**. Nama menu dan tombol di dokumen memakai terjemahan Indonesia yang tersimpan di aplikasi
+> (daftarnya di file `30`). Tujuan utama pengujianmu juga mencari **string yang janggal**: salah arti, tidak konsisten, atau masih Inggris. Catat di lembar bagian B file `30`.
 
 ## Cara paling gampang memakai panduan ini (versi manusiawi)
 

@@ -53,7 +53,7 @@ Bab manual: [`manufacturing/03-routing-produksi.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Klik "+ Create Routing"; Isi Name: "Pemotongan Rakit Kemas", Bill of Materials: Paracetamol 500 mg strip (SKU OBT-001), Operations: 3 baris dengan Operation: Pemotongan, Work Center: Gudang Jakarta, Setup Minutes: 10, Run Minutes per Unit: 20; Klik Save Routing | Routing pesan yang jelas berhasil disimpan dengan total Run Minutes per Unit 60 |
+| Positif — jalur normal (draf) | Klik "+ Buat Rute"; Isi Name: "Pemotongan Rakit Kemas", Bill of Materials: Paracetamol 500 mg strip (SKU OBT-001), Operations: 3 baris dengan Operation: Pemotongan, Work Center: Gudang Jakarta, Setup Minutes: 10, Run Minutes per Unit: 20; Klik Save Routing | Routing pesan yang jelas berhasil disimpan dengan total Run Minutes per Unit 60 |
 | Negatif — input salah (draf) | Isi Name kosong saat membuat routing; Isi Bill of Materials tidak sesuai BOM yang ada | Tampilan error: pesan yang jelas dan pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Setiap operasi di Routing akan disalin ke Production Order sebagai daftar Operations yang harus di-Start dan di-Finish satu per satu selama proses produksi berjalan (lihat chapter Production Order) |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -65,7 +65,7 @@ Bab manual: [`manufacturing/04-production-order.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Klik "+ Create Production Order"; pilih BOM Paracetamol 500 mg strip (SKU OBT-001), masukkan Planned Quantity 100, Material Warehouse Gudang Jakarta, dan Finished Goods Warehouse Gudang Jakarta; klik Save Production Order | Daftar Materials menunjukkan kebutuhan bahan baku 5000 mg Paracetamol; Operations kosong karena tidak menggunakan Routing; status menjadi Draft |
+| Positif — jalur normal (draf) | Klik "+ Buat Produksi"; pilih BOM Paracetamol 500 mg strip (SKU OBT-001), masukkan Planned Quantity 100, Material Warehouse Gudang Jakarta, dan Finished Goods Warehouse Gudang Jakarta; klik Save Production Order | Daftar Materials menunjukkan kebutuhan bahan baku 5000 mg Paracetamol; Operations kosong karena tidak menggunakan Routing; status menjadi Draft |
 | Negatif — input salah (draf) | Membuat Production Order tanpa mengisi field Bill of Materials; coba klik Save Production Order | Sistem pesan penolakan yang jelas dan tidak menyimpan order; status tetap Draft |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau order ditolak (Rejected) saat approval, order kembali bisa diedit dan disubmit ulang |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau order memakai Routing, bagian Operations menampilkan daftar tahapan kerja sesuai urutan di Routing. Operasi hanya bisa dicatat saat order berstatus In Progress, dan harus dikerjakan sesuai urutan pending-nya: |

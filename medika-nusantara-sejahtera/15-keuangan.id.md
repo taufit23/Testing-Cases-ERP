@@ -26,7 +26,7 @@ Bab manual: [`finance/01-kategori-dan-pencatatan-biaya.md`](../../erpApiServices
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat kategori biaya dan mencatat expense (draf) | Masuk ke `Finance → Expense Categories`, buat kategori "Listrik & Air"; masuk ke `Finance → Expenses`, buat expense untuk listrik dengan kategori "Listrik & Air" dan jumlah 100.000 Rupiah; pilih metode pembayaran "Transfer Bank". | Kategori "Listrik & Air" terdaftar, expense berstatus Draft; jurnal otomatis dibuat di General Ledger. |
+| Positif — Membuat kategori biaya dan mencatat expense (draf) | Masuk ke `Keuangan → Kategori Biaya`, buat kategori "Listrik & Air"; masuk ke `Keuangan → Pengeluaran`, buat expense untuk listrik dengan kategori "Listrik & Air" dan jumlah 100.000 Rupiah; pilih metode pembayaran "Transfer Bank". | Kategori "Listrik & Air" terdaftar, expense berstatus Draft; jurnal otomatis dibuat di General Ledger. |
 | Negatif — Mencoba menghapus expense yang sudah disetujui (draf) | Cari expense dengan status Approved, klik tiga titik, pilih Delete; cek apakah bisa menghapus. | Tidak dapat menghapus expense yang sudah disetujui, pesan penolakan yang jelas. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Pilih Expense Category (wajib) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi Expense Date (wajib) dan Due Date (opsional, kalau biaya ini punya tenggat pembayaran) |

@@ -26,7 +26,7 @@ visibility: internal
 
 ## B. Aset Tetap: jurnal ditahan sampai ditinjau
 
-**Dikerjakan oleh:** akuntan. **Prasyarat:** di `Client Master → Branch Setup`, ubah `fixed_asset_journal_mode` menjadi `manual` untuk cabang uji, dan nyalakan saklar jurnal perolehan.
+**Dikerjakan oleh:** akuntan. **Prasyarat:** di `Client Master → Pengaturan Cabang`, ubah `fixed_asset_journal_mode` menjadi `manual` untuk cabang uji, dan nyalakan saklar jurnal perolehan.
 
 | # | Langkah | Kenapa kamu melakukan ini | Hasil yang diharapkan |
 | ---: | --- | --- | --- |
@@ -43,7 +43,7 @@ visibility: internal
 
 | # | Langkah | Kenapa kamu melakukan ini | Hasil yang diharapkan |
 | ---: | --- | --- | --- |
-| 14 | Buka `Help`, bab berjudul "Diagram Alur ..." (mis. Accounting atau Rental) | Diagram dulu tampil sebagai teks kode | Semua diagram di halaman tampil sebagai **gambar**, tidak ada kotak kosong; ada tombol **Enlarge Diagram** |
+| 14 | Buka `Bantuan`, bab berjudul "Diagram Alur ..." (mis. Accounting atau Rental) | Diagram dulu tampil sebagai teks kode | Semua diagram di halaman tampil sebagai **gambar**, tidak ada kotak kosong; ada tombol **Enlarge Diagram** |
 | 15 | Klik Enlarge Diagram, lalu ganti tema gelap atau terang | Diagram besar harus terbaca di dua tema | Diagram ikut berubah warna dan tetap terbaca |
 | 16 | Buka bab dengan banyak diagram (mis. Rental atau Purchasing) dan perhatikan semuanya | Dulu diagram saling menimpa | Semua diagram terisi |
 | 17 | Klik **Read Aloud** | Membacakan bab untuk yang lebih suka mendengar | Suara Indonesia terdengar; paragraf yang dibaca tersorot |

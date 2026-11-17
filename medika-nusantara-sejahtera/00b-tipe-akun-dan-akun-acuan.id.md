@@ -23,9 +23,9 @@ visibility: internal
 | Langkah | Menu dan URL | Yang dikerjakan |
 | --- | --- | --- |
 | 1 | `Client Master → Chart of Account Type` (`/client-master/chart-of-account-type`) | Buat **8 tipe akun** di bagian 2 |
-| 2 | `Client Master → Chart of Accounts` (`/client-master/chart-of-accounts`) | Buat **akun** di bagian 3, satu per satu atau massal (**Bulk Add**) atau impor Excel |
+| 2 | `Client Master → Bagan Akun` (`/client-master/chart-of-accounts`) | Buat **akun** di bagian 3, satu per satu atau massal (**Bulk Add**) atau impor Excel |
 | 3 | Chart of Accounts, penanda akun (bagian 3.9) | Tandai **Modal Pemilik** (`3101`) sebagai **Is opening balance equity account**, dan penanda lain di 3.9 |
-| 4 | `Finance → Bank Accounts` (`/finance/bank-accounts`) | Hubungkan **Bank Operasional** (`1102`) ke rekening bank |
+| 4 | `Keuangan → Rekening Bank` (`/finance/bank-accounts`) | Hubungkan **Bank Operasional** (`1102`) ke rekening bank |
 | 5 | `Client Master → Chart of Accounts Balances` (`/client-master/chart-of-accounts-balances`) atau lewat COA | Isi saldo awal bagian 5, tanggal 1 Oktober 2026 |
 | 6 | Halaman konfigurasi tiap modul (bagian 4) | Hubungkan akun ke fungsi jurnal modul |
 
@@ -52,7 +52,7 @@ serta **Description**, **Active**, dan **Default unit type** (opsional). Gunakan
 | `MNS-BEBAN` | Beban Usaha | Income Statement | debit | expense | operating | Gaji, listrik, penyusutan, royalti, administrasi |
 | `MNS-LAIN` | Pendapatan dan Beban Lain | Income Statement | credit | revenue | operating | Selisih kurs, laba atau rugi pelepasan aset |
 
-> Pilihan nilai di form: Report group = `Balance Sheet` atau `Income Statement`; Normal balance = `debit` atau `credit`; Category = `asset`, `liability`, `equity`, `revenue`, `expense`;
+> Pilihan nilai di form: Report group = `Neraca` atau `Laporan Laba Rugi`; Normal balance = `debit` atau `credit`; Category = `asset`, `liability`, `equity`, `revenue`, `expense`;
 > Cash flow section = `operating`, `investing`, `financing`. Akun **mengikuti** sifat tipenya; aplikasi tidak punya kolom saldo normal di level akun.
 > Akun kontra (Akumulasi Penyusutan, Retur Pembelian, Retur Penjualan) tetap ditaruh di tipe induknya dan bersaldo berlawanan lewat jurnalnya.
 
@@ -190,7 +190,7 @@ Kerjakan sebelum transaksi modul itu:
 | `3101` Modal Pemilik | | 500.000.000 |
 | **Total** | **500.000.000** | **500.000.000** |
 
-Tanpa persediaan awal, supaya semua angka di file `01` bisa dihitung dari nol. Setelah diisi, `Reports → Trial Balance` (`/reports/trial-balance`) harus menunjukkan kedua sisi **Rp 500.000.000**.
+Tanpa persediaan awal, supaya semua angka di file `01` bisa dihitung dari nol. Setelah diisi, `Laporan → Neraca Saldo` (`/reports/trial-balance`) harus menunjukkan kedua sisi **Rp 500.000.000**.
 
 ## 6. Kasus uji khusus data akun
 

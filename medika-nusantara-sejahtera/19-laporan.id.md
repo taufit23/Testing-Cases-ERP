@@ -25,8 +25,8 @@ Bab manual: [`reports/01-laporan-lintas-modul.md`](../../erpApiServices/docs/man
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menampilkan laporan AP Aging (draf) | Pilih menu `Reports → Accounts Payable Aging`; Isi As Of Date 31 Desember 2023; Klik "Run Report"; Cek tabel hasil | Tabel menampilkan utang ke supplier, umur utang, dan total utang |
-| Negatif — Filter tanggal tidak valid (draf) | Pilih menu `Reports → Accounts Payable Aging`; Isi As Of Date 31 Desember 2024 (tanggal di masa depan); Klik "Run Report" | Muncul pesan penolakan yang jelas; Tabel kosong |
+| Positif — Menampilkan laporan AP Aging (draf) | Pilih menu `Laporan → Umur Piutang Usaha`; Isi As Of Date 31 Desember 2023; Klik "Jalankan Laporan"; Cek tabel hasil | Tabel menampilkan utang ke supplier, umur utang, dan total utang |
+| Negatif — Filter tanggal tidak valid (draf) | Pilih menu `Laporan → Umur Piutang Usaha`; Isi As Of Date 31 Desember 2024 (tanggal di masa depan); Klik "Jalankan Laporan" | Muncul pesan penolakan yang jelas; Tabel kosong |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Fitur ini berguna untuk pemilik yang mau melihat kondisi seluruh jaringan cabang dari satu tempat, tanpa harus login/pindah ke tiap cabang satu per satu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

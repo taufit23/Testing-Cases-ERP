@@ -46,16 +46,16 @@ Kalimat profil itu bukan satu formulir. Aplikasi memisahkan data menjadi **tiga 
 
 | Atribut di profil | Tingkat | Diisi di (menu dan URL) | Diisi dengan | Catatan |
 | --- | --- | --- | --- | --- |
-| Nama perusahaan "PT Medika Nusantara Sejahtera" | Perusahaan | Formulir `/subscribe` (kolom Nama Perusahaan); owner melihatnya di `Core → Providers` (`/core/providers`) | `PT Medika Nusantara Sejahtera` | Sudah terisi lewat pengajuan. Klien tidak mengubahnya sendiri |
+| Nama perusahaan "PT Medika Nusantara Sejahtera" | Perusahaan | Formulir `/subscribe` (kolom Nama Perusahaan); owner melihatnya di `Core → Penyuplai` (`/core/providers`) | `PT Medika Nusantara Sejahtera` | Sudah terisi lewat pengajuan. Klien tidak mengubahnya sendiri |
 | Nama cabang pertama dan alamatnya | Cabang | Formulir `/subscribe` (cabang pertama); lanjutan di `Client Master → Branch Manage` (`/client-master/branch-manage`) | `Kantor Pusat & Distribusi Jakarta`, alamat, provinsi, kota, kecamatan, kelurahan, kode pos 5 digit | Koordinat bisa diisi lewat pencarian wilayah atau manual |
 | Cabang lain (Bandung, Bekasi, Sukabumi, Kafe) | Cabang | `Client Master → Branch Manage` (`/client-master/branch-manage`) → **Add Branch** | Nama dan alamat tiap cabang (tabel di bawah) | Dibatasi **batas cabang paket**. Melebihi batas harus ditolak (`00a` S11) |
 | Cabang utama (Pusat) | Cabang | `Branch Manage`, kolom **This branch is a main branch** | Aktif untuk Pusat | Cabang anak memakai **Reports to main branch**. Menentukan laporan gabungan |
 | Pembukuan cabang digabung di pusat | Cabang | `Branch Manage`, kolom **Keep this branch's accounting in the main branch** | Biarkan mati untuk pengujian ini kecuali kasus khusus | Ini mode akuntansi terpusat; mengubah arah jurnal, jangan dinyalakan tanpa alasan |
-| Mata uang Rupiah | Cabang | `Client Master → Currencies` (`/client-master/currencies`) | Pilih IDR, tandai sebagai mata uang yang dipakai cabang (badge **Used by branch**) | Dikerjakan **per cabang**. Kurs mata uang lain di `Client Master → Exchange Rates` |
-| Tahun fiskal Januari sampai Desember 2026 | Cabang | `Client Master → Fiscal Year` (`/client-master/fiscal-year`) | Kode `FY2026`, nama, mulai `2026-01-01`, selesai `2026-12-31` | Wajib sebelum ada jurnal atau saldo awal |
-| 12 periode akuntansi | Cabang | `Client Master → Accounting Period` (`/client-master/accounting-period`) | Pilih tahun fiskal, durasi bulanan, mulai Januari 2026 | Periode berjalan bisa otomatis (mengikuti tanggal) atau dikunci manual |
-| Berstatus PKP dan PPN 11% | Cabang | `Client Master → Taxes` (`/client-master/taxes`) | Kode `PPN`, nama `PPN 11%`, tarif `11`, jenis pajak keluaran dan masukan | **Tidak ada kolom "status PKP" di aplikasi** (tidak ditemukan di kode maupun skema). Cukup buat pajak PPN 11% dan pakai di dokumen. Kalau PKP formal ingin diuji, catat sebagai celah |
-| Merek "Medika Nusantara" di dokumen cetak | Cabang | `Client Master → PDF Layout Settings` (`/client-master/pdf-layout-settings`), kolom **Company name override** | `Medika Nusantara` (opsional), logo, catatan header dan footer | **Tidak ada kolom merek di profil perusahaan.** Merek hanya muncul di tata letak PDF |
+| Mata uang Rupiah | Cabang | `Client Master → Mata Uang` (`/client-master/currencies`) | Pilih IDR, tandai sebagai mata uang yang dipakai cabang (badge **Used by branch**) | Dikerjakan **per cabang**. Kurs mata uang lain di `Client Master → Kurs Valuta Asing` |
+| Tahun fiskal Januari sampai Desember 2026 | Cabang | `Client Master → Tahun Fiskal` (`/client-master/fiscal-year`) | Kode `FY2026`, nama, mulai `2026-01-01`, selesai `2026-12-31` | Wajib sebelum ada jurnal atau saldo awal |
+| 12 periode akuntansi | Cabang | `Client Master → Periode Akuntansi` (`/client-master/accounting-period`) | Pilih tahun fiskal, durasi bulanan, mulai Januari 2026 | Periode berjalan bisa otomatis (mengikuti tanggal) atau dikunci manual |
+| Berstatus PKP dan PPN 11% | Cabang | `Client Master → Pajak` (`/client-master/taxes`) | Kode `PPN`, nama `PPN 11%`, tarif `11`, jenis pajak keluaran dan masukan | **Tidak ada kolom "status PKP" di aplikasi** (tidak ditemukan di kode maupun skema). Cukup buat pajak PPN 11% dan pakai di dokumen. Kalau PKP formal ingin diuji, catat sebagai celah |
+| Merek "Medika Nusantara" di dokumen cetak | Cabang | `Client Master → Pengaturan Penataan PDF` (`/client-master/pdf-layout-settings`), kolom **Company name override** | `Medika Nusantara` (opsional), logo, catatan header dan footer | **Tidak ada kolom merek di profil perusahaan.** Merek hanya muncul di tata letak PDF |
 | Periode uji Oktober 2026 | Data uji | Tidak ada isian. Itu tanggal transaksi saat membuat dokumen | Tanggal dokumen di Oktober 2026 | Pastikan periode Oktober berstatus terbuka |
 
 > **Kalau sebuah atribut tidak ketemu di layar:** kemungkinan besar memang tidak ada. Jangan dicari lama-lama; catat di tabel temuan README sebagai **Celah** dan lanjutkan.
@@ -92,10 +92,10 @@ Cabang Pusat adalah **cabang utama** (laporan bisa digabung dengan cabang anak).
 
 | Langkah | Menu dan URL | Isi |
 | --- | --- | --- |
-| 1. Buat peran | `Client Master → Roles` (`/client-master/roles`) | Nama peran (mis. `Kasir Apotek`), deskripsi, status aktif; lalu atur izinnya. Peran klien **hanya bisa memberi izin yang dimiliki pembuatnya** |
-| 2. Buat pengguna | `Client Master → Users` (`/client-master/users`) | Nama, email, kata sandi dan konfirmasinya, status aktif, PIN override manajer (untuk kasir yang butuh persetujuan atasan) |
+| 1. Buat peran | `Client Master → Peran` (`/client-master/roles`) | Nama peran (mis. `Kasir Apotek`), deskripsi, status aktif; lalu atur izinnya. Peran klien **hanya bisa memberi izin yang dimiliki pembuatnya** |
+| 2. Buat pengguna | `Client Master → Pengguna` (`/client-master/users`) | Nama, email, kata sandi dan konfirmasinya, status aktif, PIN override manajer (untuk kasir yang butuh persetujuan atasan) |
 | 3. Hubungkan pengguna ke cabang | `Client Master → Branch Manage` (`/client-master/branch-manage`), pilih cabang → **Assign user** | Pilih pengguna, tandai aktif di cabang itu |
-| 4. Data karyawan (untuk yang digaji) | `HRM → Employees` (`/hrm/employees`) | Dikerjakan di file `16`, bukan di sini |
+| 4. Data karyawan (untuk yang digaji) | `HRM → Karyawan` (`/hrm/employees`) | Dikerjakan di file `16`, bukan di sini |
 
 Pengguna dibatasi **batas pengguna paket**. Untuk uji izin, masuk bergantian sebagai tiap peran dan buka halaman yang bukan haknya.
 
@@ -115,7 +115,7 @@ berstatus nonaktif dengan penjelasan, bukan tombol hilang.
 | CUS-02 | Apotek Mitra Sehat | pelanggan grosir dan calon kanvasing | batas kredit Rp 10.000.000 |
 | CUS-03 | Pasien Umum | pelanggan POS | tanpa kredit |
 
-**Input di:** `Client Master → Contacts` (`/client-master/contacts`). Satu halaman untuk pemasok dan pelanggan; dibedakan lewat kolom **Type**.
+**Input di:** `Client Master → Kontak` (`/client-master/contacts`). Satu halaman untuk pemasok dan pelanggan; dibedakan lewat kolom **Type**.
 
 | Yang diisi | Kolom di form | Contoh |
 | --- | --- | --- |
@@ -127,7 +127,7 @@ berstatus nonaktif dengan penjelasan, bukan tombol hilang.
 | Pelanggan POS bawaan | Walking customer (POS default) | aktif hanya untuk CUS-03 Pasien Umum |
 | Mata uang | Currency | IDR |
 
-Alamat dan rekening bank mitra diisi di halaman terpisah: `Client Master → Contact Addresses` (`/client-master/contact-addresses`) dan `Contact Bank Accounts` (`/client-master/contact-bank-accounts`).
+Alamat dan rekening bank mitra diisi di halaman terpisah: `Client Master → Alamat Kontak` (`/client-master/contact-addresses`) dan `Rekening Bank Kontak` (`/client-master/contact-bank-accounts`).
 Kode `SUP-01` dan seterusnya hanya **sebutan di dokumen uji**; aplikasi membuat kodenya sendiri, jadi catat nama pemasoknya.
 
 ### 3.2 Produk dan harga acuan
@@ -148,13 +148,13 @@ Kode `SUP-01` dan seterusnya hanya **sebutan di dokumen uji**; aplikasi membuat 
 | RNT-001 | Sewa Kursi Roda | hari | - | 15.000 per hari | - | aset sewa, deposit Rp 100.000 per unit |
 | MNU-001 | Teh Jahe Hangat | gelas | - | - | 12.000 | menu kafe |
 
-**Input produk di:** `Client Master → Products` (`/client-master/products`). Urutan yang benar:
+**Input produk di:** `Client Master → Produk` (`/client-master/products`). Urutan yang benar:
 
-1. Kategori di `Client Master → Product Categories` (`/client-master/product-categories`): Obat, Alat Kesehatan, Suplemen, Herbal, Bahan Baku, Jasa Sewa, Menu Kafe.
-2. Satuan di `Client Master → Product Units` (`/client-master/product-units`): strip, botol, box, sachet, kg, hari, gelas.
-3. Produk di `Products`: nama, kategori, merek, deskripsi, saluran penjualan, tanda **dapat dibeli**. Kode SKU, satuan, dan harga mengikuti isian SKU produk itu (cocokkan dengan layar; bisa juga lewat **Import Excel** di `/client-master/products/import`).
-4. Harga jual berbeda per kanal (grosir 4.500, apotek 6.000) lewat `Client Master → Price Lists` (`/client-master/price-lists`): buat daftar harga `Grosir` dan `Apotek`, lalu isi harga per SKU.
-5. Produk khusus: resep produksi di `Client Master → Product Recipes` (HRB-001, HRB-002), menu kafe di `Restaurant → Menu`, aset sewa di `Rental → Assets`.
+1. Kategori di `Client Master → Kategori Produk` (`/client-master/product-categories`): Obat, Alat Kesehatan, Suplemen, Herbal, Bahan Baku, Jasa Sewa, Menu Kafe.
+2. Satuan di `Client Master → Satuan Produk` (`/client-master/product-units`): strip, botol, box, sachet, kg, hari, gelas.
+3. Produk di `Produk`: nama, kategori, merek, deskripsi, saluran penjualan, tanda **dapat dibeli**. Kode SKU, satuan, dan harga mengikuti isian SKU produk itu (cocokkan dengan layar; bisa juga lewat **Import Excel** di `/client-master/products/import`).
+4. Harga jual berbeda per kanal (grosir 4.500, apotek 6.000) lewat `Client Master → Daftar Harga` (`/client-master/price-lists`): buat daftar harga `Grosir` dan `Apotek`, lalu isi harga per SKU.
+5. Produk khusus: resep produksi di `Client Master → Resep Produk` (HRB-001, HRB-002), menu kafe di `Restoran → Menu`, aset sewa di `Sewa → Aset`.
 
 **Persediaan awal tidak diinput.** Sengaja kosong; stok lahir dari Goods Receipt (`01` langkah 7).
 
@@ -163,8 +163,8 @@ Kode `SUP-01` dan seterusnya hanya **sebutan di dokumen uji**; aplikasi membuat 
 `WH-PST` (Pusat), `WH-BDG` (Apotek Bandung), `WH-SKB-RM` (bahan baku Sukabumi), `WH-SKB-FG` (barang jadi Sukabumi). Transfer antar
 gudang wajib lewat **Transfer Stok**, bukan penyesuaian manual.
 
-**Input gudang di:** `Client Master → Warehouses` (`/client-master/warehouses`). Kolom: Name, Code (`WH-PST` dan seterusnya), Business unit, Type, alamat, telepon, koordinat, Status.
-Gudang **butuh unit bisnis**, jadi buat dulu satu unit per cabang di `Client Master → Business Units` (`/client-master/business-units`). `WH-BDG` dibuat saat cabang aktif adalah Bandung.
+**Input gudang di:** `Client Master → Gudang` (`/client-master/warehouses`). Kolom: Name, Code (`WH-PST` dan seterusnya), Business unit, Type, alamat, telepon, koordinat, Status.
+Gudang **butuh unit bisnis**, jadi buat dulu satu unit per cabang di `Client Master → Unit Bisnis` (`/client-master/business-units`). `WH-BDG` dibuat saat cabang aktif adalah Bandung.
 
 ### 3.4 Akun kunci
 
@@ -177,16 +177,16 @@ Beban Penyusutan, Modal Pemilik, Laba Ditahan, Laba/Rugi Pelepasan Aset, Laba/Ru
 Saldo awal 1 Oktober 2026 (lewat fitur Saldo Awal): **Bank Operasional Rp 500.000.000** dan **Modal Pemilik Rp 500.000.000**. Tanpa
 persediaan awal, supaya angka di file `01` bisa dihitung dari nol.
 
-**Input akun di:** `Client Master → Chart of Account Type` (`/client-master/chart-of-account-type`) lalu `Client Master → Chart of Accounts` (`/client-master/chart-of-accounts`).
+**Input akun di:** `Client Master → Chart of Account Type` (`/client-master/chart-of-account-type`) lalu `Client Master → Bagan Akun` (`/client-master/chart-of-accounts`).
 Isi **sesuai [`00b`](./00b-tipe-akun-dan-akun-acuan.id.md)** (8 tipe, 40 akun), bukan template bawaan: template memakai kode yang bentrok dan template Kesehatan terlalu tipis. Klien baru memang mulai dengan COA kosong.
 Kolom akun: Code, Name, Category, Effect, Normal balance, Report group.
 
 **Input saldo awal (Bank Rp 500.000.000 dan Modal Rp 500.000.000):**
 
-1. Tandai **satu akun ekuitas** (Modal Pemilik) sebagai **akun saldo awal** (opening balance equity) di `Chart of Accounts`. **Tanpa ini saldo awal gagal dengan pesan kesalahan.**
-2. Buat rekening bank di `Finance → Bank Accounts` (`/finance/bank-accounts`) untuk Bank Operasional.
+1. Tandai **satu akun ekuitas** (Modal Pemilik) sebagai **akun saldo awal** (opening balance equity) di `Bagan Akun`. **Tanpa ini saldo awal gagal dengan pesan kesalahan.**
+2. Buat rekening bank di `Keuangan → Rekening Bank` (`/finance/bank-accounts`) untuk Bank Operasional.
 3. Isi saldo awal lewat Chart of Accounts atau `Client Master → Chart of Accounts Balances` (`/client-master/chart-of-accounts-balances`), tanggal **1 Oktober 2026**.
-4. Verifikasi di `Reports → Trial Balance` (`/reports/trial-balance`): kedua sisi Rp 500.000.000.
+4. Verifikasi di `Laporan → Neraca Saldo` (`/reports/trial-balance`): kedua sisi Rp 500.000.000.
 
 ## 4. Urutan kerja yang disarankan
 
@@ -203,21 +203,21 @@ Dikerjakan oleh **Dr. Andika** (admin klien) setelah login. Untuk cabang selain 
 
 | # | Data | Menu dan URL | Bergantung pada |
 | ---: | --- | --- | --- |
-| 1 | Mata uang cabang | `Client Master → Currencies` (`/client-master/currencies`) | login |
-| 2 | Pajak PPN 11% | `Client Master → Taxes` (`/client-master/taxes`) | - |
-| 3 | Unit bisnis per cabang | `Client Master → Business Units` (`/client-master/business-units`) | - |
-| 4 | Gudang (4 gudang) | `Client Master → Warehouses` (`/client-master/warehouses`) | langkah 3 |
-| 5 | Metode pembayaran (Tunai, Transfer, QRIS) dan tipe order | `Client Master → Payment Methods` (`/client-master/payment-methods`), `Order Types` (`/client-master/order-types`) | - |
-| 6 | Jenis akun (8 tipe) dan Chart of Accounts (40 akun), **daftar di [`00b`](./00b-tipe-akun-dan-akun-acuan.id.md)** | `Client Master → Chart of Account Type`, `Chart of Accounts` | langkah 3 |
-| 7 | Tahun fiskal dan 12 periode | `Client Master → Fiscal Year`, `Accounting Period` | - |
-| 8 | Rekening bank, lalu saldo awal 1 Okt | `Finance → Bank Accounts`, `Chart of Accounts Balances` | langkah 6 dan 7 |
-| 9 | Awalan nomor dokumen | `Client Master → Branch Setup` (`/client-master/branch-setup`) | - |
-| 10 | Cabang lain, peran, pengguna | `Branch Manage`, `Roles`, `Users` | langkah 1 sampai 8 untuk cabang baru |
-| 11 | Kategori dan satuan produk | `Product Categories`, `Product Units` | - |
-| 12 | Produk, lalu daftar harga | `Products`, `Price Lists` | langkah 11 |
-| 13 | Pemasok dan pelanggan | `Client Master → Contacts` | langkah 1 |
+| 1 | Mata uang cabang | `Client Master → Mata Uang` (`/client-master/currencies`) | login |
+| 2 | Pajak PPN 11% | `Client Master → Pajak` (`/client-master/taxes`) | - |
+| 3 | Unit bisnis per cabang | `Client Master → Unit Bisnis` (`/client-master/business-units`) | - |
+| 4 | Gudang (4 gudang) | `Client Master → Gudang` (`/client-master/warehouses`) | langkah 3 |
+| 5 | Metode pembayaran (Tunai, Transfer, QRIS) dan tipe order | `Client Master → Metode Pembayaran` (`/client-master/payment-methods`), `Jenis Pesanan` (`/client-master/order-types`) | - |
+| 6 | Jenis akun (8 tipe) dan Chart of Accounts (40 akun), **daftar di [`00b`](./00b-tipe-akun-dan-akun-acuan.id.md)** | `Client Master → Chart of Account Type`, `Bagan Akun` | langkah 3 |
+| 7 | Tahun fiskal dan 12 periode | `Client Master → Tahun Fiskal`, `Periode Akuntansi` | - |
+| 8 | Rekening bank, lalu saldo awal 1 Okt | `Keuangan → Rekening Bank`, `Chart of Accounts Balances` | langkah 6 dan 7 |
+| 9 | Awalan nomor dokumen | `Client Master → Pengaturan Cabang` (`/client-master/branch-setup`) | - |
+| 10 | Cabang lain, peran, pengguna | `Branch Manage`, `Peran`, `Pengguna` | langkah 1 sampai 8 untuk cabang baru |
+| 11 | Kategori dan satuan produk | `Kategori Produk`, `Satuan Produk` | - |
+| 12 | Produk, lalu daftar harga | `Produk`, `Daftar Harga` | langkah 11 |
+| 13 | Pemasok dan pelanggan | `Client Master → Kontak` | langkah 1 |
 | 14 | Alur persetujuan | `Client Master → Approval Workflow Configs` (`/client-master/approval-workflow-configs`) | langkah 10 (peran) |
-| 15 | Pengaturan modul (Purchase Configs, Inventory Config, POS Configs, dst.) | menu `Config` di tiap modul, dibahas di file `05` sampai `17` | langkah 1 sampai 13 |
+| 15 | Pengaturan modul (Purchase Configs, Inventory Config, POS Configs, dst.) | menu `Konfigurasi` di tiap modul, dibahas di file `05` sampai `17` | langkah 1 sampai 13 |
 
 ## 5. Aturan membaca hasil
 

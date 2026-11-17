@@ -40,7 +40,7 @@ Bab manual: [`canvassing/02-target-penjualan.md`](../../erpApiServices/docs/manu
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — jalur normal (draf) | Pilih Type "Territory"; pilih wilayah "Jakarta"; masukkan target quantity 100; klik Save | Target penjualan berhasil disimpan untuk wilayah Jakarta dengan target kuantitas 100 unit |
+| Positif — jalur normal (draf) | Pilih Type "Wilayah"; pilih wilayah "Jakarta"; masukkan target quantity 100; klik Save | Target penjualan berhasil disimpan untuk wilayah Jakarta dengan target kuantitas 100 unit |
 | Negatif — input salah (draf) | Tidak memilih Type, hanya mengisi Year dan Month; coba klik Save | Tombol Save tidak aktif/error, pesan penolakan yang jelas atau pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Minimal salah satu dari Target Quantity atau Target Amount harus diisi — tidak boleh keduanya kosong |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -54,7 +54,7 @@ Bab manual: [`canvassing/03-titipan-stock-sales.md`](../../erpApiServices/docs/m
 | --- | --- | --- |
 | Positif — jalur normal (draf) | Klik "Issue Stock to Salesperson"; isi salesperson: Apoteker Penanggung Jawab, warehouse: Gudang Jakarta, tanggal: 10/10/2023, item: Paracetamol 500 mg strip (SKU OBT-001) qty: 10; klik Save | Custody baru terbentuk dengan status "issued", stok gudang berkurang 10 unit Paracetamol 500 mg strip, jurnal Persediaan Titipan Salesperson debit 10.000.000, Persediaan kredit 10.000.000 |
 | Negatif — input salah (draf) | Klik "Issue Stock to Salesperson"; tidak memilih salesperson; klik Save | Tampilan pesan error: pesan yang jelas dan tombol Save tetap nonaktif, status custody tidak berubah, stok gudang tidak berpengaruh, jurnal tidak terbentuk |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Di halaman detail custody, klik "Record Return", lalu untuk tiap item isi jumlah yang dikembalikan (tidak boleh melebihi sisa Outstanding item tersebut). Klik Save untuk menyimpan |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Di halaman detail custody, klik "Catat Retur", lalu untuk tiap item isi jumlah yang dikembalikan (tidak boleh melebihi sisa Outstanding item tersebut). Klik Save untuk menyimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Halaman ini berguna untuk cek cepat "sales A masih pegang stock apa saja" tanpa harus membuka satu per satu dokumen custody-nya |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -69,7 +69,7 @@ Bab manual: [`canvassing/04-kunjungan-dan-order-lapangan.md`](../../erpApiServic
 | Negatif — Kunjungan Sukabumi (offline) (draf) | Quick Order (Rental mode) tanpa koneksi internet; Save offline | Draft Rental order disimpan di antrean lokal perangkat, otomatis dikirim saat koneksi pulih, stok aset tidak berubah, limit kredit customer diperiksa setelah koneksi pulih |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Pilih mode: Sales (order barang biasa) atau Rental (sewa aset — hanya bisa dibuat saat online, karena kantor perlu cek ketersediaan aset) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Fitur ini butuh koneksi internet aktif — tidak bisa dipakai saat offline |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau outlet tidak bisa dikunjungi, klik "Skip" dan isi alasan — status berubah menjadi Skipped |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau outlet tidak bisa dikunjungi, klik "Lewati" dan isi alasan — status berubah menjadi Skipped |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -198,7 +198,7 @@ Bab manual: [`canvassing/14-kepemilikan-pelanggan-dan-kolam-lead.md`](../../erpA
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mengatur kebijakan kerja sales untuk kantor pusat (draf) | Buka `/canvassing/work-policies`; pilih skema 'kepemilikan akun' dengan 'Warn' jika keluar dari wilayah; simpan | Kebijakan kerja terapkan dan tampil di halaman `Sales Work Policy` |
+| Positif — Mengatur kebijakan kerja sales untuk kantor pusat (draf) | Buka `/canvassing/work-policies`; pilih skema 'kepemilikan akun' dengan 'Warn' jika keluar dari wilayah; simpan | Kebijakan kerja terapkan dan tampil di halaman `Kebijakan Kerja Penjualan` |
 | Negatif — Memindahkan kepemilikan tanpa persetujuan (draf) | Buka `/canvassing/ownerships`; pilih lead Medika Nusantara; klik transfer ke Direktur baru; tidak memerlukan persetujuan; tidak disetujui oleh pemegang izin | Transfer ditolak dengan pesan 'Transfer kepemilikan memerlukan persetujuan' |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Lead harus dikonversi menjadi pelanggan sebelum menerima order lapangan atau penagihan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Lead yang sudah dikonversi menjadi pelanggan tidak bisa diambil dari kolam maupun dilepas ke kolam |

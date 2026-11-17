@@ -28,7 +28,7 @@ Bab manual: [`konfigurasi-umum/01-mata-uang.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah mata uang default IDR (draf) | Klik "+ Create"; isi Country Name "Indonesia", Currency Name "Rupiah", Currency Code "IDR", Symbol "Rp"; atur Thousand Separator ".", Decimal Separator ",", Decimal Places 0; klik Save | Mata uang IDR ditambahkan dan jadi default |
+| Positif — Menambah mata uang default IDR (draf) | Klik "+ Buat"; isi Country Name "Indonesia", Currency Name "Rupiah", Currency Code "IDR", Symbol "Rp"; atur Thousand Separator ".", Decimal Separator ",", Decimal Places 0; klik Save | Mata uang IDR ditambahkan dan jadi default |
 | Negatif — Mencoba hapus mata uang default (draf) | Cari mata uang IDR, klik menu aksi → Set as Default; coba klik tombol Delete | Tampil pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Mata uang yang sedang default tidak bisa dihapus/diubah kodenya secara sembarangan (tombol tertentu otomatis nonaktif) — ganti dulu default ke mata uang lain kalau memang perlu menghapus yang lama |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -40,7 +40,7 @@ Bab manual: [`konfigurasi-umum/02-warehouse.md`](../../erpApiServices/docs/manua
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat Warehouse Store (draf) | Klik "+ Create"; Isi Name "Apotek Nusantara Bandung", Code "APB", Phone "0221000101"; Pilih Type "Store"; Pilih Business Unit "Kantor Pusat & Distribusi Jakarta"; Isi alamat; Klik Save | Warehouse APB ditambahkan dan terhubung dengan Business Unit Kantor Pusat & Distribusi Jakarta |
+| Positif — Membuat Warehouse Store (draf) | Klik "+ Buat"; Isi Name "Apotek Nusantara Bandung", Code "APB", Phone "0221000101"; Pilih Type "Toko"; Pilih Business Unit "Kantor Pusat & Distribusi Jakarta"; Isi alamat; Klik Save | Warehouse APB ditambahkan dan terhubung dengan Business Unit Kantor Pusat & Distribusi Jakarta |
 | Negatif — Tidak bisa Save tipe Store (draf) | Tidak memilih Business Unit; Coba klik Save | Muncul pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Warehouse bertipe Store wajib dihubungkan ke Business Unit. Ini bukan cuma label administratif — hubungan ini yang memungkinkan laporan keuangan dipecah per toko (lihat manual book Akuntansi 02. Jurnal Manual, dimensi Business Unit) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Kalau Store, pilih Business Unit (wajib) |
@@ -66,7 +66,7 @@ Bab manual: [`konfigurasi-umum/04-metode-pembayaran-dan-tipe-order.md`](../../er
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah metode pembayaran untuk Apotek Nusantara Bandung (draf) | Klik "+ Create", masukkan "QRIS DANA" sebagai Name, tandai Is Cash false, aktifkan Is Active, klik Save | Metode pembayaran QRIS DANA muncul di halaman Payment Methods |
+| Positif — Menambah metode pembayaran untuk Apotek Nusantara Bandung (draf) | Klik "+ Buat", masukkan "QRIS DANA" sebagai Name, tandai Is Cash false, aktifkan Is Active, klik Save | Metode pembayaran QRIS DANA muncul di halaman Payment Methods |
 | Negatif — Mencoba menghapus metode pembayaran kartu debit BCA (draf) | Coba hapus metode "Kartu Debit BCA" tanpa mematikan Is Active | Tidak bisa menghapus, pesan: pesan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -77,7 +77,7 @@ Bab manual: [`konfigurasi-umum/05-fiscal-year-dan-accounting-period.md`](../../e
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat FY baru (draf) | Klik "+ Create"; Code: "FY2026", Name: "Fiscal Year 2026", Start Date: 1 Januari 2026, End Date: 31 Desember 2026; Klik Save | Tampilan Success Message, FY "FY2026" ditambahkan |
+| Positif — Membuat FY baru (draf) | Klik "+ Buat"; Code: "FY2026", Name: "Fiscal Year 2026", Start Date: 1 Januari 2026, End Date: 31 Desember 2026; Klik Save | Tampilan Success Message, FY "FY2026" ditambahkan |
 | Negatif — Generate Periods untuk FY yang sudah ada (draf) | Cari FY "FY2025", klik Generate Periods; Duration Type: Bulanan | Pesan pesan yang jelas muncul, tidak membuat periode baru |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Isi Start Date dan End Date — biasanya satu tahun penuh, tapi tidak wajib mengikuti kalender Januari-Desember (bisa Juli-Juni kalau tahun buku perusahaan berbeda) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Generate Periods tidak bisa dijalankan dua kali untuk Fiscal Year yang sama — kalau sudah pernah di-generate, sistem menampilkan pesan bahwa periode sudah ada (beserta jumlahnya), bukan menduplikasi |
@@ -92,7 +92,7 @@ Bab manual: [`konfigurasi-umum/06-status-setup.md`](../../erpApiServices/docs/ma
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
 | Positif — Mengubah warna status pada Purchase Order (draf) | Buka halaman Statuses; pilih "purchase_orders"; ubah warna menjadi merah; simpan | Warna badge status Purchase Order berubah menjadi merah, tidak mempengaruhi status alur kerja |
-| Negatif — Menyebutkan status baru di field status PO (draf) | Masuk ke form PO; masukkan status "Pending Approval" yang belum ada; coba simpan | Muncul pesan kesalahan: pesan yang jelas |
+| Negatif — Menyebutkan status baru di field status PO (draf) | Masuk ke form PO; masukkan status "Menunggu Persetujuan" yang belum ada; coba simpan | Muncul pesan kesalahan: pesan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -113,7 +113,7 @@ Bab manual: [`konfigurasi-umum/08-app-setup-dan-integration-configs.md`](../../e
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah setup default global (draf) | Klik "Add Setup"; isi Setup Key "app_name"; pilih Type "String"; masukkan Value "Medika Nusantara Sejahtera"; klik Save. | Nilai default "app_name" Medika Nusantara Sejahtera ditambahkan ke App Setup dan berlaku untuk semua cabang. |
+| Positif — Menambah setup default global (draf) | Klik "Tambah Pengaturan"; isi Setup Key "app_name"; pilih Type "String"; masukkan Value "Medika Nusantara Sejahtera"; klik Save. | Nilai default "app_name" Medika Nusantara Sejahtera ditambahkan ke App Setup dan berlaku untuk semua cabang. |
 | Negatif — Mengedit setup dengan kredensial salah (draf) | Cari baris "Payment Gateway"; isi API Key dengan string yang tidak valid; aktifkan Active; klik Update. | Muncul pesan kesalahan tentang kredensial tidak valid dan konfigurasi tidak diperbarui. |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 2. Isi Setup Key (nama identitas, misalnya "appname") — tidak bisa diubah lagi setelah entri dibuat |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -125,8 +125,8 @@ Bab manual: [`konfigurasi-umum/09-cost-centers.md`](../../erpApiServices/docs/ma
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Cost Center Pabrik (draf) | Klik "+ Create"; Isi Code: HRB01, Name: Divisi Produksi; Pilih Parent: Divisi Umum; Klik Save | Cost Center baru Divisi Produksi ditambahkan dengan status "Active" |
-| Negatif — Menambah Cost Center tanpa Parent (draf) | Klik "+ Create"; Isi Code: HRB02, Name: Divisi Penjualan; Tidak memilih Parent; Klik Save | Muncul pesan error: pesan yang jelas |
+| Positif — Menambah Cost Center Pabrik (draf) | Klik "+ Buat"; Isi Code: HRB01, Name: Divisi Produksi; Pilih Parent: Divisi Umum; Klik Save | Cost Center baru Divisi Produksi ditambahkan dengan status "Aktif" |
+| Negatif — Menambah Cost Center tanpa Parent (draf) | Klik "+ Buat"; Isi Code: HRB02, Name: Divisi Penjualan; Tidak memilih Parent; Klik Save | Muncul pesan error: pesan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -136,8 +136,8 @@ Bab manual: [`konfigurasi-umum/10-product-catalog.md`](../../erpApiServices/docs
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat SKU produk Paracetamol 500 mg strip (draf) | Buka Products; klik "+ Create"; isi Name "Paracetamol 500 mg strip"; pilih Category; tambah SKU Code "OBT-001", Name "Paracetamol 500 mg strip", Unit "Pcs"; klik Save. | Produk Paracetamol 500 mg strip dengan SKU OBT-001 berhasil dibuat dan tersedia untuk transaksi. |
-| Negatif — Mengatur harga produk tanpa membuat SKU terlebih dahulu (draf) | Buka detail produk Paracetamol 500 mg strip; klik "Manage Prices"; coba atur harga tanpa ada SKU yang dipilih. | Tampil pesan error "SKU is required" dan tidak bisa mengatur harga. |
+| Positif — Membuat SKU produk Paracetamol 500 mg strip (draf) | Buka Products; klik "+ Buat"; isi Name "Paracetamol 500 mg strip"; pilih Category; tambah SKU Code "OBT-001", Name "Paracetamol 500 mg strip", Unit "Pcs"; klik Save. | Produk Paracetamol 500 mg strip dengan SKU OBT-001 berhasil dibuat dan tersedia untuk transaksi. |
+| Negatif — Mengatur harga produk tanpa membuat SKU terlebih dahulu (draf) | Buka detail produk Paracetamol 500 mg strip; klik "Kelola Harga"; coba atur harga tanpa ada SKU yang dipilih. | Tampil pesan error "SKU is required" dan tidak bisa mengatur harga. |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
@@ -147,9 +147,9 @@ Bab manual: [`konfigurasi-umum/11-kontak-supplier-dan-customer.md`](../../erpApi
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambahkan supplier baru (draf) | Buka menu Contacts; klik "+ Add"; pilih "Add Contact"; isikan Type: Supplier, Name: PT Bintang Farmasi Utama, Email: bintangfarmasi@bfu.com, Phone: 021-5550102, Currency: IDR; klik Save | Kontak PT Bintang Farmasi Utama berhasil ditambahkan dengan data sesuai input |
-| Negatif — Menambahkan supplier tanpa email (draf) | Buka menu Contacts; klik "+ Add"; pilih "Add Contact"; isikan Type: Supplier, Name: PT Alkes Prima Mandiri, Phone: 021-5550101; coba klik Save tanpa mengisi Email | Muncul pesan kesalahan meminta input email untuk kontak Supplier |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Klik "+ Add", pilih Contact yang dituju (wajib), lalu isi: |
+| Positif — Menambahkan supplier baru (draf) | Buka menu Contacts; klik "+ Tambah"; pilih "Tambah Kontak"; isikan Type: Supplier, Name: PT Bintang Farmasi Utama, Email: bintangfarmasi@bfu.com, Phone: 021-5550102, Currency: IDR; klik Save | Kontak PT Bintang Farmasi Utama berhasil ditambahkan dengan data sesuai input |
+| Negatif — Menambahkan supplier tanpa email (draf) | Buka menu Contacts; klik "+ Tambah"; pilih "Tambah Kontak"; isikan Type: Supplier, Name: PT Alkes Prima Mandiri, Phone: 021-5550101; coba klik Save tanpa mengisi Email | Muncul pesan kesalahan meminta input email untuk kontak Supplier |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 1. Klik "+ Tambah", pilih Contact yang dituju (wajib), lalu isi: |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Account Number, Account Holder — wajib diisi |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Type kontak membatasi kemunculannya di modul lain. Kontak Supplier hanya bisa dipilih sebagai supplier di Purchasing; kontak Customer hanya muncul di Sales/POS; Both muncul di kedua sisi |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -161,8 +161,8 @@ Bab manual: [`konfigurasi-umum/12-user-dan-role.md`](../../erpApiServices/docs/m
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat role kasir baru (draf) | Buka menu Roles; klik "+ Add Role"; isikan Name "Kasir", Description "Role untuk staf kasir", Status Active; klik Create | Role "Kasir" muncul dalam daftar roles dengan status Active, permission default 0 |
-| Negatif — Menambahkan action yang tidak ada (draf) | Buka menu Roles; pilih role "Admin Gudang"; klik Assign Permissions; ceklist Action Permission "Update" pada modul "accounting"; klik Save | Muncul pesan error pesan yang jelas |
+| Positif — Membuat role kasir baru (draf) | Buka menu Roles; klik "+ Tambah Peran"; isikan Name "Kasir", Description "Role untuk staf kasir", Status Active; klik Create | Role "Kasir" muncul dalam daftar roles dengan status Active, permission default 0 |
+| Negatif — Menambahkan action yang tidak ada (draf) | Buka menu Roles; pilih role "Admin Gudang"; klik Assign Permissions; ceklist Action Permission "Perbarui" pada modul "accounting"; klik Save | Muncul pesan error pesan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Password dan Password Confirmation — wajib saat membuat user baru |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Status (Active/Inactive) — user Inactive tidak bisa login |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | User Inactive tidak bisa login, tapi datanya (dan riwayat aktivitas yang tercatat atas namanya) tetap tersimpan — pola ini lebih aman dipakai daripada menghapus user |
@@ -186,9 +186,9 @@ Bab manual: [`konfigurasi-umum/14-manajemen-cabang.md`](../../erpApiServices/doc
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Membuat cabang baru (draf) | Buka Client Master → Branch Manage; Klik "+ Add Branch"; Isi Nama Cabang: "Apotek Nusantara Bandung", Alamat: Jl. Bandung 123, Provinsi: DKI Jakarta, Kota/Kabupaten: Jakarta Pusat, Kecamatan: Gambir, Kelurahan/Desa: Gambir, Kode Pos: 10110; Klik Save | Cabang pesan yang jelas ditambahkan dengan status aktif dan tampil di daftar cabang |
+| Positif — Membuat cabang baru (draf) | Buka Client Master → Branch Manage; Klik "+ Tambah Cabang"; Isi Nama Cabang: "Apotek Nusantara Bandung", Alamat: Jl. Bandung 123, Provinsi: DKI Jakarta, Kota/Kabupaten: Jakarta Pusat, Kecamatan: Gambir, Kelurahan/Desa: Gambir, Kode Pos: 10110; Klik Save | Cabang pesan yang jelas ditambahkan dengan status aktif dan tampil di daftar cabang |
 | Negatif — Menugaskan staff ke cabang yang belum ada (draf) | Coba menugaskan user "Kasir A" ke cabang "Klinik Pratama", tetapi cabang ini belum dibuat; Klik Assign User, pilih Kasir A, Aktifkan Active in Branch, klik Assign | Muncul pesan kesalahan: pesan yang jelas |
-| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Satu cabang tidak bisa sekaligus jadi Main Branch dan melapor ke Main Branch lain — kalau sudah jadi Main Branch, opsi "Reports To" otomatis terkunci, begitu juga sebaliknya |
+| Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Satu cabang tidak bisa sekaligus jadi Main Branch dan melapor ke Main Branch lain — kalau sudah jadi Main Branch, opsi "Melaporkan Ke" otomatis terkunci, begitu juga sebaliknya |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Cabang yang sudah punya cabang lain melapor kepadanya tidak bisa diubah untuk melapor ke Main Branch lain (hierarki hanya 1 tingkat, tidak berjenjang) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 3. Atur Active in Branch — kalau dimatikan, user tetap tercatat terhubung ke cabang tapi tidak bisa memilihnya sebagai cabang aktif |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Setiap item/grup punya tombol Edit (ubah nama, ikon, kata kunci pencarian, status collapse default) dan Delete lewat ikon yang muncul saat hover. Grup yang masih berisi item tidak bisa dihapus — pindahkan atau hapus dulu semua isinya |
@@ -201,8 +201,8 @@ Bab manual: [`konfigurasi-umum/15-produk-lanjutan-varian-modifier-dan-resep.md`]
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah SKU Satuan (draf) | Buka Client Master → Product SKUs; klik "+ Add"; pilih Produk induk "Paracetamol 500 mg strip", isi Kode SKU OBT-001, Nama Paracetamol 500 mg, Satuan Botol, upload gambar obat, tandai Status aktif; klik Save | SKU baru OBT-001 ditambahkan dengan detail dan status yang benar |
-| Negatif — Menambah Modifier Tanpa Jenis (draf) | Buka Client Master → Product Modifiers; klik "+ Add"; isi Nama "Extra Cheese", tanpa memilih Jenis Modifier, masukkan Price Adjustment 5000; coba klik Save | Muncul pesan kesalahan menyebutkan perlu memilih jenis modifier sebelum menyimpan |
+| Positif — Menambah SKU Satuan (draf) | Buka Client Master → Product SKUs; klik "+ Tambah"; pilih Produk induk "Paracetamol 500 mg strip", isi Kode SKU OBT-001, Nama Paracetamol 500 mg, Satuan Botol, upload gambar obat, tandai Status aktif; klik Save | SKU baru OBT-001 ditambahkan dengan detail dan status yang benar |
+| Negatif — Menambah Modifier Tanpa Jenis (draf) | Buka Client Master → Product Modifiers; klik "+ Tambah"; isi Nama "Extra Cheese", tanpa memilih Jenis Modifier, masukkan Price Adjustment 5000; coba klik Save | Muncul pesan kesalahan menyebutkan perlu memilih jenis modifier sebelum menyimpan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 5. Aktifkan Required kalau modifier ini wajib dipilih setiap kali item terkait dijual (misalnya wajib pilih ukuran) |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 6. Minimal satu bahan wajib diisi — baris terakhir tidak bisa dihapus kalau cuma tersisa satu |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
@@ -214,8 +214,8 @@ Bab manual: [`konfigurasi-umum/16-cash-register-dan-sales-channel.md`](../../erp
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah cash register untuk klinik (draf) | Buka Client Master → Cash Registers; klik "+ Add"; masukkan Name "Kasir 1", Code "KR01", Store "Klinik Pratama & Laboratorium Bekasi", Cashiers allowed "Kasir A", Notes "Meja utama"; klik Create | Cash register "Kasir 1" ditambahkan dengan status Active, terkunci ke perangkat pertama yang membuka sesi di meja ini |
-| Negatif — Menambah cash register melebihi batas paket langganan (draf) | Buka Client Master → Cash Registers; klik "+ Add"; masukkan Name "Kasir 2", Code "KR02", lainnya sama; klik Create | Sistem menolak penambahan pesan penolakan yang jelas |
+| Positif — Menambah cash register untuk klinik (draf) | Buka Client Master → Cash Registers; klik "+ Tambah"; masukkan Name "Kasir 1", Code "KR01", Store "Klinik Pratama & Laboratorium Bekasi", Cashiers allowed "Kasir A", Notes "Meja utama"; klik Create | Cash register "Kasir 1" ditambahkan dengan status Active, terkunci ke perangkat pertama yang membuka sesi di meja ini |
+| Negatif — Menambah cash register melebihi batas paket langganan (draf) | Buka Client Master → Cash Registers; klik "+ Tambah"; masukkan Name "Kasir 2", Code "KR02", lainnya sama; klik Create | Sistem menolak penambahan pesan penolakan yang jelas |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | 4. Opsional, pilih Store — toko (warehouse bertipe Store) tempat meja ini berjualan. Kalau diisi, sesi di meja ini hanya bisa dibuka untuk toko itu |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau jumlah cash register sudah mencapai batas paket langganan, penambahan baru akan ditolak sistem — hubungi admin platform untuk menaikkan paket kalau butuh lebih banyak |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kalau perangkat diganti atau hilang, klik menu pada baris → Release The Locked Device; perangkat berikutnya yang membuka meja itu yang akan terkunci. Meja yang sedang punya sesi terbuka tidak bisa dilepas kuncinya |
@@ -280,7 +280,7 @@ Bab manual: [`konfigurasi-umum/25-tata-letak-menu-dan-log-pribadi.md`](../../erp
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah Grup Menu (draf) | Masuk ke halaman `/client-master/menu-layout`, klik `New Group`, isi nama "Obat", ikon, dan bahasa, lalu klik Create | Grup "Obat" ditambahkan dengan menu yang sesuai |
+| Positif — Menambah Grup Menu (draf) | Masuk ke halaman `/client-master/menu-layout`, klik `Grup Baru`, isi nama "Obat", ikon, dan bahasa, lalu klik Create | Grup "Obat" ditambahkan dengan menu yang sesuai |
 | Negatif — Menghapus Menu Tidak Aktif (draf) | Coba hapus item "Kafe Sehat" di grup "Layanan Klinik", tanpa mengubah statusnya ke Inactive | Pesan pesan yang jelas muncul |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |

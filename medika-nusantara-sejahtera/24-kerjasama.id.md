@@ -65,9 +65,9 @@ Bab manual: [`kerjasama/04-pemakaian-rekap-dan-tagihan.md`](../../erpApiServices
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Mencatat pemakaian (draf) | Masuk ke `Kerjasama → Settlements`, klik `Usage`; pilih periode, jenis (jumlah), nilai 100; klik `Add Usage` | Catatan pemakaian ditambahkan dengan status belum diverifikasi |
+| Positif — Mencatat pemakaian (draf) | Masuk ke `Kerjasama → Penyelarasan Kerjasama`, klik `Pemakaian`; pilih periode, jenis (jumlah), nilai 100; klik `Kemitraan Tambahkan Penggunaan` | Catatan pemakaian ditambahkan dengan status belum diverifikasi |
 | Negatif — Input salah (draf) | Mencoba menambahkan catatan pemakaian tanpa memilih periode | Sistem memberikan pesan peringatan bahwa periode harus dipilih |
-| Positif — Membuat rekap (draf) | Buka tab `Settlements`, klik `Generate Settlement`; pilih model nilai (Tarif tetap), periode 1 Januari - 31 Januari; klik `Generate` | Rekap otomatis dibuat sebagai draft dan status perjanjian berubah menjadi "Draft" |
+| Positif — Membuat rekap (draf) | Buka tab `Penyelarasan Kerjasama`, klik `Kemitraan Menghasilkan Penyelesaian`; pilih model nilai (Tarif tetap), periode 1 Januari - 31 Januari; klik `Buat` | Rekap otomatis dibuat sebagai draft dan status perjanjian berubah menjadi "Draf" |
 | Negatif — Syarat tidak terpenuhi (draf) | Mencoba membuat rekap tanpa periode | Sistem memberikan pesan bahwa periode harus dipilih |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Rekap hanya bisa dibuat untuk perjanjian yang Active, yang punya tanggal mulai dan kadens berulang supaya periode berikutnya bisa ditentukan |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Membatalkan rekap yang sudah ditagihkan lewat faktur memerlukan pembatalan faktur lebih dulu. Pembatalan juga ditolak selama jurnal rekap masih menunggu persetujuan jurnal |

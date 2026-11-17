@@ -68,8 +68,8 @@ Bab manual: [`platform-owner/04-template-operasional.md`](../../erpApiServices/d
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah template status (draf) | Pilih "Add Template"; isi Name: "Stok Habis", Code: "STKHABIS", Module Type: "Inventory", Business Type: "Operasional", Sort Order: 3, Color: "#FF0000", Description: "Status stok habis" | Status templates ditambahkan dengan nama dan kode yang dimasukkan |
-| Negatif — Menambah template status tanpa mengisi field wajib (draf) | Pilih "Add Template"; klik "Create" tanpa mengisi Name; muncul pesan error "Field Name is required" | Tidak dapat menambahkan template karena field Name tidak boleh kosong |
+| Positif — Menambah template status (draf) | Pilih "Tambah Templat"; isi Name: "Stok Habis", Code: "STKHABIS", Module Type: "Persediaan", Business Type: "Operasional", Sort Order: 3, Color: "#FF0000", Description: "Status stok habis" | Status templates ditambahkan dengan nama dan kode yang dimasukkan |
+| Negatif — Menambah template status tanpa mengisi field wajib (draf) | Pilih "Tambah Templat"; klik "Buat" tanpa mengisi Name; muncul pesan error "Field Name is required" | Tidak dapat menambahkan template karena field Name tidak boleh kosong |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Pastikan untuk mengisi semua field wajib sebelum menambahkan template status |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Kode tidak dapat diubah setelah template dibuat karena logika absensi, penggajian, dan cuti bergantung pada kode tersebut |
 | Aturan manual — uji dilanggar dan dipatuhi | Lakukan tindakan yang sesuai aturan, lalu yang melanggarnya, dengan data acuan file `00` | Code tidak dapat diubah setelah template dibuat. Cabang memakai kode ini sebagai titik awal untuk tipe kepegawaian dalam HRM |
@@ -96,7 +96,7 @@ Bab manual: [`platform-owner/06-sistem-bahasa-data-acuan-dan-log.md`](../../erpA
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Menambah terjemahan (draf) | Klik Create Translation; masukkan Key "Order", Value "Pesanan", Language "Indonesia"; klik Save | Terjemahan ditambahkan dengan status berhasil, key dan value sesuai input |
+| Positif — Menambah terjemahan (draf) | Klik Create Translation; masukkan Key "Pesanan", Value "Pesanan", Language "Indonesia"; klik Save | Terjemahan ditambahkan dengan status berhasil, key dan value sesuai input |
 | Negatif — Menghapus bahasa tanpa teks (draf) | Klik Add Language; masukkan Name "Sunda", Code "su"; coba hapus tanpa menambahkan teks; lihat pesan peringatan | Tidak dapat menghapus bahasa tanpa teks, pesan penolakan yang jelas |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
@@ -161,8 +161,8 @@ Bab manual: [`mulai-menggunakan/01-login-bantuan-dan-riwayat-perubahan.md`](../.
 
 | Skenario | Langkah dan data uji | Hasil yang diharapkan |
 | --- | --- | --- |
-| Positif — Login ke Aplikasi (draf) | Masuk dengan email "admin@medikanusantara.test", password "MnsUji#2026", centang "Remember me"; klik "Login" | Dibawa ke halaman awal aplikasi sebagai admin, sesi berakhir setelah 30 menit inactivity |
-| Negatif — Login Gagal Tanpa Verifikasi Dua Langkah (draf) | Masuk dengan email "admin@medikanusantara.test", password salah; klik "Login" | Muncul pesan kesalahan verifikasi dua langkah, masukkan kode authenticator atau recovery code jika diperlukan |
+| Positif — Login ke Aplikasi (draf) | Masuk dengan email "admin@medikanusantara.test", password "MnsUji#2026", centang "Remember me"; klik "Masuk" | Dibawa ke halaman awal aplikasi sebagai admin, sesi berakhir setelah 30 menit inactivity |
+| Negatif — Login Gagal Tanpa Verifikasi Dua Langkah (draf) | Masuk dengan email "admin@medikanusantara.test", password salah; klik "Masuk" | Muncul pesan kesalahan verifikasi dua langkah, masukkan kode authenticator atau recovery code jika diperlukan |
 | Negatif — peran tanpa izin | Masuk sebagai peran yang tidak memegang izin fitur ini (mis. Kasir untuk fitur Keuangan) lalu buka halaman atau panggil endpoint | Menu atau tombol tidak dapat dipakai dengan alasan jelas (tombol nonaktif dengan tooltip), endpoint menjawab 403 |
 | Netralisasi | Batalkan, balik, atau retur dokumen uji sesuai modul; jangan hapus dokumen yang sudah berjurnal | Data kembali ke keadaan awal tanpa merusak data yang dipakai langkah `01` berikutnya |
 
